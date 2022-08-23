@@ -1,7 +1,29 @@
 import Head from 'next/head';
 import { Button } from 'ui';
+import { useQuery } from 'client';
 
 export default function Home() {
+  const response = useQuery(
+    'todo',
+    `query {
+    todoListCollection(first: 5) {
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+      }
+      edges {
+        node {
+          id
+          title
+        }
+        cursor
+      }
+    }
+  }`,
+  );
+
+  console.log({ response });
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>

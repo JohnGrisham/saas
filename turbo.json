@@ -5,6 +5,9 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "client#build": {
+      "dependsOn": ["^build", "$API_ENDPOINT", "$API_KEY"]
+    },
     "lint": {
       "outputs": []
     },
