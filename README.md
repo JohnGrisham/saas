@@ -50,7 +50,7 @@ Import the project in grafbase: https://grafbase.com/docs/getting-started/first-
 
 ### Client
 
-Configure your client by adding a .env.local file to your the packages/client folder with the following information found in the grafbase dashboard.
+Configure your client by adding a `.env.local` file to your the `packages/client` folder with the following information found in the grafbase dashboard.
 
 ```
 API_ENDPOINT=https://{your-project}.grafbase.app/graphql

@@ -8,6 +8,9 @@
     "client#build": {
       "dependsOn": ["^build", "$API_ENDPOINT", "$API_KEY"]
     },
+    "web#build": {
+      "dependsOn": ["^build", "$GITHUB_ID", "$GITHUB_SECRET"]
+    },
     "lint": {
       "outputs": []
     },
