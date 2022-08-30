@@ -1,11 +1,12 @@
-type TodoList @model {
+type User @model {
   id: ID!
-  title: String!
-  todos: [Todo]
+  display_name: String!
+  identities: [Identity!]!
 }
 
-type Todo @model {
+type Identity @model {
   id: ID!
-  title: String!
-  complete: Boolean!
+  type: String!
+  email: String!
+  password: String
 }

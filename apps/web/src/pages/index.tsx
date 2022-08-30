@@ -4,9 +4,9 @@ import { useQuery } from 'client';
 
 export default function Home() {
   const response = useQuery(
-    'todo',
+    'user',
     `query {
-    todoListCollection(first: 5) {
+    userCollection(first: 5) {
       pageInfo {
         hasPreviousPage
         hasNextPage
@@ -14,7 +14,7 @@ export default function Home() {
       edges {
         node {
           id
-          title
+          name
         }
         cursor
       }

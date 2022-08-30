@@ -8,8 +8,11 @@
     "client#build": {
       "dependsOn": ["^build", "$API_ENDPOINT", "$API_KEY"]
     },
-    "web#build": {
+    "auth#build": {
       "dependsOn": ["^build", "$GITHUB_ID", "$GITHUB_SECRET"]
+    },
+    "web#build": {
+      "dependsOn": ["^build", "$JWT_SECRET"]
     },
     "lint": {
       "outputs": []
