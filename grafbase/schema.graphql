@@ -1,6 +1,6 @@
 type User @model {
   id: ID!
-  display_name: String!
+  displayName: String!
   identities: [Identity!]!
 }
 
