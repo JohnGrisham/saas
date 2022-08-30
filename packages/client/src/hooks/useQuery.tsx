@@ -1,11 +1,6 @@
 import { useQuery as useRQquery, QueryKey } from 'react-query';
-import { GraphQLClient, gql } from 'graphql-request';
-
-const graphQLClient = new GraphQLClient(process.env.API_ENDPOINT as string, {
-  headers: {
-    Authorization: `Bearer ${process.env.API_KEY}`,
-  },
-});
+import { graphQLClient } from '../provider';
+import { gql } from 'graphql-request';
 
 export const useQuery = <
   TQueryFnData,
@@ -26,3 +21,5 @@ export const useQuery = <
     return response;
   });
 };
+
+export { gql };

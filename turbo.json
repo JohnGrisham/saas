@@ -9,7 +9,12 @@
       "dependsOn": ["^build", "$API_ENDPOINT", "$API_KEY"]
     },
     "auth#build": {
-      "dependsOn": ["^build", "$GITHUB_ID", "$GITHUB_SECRET"]
+      "dependsOn": [
+        "^build",
+        "$GITHUB_ID",
+        "$GITHUB_SECRET",
+        "$PRIMARY_USER_LIST_ID"
+      ]
     },
     "web#build": {
       "dependsOn": ["^build", "$JWT_SECRET"]

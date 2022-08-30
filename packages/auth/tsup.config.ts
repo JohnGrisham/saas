@@ -3,10 +3,11 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   esbuildOptions(options, _context) {
-    if (options.define && process.env.API_ENDPOINT && process.env.API_KEY) {
+    if (options.define && process.env.PRIMARY_USER_LIST_ID) {
       options.define = {
-        'process.env.API_ENDPOINT': JSON.stringify(process.env.API_ENDPOINT),
-        'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
+        'process.env.PRIMARY_USER_LIST_ID': JSON.stringify(
+          process.env.PRIMARY_USER_LIST_ID,
+        ),
       };
     }
   },
