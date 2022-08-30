@@ -1,12 +1,13 @@
 type User @model {
   id: ID!
   displayName: String!
+  email: String!
   identities: [Identity!]!
 }
 
 type Identity @model {
   id: ID!
   type: String!
-  email: String!
   password: String
+  user: User!
 }
