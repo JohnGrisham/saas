@@ -1,3 +1,8 @@
+enum IdentityType {
+  CREDENTIALS
+  GITHUB
+}
+
 type User @model {
   id: ID!
   displayName: String!
@@ -7,7 +12,17 @@ type User @model {
 
 type Identity @model {
   id: ID!
-  type: String! @unique
+  type: IdentityType!
   password: String
   user: User!
+}
+
+type UserList @model {
+  id: ID!
+  users: [User!]!
+}
+
+type IdentityList @model {
+  id: ID!
+  identities: [Identity!]!
 }
