@@ -5,7 +5,7 @@ enum IdentityType {
 
 type User @model {
   id: ID!
-  name: String!
+  name: String
   email: String! @unique
   identities: [Identity!]!
 }

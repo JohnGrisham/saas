@@ -14,7 +14,6 @@ export default function Home() {
       edges {
         node {
           id
-          displayName
         }
         cursor
       }

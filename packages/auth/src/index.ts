@@ -2,10 +2,8 @@ import CredentialsProvider, {
   CredentialsConfig,
 } from 'next-auth/providers/credentials';
 import GithubProvider, { GithubProfile } from 'next-auth/providers/github';
-import { graphQLClient, gql } from 'client';
 import { OAuthUserConfig } from 'next-auth/providers';
-
-const PRIMARY_USER_LIST_ID = process.env.PRIMARY_USER_LIST_ID;
+import { Auth } from '@aws-amplify/auth';
 
 export const credentials = (config?: CredentialsConfig) =>
   CredentialsProvider({
@@ -23,42 +21,17 @@ export const credentials = (config?: CredentialsConfig) =>
       },
       password: { label: 'Password', type: 'password' },
     },
-    async authorize(credentials, req) {
+    async authorize(credentials) {
       // Add logic here to look up the user from the credentials supplied
       const { username = '', password = '' } = { ...credentials };
 
-      console.log({ username, password });
+      const user = await Auth.signIn({
+        username,
+        password,
+      });
 
-      const userListQuery = `
-          query {
-            userList(id: "${PRIMARY_USER_LIST_ID}") {
-              users {
-                id
-                email
-                identities {
-                  type
-                  password
-                }
-              }
-            }
-          }`;
-
-      const { userList = { users: [] } } = await graphQLClient.request(
-        gql`
-          ${userListQuery}
-        `,
-      );
-
-      if (userList.users.length) {
-        const currentUser = userList.users.find(
-          (user: any) => user.email === username,
-        );
-        const passwordIdentity = currentUser?.identities.find(
-          (identity: any) =>
-            identity.type === 'CREDENTIALS' && identity?.password === password,
-        );
-
-        return passwordIdentity ? currentUser : null;
+      if (user?.username) {
+        return user;
       }
 
       return null;

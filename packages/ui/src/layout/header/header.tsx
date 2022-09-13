@@ -1,11 +1,26 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import {
+  SignOutParams,
+  signIn,
+  signOut,
+  useSession,
+  SignInOptions,
+} from 'next-auth/react';
 
 // The approach used in this component shows how to build a sign in and sign out
 // component that works on pages which support both client and server side
 // rendering, and avoids any flash incorrect content on initial page load.
-export const Header: React.FC = () => {
+
+export interface HeaderProps {
+  signInOptions?: SignInOptions;
+  signoutOptions?: SignOutParams;
+}
+
+export const Header: React.FC<HeaderProps> = ({
+  signInOptions,
+  signoutOptions,
+}) => {
   const { data: session, status } = useSession();
   const loading = status === 'loading';
 
@@ -22,7 +37,7 @@ export const Header: React.FC = () => {
               href={`/api/auth/signin`}
               onClick={(e) => {
                 e.preventDefault();
-                signIn();
+                signIn(undefined, signInOptions);
               }}
             >
               Sign in
@@ -52,9 +67,9 @@ export const Header: React.FC = () => {
             </nav>
             <a
               href={`/api/auth/signout`}
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.preventDefault();
-                signOut();
+                await signOut(signoutOptions);
               }}
             >
               Sign out
