@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@aws-amplify/auth": "^4.6.6",
-    "client": "*",
     "formik": "^2.2.9",
     "next": "^12.2.5",
     "next-auth": "^4.10.3",

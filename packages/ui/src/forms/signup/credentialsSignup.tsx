@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 //import { loginSchema } from './validation/loginSchema'
+import { signIn, SignInOptions } from 'next-auth/react';
 import { Auth } from '@aws-amplify/auth';
 
 enum AuthState {
@@ -9,11 +10,13 @@ enum AuthState {
 }
 
 interface CredentialsSignupProps {
-  signinUrl: string;
+  signInUrl: string;
+  onSignup?: (email: string, password: string) => Promise<void>;
 }
 
 export const CredentialsSignup: React.FC<CredentialsSignupProps> = ({
-  signinUrl,
+  signInUrl,
+  onSignup,
 }) => {
   const [authState, setAuthState] = React.useState<AuthState>(
     AuthState.PRE_SIGNUP,
@@ -47,7 +50,7 @@ export const CredentialsSignup: React.FC<CredentialsSignupProps> = ({
             );
 
             if (verifyResponse === 'SUCCESS') {
-              window.location.replace(signinUrl);
+              onSignup ? await onSignup(email, password) : null;
             }
           }
         }}
@@ -110,10 +113,10 @@ export const CredentialsSignup: React.FC<CredentialsSignupProps> = ({
             >
               {authState === AuthState.PRE_SIGNUP ? 'Signup' : 'Verify'}
             </button>
-            {signinUrl && (
+            {signInUrl && (
               <a
                 className="mt-2 text-white hover:cursor-pointer"
-                href={signinUrl}
+                href={signInUrl}
               >
                 Sign in
               </a>

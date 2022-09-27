@@ -1,5 +1,5 @@
 {
-  "name": "auth",
+  "name": "payments-server",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -8,8 +8,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts",
-    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "build": "tsup src/index.ts --format esm,cjs --dts --platform=node",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch --platform=node",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
@@ -23,9 +23,6 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
-    "@aws-amplify/auth": "^4.6.6",
-    "graphql": "^16.6.0",
-    "graphql-request": "^4.3.0",
-    "next-auth": "^4.10.3"
+    "stripe": "^10.8.0"
   }
 }

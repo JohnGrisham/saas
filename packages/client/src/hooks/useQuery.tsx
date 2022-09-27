@@ -19,7 +19,6 @@ export const useQuery = <
   return useRQquery<TQueryFnData, TError, TData, TQueryKey>(
     key,
     async () => {
-      console.log(key);
       const response = await graphQLClient.request<TQueryFnData, {}>(
         gql`
           ${query}

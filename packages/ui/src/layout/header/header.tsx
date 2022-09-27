@@ -21,8 +21,7 @@ export const Header: React.FC<HeaderProps> = ({
   signInOptions,
   signoutOptions,
 }) => {
-  const { data: session, status } = useSession();
-  const loading = status === 'loading';
+  const { data: session } = useSession();
 
   return (
     <header>
@@ -30,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
         <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
       </noscript>
       <div className="flex w-full items-center justify-center border border-transparent bg-white px-8">
-        {!session && (
+        {!session?.user?.email && (
           <>
             <span>You are not signed in:&nbsp;</span>
             <a
@@ -44,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
           </>
         )}
-        {session?.user && (
+        {session?.user?.email && (
           <>
             <nav className="flex w-full">
               <ul className="grid w-full grid-cols-3 gap-x-5">
@@ -59,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({
                   </Link>
                 </li>
                 <li>
-                  <Link href="/">
+                  <Link href="/account">
                     <a>Me</a>
                   </Link>
                 </li>

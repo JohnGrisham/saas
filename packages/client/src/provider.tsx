@@ -2,7 +2,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { GraphQLClient } from 'graphql-request';
+import { GraphQLClient, gql } from 'graphql-request';
 
 const queryClient = new QueryClient();
 
@@ -21,3 +21,5 @@ export const Client: React.FC = ({ children }) => (
     <ReactQueryDevtools />
   </QueryClientProvider>
 );
+
+export { gql };

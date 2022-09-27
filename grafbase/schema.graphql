@@ -8,12 +8,18 @@ type User @model {
   name: String
   email: String! @unique
   identities: [Identity!]!
+  customer: Customer
 }
 
 type Identity @model {
   id: ID!
   type: IdentityType!
-  password: String
+  user: User!
+}
+
+type Customer @model {
+  id: ID!
+  stripeId: String!
   user: User!
 }
 
