@@ -1,10 +1,7 @@
-import { CognitoUser } from '@aws-amplify/auth';
+import { graphQLClient, gql } from 'client';
+import { isCognitoUser, stripe } from '../../../utils';
 import NextAuth from 'next-auth';
 import providers from 'auth';
-
-interface User extends CognitoUser {
-  [key: string]: any;
-}
 
 export default NextAuth({
   pages: {
@@ -13,19 +10,69 @@ export default NextAuth({
   },
   providers,
   callbacks: {
+    async signIn({ user, account }) {
+      const name = user.name ?? undefined;
+      const email: string | undefined = isCognitoUser(user)
+        ? user.attributes.email
+        : user.email ?? undefined;
+
+      if (!email) {
+        return false;
+      }
+
+      const [existingStripeUser = undefined] = (
+        await stripe.customers.list({ email })
+      ).data;
+
+      if (!existingStripeUser) {
+        const sub = isCognitoUser(user)
+          ? user.getUsername()
+          : account.providerAccountId;
+
+        const newStripeCustomer = await stripe.customers.create({
+          name,
+          email,
+          metadata: {
+            sub,
+          },
+        });
+
+        await graphQLClient.request(gql`
+        mutation CreatUser {
+                userCreate(
+                    input: {
+                        name: ${name}
+                        email: ${email}
+                        identities: {
+                        create: { sub: ${sub}, type: ${account.provider.toUpperCase()} }
+                        }
+                        customer: {
+                        create: { stripeId: ${newStripeCustomer.id} }
+                        }
+                    }
+                    ) {
+                    user {
+                        id
+                    }
+                }
+            }
+        `);
+      }
+
+      return true;
+    },
     async jwt({ user, token }) {
       if (user) {
         let currentUser = user as unknown;
         let tokenResponse = token;
 
-        if (Object.hasOwn(currentUser as {}, 'authenticationFlowType')) {
-          const cognitoUser = currentUser as User;
-          const session = cognitoUser.getSignInUserSession();
+        if (isCognitoUser(currentUser)) {
+          const session = currentUser.getSignInUserSession();
 
           tokenResponse = {
             ...token,
-            sub: cognitoUser.getUsername(),
-            email: cognitoUser.attributes.email,
+            sub: currentUser.getUsername(),
+            email: currentUser.attributes.email,
             accessToken: session?.getAccessToken().getJwtToken(),
             refreshToken: session?.getRefreshToken().getToken(),
           };

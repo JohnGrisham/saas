@@ -36,6 +36,9 @@ export const CredentialsSignup: React.FC<CredentialsSignupProps> = ({
             const response = await Auth.signUp({
               username: email,
               password,
+              attributes: {
+                email,
+              },
             });
 
             if (response.user && response.userConfirmed === false) {

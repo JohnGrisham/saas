@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken, stripe } from '../../utils';
 import { graphQLClient, gql } from 'client';
+import { Auth } from '@aws-amplify/auth';
 
 const signup = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
@@ -25,7 +26,7 @@ const signup = async (req: NextApiRequest, res: NextApiResponse) => {
                             name: ${name}
                             email: ${email}
                             identities: {
-                            create: { type: CREDENTIALS }
+                            create: { sub: ${sub}, type: CREDENTIALS }
                             }
                             customer: {
                             create: { stripeId: ${stripeCustomer.id} }
@@ -38,6 +39,11 @@ const signup = async (req: NextApiRequest, res: NextApiResponse) => {
                     }
                 }
             `);
+
+      const user = await Auth.currentAuthenticatedUser();
+      await Auth.updateUserAttributes(user, {
+        'custom:userId': data.id,
+      });
 
       res.status(200).json({ data });
     } catch (err: any) {

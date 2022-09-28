@@ -13,6 +13,7 @@ type User @model {
 
 type Identity @model {
   id: ID!
+  sub: String
   type: IdentityType!
   user: User!
 }
