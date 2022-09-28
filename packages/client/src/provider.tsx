@@ -10,7 +10,8 @@ export const graphQLClient = new GraphQLClient(
   process.env.API_ENDPOINT as string,
   {
     headers: {
-      Authorization: `Bearer ${process.env.API_KEY}`,
+      'content-type': 'application/json',
+      'x-api-key': process.env.API_KEY as string,
     },
   },
 );

@@ -6,7 +6,7 @@ export default function Home() {
   const response = useQuery(
     'user',
     `query {
-    userCollection(first: 5) {
+    userCollection(first: 100) {
       pageInfo {
         hasPreviousPage
         hasNextPage

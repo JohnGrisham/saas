@@ -11,12 +11,6 @@ const signup = () => (
           username: email,
           password,
         });
-        const res = await fetch('/api/signup', { method: 'POST' });
-
-        if (res.ok) {
-          const json = await res.json();
-          console.log(json);
-        }
       } catch (err: any) {
         console.error(err.message);
       } finally {
