@@ -3,10 +3,16 @@ enum IdentityType {
   GITHUB
 }
 
+enum PlanType {
+  STARTER
+  BUSINESS
+  CUSTOM
+}
+
 type User @model {
   id: ID!
   name: String
-  email: String! @unique
+  email: Email! @unique
   identities: [Identity!]!
   customer: Customer
 }
@@ -21,7 +27,21 @@ type Identity @model {
 type Customer @model {
   id: ID!
   stripeId: String!
+  plan: Plan!
   user: User!
+}
+
+type Plan @model {
+  id: ID!
+  planType: PlanType! @unique
+  expiration: Timestamp!
+  features: [Feature!]!
+}
+
+type Feature @model {
+  id: ID!
+  name: String!
+  description: String
 }
 
 type UserList @model {

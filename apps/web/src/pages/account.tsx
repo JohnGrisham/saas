@@ -126,8 +126,8 @@ export default function Account() {
           description="Please enter your full name, or a display name you are comfortable with."
           footer={<p>Please use 64 characters at maximum.</p>}
         >
-          <div className="mt-8 mb-4 text-xl font-semibold">
-            {session.user ? (
+          <div className="mt-8 mb-4 text-xl font-semibold text-white">
+            {session.user.name ? (
               `${session.user.name}`
             ) : (
               <div className="mb-6 h-8">...</div>
@@ -139,7 +139,7 @@ export default function Account() {
           description="Please enter the email address you want to use to login."
           footer={<p>We will email you to verify the change.</p>}
         >
-          <p className="mt-8 mb-4 text-xl font-semibold">
+          <p className="mt-8 mb-4 text-xl font-semibold text-white">
             {session.user ? session.user.email : undefined}
           </p>
         </Card>
