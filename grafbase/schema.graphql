@@ -3,17 +3,21 @@ enum IdentityType {
   GITHUB
 }
 
-enum PlanType {
-  STARTER
-  BUSINESS
-  CUSTOM
+enum SubStatus {
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
 }
 
 type User @model {
   id: ID!
   name: String
   email: Email! @unique
-  identities: [Identity!]!
+  identities: [Identity!]
   customer: Customer
 }
 
@@ -27,21 +31,33 @@ type Identity @model {
 type Customer @model {
   id: ID!
   stripeId: String!
-  plan: Plan!
+  subscription: Subscription
   user: User!
 }
 
-type Plan @model {
+type Product @model {
   id: ID!
-  planType: PlanType! @unique
-  expiration: Timestamp!
+  name: String! @unique
+  price: String!
   features: [Feature!]!
 }
 
 type Feature @model {
   id: ID!
-  name: String!
+  name: String! @unique
   description: String
+}
+
+type Subscription @model {
+  id: ID!
+  customer: Customer!
+  product: Product!
+  quantity: Int!
+  status: SubStatus!
+  startDate: Timestamp!
+  endDate: Timestamp
+  trialStart: Timestamp
+  trialEnd: Timestamp
 }
 
 type UserList @model {

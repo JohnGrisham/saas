@@ -40,41 +40,23 @@ export default NextAuth({
             },
           });
 
-          const { userCreate } = await graphQLClient.request(
-            gql`
-              mutation CreatUser(
-                $name: String
-                $email: String!
-                $sub: String
-                $type: String
-                $stripeId: String!
-              ) {
-                userCreate(
-                  input: {
-                    name: $name
-                    email: $email
-                    identities: { create: { sub: $sub, type: $type } }
-                    customer: { create: { stripeId: $stripeId } }
-                  }
-                ) {
-                  user {
-                    id
-                  }
-                }
-              }
-            `,
-            {
-              name,
-              email,
-              sub,
-              type: account.provider.toUpperCase(),
-              stripeId: newStripeCustomer.id,
-            },
-          );
+          const [starterProduct] = (
+            await stripe.products.search({ query: "name~'Starter'" })
+          ).data;
+          const price =
+            typeof starterProduct.default_price === 'string'
+              ? starterProduct.default_price
+              : starterProduct.default_price?.unit_amount_decimal ?? '0';
+
+          await stripe.subscriptions.create({
+            customer: newStripeCustomer.id,
+            items: [{ price, quantity: 1 }],
+            trial_period_days: 7,
+          });
 
           if (isCognitoUser(user)) {
             await Auth.updateUserAttributes(user, {
-              'custom:userId': userCreate.user.id,
+              'custom:userId': newStripeCustomer.metadata.userId,
             });
           }
         }
