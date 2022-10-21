@@ -1,7 +1,7 @@
 import { graphQLClient } from 'client';
 import { Stripe } from 'stripe';
 import { gql } from 'graphql-request';
-import { isStripeSubscription } from '../type-guards';
+import { isStripeSubscription } from 'core';
 import { v4 } from 'uuid';
 
 const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {

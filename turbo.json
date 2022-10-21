@@ -5,6 +5,12 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "codegen": {
+      "dependsOn": ["^codegen"]
+    },
+    "core#build": {
+      "dependsOn": ["^build"]
+    },
     "auth#build": {
       "dependsOn": [
         "^build",

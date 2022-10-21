@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-//import { loginSchema } from './validation/loginSchema'
-import { signIn, SignInOptions } from 'next-auth/react';
 import { Auth } from '@aws-amplify/auth';
 
 enum AuthState {

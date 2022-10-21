@@ -1,26 +1,9 @@
 import Head from 'next/head';
 import { Button } from 'ui';
-import { useQuery } from 'client';
+import { useGetUserByEmailQuery } from 'client';
 
 export default function Home() {
-  const response = useQuery(
-    'user',
-    `query {
-    userCollection(first: 100) {
-      pageInfo {
-        hasPreviousPage
-        hasNextPage
-      }
-      edges {
-        node {
-          id
-        }
-        cursor
-      }
-    }
-  }`,
-  );
-
+  const response = useGetUserByEmailQuery('jgrisham@vhtcx.com');
   console.log({ response });
 
   return (

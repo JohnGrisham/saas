@@ -1,7 +1,7 @@
 import { graphQLClient } from 'client';
 import { Stripe } from 'stripe';
 import { gql } from 'graphql-request';
-import { isStripeCustomer } from '../type-guards';
+import { isStripeCustomer } from 'core';
 import { v4 } from 'uuid';
 
 const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
@@ -13,15 +13,25 @@ const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
     throw new Error('Customer requires an email');
   }
 
-  const { userCreate } = await graphQLClient.request(
+  const { user } = await graphQLClient.request(
     gql`
-      mutation CreateUser($name: String, $email: Email!, $stripeId: String!) {
-        userCreate(
-          input: {
-            name: $name
-            email: $email
-            customer: { create: { stripeId: $stripeId } }
-          }
+      query GetUserByEmail($email: Email!) {
+        user(by: { email: $email }) {
+          id
+        }
+      }
+    `,
+  );
+
+  if (!user?.id) {
+    throw new Error('Unable to find a user with this email');
+  }
+
+  const { customerCreate } = await graphQLClient.request(
+    gql`
+      mutation CreateUser($stripeId: String!, $userId: ID!) {
+        customerCreate(
+          input: { stripeId: $stripeId, user: { link: $userId } }
         ) {
           user {
             id
@@ -33,9 +43,8 @@ const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
       }
     `,
     {
-      name: data.name ?? undefined,
-      email: data.email,
       stripeId: data.id,
+      userId: '',
     },
   );
 
@@ -43,8 +52,8 @@ const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
     data.id,
     {
       metadata: {
-        customerId: userCreate.user.customer.id,
-        userId: userCreate.user.id,
+        customerId: customerCreate.user.customer.id,
+        userId: customerCreate.user.id,
       },
     },
     { idempotencyKey: `IGNORE_${v4()}` },
@@ -109,8 +118,8 @@ const remove = async (data: Stripe.Event.Data.Object) => {
   if (data.metadata.userId) {
     await graphQLClient.request(
       gql`
-        mutation DeleteUser($id: ID!) {
-          userDelete(id: $id) {
+        mutation DeleteCustomer($id: ID!) {
+          customerDelete(id: $id) {
             deletedId
           }
         }

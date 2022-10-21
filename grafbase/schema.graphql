@@ -23,14 +23,14 @@ type User @model {
 
 type Identity @model {
   id: ID!
-  sub: String
+  sub: String! @unique
   type: IdentityType!
   user: User!
 }
 
 type Customer @model {
   id: ID!
-  stripeId: String!
+  stripeId: String! @unique
   subscription: Subscription
   user: User!
 }
@@ -58,14 +58,4 @@ type Subscription @model {
   endDate: Timestamp
   trialStart: Timestamp
   trialEnd: Timestamp
-}
-
-type UserList @model {
-  id: ID!
-  users: [User!]!
-}
-
-type IdentityList @model {
-  id: ID!
-  identities: [Identity!]!
 }

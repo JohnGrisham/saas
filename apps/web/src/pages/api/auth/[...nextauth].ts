@@ -1,9 +1,8 @@
-import { graphQLClient } from 'client';
-import { isCognitoUser, stripe } from '../../../utils';
 import { Auth } from '@aws-amplify/auth';
 import NextAuth from 'next-auth';
-import { gql } from 'graphql-request';
+import { isCognitoUser } from 'core';
 import providers from 'auth';
+import { stripe } from '../../../utils';
 
 export default NextAuth({
   pages: {
@@ -53,12 +52,10 @@ export default NextAuth({
             items: [{ price, quantity: 1 }],
             trial_period_days: 7,
           });
-
-          if (isCognitoUser(user)) {
-            await Auth.updateUserAttributes(user, {
-              'custom:userId': newStripeCustomer.metadata.userId,
-            });
-          }
+        } else if (isCognitoUser(user)) {
+          await Auth.updateUserAttributes(user, {
+            'custom:userId': existingStripeUser.metadata.userId,
+          });
         }
 
         return true;

@@ -1,0 +1,17 @@
+query UserByEmail($email: Email!) {
+  user(by: { email: $email }) {
+    ...UserParts
+    createdAt
+    updatedAt
+    customer {
+      ...CustomerParts
+    }
+    identities(first: 100) {
+      edges {
+        node {
+          ...IdentityParts
+        }
+      }
+    }
+  }
+}

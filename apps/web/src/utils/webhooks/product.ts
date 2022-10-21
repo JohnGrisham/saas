@@ -1,7 +1,7 @@
 import { graphQLClient } from 'client';
 import { Stripe } from 'stripe';
 import { gql } from 'graphql-request';
-import { isStripeProduct } from '../type-guards';
+import { isStripeProduct } from 'core';
 import { v4 } from 'uuid';
 
 const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
@@ -18,7 +18,7 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
       : data.default_price;
   const features: any[] = JSON.parse(data.metadata.features ?? '[]');
 
-  if (!price || !price.unit_amount_decimal) {
+  if (!price || price.unit_amount === null) {
     throw new Error('Product requires a price');
   }
 
@@ -29,7 +29,7 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
   const existing = await graphQLClient.request(
     gql`
       query ExistingProduct($id: ID!) {
-        product(id: $id) {
+        product(by: { id: $id }) {
           id
           features(first: 100) {
             edges {
@@ -76,7 +76,10 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
       `,
       {
         name: data.name,
-        price: price.unit_amount_decimal,
+        price: (price.unit_amount / 100).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }),
         features: features.map((f: any) => ({
           create: { name: f.name, description: f.description },
         })),
@@ -105,7 +108,7 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
               await graphQLClient.request(
                 gql`
                   query getFeature($id: ID!) {
-                    feature(id: $id) {
+                    feature(by: { id: $id }) {
                       id
                     }
                   }
@@ -160,7 +163,10 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
       {
         id: data.metadata.productId,
         name: data.name,
-        price: price.unit_amount_decimal,
+        price: (price.unit_amount / 100).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }),
         features: updatedFeatures,
       },
     );
