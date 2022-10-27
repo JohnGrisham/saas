@@ -1,6 +1,6 @@
-import { graphQLClient } from '../provider';
-import { Scalars, useUserByEmailQuery } from '../types';
-import { isEmail } from '../../../core';
+import { graphQLClient } from '../../provider';
+import { Scalars, useUserByEmailQuery } from '../../types';
+import { isEmail } from '../../../../core';
 
 export const useGetUserByEmailQuery = (email: Scalars['Email']) => {
   if (!isEmail(email)) {

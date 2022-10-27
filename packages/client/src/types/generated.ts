@@ -28,10 +28,18 @@ export type Customer = {
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   stripeId: Scalars['String'];
-  subscription?: Maybe<Subscription>;
+  subscriptions?: Maybe<SubscriptionConnection>;
   /** when the model was updated */
   updatedAt: Scalars['DateTime'];
   user: User;
+};
+
+
+export type CustomerSubscriptionsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 export type CustomerByInput = {
@@ -49,7 +57,7 @@ export type CustomerConnection = {
 /** Input to create a new Customer */
 export type CustomerCreateInput = {
   stripeId: Scalars['String'];
-  subscription?: InputMaybe<CustomerCustomerRelateSubscriptionSubscriptionCreateRelationInput>;
+  subscriptions?: InputMaybe<Array<CustomerCustomerRelateSubscriptionSubscriptionCreateRelationInput>>;
   user: CustomerCustomerRelateUserUserCreateRelationInput;
 };
 
@@ -116,7 +124,7 @@ export type CustomerEdge = {
 /** Input to create a new Customer */
 export type CustomerUpdateInput = {
   stripeId?: InputMaybe<Scalars['String']>;
-  subscription?: InputMaybe<CustomerCustomerRelateSubscriptionSubscriptionUpdateRelationInput>;
+  subscriptions?: InputMaybe<Array<CustomerCustomerRelateSubscriptionSubscriptionUpdateRelationInput>>;
   user?: InputMaybe<CustomerCustomerRelateUserUserUpdateRelationInput>;
 };
 
@@ -772,7 +780,7 @@ export type UserCreatePayload = {
 /** Input to create a new UserCustomerRelateUserCustomer */
 export type UserCustomerRelateUserCustomerCreateInput = {
   stripeId: Scalars['String'];
-  subscription?: InputMaybe<CustomerCustomerRelateSubscriptionSubscriptionCreateInput>;
+  subscriptions?: InputMaybe<Array<CustomerCustomerRelateSubscriptionSubscriptionCreateInput>>;
 };
 
 /** Input to create a new UserCustomerRelateUserCustomer relation */
@@ -843,19 +851,74 @@ export type SubscriptionPartsFragment = { __typename?: 'Subscription', id: strin
 
 export type UserPartsFragment = { __typename?: 'User', id: string, email: string, name?: string | null };
 
+export type FeatureByIdQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type FeatureByIdQuery = { __typename?: 'Query', feature?: { __typename?: 'Feature', id: string, name: string, description?: string | null } | null };
+
+export type FeatureByNameQueryVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type FeatureByNameQuery = { __typename?: 'Query', feature?: { __typename?: 'Feature', id: string, name: string, description?: string | null } | null };
+
+export type IdentityByIdQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type IdentityByIdQuery = { __typename?: 'Query', identity?: { __typename?: 'Identity', createdAt: any, updatedAt: any, id: string, sub: string, type: IdentityType, user: { __typename?: 'User', id: string, email: string, name?: string | null } } | null };
+
+export type IdentityBySubQueryVariables = Exact<{
+  sub: Scalars['String'];
+}>;
+
+
+export type IdentityBySubQuery = { __typename?: 'Query', identity?: { __typename?: 'Identity', createdAt: any, updatedAt: any, id: string, sub: string, type: IdentityType, user: { __typename?: 'User', id: string, email: string, name?: string | null } } | null };
+
+export type IdentityCollectionQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type IdentityCollectionQuery = { __typename?: 'Query', identityCollection?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', cursor: string, node: { __typename?: 'Identity', createdAt: any, updatedAt: any, id: string, sub: string, type: IdentityType, user: { __typename?: 'User', id: string, email: string, name?: string | null } } } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } | null };
+
+export type ProductByIdQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ProductByIdQuery = { __typename?: 'Query', product?: { __typename?: 'Product', createdAt: any, updatedAt: any, id: string, name: string, price: string, features?: { __typename?: 'FeatureConnection', edges?: Array<{ __typename?: 'FeatureEdge', node: { __typename?: 'Feature', id: string, name: string, description?: string | null } } | null> | null } | null } | null };
+
 export type UserByEmailQueryVariables = Exact<{
   email: Scalars['Email'];
 }>;
 
 
-export type UserByEmailQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'Customer', id: string, stripeId: string } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
+export type UserByEmailQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'Customer', id: string, stripeId: string, subscriptions?: { __typename?: 'SubscriptionConnection', edges?: Array<{ __typename?: 'SubscriptionEdge', node: { __typename?: 'Subscription', id: string, startDate: any, endDate?: any | null, quantity: number, status: SubStatus, trialStart?: any | null, trialEnd?: any | null } } | null> | null } | null } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
 
 export type UserByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type UserByIdQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'Customer', id: string, stripeId: string } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
+export type UserByIdQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'Customer', id: string, stripeId: string, subscriptions?: { __typename?: 'SubscriptionConnection', edges?: Array<{ __typename?: 'SubscriptionEdge', node: { __typename?: 'Subscription', id: string, startDate: any, endDate?: any | null, quantity: number, status: SubStatus, trialStart?: any | null, trialEnd?: any | null } } | null> | null } | null } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
+
+export type UserCollectionQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UserCollectionQuery = { __typename?: 'Query', userCollection?: { __typename?: 'UserConnection', edges?: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'Customer', id: string, stripeId: string, subscriptions?: { __typename?: 'SubscriptionConnection', edges?: Array<{ __typename?: 'SubscriptionEdge', node: { __typename?: 'Subscription', id: string, startDate: any, endDate?: any | null, quantity: number, status: SubStatus, trialStart?: any | null, trialEnd?: any | null } } | null> | null } | null } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', cursor: string, node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } | null } } | null> | null } | null };
 
 export const CustomerPartsFragmentDoc = `
     fragment CustomerParts on Customer {
@@ -902,6 +965,171 @@ export const UserPartsFragmentDoc = `
   name
 }
     `;
+export const FeatureByIdDocument = `
+    query FeatureById($id: ID!) {
+  feature(by: {id: $id}) {
+    ...FeatureParts
+  }
+}
+    ${FeaturePartsFragmentDoc}`;
+export const useFeatureByIdQuery = <
+      TData = FeatureByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: FeatureByIdQueryVariables,
+      options?: UseQueryOptions<FeatureByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<FeatureByIdQuery, TError, TData>(
+      ['FeatureById', variables],
+      fetcher<FeatureByIdQuery, FeatureByIdQueryVariables>(client, FeatureByIdDocument, variables, headers),
+      options
+    );
+export const FeatureByNameDocument = `
+    query FeatureByName($name: String!) {
+  feature(by: {name: $name}) {
+    ...FeatureParts
+  }
+}
+    ${FeaturePartsFragmentDoc}`;
+export const useFeatureByNameQuery = <
+      TData = FeatureByNameQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: FeatureByNameQueryVariables,
+      options?: UseQueryOptions<FeatureByNameQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<FeatureByNameQuery, TError, TData>(
+      ['FeatureByName', variables],
+      fetcher<FeatureByNameQuery, FeatureByNameQueryVariables>(client, FeatureByNameDocument, variables, headers),
+      options
+    );
+export const IdentityByIdDocument = `
+    query IdentityById($id: ID!) {
+  identity(by: {id: $id}) {
+    ...IdentityParts
+    createdAt
+    updatedAt
+    user {
+      ...UserParts
+    }
+  }
+}
+    ${IdentityPartsFragmentDoc}
+${UserPartsFragmentDoc}`;
+export const useIdentityByIdQuery = <
+      TData = IdentityByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: IdentityByIdQueryVariables,
+      options?: UseQueryOptions<IdentityByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<IdentityByIdQuery, TError, TData>(
+      ['IdentityById', variables],
+      fetcher<IdentityByIdQuery, IdentityByIdQueryVariables>(client, IdentityByIdDocument, variables, headers),
+      options
+    );
+export const IdentityBySubDocument = `
+    query IdentityBySub($sub: String!) {
+  identity(by: {sub: $sub}) {
+    ...IdentityParts
+    createdAt
+    updatedAt
+    user {
+      ...UserParts
+    }
+  }
+}
+    ${IdentityPartsFragmentDoc}
+${UserPartsFragmentDoc}`;
+export const useIdentityBySubQuery = <
+      TData = IdentityBySubQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: IdentityBySubQueryVariables,
+      options?: UseQueryOptions<IdentityBySubQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<IdentityBySubQuery, TError, TData>(
+      ['IdentityBySub', variables],
+      fetcher<IdentityBySubQuery, IdentityBySubQueryVariables>(client, IdentityBySubDocument, variables, headers),
+      options
+    );
+export const IdentityCollectionDocument = `
+    query IdentityCollection($first: Int, $last: Int, $before: String, $after: String) {
+  identityCollection(first: $first, last: $last, before: $before, after: $after) {
+    edges {
+      node {
+        ...IdentityParts
+        createdAt
+        updatedAt
+        user {
+          ...UserParts
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      endCursor
+      startCursor
+    }
+  }
+}
+    ${IdentityPartsFragmentDoc}
+${UserPartsFragmentDoc}`;
+export const useIdentityCollectionQuery = <
+      TData = IdentityCollectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: IdentityCollectionQueryVariables,
+      options?: UseQueryOptions<IdentityCollectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<IdentityCollectionQuery, TError, TData>(
+      variables === undefined ? ['IdentityCollection'] : ['IdentityCollection', variables],
+      fetcher<IdentityCollectionQuery, IdentityCollectionQueryVariables>(client, IdentityCollectionDocument, variables, headers),
+      options
+    );
+export const ProductByIdDocument = `
+    query ProductById($id: ID!) {
+  product(by: {id: $id}) {
+    ...ProductParts
+    createdAt
+    updatedAt
+    features(first: 100) {
+      edges {
+        node {
+          ...FeatureParts
+        }
+      }
+    }
+  }
+}
+    ${ProductPartsFragmentDoc}
+${FeaturePartsFragmentDoc}`;
+export const useProductByIdQuery = <
+      TData = ProductByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ProductByIdQueryVariables,
+      options?: UseQueryOptions<ProductByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ProductByIdQuery, TError, TData>(
+      ['ProductById', variables],
+      fetcher<ProductByIdQuery, ProductByIdQueryVariables>(client, ProductByIdDocument, variables, headers),
+      options
+    );
 export const UserByEmailDocument = `
     query UserByEmail($email: Email!) {
   user(by: {email: $email}) {
@@ -910,6 +1138,13 @@ export const UserByEmailDocument = `
     updatedAt
     customer {
       ...CustomerParts
+      subscriptions(first: 100) {
+        edges {
+          node {
+            ...SubscriptionParts
+          }
+        }
+      }
     }
     identities(first: 100) {
       edges {
@@ -922,6 +1157,7 @@ export const UserByEmailDocument = `
 }
     ${UserPartsFragmentDoc}
 ${CustomerPartsFragmentDoc}
+${SubscriptionPartsFragmentDoc}
 ${IdentityPartsFragmentDoc}`;
 export const useUserByEmailQuery = <
       TData = UserByEmailQuery,
@@ -945,6 +1181,13 @@ export const UserByIdDocument = `
     updatedAt
     customer {
       ...CustomerParts
+      subscriptions(first: 100) {
+        edges {
+          node {
+            ...SubscriptionParts
+          }
+        }
+      }
     }
     identities(first: 100) {
       edges {
@@ -957,6 +1200,7 @@ export const UserByIdDocument = `
 }
     ${UserPartsFragmentDoc}
 ${CustomerPartsFragmentDoc}
+${SubscriptionPartsFragmentDoc}
 ${IdentityPartsFragmentDoc}`;
 export const useUserByIdQuery = <
       TData = UserByIdQuery,
@@ -970,5 +1214,59 @@ export const useUserByIdQuery = <
     useQuery<UserByIdQuery, TError, TData>(
       ['UserByID', variables],
       fetcher<UserByIdQuery, UserByIdQueryVariables>(client, UserByIdDocument, variables, headers),
+      options
+    );
+export const UserCollectionDocument = `
+    query UserCollection($first: Int, $last: Int, $before: String, $after: String) {
+  userCollection(first: $first, last: $last, before: $before, after: $after) {
+    edges {
+      node {
+        ...UserParts
+        createdAt
+        updatedAt
+        customer {
+          ...CustomerParts
+          subscriptions(first: 100) {
+            edges {
+              node {
+                ...SubscriptionParts
+              }
+            }
+          }
+        }
+        identities(first: 100) {
+          edges {
+            node {
+              ...IdentityParts
+            }
+            cursor
+          }
+          pageInfo {
+            hasPreviousPage
+            hasNextPage
+            endCursor
+            startCursor
+          }
+        }
+      }
+    }
+  }
+}
+    ${UserPartsFragmentDoc}
+${CustomerPartsFragmentDoc}
+${SubscriptionPartsFragmentDoc}
+${IdentityPartsFragmentDoc}`;
+export const useUserCollectionQuery = <
+      TData = UserCollectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: UserCollectionQueryVariables,
+      options?: UseQueryOptions<UserCollectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<UserCollectionQuery, TError, TData>(
+      variables === undefined ? ['UserCollection'] : ['UserCollection', variables],
+      fetcher<UserCollectionQuery, UserCollectionQueryVariables>(client, UserCollectionDocument, variables, headers),
       options
     );

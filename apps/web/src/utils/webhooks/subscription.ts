@@ -1,4 +1,11 @@
-import { graphQLClient } from 'client';
+import {
+  MutationSubscriptionCreateArgs,
+  MutationSubscriptionDeleteArgs,
+  MutationSubscriptionUpdateArgs,
+  Mutation,
+  SubStatus,
+  graphQLClient,
+} from 'client';
 import { Stripe } from 'stripe';
 import { gql } from 'graphql-request';
 import { isStripeSubscription } from 'core';
@@ -32,30 +39,13 @@ const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
     throw new Error('Subscription requires a positive quantity');
   }
 
-  const { subscriptionCreate } = await graphQLClient.request(
+  const { subscriptionCreate } = await graphQLClient.request<
+    Mutation,
+    MutationSubscriptionCreateArgs
+  >(
     gql`
-      mutation CreateSubscription(
-        $customerId: ID!
-        $productId: ID!
-        $quantity: Int!
-        $status: SubStatus!
-        $startDate: Timestamp!
-        $endDate: Timestamp!
-        $trialStart: Timestamp
-        $trialEnd: Timestamp
-      ) {
-        subscriptionCreate(
-          input: {
-            customer: { link: $customerId }
-            product: { link: $productId }
-            quantity: $quantity
-            status: $status
-            startDate: $startDate
-            endDate: $endDate
-            trialStart: $trialStart
-            trialEnd: $trialEnd
-          }
-        ) {
+      mutation CreateSubscription($input: SubscriptionCreateInput!) {
+        subscriptionCreate(input: $input) {
           subscription {
             id
             customer {
@@ -69,16 +59,25 @@ const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
       }
     `,
     {
-      customerId: subscriptionCustomer.metadata.customerId,
-      productId: subscriptionProduct.metadata.productId,
-      startDate: data.current_period_start,
-      endDate: data.cancel_at,
-      status: data.status.toUpperCase(),
-      trialStart: data.trial_start,
-      trialEnd: data.trial_end,
-      quantity: data.quantity,
+      input: {
+        customer: { link: subscriptionCustomer.metadata.customerId },
+        product: { link: subscriptionProduct.metadata.productId },
+        startDate: data.current_period_start,
+        endDate: data.cancel_at,
+        status: data.status.toUpperCase() as SubStatus,
+        trialStart: data.trial_start,
+        trialEnd: data.trial_end,
+        quantity: data.quantity,
+      },
     },
   );
+
+  if (!subscriptionCreate?.subscription) {
+    throw new Error(
+      `Unable to get created subscription. The stripe subscription metadata was not updated.`,
+    );
+  }
+
   await stripe.subscriptions.update(
     data.id,
     {
@@ -99,32 +98,13 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
     );
   }
 
-  const { subscriptionUpdate } = await graphQLClient.request(
+  const { subscriptionUpdate } = await graphQLClient.request<
+    Mutation,
+    MutationSubscriptionUpdateArgs
+  >(
     gql`
-      mutation UpdateSubscription(
-        $id: ID!
-        $customerId: ID!
-        $productId: ID!
-        $quantity: Int!
-        $status: SubStatus!
-        $startDate: Timestamp!
-        $endDate: Timestamp!
-        $trialStart: Timestamp
-        $trialEnd: Timestamp
-      ) {
-        subscriptionUpdate(
-          id: $id
-          input: {
-            customer: { link: $customerId }
-            product: { link: $productId }
-            quantity: $quantity
-            status: $status
-            startDate: $startDate
-            endDate: $endDate
-            trialStart: $trialStart
-            trialEnd: $trialEnd
-          }
-        ) {
+      mutation UpdateSubscription($id: ID!, $input: SubscriptionUpdateInput!) {
+        subscriptionUpdate(id: $id, input: $input) {
           subscription {
             id
             customer {
@@ -139,16 +119,24 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
     `,
     {
       id: data.metadata.subscriptionId,
-      customerId: data.metadata.customerId,
-      productId: data.metadata.productId,
-      startDate: data.current_period_start,
-      endDate: data.cancel_at,
-      status: data.status.toUpperCase(),
-      trialStart: data.trial_start,
-      trialEnd: data.trial_end,
-      quantity: data.quantity,
+      input: {
+        customer: { link: data.metadata.customerId },
+        product: { link: data.metadata.productId },
+        startDate: data.current_period_start,
+        endDate: data.cancel_at,
+        status: data.status.toUpperCase() as SubStatus,
+        trialStart: data.trial_start,
+        trialEnd: data.trial_end,
+        quantity: data.quantity,
+      },
     },
   );
+
+  if (!subscriptionUpdate?.subscription) {
+    throw new Error(
+      `Unable to get updated subscription. The stripe subscription metadata was not updated.`,
+    );
+  }
 
   await stripe.subscriptions.update(
     data.id,
@@ -171,7 +159,7 @@ const remove = async (data: Stripe.Event.Data.Object) => {
   }
 
   if (data.metadata.subscriptionId) {
-    await graphQLClient.request(
+    await graphQLClient.request<Mutation, MutationSubscriptionDeleteArgs>(
       gql`
         mutation DeleteSubscription($id: ID!) {
           subscriptionDelete(id: $id) {

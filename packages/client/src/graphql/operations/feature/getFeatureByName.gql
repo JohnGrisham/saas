@@ -1,0 +1,5 @@
+query FeatureByName($name: String!) {
+  feature(by: { name: $name }) {
+    ...FeatureParts
+  }
+}

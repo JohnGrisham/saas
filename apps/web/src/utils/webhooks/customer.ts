@@ -1,4 +1,12 @@
-import { graphQLClient } from 'client';
+import {
+  MutationCustomerCreateArgs,
+  MutationCustomerDeleteArgs,
+  MutationCustomerUpdateArgs,
+  Mutation,
+  UserByEmailQuery,
+  UserByEmailQueryVariables,
+  graphQLClient,
+} from 'client';
 import { Stripe } from 'stripe';
 import { gql } from 'graphql-request';
 import { isStripeCustomer } from 'core';
@@ -13,7 +21,10 @@ const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
     throw new Error('Customer requires an email');
   }
 
-  const { user } = await graphQLClient.request(
+  const { user } = await graphQLClient.request<
+    UserByEmailQuery,
+    UserByEmailQueryVariables
+  >(
     gql`
       query GetUserByEmail($email: Email!) {
         user(by: { email: $email }) {
@@ -21,39 +32,48 @@ const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
         }
       }
     `,
+    {
+      email: data.email,
+    },
   );
 
   if (!user?.id) {
     throw new Error('Unable to find a user with this email');
   }
 
-  const { customerCreate } = await graphQLClient.request(
+  const { customerCreate } = await graphQLClient.request<
+    Mutation,
+    MutationCustomerCreateArgs
+  >(
     gql`
-      mutation CreateUser($stripeId: String!, $userId: ID!) {
-        customerCreate(
-          input: { stripeId: $stripeId, user: { link: $userId } }
-        ) {
-          user {
+      mutation CreateCustomer($input: CustomerCreateInput!) {
+        customerCreate(input: $input) {
+          customer {
             id
-            customer {
-              id
-            }
           }
         }
       }
     `,
     {
-      stripeId: data.id,
-      userId: '',
+      input: {
+        stripeId: data.id,
+        user: { link: user.id },
+      },
     },
   );
+
+  if (!customerCreate?.customer) {
+    throw Error(
+      `Unable to get created customer. The stripe customer metadata was not updated.`,
+    );
+  }
 
   await stripe.customers.update(
     data.id,
     {
       metadata: {
-        customerId: customerCreate.user.customer.id,
-        userId: customerCreate.user.id,
+        customerId: customerCreate.customer.id,
+        userId: user.id,
       },
     },
     { idempotencyKey: `IGNORE_${v4()}` },
@@ -69,18 +89,33 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
     throw new Error('Customer requires an email');
   }
 
-  const { userUpdate } = await graphQLClient.request(
+  const { user } = await graphQLClient.request<
+    UserByEmailQuery,
+    UserByEmailQueryVariables
+  >(
     gql`
-      mutation UpdateUser(
-        $id: ID!
-        $name: String
-        $email: Email!
-        $customerId: ID!
-      ) {
-        userUpdate(
-          id: $id
-          input: { name: $name, email: $email, customer: { link: $customerId } }
-        ) {
+      query GetUserByEmail($email: Email!) {
+        user(by: { email: $email }) {
+          id
+        }
+      }
+    `,
+    {
+      email: data.email,
+    },
+  );
+
+  if (!user?.id) {
+    throw new Error('Unable to find a user with this email');
+  }
+
+  const { customerUpdate } = await graphQLClient.request<
+    Mutation,
+    MutationCustomerUpdateArgs
+  >(
+    gql`
+      mutation UpdateCustomer($id: ID!, $input: CustomerUpdateInput!) {
+        customerUpdate(id: $id, input: $input) {
           user {
             id
             customer {
@@ -91,19 +126,32 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
       }
     `,
     {
-      id: data.metadata.userId,
-      name: data.name ?? undefined,
-      email: data.email,
-      customerId: data.metadata.customerId,
+      id: data.metadata.customerId,
+      input: {
+        stripeId: data.id,
+        subscriptions:
+          data.subscriptions?.data
+            ?.filter(({ metadata }) => metadata.subscriptionId)
+            .map((sub) => ({
+              link: sub.metadata.subscriptionId,
+            })) ?? [],
+        user: { link: user.id },
+      },
     },
   );
+
+  if (!customerUpdate?.customer) {
+    throw Error(
+      `Unable to get updated customer. The stripe customer metadata was not updated.`,
+    );
+  }
 
   await stripe.customers.update(
     data.id,
     {
       metadata: {
-        customerId: userUpdate.user.customer.id,
-        userId: userUpdate.user.id,
+        customerId: customerUpdate.customer.id,
+        userId: user.id,
       },
     },
     { idempotencyKey: `IGNORE_${v4()}` },
@@ -115,8 +163,8 @@ const remove = async (data: Stripe.Event.Data.Object) => {
     throw new Error('Unknown data type when processing customer delete event');
   }
 
-  if (data.metadata.userId) {
-    await graphQLClient.request(
+  if (data.metadata.customerId) {
+    await graphQLClient.request<Mutation, MutationCustomerDeleteArgs>(
       gql`
         mutation DeleteCustomer($id: ID!) {
           customerDelete(id: $id) {
@@ -125,7 +173,7 @@ const remove = async (data: Stripe.Event.Data.Object) => {
         }
       `,
       {
-        id: data.metadata.userId,
+        id: data.metadata.customerId,
       },
     );
   }
