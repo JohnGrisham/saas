@@ -104,7 +104,7 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
   >(
     gql`
       mutation UpdateSubscription($id: ID!, $input: SubscriptionUpdateInput!) {
-        subscriptionUpdate(id: $id, input: $input) {
+        subscriptionUpdate(by: { id: $id }, input: $input) {
           subscription {
             id
             customer {
@@ -162,7 +162,7 @@ const remove = async (data: Stripe.Event.Data.Object) => {
     await graphQLClient.request<Mutation, MutationSubscriptionDeleteArgs>(
       gql`
         mutation DeleteSubscription($id: ID!) {
-          subscriptionDelete(id: $id) {
+          subscriptionDelete(by: { id: $id }) {
             deletedId
           }
         }
