@@ -229,8 +229,6 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
       },
     );
 
-    console.log(productUpdate);
-
     productResult = productUpdate?.product;
   }
 
