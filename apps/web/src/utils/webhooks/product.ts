@@ -68,7 +68,7 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
     },
   );
 
-  if (!existingProduct) {
+  if (!existingProduct && data.active) {
     const { productCreate } = await graphQLClient.request<
       Mutation,
       MutationProductCreateArgs

@@ -1,8 +1,12 @@
 import {
+  CustomerByIdQuery,
+  CustomerByIdQueryVariables,
   MutationSubscriptionCreateArgs,
   MutationSubscriptionDeleteArgs,
   MutationSubscriptionUpdateArgs,
   Mutation,
+  ProductByIdQuery,
+  ProductByIdQueryVariables,
   SubStatus,
   graphQLClient,
 } from 'client';
@@ -37,6 +41,59 @@ const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
 
   if (!data.quantity) {
     throw new Error('Subscription requires a positive quantity');
+  }
+
+  const { customer: existingCustomer } = await graphQLClient.request<
+    CustomerByIdQuery,
+    CustomerByIdQueryVariables
+  >(
+    gql`
+      query ExistingCustomer($id: ID!) {
+        customer(by: { id: $id }) {
+          id
+        }
+      }
+    `,
+    {
+      id: subscriptionCustomer.metadata?.customerId ?? '',
+    },
+  );
+
+  if (!existingCustomer) {
+    throw new Error(
+      `Could not find customer by name ${subscriptionCustomer.name}`,
+    );
+  }
+
+  const { product: existingProduct } = await graphQLClient.request<
+    ProductByIdQuery,
+    ProductByIdQueryVariables
+  >(
+    gql`
+      query ExistingProduct($id: ID!) {
+        product(by: { id: $id }) {
+          id
+          features(first: 100) {
+            edges {
+              node {
+                id
+                name
+                description
+              }
+            }
+          }
+        }
+      }
+    `,
+    {
+      id: subscriptionProduct.metadata?.productId ?? '',
+    },
+  );
+
+  if (!existingProduct) {
+    throw new Error(
+      `Could not find product by name ${subscriptionProduct.name}`,
+    );
   }
 
   const { subscriptionCreate } = await graphQLClient.request<

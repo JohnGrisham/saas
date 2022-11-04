@@ -1,0 +1,7 @@
+query SubscriptionById($id: ID!) {
+  subscription(by: { id: $id }) {
+    ...SubscriptionParts
+    createdAt
+    updatedAt
+  }
+}

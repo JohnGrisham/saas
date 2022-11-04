@@ -1,0 +1,17 @@
+query CustomerByID($id: ID!) {
+  customer(by: { id: $id }) {
+    ...CustomerParts
+    createdAt
+    updatedAt
+    user {
+      ...UserParts
+    }
+    subscriptions(first: 100) {
+      edges {
+        node {
+          ...SubscriptionParts
+        }
+      }
+    }
+  }
+}

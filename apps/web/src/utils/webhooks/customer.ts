@@ -116,11 +116,8 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
     gql`
       mutation UpdateCustomer($id: ID!, $input: CustomerUpdateInput!) {
         customerUpdate(by: { id: $id }, input: $input) {
-          user {
+          customer {
             id
-            customer {
-              id
-            }
           }
         }
       }

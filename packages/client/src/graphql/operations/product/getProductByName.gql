@@ -1,0 +1,14 @@
+query ProductByName($name: String!) {
+  product(by: { name: $name }) {
+    ...ProductParts
+    createdAt
+    updatedAt
+    features(first: 100) {
+      edges {
+        node {
+          ...FeatureParts
+        }
+      }
+    }
+  }
+}

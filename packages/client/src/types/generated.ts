@@ -851,6 +851,13 @@ export type SubscriptionPartsFragment = { __typename?: 'Subscription', id: strin
 
 export type UserPartsFragment = { __typename?: 'User', id: string, email: string, name?: string | null };
 
+export type CustomerByIdQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type CustomerByIdQuery = { __typename?: 'Query', customer?: { __typename?: 'Customer', createdAt: any, updatedAt: any, id: string, stripeId: string, user: { __typename?: 'User', id: string, email: string, name?: string | null }, subscriptions?: { __typename?: 'SubscriptionConnection', edges?: Array<{ __typename?: 'SubscriptionEdge', node: { __typename?: 'Subscription', id: string, startDate: any, endDate?: any | null, quantity: number, status: SubStatus, trialStart?: any | null, trialEnd?: any | null } } | null> | null } | null } | null };
+
 export type FeatureByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -895,6 +902,20 @@ export type ProductByIdQueryVariables = Exact<{
 
 
 export type ProductByIdQuery = { __typename?: 'Query', product?: { __typename?: 'Product', createdAt: any, updatedAt: any, id: string, name: string, price: string, features?: { __typename?: 'FeatureConnection', edges?: Array<{ __typename?: 'FeatureEdge', node: { __typename?: 'Feature', id: string, name: string, description?: string | null } } | null> | null } | null } | null };
+
+export type ProductByNameQueryVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type ProductByNameQuery = { __typename?: 'Query', product?: { __typename?: 'Product', createdAt: any, updatedAt: any, id: string, name: string, price: string, features?: { __typename?: 'FeatureConnection', edges?: Array<{ __typename?: 'FeatureEdge', node: { __typename?: 'Feature', id: string, name: string, description?: string | null } } | null> | null } | null } | null };
+
+export type SubscriptionByIdQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type SubscriptionByIdQuery = { __typename?: 'Query', subscription?: { __typename?: 'Subscription', createdAt: any, updatedAt: any, id: string, startDate: any, endDate?: any | null, quantity: number, status: SubStatus, trialStart?: any | null, trialEnd?: any | null } | null };
 
 export type UserByEmailQueryVariables = Exact<{
   email: Scalars['Email'];
@@ -965,6 +986,41 @@ export const UserPartsFragmentDoc = `
   name
 }
     `;
+export const CustomerByIdDocument = `
+    query CustomerByID($id: ID!) {
+  customer(by: {id: $id}) {
+    ...CustomerParts
+    createdAt
+    updatedAt
+    user {
+      ...UserParts
+    }
+    subscriptions(first: 100) {
+      edges {
+        node {
+          ...SubscriptionParts
+        }
+      }
+    }
+  }
+}
+    ${CustomerPartsFragmentDoc}
+${UserPartsFragmentDoc}
+${SubscriptionPartsFragmentDoc}`;
+export const useCustomerByIdQuery = <
+      TData = CustomerByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: CustomerByIdQueryVariables,
+      options?: UseQueryOptions<CustomerByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<CustomerByIdQuery, TError, TData>(
+      ['CustomerByID', variables],
+      fetcher<CustomerByIdQuery, CustomerByIdQueryVariables>(client, CustomerByIdDocument, variables, headers),
+      options
+    );
 export const FeatureByIdDocument = `
     query FeatureById($id: ID!) {
   feature(by: {id: $id}) {
@@ -1128,6 +1184,60 @@ export const useProductByIdQuery = <
     useQuery<ProductByIdQuery, TError, TData>(
       ['ProductById', variables],
       fetcher<ProductByIdQuery, ProductByIdQueryVariables>(client, ProductByIdDocument, variables, headers),
+      options
+    );
+export const ProductByNameDocument = `
+    query ProductByName($name: String!) {
+  product(by: {name: $name}) {
+    ...ProductParts
+    createdAt
+    updatedAt
+    features(first: 100) {
+      edges {
+        node {
+          ...FeatureParts
+        }
+      }
+    }
+  }
+}
+    ${ProductPartsFragmentDoc}
+${FeaturePartsFragmentDoc}`;
+export const useProductByNameQuery = <
+      TData = ProductByNameQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ProductByNameQueryVariables,
+      options?: UseQueryOptions<ProductByNameQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ProductByNameQuery, TError, TData>(
+      ['ProductByName', variables],
+      fetcher<ProductByNameQuery, ProductByNameQueryVariables>(client, ProductByNameDocument, variables, headers),
+      options
+    );
+export const SubscriptionByIdDocument = `
+    query SubscriptionById($id: ID!) {
+  subscription(by: {id: $id}) {
+    ...SubscriptionParts
+    createdAt
+    updatedAt
+  }
+}
+    ${SubscriptionPartsFragmentDoc}`;
+export const useSubscriptionByIdQuery = <
+      TData = SubscriptionByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: SubscriptionByIdQueryVariables,
+      options?: UseQueryOptions<SubscriptionByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SubscriptionByIdQuery, TError, TData>(
+      ['SubscriptionById', variables],
+      fetcher<SubscriptionByIdQuery, SubscriptionByIdQueryVariables>(client, SubscriptionByIdDocument, variables, headers),
       options
     );
 export const UserByEmailDocument = `
