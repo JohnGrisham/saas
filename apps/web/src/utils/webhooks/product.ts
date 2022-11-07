@@ -35,8 +35,8 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
       : data.default_price;
   const features: Feature[] = JSON.parse(data.metadata.features ?? '[]');
 
-  if (!price || price.unit_amount === null) {
-    throw new Error('Product requires a price');
+  if (!price || price.unit_amount === null || !price.recurring) {
+    throw new Error('Product requires a positive recurring price');
   }
 
   if (!features || !features.length) {
@@ -93,10 +93,12 @@ const update = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
       `,
       {
         input: {
+          currency: price.currency,
+          interval: price.recurring.interval,
           name: data.name,
           price: (price.unit_amount / 100).toLocaleString('en-US', {
             style: 'currency',
-            currency: 'USD',
+            currency: price.currency,
           }),
           features: await Promise.all(
             features.map(async (f) => {

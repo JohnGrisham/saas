@@ -37,6 +37,8 @@ type Customer @model {
 
 type Product @model {
   id: ID!
+  currency: String!
+  interval: String!
   name: String! @unique
   price: String!
   features: [Feature!]!

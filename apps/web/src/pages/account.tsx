@@ -2,6 +2,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { useState, ReactNode } from 'react';
 import { useSession } from 'next-auth/react';
+import { useGetUserByEmailQuery } from 'client';
 
 const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;
 
@@ -30,14 +31,15 @@ function Card({ title, description, footer, children }: Props) {
 export default function Account() {
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
-  const subscription = {
-    prices: {
-      currency: 'USD',
-      unit_amount: 0,
-      interval: '',
-      products: { name: 'Test' },
-    },
-  };
+  const { data } = useGetUserByEmailQuery(session?.user?.email ?? '');
+
+  const subscription = React.useMemo(() => {
+    if (!data?.user?.customer?.subscriptions?.edges?.length) {
+      return null;
+    }
+
+    return data.user.customer.subscriptions.edges[0]?.node;
+  }, [data]);
 
   const redirectToCustomerPortal = async () => {
     setLoading(true);
@@ -57,21 +59,13 @@ export default function Account() {
     setLoading(false);
   };
 
-  const subscriptionPrice =
-    subscription &&
-    new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: subscription?.prices?.currency,
-      minimumFractionDigits: 0,
-    }).format((subscription?.prices?.unit_amount || 0) / 100);
-
   React.useEffect(() => {
     if (!session?.user) {
       window.location.replace(ROOT);
     }
   }, [session]);
 
-  if (!session?.user) {
+  if (!session?.user?.email || !data) {
     return null;
   }
 
@@ -92,7 +86,7 @@ export default function Account() {
           title="Your Plan"
           description={
             subscription
-              ? `You are currently on the ${subscription?.prices?.products?.name} plan.`
+              ? `You are currently on the ${subscription.product.name} plan.`
               : ''
           }
           footer={
@@ -113,7 +107,7 @@ export default function Account() {
             {loading ? (
               <div className="mb-6 h-12">...</div>
             ) : subscription ? (
-              `${subscriptionPrice}/${subscription?.prices?.interval}`
+              `${subscription.product.price}/${subscription.product.interval}/${subscription.product.currency}`
             ) : (
               <Link href="/">
                 <a>Choose your plan</a>

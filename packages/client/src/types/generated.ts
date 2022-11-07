@@ -421,8 +421,10 @@ export type Product = {
   __typename?: 'Product';
   /** when the model was created */
   createdAt: Scalars['DateTime'];
+  currency: Scalars['String'];
   features?: Maybe<FeatureConnection>;
   id: Scalars['ID'];
+  interval: Scalars['String'];
   name: Scalars['String'];
   price: Scalars['String'];
   /** when the model was updated */
@@ -451,7 +453,9 @@ export type ProductConnection = {
 
 /** Input to create a new Product */
 export type ProductCreateInput = {
+  currency: Scalars['String'];
   features: Array<ProductFeatureRelateProductFeatureCreateRelationInput>;
+  interval: Scalars['String'];
   name: Scalars['String'];
   price: Scalars['String'];
 };
@@ -493,7 +497,9 @@ export type ProductFeatureRelateProductFeatureUpdateRelationInput = {
 
 /** Input to create a new Product */
 export type ProductUpdateInput = {
+  currency?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<Array<ProductFeatureRelateProductFeatureUpdateRelationInput>>;
+  interval?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['String']>;
 };
@@ -696,7 +702,9 @@ export type SubscriptionEdge = {
 
 /** Input to create a new SubscriptionProductRelateSubscriptionProduct */
 export type SubscriptionProductRelateSubscriptionProductCreateInput = {
+  currency: Scalars['String'];
   features: Array<ProductFeatureRelateProductFeatureCreateInput>;
+  interval: Scalars['String'];
   name: Scalars['String'];
   price: Scalars['String'];
 };
@@ -845,7 +853,7 @@ export type FeaturePartsFragment = { __typename?: 'Feature', id: string, name: s
 
 export type IdentityPartsFragment = { __typename?: 'Identity', id: string, sub: string, type: IdentityType };
 
-export type ProductPartsFragment = { __typename?: 'Product', id: string, name: string, price: string };
+export type ProductPartsFragment = { __typename?: 'Product', id: string, currency: string, interval: string, name: string, price: string };
 
 export type SubscriptionPartsFragment = { __typename?: 'Subscription', id: string, startDate: any, endDate?: any | null, quantity: number, status: SubStatus, trialStart?: any | null, trialEnd?: any | null };
 
@@ -901,14 +909,14 @@ export type ProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', product?: { __typename?: 'Product', createdAt: any, updatedAt: any, id: string, name: string, price: string, features?: { __typename?: 'FeatureConnection', edges?: Array<{ __typename?: 'FeatureEdge', node: { __typename?: 'Feature', id: string, name: string, description?: string | null } } | null> | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', product?: { __typename?: 'Product', createdAt: any, updatedAt: any, id: string, currency: string, interval: string, name: string, price: string, features?: { __typename?: 'FeatureConnection', edges?: Array<{ __typename?: 'FeatureEdge', node: { __typename?: 'Feature', id: string, name: string, description?: string | null } } | null> | null } | null } | null };
 
 export type ProductByNameQueryVariables = Exact<{
   name: Scalars['String'];
 }>;
 
 
-export type ProductByNameQuery = { __typename?: 'Query', product?: { __typename?: 'Product', createdAt: any, updatedAt: any, id: string, name: string, price: string, features?: { __typename?: 'FeatureConnection', edges?: Array<{ __typename?: 'FeatureEdge', node: { __typename?: 'Feature', id: string, name: string, description?: string | null } } | null> | null } | null } | null };
+export type ProductByNameQuery = { __typename?: 'Query', product?: { __typename?: 'Product', createdAt: any, updatedAt: any, id: string, currency: string, interval: string, name: string, price: string, features?: { __typename?: 'FeatureConnection', edges?: Array<{ __typename?: 'FeatureEdge', node: { __typename?: 'Feature', id: string, name: string, description?: string | null } } | null> | null } | null } | null };
 
 export type SubscriptionByIdQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -922,7 +930,7 @@ export type UserByEmailQueryVariables = Exact<{
 }>;
 
 
-export type UserByEmailQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'Customer', id: string, stripeId: string, subscriptions?: { __typename?: 'SubscriptionConnection', edges?: Array<{ __typename?: 'SubscriptionEdge', node: { __typename?: 'Subscription', id: string, startDate: any, endDate?: any | null, quantity: number, status: SubStatus, trialStart?: any | null, trialEnd?: any | null } } | null> | null } | null } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
+export type UserByEmailQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'Customer', id: string, stripeId: string, subscriptions?: { __typename?: 'SubscriptionConnection', edges?: Array<{ __typename?: 'SubscriptionEdge', node: { __typename?: 'Subscription', id: string, startDate: any, endDate?: any | null, quantity: number, status: SubStatus, trialStart?: any | null, trialEnd?: any | null, product: { __typename?: 'Product', id: string, currency: string, interval: string, name: string, price: string } } } | null> | null } | null } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
 
 export type UserByIdQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -964,6 +972,8 @@ export const IdentityPartsFragmentDoc = `
 export const ProductPartsFragmentDoc = `
     fragment ProductParts on Product {
   id
+  currency
+  interval
   name
   price
 }
@@ -1252,6 +1262,9 @@ export const UserByEmailDocument = `
         edges {
           node {
             ...SubscriptionParts
+            product {
+              ...ProductParts
+            }
           }
         }
       }
@@ -1268,6 +1281,7 @@ export const UserByEmailDocument = `
     ${UserPartsFragmentDoc}
 ${CustomerPartsFragmentDoc}
 ${SubscriptionPartsFragmentDoc}
+${ProductPartsFragmentDoc}
 ${IdentityPartsFragmentDoc}`;
 export const useUserByEmailQuery = <
       TData = UserByEmailQuery,

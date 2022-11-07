@@ -1,5 +1,7 @@
 fragment ProductParts on Product {
   id
+  currency
+  interval
   name
   price
 }

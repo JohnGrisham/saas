@@ -9,6 +9,9 @@ query UserByEmail($email: Email!) {
         edges {
           node {
             ...SubscriptionParts
+            product {
+              ...ProductParts
+            }
           }
         }
       }
