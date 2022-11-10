@@ -8,6 +8,9 @@
     "codegen": {
       "dependsOn": ["^codegen"]
     },
+    "storybook": {
+      "dependsOn": ["^build"]
+    },
     "core#build": {
       "dependsOn": ["^build"]
     },
@@ -50,6 +53,9 @@
         "$NEXT_PUBLIC_USER_POOL_ID",
         "$NEXT_PUBLIC_USER_POOL_CLIENT_ID"
       ]
+    },
+    "ui#storybook": {
+      "dependsOn": ["^storybook"]
     },
     "lint": {
       "outputs": []

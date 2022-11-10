@@ -61,7 +61,9 @@ const create = async (stripe: Stripe, data: Stripe.Event.Data.Object) => {
 
   if (!existingCustomer) {
     throw new Error(
-      `Could not find customer by name ${subscriptionCustomer.name}`,
+      `Could not find customer ${
+        subscriptionCustomer.name ?? subscriptionCustomer.id
+      }`,
     );
   }
 

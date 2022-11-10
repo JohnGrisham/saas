@@ -103,7 +103,7 @@ export default function Account() {
             </div>
           }
         >
-          <div className="mt-8 mb-4 text-xl font-semibold">
+          <div className="mt-8 mb-4 text-xl font-semibold text-white">
             {loading ? (
               <div className="mb-6 h-12">...</div>
             ) : subscription ? (
