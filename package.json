@@ -16,6 +16,8 @@
     "storybook": "turbo run storybook"
   },
   "devDependencies": {
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
     "eslint-config-custom": "*",
     "prettier": "latest",
     "prettier-plugin-tailwindcss": "^0.1.13",

@@ -6,6 +6,10 @@ import { GraphQLClient, gql } from 'graphql-request';
 
 const queryClient = new QueryClient();
 
+export interface ClientProps {
+  children: React.ReactNode;
+}
+
 export const graphQLClient = new GraphQLClient(
   process.env.API_ENDPOINT as string,
   {
@@ -16,7 +20,7 @@ export const graphQLClient = new GraphQLClient(
   },
 );
 
-export const Client: React.FC = ({ children }) => (
+export const Client: React.FC<ClientProps> = ({ children }) => (
   <QueryClientProvider client={queryClient}>
     {children}
     <ReactQueryDevtools />

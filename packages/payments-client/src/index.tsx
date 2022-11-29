@@ -7,6 +7,7 @@ import {
 import { Elements } from '@stripe/react-stripe-js';
 
 interface StripeClientProps {
+  children: React.ReactNode;
   publishableKey: string;
   options?: StripeConstructorOptions;
 }
