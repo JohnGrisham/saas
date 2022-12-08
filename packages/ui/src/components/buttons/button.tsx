@@ -1,11 +1,12 @@
 import * as React from 'react';
 import cn from 'classnames';
-export interface ButtonProps {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   color?: 'primary' | 'secondary' | 'accent' | 'danger' | 'warning' | 'info';
   classNames?: string;
   disabled?: boolean;
-  link?: string;
+  link?: boolean | string;
   outline?: boolean;
   rounded?: boolean;
   size?: 'small' | 'medium' | 'large';
@@ -20,6 +21,7 @@ export const Button: React.FC<ButtonProps> = ({
   outline = false,
   rounded = false,
   size = 'medium',
+  ...buttonProps
 }) => {
   const styles = React.useMemo(() => {
     return cn([
@@ -49,17 +51,22 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <div
-      className={`flex justify-center items-center space-x-2 ${
-        disabled ? 'opacity-60 cursor-not-allowed' : ''
+      className={`flex items-center justify-center space-x-2 ${
+        disabled ? 'cursor-not-allowed opacity-60' : ''
       }`}
       aria-disabled={disabled}
     >
-      {link ? (
+      {link && typeof link === 'string' ? (
         <a className={styles} href={disabled ? undefined : link}>
           {children}
         </a>
       ) : (
-        <button type="button" className={styles} disabled={disabled}>
+        <button
+          type="button"
+          className={styles}
+          disabled={disabled}
+          {...buttonProps}
+        >
           {children}
         </button>
       )}

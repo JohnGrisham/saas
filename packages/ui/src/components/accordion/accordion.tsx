@@ -9,6 +9,7 @@ export interface AccordionProps {
   classNames?: string;
   disabled?: boolean;
   header: string;
+  initialCollapsed?: boolean;
 }
 
 export const Accordion: React.FC<AccordionProps> = ({
@@ -16,8 +17,9 @@ export const Accordion: React.FC<AccordionProps> = ({
   classNames,
   disabled = false,
   header,
+  initialCollapsed = true,
 }) => {
-  const [collapsed, setCollapsed] = React.useState(true);
+  const [collapsed, setCollapsed] = React.useState(initialCollapsed);
 
   const accordionStyles = React.useMemo(() => {
     return cn([

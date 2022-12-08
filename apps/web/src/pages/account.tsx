@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { Accordion } from 'ui';
+import { Accordion, Button, useAuthSession } from 'ui';
 import Link from 'next/link';
 import { useState, ReactNode } from 'react';
-import { useSession } from 'next-auth/react';
 import { useGetUserByEmailQuery } from 'client';
 
 const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;
@@ -16,7 +15,7 @@ interface Props {
 
 function Card({ title, description, footer, children }: Props) {
   return (
-    <Accordion header={title}>
+    <Accordion header={title} initialCollapsed={false}>
       <div className="p m-auto	my-8 w-full max-w-3xl rounded-md border border-zinc-700">
         <div className="px-5 py-4">
           <p className="text-zinc-300">{description}</p>
@@ -32,8 +31,10 @@ function Card({ title, description, footer, children }: Props) {
 
 export default function Account() {
   const [loading, setLoading] = useState(false);
-  const { data: session } = useSession();
-  const { data } = useGetUserByEmailQuery(session?.user?.email ?? '');
+  const {
+    context: { data: session },
+  } = useAuthSession();
+  const { data } = useGetUserByEmailQuery(session.user.email);
 
   const subscription = React.useMemo(() => {
     if (!data?.user?.customer?.subscriptions?.edges?.length) {
@@ -72,7 +73,7 @@ export default function Account() {
   }
 
   return (
-    <section className="mb-32 bg-black">
+    <section className="mb-32 min-w-[60%] bg-black">
       <div className="mx-auto max-w-6xl px-4 pt-8 pb-8 sm:px-6 sm:pt-24 lg:px-8">
         <div className="sm:align-center sm:flex sm:flex-col">
           <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
@@ -96,12 +97,13 @@ export default function Account() {
               <p className="pb-4 sm:pb-0">
                 Manage your subscription on Stripe.
               </p>
-              <button
+              <Button
                 disabled={loading || !subscription}
                 onClick={redirectToCustomerPortal}
+                link
               >
                 Open customer portal
-              </button>
+              </Button>
             </div>
           }
         >

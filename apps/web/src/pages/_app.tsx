@@ -5,6 +5,7 @@ import { Header, Body, SessionProvider } from 'ui';
 import { Auth } from '@aws-amplify/auth';
 import { Client as GraphqlClient } from 'client';
 import { StripeClient } from 'payments-client';
+import { NextComponentType, NextPageContext } from 'next';
 
 const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;
 const STRIPE_PUBLISHABLE_KEY =
@@ -26,15 +27,19 @@ Auth.configure({
   },
 });
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export interface MyAppProps extends AppProps {
+  Component: any;
+}
+
+export default function MyApp({ Component, pageProps }: MyAppProps) {
   return (
-    <SessionProvider session={(pageProps as any).session}>
-      <Header
-        signInOptions={{ callbackUrl: ROOT }}
-        signoutOptions={{ callbackUrl: `${ROOT}/auth/signout` }}
-      />
+    <SessionProvider requiresAuth={Component.auth}>
       <GraphqlClient>
         <StripeClient publishableKey={STRIPE_PUBLISHABLE_KEY}>
+          <Header
+            signInOptions={{ callbackUrl: ROOT }}
+            signoutOptions={{ callbackUrl: `${ROOT}/auth/signout` }}
+          />
           <Body>
             <Component {...pageProps} />
           </Body>

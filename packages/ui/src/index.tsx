@@ -1,5 +1,3 @@
-export * from './accordion';
-export * from './buttons';
-export * from './layout';
-export * from './forms';
+export * from './components';
+export * from './hooks';
 export * from './providers';

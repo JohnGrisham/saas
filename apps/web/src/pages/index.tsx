@@ -16,7 +16,7 @@ export default function Home() {
       <main className="mx-auto w-auto px-4 pt-16 pb-8 sm:pt-24 lg:px-8">
         <h1 className="mx-auto max-w-5xl text-center text-6xl font-extrabold leading-[1.1] tracking-tighter text-white sm:text-7xl lg:text-8xl xl:text-8xl">
           Web <br className="hidden lg:block" />
-          <span className="from-red-500 to-blue-500 inline-block bg-gradient-to-r bg-clip-text text-transparent">
+          <span className="inline-block bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent">
             Turborepo Example
           </span>{' '}
         </h1>
@@ -24,7 +24,7 @@ export default function Home() {
           <Button>
             <a href="https://turborepo.org/docs/getting-started">
               Read the docs
-              <span className="from-red-500 to-blue-500 ml-2 bg-white bg-clip-text text-transparent">
+              <span className="ml-2 bg-white from-red-500 to-blue-500 bg-clip-text text-transparent">
                 →
               </span>
             </a>
@@ -34,3 +34,5 @@ export default function Home() {
     </div>
   );
 }
+
+Home.auth = false;
