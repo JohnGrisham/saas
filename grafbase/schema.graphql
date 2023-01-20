@@ -41,6 +41,7 @@ type Product @model {
   interval: String!
   name: String! @unique
   price: String!
+  subscription: Subscription!
   features: [Feature!]!
 }
 
@@ -48,6 +49,7 @@ type Feature @model {
   id: ID!
   name: String! @unique
   description: String
+  feature: Product
 }
 
 type Subscription @model {
