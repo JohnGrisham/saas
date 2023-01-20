@@ -1,11 +1,11 @@
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import '../styles/globals.css';
 import 'ui/styles.css';
 import type { AppProps } from 'next/app';
-import { Header, Body, SessionProvider } from 'ui';
+import { Body, Navbar, SessionProvider } from 'ui';
 import { Auth } from '@aws-amplify/auth';
 import { Client as GraphqlClient } from 'client';
 import { StripeClient } from 'payments-client';
-import { NextComponentType, NextPageContext } from 'next';
 
 const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;
 const STRIPE_PUBLISHABLE_KEY =
@@ -36,8 +36,15 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
     <SessionProvider requiresAuth={Component.auth}>
       <GraphqlClient>
         <StripeClient publishableKey={STRIPE_PUBLISHABLE_KEY}>
-          <Header
-            signInOptions={{ callbackUrl: ROOT }}
+          <Navbar
+            logoProps={{
+              title: 'SaaS',
+              src: 'https://flowbite.com/docs/images/logo.svg',
+            }}
+            navItems={[
+              { id: 'home', href: '/', title: 'Home', type: 'simple' },
+              { id: 'about', href: '/about', title: 'About', type: 'simple' },
+            ]}
             signoutOptions={{ callbackUrl: `${ROOT}/auth/signout` }}
           />
           <Body>

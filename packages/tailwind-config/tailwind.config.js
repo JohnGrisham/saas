@@ -45,6 +45,7 @@ const palette = {
   info: colors.blue,
 };
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     // app content
@@ -75,5 +76,6 @@ module.exports = {
         'dark:active',
       ],
     },
+    { pattern: /(w)-([0-9])/ },
   ],
 };

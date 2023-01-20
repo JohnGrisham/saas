@@ -11,6 +11,9 @@
     "storybook": {
       "dependsOn": ["^build"]
     },
+    "tailwind-config#build": {
+      "dependsOn": ["^build"]
+    },
     "core#build": {
       "dependsOn": ["^build"]
     },

@@ -21,6 +21,7 @@ module.exports = {
         },
       },
     },
+    'storybook-addon-next-router',
   ],
   framework: '@storybook/react',
   core: {
@@ -69,4 +70,12 @@ module.exports = {
     ACCENT_800: tailwindConfig.theme.extend.colors.accent[800],
     ACCENT_900: tailwindConfig.theme.extend.colors.accent[900],
   }),
+  webpackFinal: async (config) => {
+    config.resolve.fallback = {
+      tty: require.resolve('tty-browserify'),
+    };
+
+    // Return the altered config
+    return config;
+  },
 };

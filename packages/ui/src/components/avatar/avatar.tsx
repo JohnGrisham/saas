@@ -7,6 +7,7 @@ export interface AvatarProps {
   classNames?: string;
   title?: string;
   description?: string;
+  width?: number;
 }
 
 export const Avatar: React.FC<AvatarProps> = ({
@@ -14,18 +15,24 @@ export const Avatar: React.FC<AvatarProps> = ({
   description,
   imageSrc,
   title,
+  width = 32,
 }) => {
-  const styles = React.useMemo(() => {
+  const avatarWrapperStyles = React.useMemo(() => {
     return cn([`avatar text-center`, classNames]);
   }, [classNames]);
 
+  const avatarImageStyles = React.useMemo(() => {
+    return cn([
+      `mx-auto w-${width} rounded-full`,
+      {
+        ['mb-4']: title,
+      },
+    ]);
+  }, [title, width]);
+
   return (
-    <div className={styles}>
-      <img
-        src={imageSrc}
-        className="mx-auto mb-4 w-32 rounded-full"
-        alt="Avatar"
-      />
+    <div className={avatarWrapperStyles}>
+      <img src={imageSrc} className={avatarImageStyles} alt="Avatar" />
       {title && (
         <h5 className="mb-2 text-xl font-medium leading-tight dark:text-white">
           John Doe

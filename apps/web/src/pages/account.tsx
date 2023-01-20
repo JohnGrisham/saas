@@ -16,12 +16,12 @@ interface Props {
 function Card({ title, description, footer, children }: Props) {
   return (
     <Accordion header={title} initialCollapsed={false}>
-      <div className="p m-auto	my-8 w-full max-w-3xl rounded-md border border-zinc-700">
+      <div className="w-full max-w-3xl m-auto my-8 border rounded-md p border-zinc-700">
         <div className="px-5 py-4">
-          <p className="text-zinc-300">{description}</p>
+          <p className="text-zinc-400">{description}</p>
           {children}
         </div>
-        <div className="rounded-b-md border-t border-zinc-700 bg-zinc-900 p-4 text-zinc-500">
+        <div className="p-4 text-white border-t rounded-b-md border-zinc-700 bg-zinc-900">
           {footer}
         </div>
       </div>
@@ -74,12 +74,12 @@ export default function Account() {
 
   return (
     <section className="mb-32 min-w-[60%] bg-black">
-      <div className="mx-auto max-w-6xl px-4 pt-8 pb-8 sm:px-6 sm:pt-24 lg:px-8">
+      <div className="max-w-6xl px-4 pt-8 pb-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
         <div className="sm:align-center sm:flex sm:flex-col">
           <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
             Account
           </h1>
-          <p className="m-auto mt-5 max-w-2xl text-xl text-zinc-200 sm:text-center sm:text-2xl">
+          <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
             We partnered with Stripe for a simplified billing.
           </p>
         </div>
@@ -107,9 +107,9 @@ export default function Account() {
             </div>
           }
         >
-          <div className="mt-8 mb-4 text-xl font-semibold text-white">
+          <div className="mt-8 mb-4 text-xl font-semibold text-zinc-600">
             {loading ? (
-              <div className="mb-6 h-12">...</div>
+              <div className="h-12 mb-6">...</div>
             ) : subscription ? (
               `${subscription.product.price}/${subscription.product.interval}/${subscription.product.currency}`
             ) : (
@@ -124,11 +124,11 @@ export default function Account() {
           description="Please enter your full name, or a display name you are comfortable with."
           footer={<p>Please use 64 characters at maximum.</p>}
         >
-          <div className="mt-8 mb-4 text-xl font-semibold text-white">
+          <div className="mt-8 mb-4 text-xl font-semibold text-zinc-600">
             {session.user.name ? (
               `${session.user.name}`
             ) : (
-              <div className="mb-6 h-8">...</div>
+              <div className="h-8 mb-6">...</div>
             )}
           </div>
         </Card>
@@ -137,7 +137,7 @@ export default function Account() {
           description="Please enter the email address you want to use to login."
           footer={<p>We will email you to verify the change.</p>}
         >
-          <p className="mt-8 mb-4 text-xl font-semibold text-white">
+          <p className="mt-8 mb-4 text-xl font-semibold text-zinc-600">
             {session.user ? session.user.email : undefined}
           </p>
         </Card>
