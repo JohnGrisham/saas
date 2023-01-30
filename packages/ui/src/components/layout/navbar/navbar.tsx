@@ -2,14 +2,16 @@
 import * as React from 'react';
 import { Dropdown, DropdownItem } from '../../dropdown';
 import { SignOutParams, signOut, useSession } from 'next-auth/react';
+import { useBreakpointEffect } from 'tailwind-config';
 import { Avatar } from '../../avatar';
 import { Button } from '../../button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import { Toggle } from '../../toggle';
 import cn from 'classnames';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
-import { useBreakpointEffect } from 'tailwind-config';
+import { useThemeContext } from '../../../hooks';
 
 export interface NavItem {
   id: string;
@@ -33,7 +35,6 @@ export interface LogoSettings {
 export interface NavbarProps {
   navItems: Array<NavItem | CustomNavItem>;
   logoProps: LogoSettings;
-  postNavigation?: React.ReactNode;
   classNames?: string;
   profileItems?: DropdownItem[];
   signoutOptions?: SignOutParams;
@@ -44,23 +45,23 @@ export const Navbar: React.FC<NavbarProps> = ({
   logoProps,
   navItems,
   signoutOptions,
-  postNavigation,
   profileItems = [],
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const { data: session, status } = useSession();
+  const { isDarkMode, setDarkMode } = useThemeContext();
   const { pathname } = useRouter();
 
   const navbarStyles = React.useMemo(() => {
     return cn([
-      `border-gray-200 bg-white px-2 py-2.5 dark:bg-gray-900 sm:px-4 relative`,
+      `flex border-gray-200 bg-white px-2 py-2.5 dark:bg-gray-900 sm:px-4 relative`,
       classNames,
     ]);
   }, [classNames]);
 
   const navWrapperStyles = React.useMemo(() => {
     return cn([
-      `items-center w-full md:flex md:w-auto md:space-x-8 md:mr-10`,
+      `items-center w-full md:flex md:w-auto md:space-x-8 md:mr-20`,
       {
         hidden: !mobileMenuOpen,
         ['absolute left-0 top-12']: mobileMenuOpen,
@@ -75,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const postNavStyles = React.useMemo(() => {
-    return cn([`flex items-center md:static absolute right-4 top-3.5`]);
+    return cn([`flex items-center absolute right-16 top-[1.3rem]`]);
   }, []);
 
   const profileDropdownItems = React.useMemo(() => {
@@ -123,18 +124,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav className={navbarStyles}>
-      <div className="container flex flex-wrap items-center justify-between h-10 mx-auto md:h-auto">
+      <div className="container flex flex-wrap items-center justify-between mx-auto h-14">
         <a href={logoProps.href ?? '#'} className="flex items-center">
           <img
             src={logoProps.src}
-            className="h-6 mr-3 sm:h-9"
+            className="h-6 mr-3"
             alt={`${logoProps.title} Logo`}
           />
           <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
             {logoProps.title}
           </span>
         </a>
-        <div className="flex">
+        <div className="flex h-full">
           {status === 'authenticated' && session && (
             <>
               <div className={navWrapperStyles} id="navbar-items-wrapper">
@@ -156,7 +157,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <div className={postNavStyles}>
                 <Button
-                  className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
+                  className="inline-flex items-center p-2 ml-3 mr-1 text-sm text-gray-500 rounded-lg hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
                   aria-controls="navbar-items-wrapper"
                   aria-expanded="false"
                   onClick={() => setMobileMenuOpen((current) => !current)}
@@ -164,7 +165,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span className="sr-only">Open main menu</span>
                   <FontAwesomeIcon icon={faBars} size={'lg'} />
                 </Button>
-                {postNavigation}
                 <Dropdown listClassNames="right-0" items={profileDropdownItems}>
                   <Avatar
                     imageSrc="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
@@ -176,6 +176,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
       </div>
+      <Toggle
+        checked={isDarkMode}
+        classNames="mb-1.5 ml-2 toggle-dark-mode"
+        onChange={() => setDarkMode((currentMode) => !currentMode)}
+      />
     </nav>
   );
 };

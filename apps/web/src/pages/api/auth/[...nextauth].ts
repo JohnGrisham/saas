@@ -29,7 +29,11 @@ export default NextAuth({
         if (!existingStripeUser) {
           const sub = isCognitoUser(user)
             ? user.getUsername()
-            : account.providerAccountId;
+            : account?.providerAccountId;
+
+          if (!sub) {
+            throw new Error('Failed to get an account ID for this provider');
+          }
 
           const newStripeCustomer = await stripe.customers.create({
             name,

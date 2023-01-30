@@ -3,5 +3,9 @@ export interface BodyProps {
 }
 
 export const Body: React.FC<BodyProps> = ({ children }) => {
-  return <main className="flex justify-center p-8">{children}</main>;
+  return (
+    <main className="flex h-full min-h-[92vh] justify-center bg-white p-8 dark:bg-black">
+      {children}
+    </main>
+  );
 };

@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "generate-tailwind-theme": "turbo run generate-tailwind-theme",
     "gql:dev": "npx grafbase dev",
     "codegen": "turbo run codegen",
     "dev": "turbo run dev --parallel",
@@ -16,11 +17,16 @@
     "storybook": "turbo run storybook"
   },
   "devDependencies": {
+    "@types/prettier": "^2.7.2",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
+    "autoprefixer": "^10.4.13",
     "eslint-config-custom": "*",
+    "postcss": "^8.4.21",
     "prettier": "latest",
     "prettier-plugin-tailwindcss": "^0.1.13",
+    "tailwindcss": "^3.2.4",
+    "ts-node": "^10.9.1",
     "turbo": "latest"
   },
   "engines": {

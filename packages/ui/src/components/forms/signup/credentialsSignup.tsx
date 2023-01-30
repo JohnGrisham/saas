@@ -8,11 +8,13 @@ enum AuthState {
 }
 
 interface CredentialsSignupProps {
+  image: React.ReactNode;
   signInUrl: string;
   onSignup?: (email: string, password: string) => Promise<void>;
 }
 
 export const CredentialsSignup: React.FC<CredentialsSignupProps> = ({
+  image,
   signInUrl,
   onSignup,
 }) => {
@@ -56,74 +58,87 @@ export const CredentialsSignup: React.FC<CredentialsSignupProps> = ({
           }
         }}
       >
-        <Form>
-          <label
-            className="block pt-2 pb-1 text-sm font-bold text-white"
-            htmlFor="Email"
-          >
-            Email
-          </label>
-          <Field
-            className="focus:shadow-outline block w-full appearance-none rounded border border-gray-300 bg-gray-200 py-2 px-4 text-gray-700 focus:outline-none"
-            id="email"
-            name="email"
-          />
-          <ErrorMessage
-            component="a"
-            className="text-sm text-red-500"
-            name="email"
-          />
-          {authState === AuthState.VERIFY ? (
-            <>
-              <label
-                className="block pt-2 pb-1 text-sm font-bold text-white"
-                htmlFor="verificationCode"
-              >
-                Verification Code
-              </label>
-              <Field
-                className="focus:shadow-outline block w-full appearance-none rounded border border-gray-300 bg-gray-200 py-2 px-4 text-gray-700 focus:outline-none"
-                id="verificationCode"
-                name="verificationCode"
-              />
-            </>
-          ) : (
-            <>
-              <label
-                className="block pt-2 pb-1 text-sm font-bold text-white"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <Field
-                className="focus:shadow-outline block w-full appearance-none rounded border border-gray-300 bg-gray-200 py-2 px-4 text-gray-700 focus:outline-none"
-                id="password"
-                name="password"
-              />
-            </>
-          )}
-          <ErrorMessage
-            component="a"
-            className="text-sm text-red-500"
-            name="password"
-          />
-          <div className="mt-8 flex flex-col items-center">
-            <button
-              type="submit"
-              className="w-full rounded bg-gray-700 py-2 px-4 font-bold text-white hover:bg-gray-600"
-            >
-              {authState === AuthState.PRE_SIGNUP ? 'Signup' : 'Verify'}
-            </button>
-            {signInUrl && (
-              <a
-                className="mt-2 text-white hover:cursor-pointer"
-                href={signInUrl}
-              >
-                Sign in
-              </a>
-            )}
+        <section className="w-screen">
+          <div className="flex flex-wrap items-center justify-center text-gray-800 g-6">
+            <div className="w-7/12 -mt-10 md:mt-0 lg:w-5/12">{image}</div>
+            <div className="lg:w-4/12">
+              <Form>
+                <label
+                  className="block pt-2 pb-1 text-sm font-bold text-gray-700 dark:text-white"
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <div className="mb-6">
+                  <Field
+                    className="block w-full px-4 py-2 m-0 text-xl font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:border-primary-600 focus:bg-white focus:text-gray-700 focus:outline-none"
+                    id="email"
+                    name="email"
+                  />
+                </div>
+                <ErrorMessage
+                  component="a"
+                  className="text-sm text-red-500"
+                  name="email"
+                />
+                {authState === AuthState.VERIFY ? (
+                  <>
+                    <label
+                      className="block pt-2 pb-1 text-sm font-bold text-gray-700 dark:text-white"
+                      htmlFor="verificationCode"
+                    >
+                      Verification Code
+                    </label>
+                    <div className="mb-6">
+                      <Field
+                        className="block w-full px-4 py-2 m-0 text-xl font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:border-primary-600 focus:bg-white focus:text-gray-700 focus:outline-none"
+                        id="verificationCode"
+                        name="verificationCode"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <label
+                      className="block pt-2 pb-1 text-sm font-bold text-gray-700 dark:text-white"
+                      htmlFor="password"
+                    >
+                      Password
+                    </label>
+                    <div className="mb-6">
+                      <Field
+                        className="block w-full px-4 py-2 m-0 text-xl font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:border-primary-600 focus:bg-white focus:text-gray-700 focus:outline-none"
+                        id="password"
+                        name="password"
+                      />
+                    </div>
+                  </>
+                )}
+                <ErrorMessage
+                  component="a"
+                  className="text-sm text-red-500"
+                  name="password"
+                />
+                <div className="flex flex-col items-center mt-8">
+                  <button
+                    type="submit"
+                    className="w-full px-4 py-2 font-bold text-white bg-gray-700 rounded hover:bg-gray-600"
+                  >
+                    {authState === AuthState.PRE_SIGNUP ? 'Signup' : 'Verify'}
+                  </button>
+                  {signInUrl && (
+                    <a
+                      className="mt-2 text-primary-600 hover:cursor-pointer dark:text-white"
+                      href={signInUrl}
+                    >
+                      Sign in
+                    </a>
+                  )}
+                </div>
+              </Form>
+            </div>
           </div>
-        </Form>
+        </section>
       </Formik>
     </>
   );

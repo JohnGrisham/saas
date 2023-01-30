@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Auth } from '@aws-amplify/auth';
 
-export default function Signout() {
+const Signout: React.FC = () => {
   React.useEffect(() => {
     const signout = async () => {
       await Auth.signOut();
@@ -11,4 +11,6 @@ export default function Signout() {
   }, []);
 
   return null;
-}
+};
+
+export default Signout;

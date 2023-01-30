@@ -2,10 +2,12 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import '../styles/globals.css';
 import 'ui/styles.css';
 import type { AppProps } from 'next/app';
-import { Body, Navbar, SessionProvider } from 'ui';
+import { Body, Navbar, SessionProvider, ThemeProvider } from 'ui';
 import { Auth } from '@aws-amplify/auth';
 import { Client as GraphqlClient } from 'client';
 import { StripeClient } from 'payments-client';
+// @ts-ignore
+import { theme } from 'tailwind-config/tailwind.config';
 
 const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;
 const STRIPE_PUBLISHABLE_KEY =
@@ -36,20 +38,22 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
     <SessionProvider requiresAuth={Component.auth}>
       <GraphqlClient>
         <StripeClient publishableKey={STRIPE_PUBLISHABLE_KEY}>
-          <Navbar
-            logoProps={{
-              title: 'SaaS',
-              src: 'https://flowbite.com/docs/images/logo.svg',
-            }}
-            navItems={[
-              { id: 'home', href: '/', title: 'Home', type: 'simple' },
-              { id: 'about', href: '/about', title: 'About', type: 'simple' },
-            ]}
-            signoutOptions={{ callbackUrl: `${ROOT}/auth/signout` }}
-          />
-          <Body>
-            <Component {...pageProps} />
-          </Body>
+          <ThemeProvider theme={theme}>
+            <Navbar
+              logoProps={{
+                title: 'SaaS',
+                src: 'https://flowbite.com/docs/images/logo.svg',
+              }}
+              navItems={[
+                { id: 'home', href: '/', title: 'Home', type: 'simple' },
+                { id: 'about', href: '/about', title: 'About', type: 'simple' },
+              ]}
+              signoutOptions={{ callbackUrl: `${ROOT}/auth/signout` }}
+            />
+            <Body>
+              <Component {...pageProps} />
+            </Body>
+          </ThemeProvider>
         </StripeClient>
       </GraphqlClient>
     </SessionProvider>

@@ -6,20 +6,21 @@
       "outputs": ["dist/**", ".next/**"]
     },
     "codegen": {
-      "dependsOn": ["^codegen"]
+      "dependsOn": []
+    },
+    "dev": {
+      "cache": false,
+      "dependsOn": ["^dev"]
+    },
+    "generate-tailwind-theme": {
+      "cache": false,
+      "dependsOn": ["^build"]
     },
     "storybook": {
-      "dependsOn": ["^build"]
-    },
-    "tailwind-config#build": {
-      "dependsOn": ["^build"]
-    },
-    "core#build": {
-      "dependsOn": ["^build"]
+      "dependsOn": []
     },
     "auth#build": {
       "dependsOn": [
-        "^build",
         "$COGNITO_CLIENT_ID",
         "$COGNITO_CLIENT_SECRET",
         "$COGNITO_ISSUER",
@@ -29,14 +30,10 @@
       ]
     },
     "client#build": {
-      "dependsOn": ["^build", "$API_ENDPOINT", "$API_KEY"]
-    },
-    "payments-client#build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["$API_ENDPOINT", "$API_KEY"]
     },
     "payments-server#build": {
       "dependsOn": [
-        "^build",
         "$STRIPE_SECRET_KEY",
         "$STRIPE_SECRET_KEY_LIVE",
         "$STRIPE_WEBHOOK_SECRET",
@@ -45,7 +42,6 @@
     },
     "web#build": {
       "dependsOn": [
-        "^build",
         "$NEXT_PUBLIC_AWS_REGION",
         "$NEXT_PUBLIC_COGNITO_DOMAIN",
         "$NEXTAUTH_SECRET",
@@ -57,14 +53,8 @@
         "$NEXT_PUBLIC_USER_POOL_CLIENT_ID"
       ]
     },
-    "ui#storybook": {
-      "dependsOn": ["^storybook"]
-    },
     "lint": {
       "outputs": []
-    },
-    "dev": {
-      "cache": false
     }
   }
 }

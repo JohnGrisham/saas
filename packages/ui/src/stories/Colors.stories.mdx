@@ -10,8 +10,8 @@ import tailwindConfig from '../../tailwind.config.js';
       primary: process.env.PRIMARY_500,
       secondary: process.env.SECONDARY_500,
       accent: process.env.ACCENT_500,
-      black: tailwindConfig.theme.extend.colors.black,
-      white: tailwindConfig.theme.extend.colors.white,
+      black: tailwindConfig.theme.colors.black,
+      white: tailwindConfig.theme.colors.white,
     }}
   />
   <ColorItem
@@ -62,13 +62,13 @@ import tailwindConfig from '../../tailwind.config.js';
   <ColorItem
     title="theme.color.black"
     colors={{
-      Black: tailwindConfig.theme.extend.colors.black,
+      Black: tailwindConfig.theme.colors.black,
     }}
   />
   <ColorItem
     title="theme.color.white"
     colors={{
-      White: tailwindConfig.theme.extend.colors.white,
+      White: tailwindConfig.theme.colors.white,
     }}
   />
 </ColorPalette>

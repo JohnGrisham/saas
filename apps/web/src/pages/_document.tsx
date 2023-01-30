@@ -20,7 +20,7 @@ class MyDocument extends Document {
     return (
       <Html className="bg-zinc-900">
         <Head />
-        <body>
+        <body className="min-w-[400px]">
           <Main />
           <NextScript />
         </body>

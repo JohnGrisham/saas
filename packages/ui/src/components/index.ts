@@ -7,3 +7,4 @@ export * from './forms';
 export * from './layout';
 export * from './modal';
 export * from './table';
+export * from './toggle';
