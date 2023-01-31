@@ -48,7 +48,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const getListItemStyles = React.useCallback(
     (classNames?: string, disabled?: boolean) => {
       return cn([
-        `dropdown-item block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`,
+        `dropdown-item block w-full whitespace-nowrap px-4 py-2 text-sm font-normal hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`,
         {
           'pointer-events-none text-decoration-none select-none': disabled,
         },

@@ -1,6 +1,6 @@
-import * as React from 'react';
 import { Button } from '../button';
 import { Modal } from './modal';
+import { useState } from '@storybook/addons';
 
 const modal = {
   /* 👇 The title prop is optional.
@@ -14,7 +14,7 @@ const modal = {
 export default modal;
 
 export const Basic = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="flex flex-col justify-center">

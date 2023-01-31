@@ -17,7 +17,7 @@ function Card({ title, description, footer, children }: Props) {
   return (
     <Accordion header={title} initialCollapsed={false}>
       <div className="w-full max-w-3xl m-auto my-8 border rounded-md p border-zinc-700">
-        <div className="px-5 py-4">
+        <div className="px-5 py-4 dark:bg-white">
           <p className="text-zinc-400">{description}</p>
           {children}
         </div>
@@ -73,13 +73,13 @@ export default function Account() {
   }
 
   return (
-    <section className="mb-32 min-w-[60%] bg-black">
+    <section className="mb-32 min-w-[60%] bg-inherit">
       <div className="max-w-6xl px-4 pt-8 pb-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
-        <div className="sm:align-center sm:flex sm:flex-col">
-          <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
+        <div className="sm:align-center dark:text-white sm:flex sm:flex-col">
+          <h1 className="text-4xl font-extrabold sm:text-center sm:text-6xl">
             Account
           </h1>
-          <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
+          <p className="max-w-2xl m-auto mt-5 text-xl sm:text-center sm:text-2xl">
             We partnered with Stripe for a simplified billing.
           </p>
         </div>
@@ -98,6 +98,7 @@ export default function Account() {
                 Manage your subscription on Stripe.
               </p>
               <Button
+                classNames="text-white"
                 disabled={loading || !subscription}
                 onClick={redirectToCustomerPortal}
                 link

@@ -1,5 +1,5 @@
 import { CredentialsSignin, useThemeContext } from 'ui';
-import Unlock from '../../../public/unlock-edited.svg';
+import Unlock from '../../../public/unlock.svg';
 
 const Signin: React.FC = () => {
   const theme = useThemeContext();

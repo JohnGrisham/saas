@@ -42,9 +42,9 @@ export const Modal: React.FC<ModalProps> = ({
       aria-labelledby={label}
       aria-hidden="true"
     >
-      <div className="modal-dialog pointer-events-none relative w-auto">
-        <div className="modal-content pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none">
-          <div className="modal-header flex flex-shrink-0 items-center justify-between rounded-t-md border-b border-gray-200 p-4">
+      <div className="relative w-auto pointer-events-none modal-dialog">
+        <div className="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-lg outline-none pointer-events-auto modal-content bg-clip-padding">
+          <div className="flex items-center justify-between flex-shrink-0 p-4 border-b border-gray-200 modal-header rounded-t-md">
             <h5
               className="text-xl font-medium leading-normal text-gray-800"
               id={label}
@@ -53,15 +53,15 @@ export const Modal: React.FC<ModalProps> = ({
             </h5>
             <button
               type="button"
-              className="box-content h-4 w-4 rounded-none border-none p-1 text-black opacity-50 hover:text-black hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              className="box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 hover:text-black hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
               onClick={onClose}
               aria-label="Close"
             >
               <FontAwesomeIcon icon={faTimes} />
             </button>
           </div>
-          <div className="modal-body relative p-4">{children}</div>
-          <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t border-gray-200 p-4">
+          <div className="relative p-4 modal-body">{children}</div>
+          <div className="flex flex-wrap items-center justify-end flex-shrink-0 p-4 border-t border-gray-200 modal-footer rounded-b-md">
             {!footer ? (
               <button
                 type="button"

@@ -1,5 +1,5 @@
 import { CredentialsSignup, useThemeContext } from 'ui';
-import Unlock from '../../../public/unlock-edited.svg';
+import Register from '../../../public/register.svg';
 import { signIn } from 'next-auth/react';
 
 const Signup = () => {
@@ -7,7 +7,7 @@ const Signup = () => {
 
   return (
     <CredentialsSignup
-      image={<Unlock color={theme.colors.primary[500]} />}
+      image={<Register color={theme.colors.primary[500]} />}
       signInUrl="/auth/signin"
       onSignup={async (email, password) => {
         try {
