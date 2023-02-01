@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { Formik, FormikConfig, Form as FormikForm } from 'formik';
+import { Formik, FormikConfig, Form as FormikForm, FormikBag } from 'formik';
 
 export interface FormProps<T = any> extends FormikConfig<T> {
-  children: React.ReactNode;
   innerFormProps?: React.HTMLAttributes<HTMLFormElement>;
 }
 
@@ -13,7 +12,11 @@ export const Form: React.FC<FormProps> = ({
 }) => {
   return (
     <Formik {...formikProps}>
-      <FormikForm {...innerFormProps}>{children}</FormikForm>
+      {(props) => (
+        <FormikForm {...innerFormProps}>
+          {typeof children === 'function' ? children(props) : children}
+        </FormikForm>
+      )}
     </Formik>
   );
 };

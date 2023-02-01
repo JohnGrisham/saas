@@ -20,7 +20,13 @@ export const Basic = () => (
           type="number"
           placeholder="Enter a number"
         />
-        <Field label="Email" name="email" type="email" placeholder="Email" />
+        <Field
+          label="Required Email"
+          name="email"
+          type="email"
+          placeholder="Email"
+          required
+        />
         <Field
           label="Password"
           name="password"
