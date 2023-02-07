@@ -1,5 +1,12 @@
+import {
+  Mutation,
+  MutationUserCreateArgs,
+  IdentityType,
+  graphQLClient,
+} from 'client';
 import { Auth } from '@aws-amplify/auth';
 import NextAuth from 'next-auth';
+import { gql } from 'graphql-request';
 import { isCognitoUser } from 'core';
 import providers from 'auth';
 import { stripe } from '../../../utils';
@@ -27,7 +34,8 @@ export default NextAuth({
         ).data;
 
         if (!existingStripeUser) {
-          const sub = isCognitoUser(user)
+          const cognitoUser = isCognitoUser(user);
+          const sub = cognitoUser
             ? user.getUsername()
             : account?.providerAccountId;
 
@@ -35,11 +43,43 @@ export default NextAuth({
             throw new Error('Failed to get an account ID for this provider');
           }
 
+          const { userCreate } = await graphQLClient.request<
+            Mutation,
+            MutationUserCreateArgs
+          >(
+            gql`
+              mutation CreateUser($input: UserCreateInput!) {
+                userCreate(input: $input) {
+                  user {
+                    id
+                  }
+                }
+              }
+            `,
+            {
+              input: {
+                email,
+                name,
+                identities: [
+                  {
+                    create: {
+                      sub,
+                      type: cognitoUser
+                        ? IdentityType.Credentials
+                        : IdentityType.Github,
+                    },
+                  },
+                ],
+              },
+            },
+          );
+
           const newStripeCustomer = await stripe.customers.create({
             name,
             email,
             metadata: {
               sub,
+              userId: userCreate?.user?.id ?? '',
             },
           });
 
@@ -64,6 +104,7 @@ export default NextAuth({
 
         return true;
       } catch (err: any) {
+        console.log(err.message);
         throw new Error(err.message);
       }
     },

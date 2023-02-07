@@ -90,8 +90,8 @@ export const Field: React.FC<FieldProps> = ({
       `block w-full px-4 py-2 m-0 text-xl font-normal transition ease-in-out bg-white border border-solid rounded form-control bg-clip-padding focus:bg-white focus:outline-none`,
       {
         'border-danger-500 text-danger-500': meta.touched && meta.error,
-        'border-gray-300 focus:border-primary-600 focus:text-gray-700':
-          meta.touched && !meta.error,
+        'text-gray-700': !meta.error,
+        'border-gray-300 focus:border-primary-600': meta.touched && !meta.error,
       },
       classNames,
     ]);

@@ -6,7 +6,7 @@ import {
   signIn,
   useSession,
 } from 'next-auth/react';
-import { isAuthenticatedSession, isAuthScreen } from '../../../core';
+import { isAuthenticatedSession, isAuthScreen } from 'core';
 import { Session } from 'next-auth';
 
 export interface AuthenticatedUser {
@@ -58,14 +58,19 @@ const AuthenticatedSessionProvider: React.FC<
   AuthenticatedSessionProviderProps
 > = ({ children }) => {
   const { data: session, status } = useSession();
+  const [authStatus, setAuthStatus] = React.useState(status);
   const isAuthSession = isAuthenticatedSession(session);
 
   React.useEffect(() => {
-    if (status === 'loading') return;
-    if (!isAuthSession && !isAuthScreen()) signIn();
-  }, [isAuthSession, status]);
+    if (!isAuthSession && !isAuthScreen()) {
+      setAuthStatus('loading');
+      signIn();
+    } else {
+      setAuthStatus('unauthenticated');
+    }
+  }, [authStatus, isAuthSession]);
 
-  if (status === 'loading') {
+  if (authStatus === 'loading') {
     return <div>Loading...</div>;
   }
 

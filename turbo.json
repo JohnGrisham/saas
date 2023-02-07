@@ -10,7 +10,7 @@
     },
     "dev": {
       "cache": false,
-      "dependsOn": ["^dev"]
+      "dependsOn": ["^dev", "ui#build"]
     },
     "generate-tailwind-theme": {
       "cache": false,

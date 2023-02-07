@@ -1,4 +1,5 @@
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import '../styles/globals.css';
 import 'ui/styles.css';
 
 import type { AppProps } from 'next/app';

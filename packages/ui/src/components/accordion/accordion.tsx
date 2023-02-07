@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import cn from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -55,7 +55,7 @@ export const Accordion: React.FC<AccordionProps> = ({
   }, [collapsed, disabled]);
 
   return (
-    <div className="accordion w-full">
+    <div className="w-full accordion">
       <div className={accordionStyles}>
         <motion.h2
           className={headerStyles}
@@ -80,7 +80,7 @@ export const Accordion: React.FC<AccordionProps> = ({
               initial="collapsed"
               animate="open"
               exit="collapsed"
-              className="accordion-body py-4 px-5 text-black dark:text-white"
+              className="px-5 py-4 text-black accordion-body dark:text-white"
               variants={{
                 open: { height: 'auto', visibility: 'visible' },
                 collapsed: { height: 0, visibility: 'collapse' },

@@ -1,8 +1,8 @@
 import Document, {
   DocumentContext,
   DocumentInitialProps,
-  Html,
   Head,
+  Html,
   Main,
   NextScript,
 } from 'next/document';
@@ -20,7 +20,7 @@ class MyDocument extends Document {
     return (
       <Html className="bg-zinc-900">
         <Head />
-        <body>
+        <body className="min-w-[400px]">
           <Main />
           <NextScript />
         </body>

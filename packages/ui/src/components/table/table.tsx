@@ -1,28 +1,42 @@
 import * as React from 'react';
+import { Button, ButtonProps } from '../button';
 import cn from 'classnames';
+import split from 'just-split';
 
 export interface TableRowItem {
   id: string;
-  columns: string[];
+  cells: string[];
 }
 
 export interface TableProps {
   headers: string[];
   data: TableRowItem[];
+  currentPage?: number;
   classNames?: string;
+  pageCount?: number;
+  setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const Table: React.FC<TableProps> = ({ classNames, data, headers }) => {
+export const Table: React.FC<TableProps> = ({
+  classNames,
+  currentPage = 1,
+  data,
+  headers,
+  pageCount = 10,
+  setCurrentPage,
+}) => {
+  const [page, setPage] = React.useState(currentPage);
   const styles = React.useMemo(() => {
-    return cn([`flex flex-col`, classNames]);
+    return cn([`flex flex-col text-gray-900 dark:text-white`, classNames]);
   }, [classNames]);
 
   const tableHeaders = React.useMemo(
     () =>
-      headers.map((header) => (
+      headers.map((header, i) => (
         <th
+          key={`${header}-${i}`}
           scope="col"
-          className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+          className="px-6 py-4 text-sm font-medium text-left"
         >
           {header}
         </th>
@@ -32,22 +46,73 @@ export const Table: React.FC<TableProps> = ({ classNames, data, headers }) => {
 
   const tableRows = React.useMemo(
     () =>
-      data.map(({ id, columns }) => (
-        <tr id={id} className="border-b">
-          {columns.map((col) => (
-            <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-              {col}
-            </td>
-          ))}
-        </tr>
-      )),
-    [data],
+      split(data, pageCount).map((pageItems) => {
+        return pageItems.map(({ id, cells }) => (
+          <tr
+            id={id}
+            key={id}
+            className="transition duration-300 ease-in-out border-b hover:bg-accent-100"
+          >
+            {cells.map((cell) => (
+              <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ));
+      }),
+    [data, pageCount],
+  );
+
+  const getPageLinkStyles = React.useCallback(
+    (pageNum: number) => {
+      return cn([
+        `page-link relative block rounded rounded border-0 py-1.5 px-3 outline-none transition-all duration-300 hover:bg-gray-200 hover:text-gray-800 focus:shadow-none dark:text-white dark:hover:text-gray-800`,
+        {
+          [`bg-primary-600 text-white`]: page === pageNum,
+        },
+      ]);
+    },
+    [page],
+  );
+
+  const getPageNavProps = React.useCallback(
+    (navType: 'Previous' | 'Next'): ButtonProps => {
+      const disabled =
+        (navType === 'Previous' && page === 1) ||
+        (navType === 'Next' && page === tableRows.length);
+
+      return {
+        children: navType,
+        className: cn([
+          `page-link relative block rounded rounded border-0 py-1.5 px-3 outline-none transition-all duration-300 focus:shadow-none hover:text-gray-800 hover:bg-gray-200 focus:shadow-none`,
+          {
+            'bg-transparent pointer-events-none text-gray-500': disabled,
+          },
+        ]),
+        type: 'button',
+        link: true,
+        disabled,
+        onClick: () => {
+          if (navType === 'Previous') {
+            setCurrentPage
+              ? setCurrentPage((current) => current - 1)
+              : setPage((current) => current - 1);
+          } else {
+            setCurrentPage
+              ? setCurrentPage((current) => current + 1)
+              : setPage((current) => current + 1);
+          }
+        },
+      };
+    },
+    [page, setCurrentPage, tableRows],
   );
 
   React.useEffect(() => {
-    if (!data.every(({ columns }) => columns.length === headers.length)) {
+    if (!data.every(({ cells }) => cells.length === headers.length)) {
       throw new Error(
-        'Invalid number of data columns for the provided number of table headers',
+        'Invalid number of data cells for the provided number of table headers',
       );
     }
   }, [data, headers]);
@@ -61,10 +126,42 @@ export const Table: React.FC<TableProps> = ({ classNames, data, headers }) => {
               <thead className="border-b">
                 <tr>{tableHeaders}</tr>
               </thead>
-              <tbody>{tableRows}</tbody>
+              <tbody>{tableRows[page - 1]}</tbody>
             </table>
           </div>
         </div>
+      </div>
+      <div className="flex justify-center">
+        <nav aria-label="Page navigation example">
+          <ul className="flex list-style-none">
+            <li className="page-item disabled">
+              <Button tabIndex={-1} {...getPageNavProps('Previous')} />
+            </li>
+            {tableRows.map((_p, i) => {
+              const pageNum = i + 1;
+
+              return (
+                <li className="page-item">
+                  <Button
+                    className={getPageLinkStyles(pageNum)}
+                    type="button"
+                    onClick={() =>
+                      setCurrentPage
+                        ? setCurrentPage(pageNum)
+                        : setPage(pageNum)
+                    }
+                    link
+                  >
+                    {pageNum}
+                  </Button>
+                </li>
+              );
+            })}
+            <li className="page-item">
+              <Button {...getPageNavProps('Next')} />
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   );

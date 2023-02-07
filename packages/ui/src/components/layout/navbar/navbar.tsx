@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { Toggle } from '../../toggle';
 import cn from 'classnames';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useThemeContext } from '../../../hooks';
 
 export interface NavItem {
@@ -50,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const { data: session, status } = useSession();
   const { isDarkMode, setDarkMode } = useThemeContext();
-  const { pathname } = useRouter();
+  const pathname = usePathname();
 
   const navbarStyles = React.useMemo(() => {
     return cn([
@@ -76,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const postNavStyles = React.useMemo(() => {
-    return cn([`flex items-center absolute right-16 top-[1.3rem]`]);
+    return cn([`flex items-center absolute right-16 top-[1.4rem]`]);
   }, []);
 
   const profileDropdownItems = React.useMemo(() => {
@@ -143,10 +143,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {navItems.map((item) => (
                     <li key={item.id} className="p-2 nav-item">
                       {item.type === 'simple' ? (
-                        <Link href={item.href}>
-                          <a className={getNavItemStyles(item.href)}>
-                            {item.title}
-                          </a>
+                        <Link
+                          href={item.href}
+                          className={getNavItemStyles(item.href)}
+                        >
+                          {item.title}
                         </Link>
                       ) : (
                         item.component
@@ -178,7 +179,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
       <Toggle
         checked={isDarkMode}
-        classNames="mb-1.5 ml-2 toggle-dark-mode"
+        classNames="md:mb-1.5 ml-2 toggle-dark-mode"
         onChange={() => setDarkMode((currentMode) => !currentMode)}
       />
     </nav>

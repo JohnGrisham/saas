@@ -114,9 +114,7 @@ export default function Account() {
             ) : subscription ? (
               `${subscription.product.price}/${subscription.product.interval}/${subscription.product.currency}`
             ) : (
-              <Link href="/">
-                <a>Choose your plan</a>
-              </Link>
+              <Link href="/">Choose your plan</Link>
             )}
           </div>
         </Card>
