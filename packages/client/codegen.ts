@@ -1,5 +1,4 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
-import { isEmail } from '../core';
 
 const config: CodegenConfig = {
   overwrite: true,

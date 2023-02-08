@@ -12,6 +12,7 @@
     "@aws-amplify/auth": "^4.6.6",
     "@stripe/react-stripe-js": "^1.14.2",
     "auth": "*",
+    "encoding": "^0.1.13",
     "graphql-request": "^4.3.0",
     "next": "^13.1.6",
     "next-auth": "^4.19.2",

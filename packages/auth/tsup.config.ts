@@ -4,6 +4,12 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   esbuildOptions(options, _context) {
     if (options.define !== undefined) {
+      if (process.env.API_KEY) {
+        options.define['process.env.API_KEY'] = JSON.stringify(
+          process.env.API_KEY,
+        );
+      }
+
       if (process.env.COGNITO_CLIENT_ID) {
         options.define['process.env.COGNITO_CLIENT_ID'] = JSON.stringify(
           process.env.COGNITO_CLIENT_ID,

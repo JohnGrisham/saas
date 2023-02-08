@@ -21,16 +21,19 @@
     },
     "auth#build": {
       "dependsOn": [
+        "$API_KEY",
         "$COGNITO_CLIENT_ID",
         "$COGNITO_CLIENT_SECRET",
         "$COGNITO_ISSUER",
         "$GITHUB_ID",
         "$GITHUB_SECRET",
-        "$PRIMARY_USER_LIST_ID"
+        "$PRIMARY_USER_LIST_ID",
+        "$ISSUER_URL",
+        "$NEXTAUTH_SECRET"
       ]
     },
     "client#build": {
-      "dependsOn": ["$API_ENDPOINT", "$API_KEY"]
+      "dependsOn": ["$API_ENDPOINT"]
     },
     "payments-server#build": {
       "dependsOn": [
@@ -44,8 +47,9 @@
       "dependsOn": [
         "$NEXT_PUBLIC_AWS_REGION",
         "$NEXT_PUBLIC_COGNITO_DOMAIN",
-        "$NEXTAUTH_SECRET",
         "$NEXTAUTH_URL",
+        "$ISSUER_URL",
+        "$NEXTAUTH_SECRET",
         "$NEXT_PUBLIC_ROOT_URL",
         "$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE",
         "$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",

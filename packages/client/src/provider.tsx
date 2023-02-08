@@ -3,6 +3,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { GraphQLClient, gql } from 'graphql-request';
+import { fetchWithToken } from './utils/fetchWithToken';
 
 const queryClient = new QueryClient();
 
@@ -13,9 +14,9 @@ export interface ClientProps {
 export const graphQLClient = new GraphQLClient(
   process.env.API_ENDPOINT as string,
   {
+    fetch: fetchWithToken,
     headers: {
       'content-type': 'application/json',
-      'x-api-key': process.env.API_KEY as string,
     },
   },
 );

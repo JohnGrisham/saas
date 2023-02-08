@@ -1,14 +1,8 @@
-import {
-  Mutation,
-  MutationUserCreateArgs,
-  IdentityType,
-  graphQLClient,
-} from 'client';
 import { Auth } from '@aws-amplify/auth';
 import NextAuth from 'next-auth';
-import { gql } from 'graphql-request';
+import { JWT } from 'next-auth/jwt';
 import { isCognitoUser } from 'core';
-import providers from 'auth';
+import providers, { jwt } from 'auth';
 import { stripe } from '../../../utils';
 
 export default NextAuth({
@@ -43,43 +37,11 @@ export default NextAuth({
             throw new Error('Failed to get an account ID for this provider');
           }
 
-          const { userCreate } = await graphQLClient.request<
-            Mutation,
-            MutationUserCreateArgs
-          >(
-            gql`
-              mutation CreateUser($input: UserCreateInput!) {
-                userCreate(input: $input) {
-                  user {
-                    id
-                  }
-                }
-              }
-            `,
-            {
-              input: {
-                email,
-                name,
-                identities: [
-                  {
-                    create: {
-                      sub,
-                      type: cognitoUser
-                        ? IdentityType.Credentials
-                        : IdentityType.Github,
-                    },
-                  },
-                ],
-              },
-            },
-          );
-
           const newStripeCustomer = await stripe.customers.create({
             name,
             email,
             metadata: {
               sub,
-              userId: userCreate?.user?.id ?? '',
             },
           });
 
@@ -97,9 +59,9 @@ export default NextAuth({
             trial_period_days: 7,
           });
         } else if (isCognitoUser(user)) {
-          await Auth.updateUserAttributes(user, {
-            'custom:userId': existingStripeUser.metadata.userId,
-          });
+          // await Auth.updateUserAttributes(user, {
+          //   'custom:userId': existingStripeUser.metadata.userId,
+          // });
         }
 
         return true;
@@ -111,7 +73,7 @@ export default NextAuth({
     async jwt({ user, token }) {
       if (user) {
         let currentUser = user as unknown;
-        let tokenResponse = token;
+        let tokenResponse: JWT = token;
 
         if (isCognitoUser(currentUser)) {
           const session = currentUser.getSignInUserSession();
@@ -138,4 +100,5 @@ export default NextAuth({
       return Promise.resolve(session);
     },
   },
+  jwt,
 });

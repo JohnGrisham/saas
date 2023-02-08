@@ -1,3 +1,17 @@
+schema
+  @auth(
+    providers: [
+      {
+        type: jwt
+        issuer: "{{ env.ISSUER_URL }}"
+        secret: "{{ env.NEXTAUTH_SECRET }}"
+      }
+    ]
+    rules: [{ allow: private }]
+  ) {
+  query: Query
+}
+
 enum IdentityType {
   CREDENTIALS
   GITHUB
@@ -49,7 +63,7 @@ type Feature @model {
   id: ID!
   name: String! @unique
   description: String
-  feature: Product!
+  product: Product!
 }
 
 type Subscription @model {

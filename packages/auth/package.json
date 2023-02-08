@@ -24,8 +24,11 @@
   },
   "dependencies": {
     "@aws-amplify/auth": "^4.6.6",
+    "client": "*",
+    "core": "*",
     "graphql": "^16.6.0",
     "graphql-request": "^4.3.0",
+    "jsonwebtoken": "^9.0.0",
     "next-auth": "^4.19.2"
   }
 }

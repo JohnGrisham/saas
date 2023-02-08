@@ -1,9 +1,40 @@
+import {
+  Mutation,
+  MutationUserCreateArgs,
+  IdentityType,
+  graphQLClient,
+  UserByEmailQuery,
+  UserByEmailQueryVariables,
+} from 'client';
 import CredentialsProvider, {
   CredentialsConfig,
 } from 'next-auth/providers/credentials';
+import { JWTOptions } from 'next-auth/jwt';
 import GithubProvider, { GithubProfile } from 'next-auth/providers/github';
 import { OAuthUserConfig } from 'next-auth/providers';
 import { Auth } from '@aws-amplify/auth';
+import { JWT } from 'next-auth/jwt';
+import { gql } from 'graphql-request';
+import jsonwebtoken from 'jsonwebtoken';
+import { isCognitoUser } from 'core';
+
+export const jwt: Partial<JWTOptions> = {
+  encode: ({ secret, token }) => {
+    const encodedToken = jsonwebtoken.sign(
+      {
+        ...token,
+        iss: process.env.ISSUER_URL as string,
+        exp: Math.floor(Date.now() / 1000) + 60 * 60,
+      },
+      secret,
+    );
+    return encodedToken;
+  },
+  decode: async ({ secret, token }) => {
+    const decodedToken = jsonwebtoken.verify(token!, secret);
+    return decodedToken as JWT;
+  },
+};
 
 export const credentials = (config?: CredentialsConfig) =>
   CredentialsProvider({
@@ -22,19 +53,63 @@ export const credentials = (config?: CredentialsConfig) =>
       password: { label: 'Password', type: 'password' },
     },
     async authorize(credentials) {
-      // Add logic here to look up the user from the credentials supplied
-      const { username = '', password = '' } = { ...credentials };
+      try {
+        graphQLClient.setHeader('x-api-key', process.env.API_KEY as string);
+        const { username = '', password = '' } = { ...credentials };
 
-      const user = await Auth.signIn({
-        username,
-        password,
-      });
+        const user = await Auth.signIn({
+          username,
+          password,
+        });
 
-      if (user?.username) {
-        return user;
+        const { user: gqlUserRecord } = await graphQLClient.request<
+          UserByEmailQuery,
+          UserByEmailQueryVariables
+        >(
+          gql`
+            query UserByEmail($email: Email!) {
+              user(by: { email: $email }) {
+                id
+              }
+            }
+          `,
+          {
+            email: username,
+          },
+        );
+
+        if (!gqlUserRecord && isCognitoUser(user)) {
+          await graphQLClient.request<Mutation, MutationUserCreateArgs>(
+            gql`
+              mutation CreateUser($input: UserCreateInput!) {
+                userCreate(input: $input) {
+                  user {
+                    id
+                  }
+                }
+              }
+            `,
+            {
+              input: {
+                email: username,
+                identities: [
+                  {
+                    create: {
+                      sub: user.getUsername(),
+                      type: IdentityType.Credentials,
+                    },
+                  },
+                ],
+              },
+            },
+          );
+        }
+
+        return new Promise((res) => res(user as any));
+      } catch (err: any) {
+        console.log(err.message);
+        return null;
       }
-
-      return null;
     },
     ...config,
   });
