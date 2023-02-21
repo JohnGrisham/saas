@@ -40,9 +40,15 @@ export default defineConfig({
         );
       }
 
-      if (process.env.PRIMARY_USER_LIST_ID) {
-        options.define['process.env.PRIMARY_USER_LIST_ID'] = JSON.stringify(
-          process.env.PRIMARY_USER_LIST_ID,
+      if (process.env.GOOGLE_CLIENT_ID) {
+        options.define['process.env.GOOGLE_CLIENT_ID'] = JSON.stringify(
+          process.env.GOOGLE_CLIENT_ID,
+        );
+      }
+
+      if (process.env.GOOGLE_CLIENT_SECRET) {
+        options.define['process.env.GOOGLE_CLIENT_SECRET'] = JSON.stringify(
+          process.env.GOOGLE_CLIENT_SECRET,
         );
       }
     }

@@ -27,7 +27,8 @@
         "$COGNITO_ISSUER",
         "$GITHUB_ID",
         "$GITHUB_SECRET",
-        "$PRIMARY_USER_LIST_ID",
+        "$GOOGLE_CLIENT_ID",
+        "$GOOGLE_CLIENT_SECRET",
         "$ISSUER_URL",
         "$NEXTAUTH_SECRET"
       ]

@@ -26,6 +26,7 @@ export type Customer = {
   __typename?: 'Customer';
   /** when the model was created */
   createdAt: Scalars['DateTime'];
+  /** Unique identifier */
   id: Scalars['ID'];
   stripeId: Scalars['String'];
   subscriptions?: Maybe<SubscriptionConnection>;
@@ -40,6 +41,7 @@ export type CustomerSubscriptionsArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<CustomerOrderByInput>;
 };
 
 export type CustomerByInput = {
@@ -54,60 +56,16 @@ export type CustomerConnection = {
   pageInfo: PageInfo;
 };
 
-/** Input to create a new Customer */
+/** Input to create a Customer */
 export type CustomerCreateInput = {
   stripeId: Scalars['String'];
-  subscriptions?: InputMaybe<Array<CustomerCustomerRelateSubscriptionSubscriptionCreateRelationInput>>;
-  user: CustomerCustomerRelateUserUserCreateRelationInput;
+  subscriptions?: InputMaybe<Array<CustomerToSubscriptionCreateSubscriptionRelation>>;
+  user: CustomerToUserCreateUserRelation;
 };
 
 export type CustomerCreatePayload = {
   __typename?: 'CustomerCreatePayload';
   customer?: Maybe<Customer>;
-};
-
-/** Input to create a new CustomerCustomerRelateSubscriptionSubscription */
-export type CustomerCustomerRelateSubscriptionSubscriptionCreateInput = {
-  endDate?: InputMaybe<Scalars['Timestamp']>;
-  product: SubscriptionProductRelateSubscriptionProductCreateInput;
-  quantity: Scalars['Int'];
-  startDate: Scalars['Timestamp'];
-  status: SubStatus;
-  trialEnd?: InputMaybe<Scalars['Timestamp']>;
-  trialStart?: InputMaybe<Scalars['Timestamp']>;
-};
-
-/** Input to create a new CustomerCustomerRelateSubscriptionSubscription relation */
-export type CustomerCustomerRelateSubscriptionSubscriptionCreateRelationInput = {
-  create?: InputMaybe<CustomerCustomerRelateSubscriptionSubscriptionCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to update a CustomerCustomerRelateSubscriptionSubscription relation */
-export type CustomerCustomerRelateSubscriptionSubscriptionUpdateRelationInput = {
-  create?: InputMaybe<CustomerCustomerRelateSubscriptionSubscriptionCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to create a new CustomerCustomerRelateUserUser */
-export type CustomerCustomerRelateUserUserCreateInput = {
-  email: Scalars['Email'];
-  identities?: InputMaybe<Array<UserIdentityRelateUserIdentityCreateInput>>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** Input to create a new CustomerCustomerRelateUserUser relation */
-export type CustomerCustomerRelateUserUserCreateRelationInput = {
-  create?: InputMaybe<CustomerCustomerRelateUserUserCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to update a CustomerCustomerRelateUserUser relation */
-export type CustomerCustomerRelateUserUserUpdateRelationInput = {
-  create?: InputMaybe<CustomerCustomerRelateUserUserCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
 };
 
 export type CustomerDeletePayload = {
@@ -121,11 +79,98 @@ export type CustomerEdge = {
   node: Customer;
 };
 
-/** Input to create a new Customer */
+export type CustomerOrderByInput = {
+  createdAt?: InputMaybe<OrderByDirection>;
+};
+
+/** Input to create a Customer for the CustomerToSubscription relation of Subscription */
+export type CustomerToSubscriptionCreateCustomer = {
+  stripeId: Scalars['String'];
+  subscriptions?: InputMaybe<Array<CustomerToSubscriptionCreateSubscriptionRelation>>;
+  user: CustomerToUserCreateUserRelation;
+};
+
+/** Input to link to or create a Customer for the CustomerToSubscription relation of Subscription */
+export type CustomerToSubscriptionCreateCustomerRelation = {
+  create?: InputMaybe<CustomerToSubscriptionCreateCustomer>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to create a Subscription for the CustomerToSubscription relation of Customer */
+export type CustomerToSubscriptionCreateSubscription = {
+  endDate?: InputMaybe<Scalars['Timestamp']>;
+  product: ProductToSubscriptionCreateProductRelation;
+  quantity: Scalars['Int'];
+  startDate: Scalars['Timestamp'];
+  status: SubStatus;
+  trialEnd?: InputMaybe<Scalars['Timestamp']>;
+  trialStart?: InputMaybe<Scalars['Timestamp']>;
+};
+
+/** Input to link to or create a Subscription for the CustomerToSubscription relation of Customer */
+export type CustomerToSubscriptionCreateSubscriptionRelation = {
+  create?: InputMaybe<CustomerToSubscriptionCreateSubscription>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a Customer for the CustomerToSubscription relation of Subscription */
+export type CustomerToSubscriptionUpdateCustomerRelation = {
+  create?: InputMaybe<CustomerToSubscriptionCreateCustomer>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a Subscription for the CustomerToSubscription relation of Customer */
+export type CustomerToSubscriptionUpdateSubscriptionRelation = {
+  create?: InputMaybe<CustomerToSubscriptionCreateSubscription>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to create a Customer for the CustomerToUser relation of User */
+export type CustomerToUserCreateCustomer = {
+  stripeId: Scalars['String'];
+  subscriptions?: InputMaybe<Array<CustomerToSubscriptionCreateSubscriptionRelation>>;
+};
+
+/** Input to link to or create a Customer for the CustomerToUser relation of User */
+export type CustomerToUserCreateCustomerRelation = {
+  create?: InputMaybe<CustomerToUserCreateCustomer>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to create a User for the CustomerToUser relation of Customer */
+export type CustomerToUserCreateUser = {
+  email: Scalars['Email'];
+  identities?: InputMaybe<Array<IdentityToUserCreateIdentityRelation>>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** Input to link to or create a User for the CustomerToUser relation of Customer */
+export type CustomerToUserCreateUserRelation = {
+  create?: InputMaybe<CustomerToUserCreateUser>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a Customer for the CustomerToUser relation of User */
+export type CustomerToUserUpdateCustomerRelation = {
+  create?: InputMaybe<CustomerToUserCreateCustomer>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a User for the CustomerToUser relation of Customer */
+export type CustomerToUserUpdateUserRelation = {
+  create?: InputMaybe<CustomerToUserCreateUser>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to update a Customer */
 export type CustomerUpdateInput = {
   stripeId?: InputMaybe<Scalars['String']>;
-  subscriptions?: InputMaybe<Array<CustomerCustomerRelateSubscriptionSubscriptionUpdateRelationInput>>;
-  user?: InputMaybe<CustomerCustomerRelateUserUserUpdateRelationInput>;
+  subscriptions?: InputMaybe<Array<CustomerToSubscriptionUpdateSubscriptionRelation>>;
+  user?: InputMaybe<CustomerToUserUpdateUserRelation>;
 };
 
 export type CustomerUpdatePayload = {
@@ -138,8 +183,10 @@ export type Feature = {
   /** when the model was created */
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
+  /** Unique identifier */
   id: Scalars['ID'];
   name: Scalars['String'];
+  product: Product;
   /** when the model was updated */
   updatedAt: Scalars['DateTime'];
 };
@@ -156,10 +203,11 @@ export type FeatureConnection = {
   pageInfo: PageInfo;
 };
 
-/** Input to create a new Feature */
+/** Input to create a Feature */
 export type FeatureCreateInput = {
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
+  product: FeatureToProductCreateProductRelation;
 };
 
 export type FeatureCreatePayload = {
@@ -178,10 +226,57 @@ export type FeatureEdge = {
   node: Feature;
 };
 
-/** Input to create a new Feature */
+export type FeatureOrderByInput = {
+  createdAt?: InputMaybe<OrderByDirection>;
+};
+
+/** Input to create a Feature for the FeatureToProduct relation of Product */
+export type FeatureToProductCreateFeature = {
+  description?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+/** Input to link to or create a Feature for the FeatureToProduct relation of Product */
+export type FeatureToProductCreateFeatureRelation = {
+  create?: InputMaybe<FeatureToProductCreateFeature>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to create a Product for the FeatureToProduct relation of Feature */
+export type FeatureToProductCreateProduct = {
+  currency: Scalars['String'];
+  features: Array<FeatureToProductCreateFeatureRelation>;
+  interval: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['String'];
+  subscription: ProductToSubscriptionCreateSubscriptionRelation;
+};
+
+/** Input to link to or create a Product for the FeatureToProduct relation of Feature */
+export type FeatureToProductCreateProductRelation = {
+  create?: InputMaybe<FeatureToProductCreateProduct>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a Feature for the FeatureToProduct relation of Product */
+export type FeatureToProductUpdateFeatureRelation = {
+  create?: InputMaybe<FeatureToProductCreateFeature>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a Product for the FeatureToProduct relation of Feature */
+export type FeatureToProductUpdateProductRelation = {
+  create?: InputMaybe<FeatureToProductCreateProduct>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to update a Feature */
 export type FeatureUpdateInput = {
   description?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  product?: InputMaybe<FeatureToProductUpdateProductRelation>;
 };
 
 export type FeatureUpdatePayload = {
@@ -193,6 +288,7 @@ export type Identity = {
   __typename?: 'Identity';
   /** when the model was created */
   createdAt: Scalars['DateTime'];
+  /** Unique identifier */
   id: Scalars['ID'];
   sub: Scalars['String'];
   type: IdentityType;
@@ -213,11 +309,11 @@ export type IdentityConnection = {
   pageInfo: PageInfo;
 };
 
-/** Input to create a new Identity */
+/** Input to create a Identity */
 export type IdentityCreateInput = {
   sub: Scalars['String'];
   type: IdentityType;
-  user: IdentityIdentityRelateUserUserCreateRelationInput;
+  user: IdentityToUserCreateUserRelation;
 };
 
 export type IdentityCreatePayload = {
@@ -236,36 +332,61 @@ export type IdentityEdge = {
   node: Identity;
 };
 
-/** Input to create a new IdentityIdentityRelateUserUser */
-export type IdentityIdentityRelateUserUserCreateInput = {
-  customer?: InputMaybe<UserCustomerRelateUserCustomerCreateInput>;
-  email: Scalars['Email'];
-  name?: InputMaybe<Scalars['String']>;
+export type IdentityOrderByInput = {
+  createdAt?: InputMaybe<OrderByDirection>;
 };
 
-/** Input to create a new IdentityIdentityRelateUserUser relation */
-export type IdentityIdentityRelateUserUserCreateRelationInput = {
-  create?: InputMaybe<IdentityIdentityRelateUserUserCreateInput>;
+/** Input to create a Identity for the IdentityToUser relation of User */
+export type IdentityToUserCreateIdentity = {
+  sub: Scalars['String'];
+  type: IdentityType;
+};
+
+/** Input to link to or create a Identity for the IdentityToUser relation of User */
+export type IdentityToUserCreateIdentityRelation = {
+  create?: InputMaybe<IdentityToUserCreateIdentity>;
   link?: InputMaybe<Scalars['ID']>;
 };
 
-/** Input to update a IdentityIdentityRelateUserUser relation */
-export type IdentityIdentityRelateUserUserUpdateRelationInput = {
-  create?: InputMaybe<IdentityIdentityRelateUserUserCreateInput>;
+/** Input to create a User for the IdentityToUser relation of Identity */
+export type IdentityToUserCreateUser = {
+  customer?: InputMaybe<CustomerToUserCreateCustomerRelation>;
+  email: Scalars['Email'];
+  identities?: InputMaybe<Array<IdentityToUserCreateIdentityRelation>>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** Input to link to or create a User for the IdentityToUser relation of Identity */
+export type IdentityToUserCreateUserRelation = {
+  create?: InputMaybe<IdentityToUserCreateUser>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a Identity for the IdentityToUser relation of User */
+export type IdentityToUserUpdateIdentityRelation = {
+  create?: InputMaybe<IdentityToUserCreateIdentity>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a User for the IdentityToUser relation of Identity */
+export type IdentityToUserUpdateUserRelation = {
+  create?: InputMaybe<IdentityToUserCreateUser>;
   link?: InputMaybe<Scalars['ID']>;
   unlink?: InputMaybe<Scalars['ID']>;
 };
 
 export enum IdentityType {
   Credentials = 'CREDENTIALS',
-  Github = 'GITHUB'
+  Github = 'GITHUB',
+  Google = 'GOOGLE'
 }
 
-/** Input to create a new Identity */
+/** Input to update a Identity */
 export type IdentityUpdateInput = {
   sub?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<IdentityType>;
-  user?: InputMaybe<IdentityIdentityRelateUserUserUpdateRelationInput>;
+  user?: InputMaybe<IdentityToUserUpdateUserRelation>;
 };
 
 export type IdentityUpdatePayload = {
@@ -273,41 +394,48 @@ export type IdentityUpdatePayload = {
   identity?: Maybe<Identity>;
 };
 
+/** Possible operations for an Int field */
+export type IntOperationsInput = {
+  decrement?: InputMaybe<Scalars['Int']>;
+  increment?: InputMaybe<Scalars['Int']>;
+  set?: InputMaybe<Scalars['Int']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** Create a Customer */
   customerCreate?: Maybe<CustomerCreatePayload>;
-  /** Delete a Customer by ID */
+  /** Delete a Customer by ID or unique field */
   customerDelete?: Maybe<CustomerDeletePayload>;
   /** Update a Customer */
   customerUpdate?: Maybe<CustomerUpdatePayload>;
   /** Create a Feature */
   featureCreate?: Maybe<FeatureCreatePayload>;
-  /** Delete a Feature by ID */
+  /** Delete a Feature by ID or unique field */
   featureDelete?: Maybe<FeatureDeletePayload>;
   /** Update a Feature */
   featureUpdate?: Maybe<FeatureUpdatePayload>;
   /** Create a Identity */
   identityCreate?: Maybe<IdentityCreatePayload>;
-  /** Delete a Identity by ID */
+  /** Delete a Identity by ID or unique field */
   identityDelete?: Maybe<IdentityDeletePayload>;
   /** Update a Identity */
   identityUpdate?: Maybe<IdentityUpdatePayload>;
   /** Create a Product */
   productCreate?: Maybe<ProductCreatePayload>;
-  /** Delete a Product by ID */
+  /** Delete a Product by ID or unique field */
   productDelete?: Maybe<ProductDeletePayload>;
   /** Update a Product */
   productUpdate?: Maybe<ProductUpdatePayload>;
   /** Create a Subscription */
   subscriptionCreate?: Maybe<SubscriptionCreatePayload>;
-  /** Delete a Subscription by ID */
+  /** Delete a Subscription by ID or unique field */
   subscriptionDelete?: Maybe<SubscriptionDeletePayload>;
   /** Update a Subscription */
   subscriptionUpdate?: Maybe<SubscriptionUpdatePayload>;
   /** Create a User */
   userCreate?: Maybe<UserCreatePayload>;
-  /** Delete a User by ID */
+  /** Delete a User by ID or unique field */
   userDelete?: Maybe<UserDeletePayload>;
   /** Update a User */
   userUpdate?: Maybe<UserUpdatePayload>;
@@ -320,12 +448,12 @@ export type MutationCustomerCreateArgs = {
 
 
 export type MutationCustomerDeleteArgs = {
-  id: Scalars['ID'];
+  by: CustomerByInput;
 };
 
 
 export type MutationCustomerUpdateArgs = {
-  id: Scalars['ID'];
+  by: CustomerByInput;
   input: CustomerUpdateInput;
 };
 
@@ -336,12 +464,12 @@ export type MutationFeatureCreateArgs = {
 
 
 export type MutationFeatureDeleteArgs = {
-  id: Scalars['ID'];
+  by: FeatureByInput;
 };
 
 
 export type MutationFeatureUpdateArgs = {
-  id: Scalars['ID'];
+  by: FeatureByInput;
   input: FeatureUpdateInput;
 };
 
@@ -352,12 +480,12 @@ export type MutationIdentityCreateArgs = {
 
 
 export type MutationIdentityDeleteArgs = {
-  id: Scalars['ID'];
+  by: IdentityByInput;
 };
 
 
 export type MutationIdentityUpdateArgs = {
-  id: Scalars['ID'];
+  by: IdentityByInput;
   input: IdentityUpdateInput;
 };
 
@@ -368,12 +496,12 @@ export type MutationProductCreateArgs = {
 
 
 export type MutationProductDeleteArgs = {
-  id: Scalars['ID'];
+  by: ProductByInput;
 };
 
 
 export type MutationProductUpdateArgs = {
-  id: Scalars['ID'];
+  by: ProductByInput;
   input: ProductUpdateInput;
 };
 
@@ -384,12 +512,12 @@ export type MutationSubscriptionCreateArgs = {
 
 
 export type MutationSubscriptionDeleteArgs = {
-  id: Scalars['ID'];
+  by: SubscriptionByInput;
 };
 
 
 export type MutationSubscriptionUpdateArgs = {
-  id: Scalars['ID'];
+  by: SubscriptionByInput;
   input: SubscriptionUpdateInput;
 };
 
@@ -400,14 +528,19 @@ export type MutationUserCreateArgs = {
 
 
 export type MutationUserDeleteArgs = {
-  id: Scalars['ID'];
+  by: UserByInput;
 };
 
 
 export type MutationUserUpdateArgs = {
-  id: Scalars['ID'];
+  by: UserByInput;
   input: UserUpdateInput;
 };
+
+export enum OrderByDirection {
+  Asc = 'ASC',
+  Desc = 'DESC'
+}
 
 export type PageInfo = {
   __typename?: 'PageInfo';
@@ -423,10 +556,12 @@ export type Product = {
   createdAt: Scalars['DateTime'];
   currency: Scalars['String'];
   features?: Maybe<FeatureConnection>;
+  /** Unique identifier */
   id: Scalars['ID'];
   interval: Scalars['String'];
   name: Scalars['String'];
   price: Scalars['String'];
+  subscription: Subscription;
   /** when the model was updated */
   updatedAt: Scalars['DateTime'];
 };
@@ -437,6 +572,7 @@ export type ProductFeaturesArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<ProductOrderByInput>;
 };
 
 export type ProductByInput = {
@@ -451,13 +587,14 @@ export type ProductConnection = {
   pageInfo: PageInfo;
 };
 
-/** Input to create a new Product */
+/** Input to create a Product */
 export type ProductCreateInput = {
   currency: Scalars['String'];
-  features: Array<ProductFeatureRelateProductFeatureCreateRelationInput>;
+  features: Array<FeatureToProductCreateFeatureRelation>;
   interval: Scalars['String'];
   name: Scalars['String'];
   price: Scalars['String'];
+  subscription: ProductToSubscriptionCreateSubscriptionRelation;
 };
 
 export type ProductCreatePayload = {
@@ -476,32 +613,64 @@ export type ProductEdge = {
   node: Product;
 };
 
-/** Input to create a new ProductFeatureRelateProductFeature */
-export type ProductFeatureRelateProductFeatureCreateInput = {
-  description?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
+export type ProductOrderByInput = {
+  createdAt?: InputMaybe<OrderByDirection>;
 };
 
-/** Input to create a new ProductFeatureRelateProductFeature relation */
-export type ProductFeatureRelateProductFeatureCreateRelationInput = {
-  create?: InputMaybe<ProductFeatureRelateProductFeatureCreateInput>;
+/** Input to create a Product for the ProductToSubscription relation of Subscription */
+export type ProductToSubscriptionCreateProduct = {
+  currency: Scalars['String'];
+  features: Array<FeatureToProductCreateFeatureRelation>;
+  interval: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['String'];
+};
+
+/** Input to link to or create a Product for the ProductToSubscription relation of Subscription */
+export type ProductToSubscriptionCreateProductRelation = {
+  create?: InputMaybe<ProductToSubscriptionCreateProduct>;
   link?: InputMaybe<Scalars['ID']>;
 };
 
-/** Input to update a ProductFeatureRelateProductFeature relation */
-export type ProductFeatureRelateProductFeatureUpdateRelationInput = {
-  create?: InputMaybe<ProductFeatureRelateProductFeatureCreateInput>;
+/** Input to create a Subscription for the ProductToSubscription relation of Product */
+export type ProductToSubscriptionCreateSubscription = {
+  customer: CustomerToSubscriptionCreateCustomerRelation;
+  endDate?: InputMaybe<Scalars['Timestamp']>;
+  quantity: Scalars['Int'];
+  startDate: Scalars['Timestamp'];
+  status: SubStatus;
+  trialEnd?: InputMaybe<Scalars['Timestamp']>;
+  trialStart?: InputMaybe<Scalars['Timestamp']>;
+};
+
+/** Input to link to or create a Subscription for the ProductToSubscription relation of Product */
+export type ProductToSubscriptionCreateSubscriptionRelation = {
+  create?: InputMaybe<ProductToSubscriptionCreateSubscription>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a Product for the ProductToSubscription relation of Subscription */
+export type ProductToSubscriptionUpdateProductRelation = {
+  create?: InputMaybe<ProductToSubscriptionCreateProduct>;
   link?: InputMaybe<Scalars['ID']>;
   unlink?: InputMaybe<Scalars['ID']>;
 };
 
-/** Input to create a new Product */
+/** Input to link/unlink to or create a Subscription for the ProductToSubscription relation of Product */
+export type ProductToSubscriptionUpdateSubscriptionRelation = {
+  create?: InputMaybe<ProductToSubscriptionCreateSubscription>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to update a Product */
 export type ProductUpdateInput = {
   currency?: InputMaybe<Scalars['String']>;
-  features?: InputMaybe<Array<ProductFeatureRelateProductFeatureUpdateRelationInput>>;
+  features?: InputMaybe<Array<FeatureToProductUpdateFeatureRelation>>;
   interval?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['String']>;
+  subscription?: InputMaybe<ProductToSubscriptionUpdateSubscriptionRelation>;
 };
 
 export type ProductUpdatePayload = {
@@ -548,6 +717,7 @@ export type QueryCustomerCollectionArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<CustomerOrderByInput>;
 };
 
 
@@ -561,6 +731,7 @@ export type QueryFeatureCollectionArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<FeatureOrderByInput>;
 };
 
 
@@ -574,6 +745,7 @@ export type QueryIdentityCollectionArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<IdentityOrderByInput>;
 };
 
 
@@ -587,6 +759,7 @@ export type QueryProductCollectionArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<ProductOrderByInput>;
 };
 
 
@@ -600,6 +773,7 @@ export type QuerySubscriptionCollectionArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<SubscriptionOrderByInput>;
 };
 
 
@@ -613,6 +787,7 @@ export type QueryUserCollectionArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<UserOrderByInput>;
 };
 
 export enum SubStatus {
@@ -631,6 +806,7 @@ export type Subscription = {
   createdAt: Scalars['DateTime'];
   customer: Customer;
   endDate?: Maybe<Scalars['Timestamp']>;
+  /** Unique identifier */
   id: Scalars['ID'];
   product: Product;
   quantity: Scalars['Int'];
@@ -653,11 +829,11 @@ export type SubscriptionConnection = {
   pageInfo: PageInfo;
 };
 
-/** Input to create a new Subscription */
+/** Input to create a Subscription */
 export type SubscriptionCreateInput = {
-  customer: SubscriptionCustomerRelateSubscriptionCustomerCreateRelationInput;
+  customer: CustomerToSubscriptionCreateCustomerRelation;
   endDate?: InputMaybe<Scalars['Timestamp']>;
-  product: SubscriptionProductRelateSubscriptionProductCreateRelationInput;
+  product: ProductToSubscriptionCreateProductRelation;
   quantity: Scalars['Int'];
   startDate: Scalars['Timestamp'];
   status: SubStatus;
@@ -668,25 +844,6 @@ export type SubscriptionCreateInput = {
 export type SubscriptionCreatePayload = {
   __typename?: 'SubscriptionCreatePayload';
   subscription?: Maybe<Subscription>;
-};
-
-/** Input to create a new SubscriptionCustomerRelateSubscriptionCustomer */
-export type SubscriptionCustomerRelateSubscriptionCustomerCreateInput = {
-  stripeId: Scalars['String'];
-  user: CustomerCustomerRelateUserUserCreateInput;
-};
-
-/** Input to create a new SubscriptionCustomerRelateSubscriptionCustomer relation */
-export type SubscriptionCustomerRelateSubscriptionCustomerCreateRelationInput = {
-  create?: InputMaybe<SubscriptionCustomerRelateSubscriptionCustomerCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to update a SubscriptionCustomerRelateSubscriptionCustomer relation */
-export type SubscriptionCustomerRelateSubscriptionCustomerUpdateRelationInput = {
-  create?: InputMaybe<SubscriptionCustomerRelateSubscriptionCustomerCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
 };
 
 export type SubscriptionDeletePayload = {
@@ -700,34 +857,16 @@ export type SubscriptionEdge = {
   node: Subscription;
 };
 
-/** Input to create a new SubscriptionProductRelateSubscriptionProduct */
-export type SubscriptionProductRelateSubscriptionProductCreateInput = {
-  currency: Scalars['String'];
-  features: Array<ProductFeatureRelateProductFeatureCreateInput>;
-  interval: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['String'];
+export type SubscriptionOrderByInput = {
+  createdAt?: InputMaybe<OrderByDirection>;
 };
 
-/** Input to create a new SubscriptionProductRelateSubscriptionProduct relation */
-export type SubscriptionProductRelateSubscriptionProductCreateRelationInput = {
-  create?: InputMaybe<SubscriptionProductRelateSubscriptionProductCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to update a SubscriptionProductRelateSubscriptionProduct relation */
-export type SubscriptionProductRelateSubscriptionProductUpdateRelationInput = {
-  create?: InputMaybe<SubscriptionProductRelateSubscriptionProductCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to create a new Subscription */
+/** Input to update a Subscription */
 export type SubscriptionUpdateInput = {
-  customer?: InputMaybe<SubscriptionCustomerRelateSubscriptionCustomerUpdateRelationInput>;
+  customer?: InputMaybe<CustomerToSubscriptionUpdateCustomerRelation>;
   endDate?: InputMaybe<Scalars['Timestamp']>;
-  product?: InputMaybe<SubscriptionProductRelateSubscriptionProductUpdateRelationInput>;
-  quantity?: InputMaybe<Scalars['Int']>;
+  product?: InputMaybe<ProductToSubscriptionUpdateProductRelation>;
+  quantity?: InputMaybe<IntOperationsInput>;
   startDate?: InputMaybe<Scalars['Timestamp']>;
   status?: InputMaybe<SubStatus>;
   trialEnd?: InputMaybe<Scalars['Timestamp']>;
@@ -745,6 +884,7 @@ export type User = {
   createdAt: Scalars['DateTime'];
   customer?: Maybe<Customer>;
   email: Scalars['Email'];
+  /** Unique identifier */
   id: Scalars['ID'];
   identities?: Maybe<IdentityConnection>;
   name?: Maybe<Scalars['String']>;
@@ -758,6 +898,7 @@ export type UserIdentitiesArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<UserOrderByInput>;
 };
 
 export type UserByInput = {
@@ -772,36 +913,17 @@ export type UserConnection = {
   pageInfo: PageInfo;
 };
 
-/** Input to create a new User */
+/** Input to create a User */
 export type UserCreateInput = {
-  customer?: InputMaybe<UserCustomerRelateUserCustomerCreateRelationInput>;
+  customer?: InputMaybe<CustomerToUserCreateCustomerRelation>;
   email: Scalars['Email'];
-  identities?: InputMaybe<Array<UserIdentityRelateUserIdentityCreateRelationInput>>;
+  identities?: InputMaybe<Array<IdentityToUserCreateIdentityRelation>>;
   name?: InputMaybe<Scalars['String']>;
 };
 
 export type UserCreatePayload = {
   __typename?: 'UserCreatePayload';
   user?: Maybe<User>;
-};
-
-/** Input to create a new UserCustomerRelateUserCustomer */
-export type UserCustomerRelateUserCustomerCreateInput = {
-  stripeId: Scalars['String'];
-  subscriptions?: InputMaybe<Array<CustomerCustomerRelateSubscriptionSubscriptionCreateInput>>;
-};
-
-/** Input to create a new UserCustomerRelateUserCustomer relation */
-export type UserCustomerRelateUserCustomerCreateRelationInput = {
-  create?: InputMaybe<UserCustomerRelateUserCustomerCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to update a UserCustomerRelateUserCustomer relation */
-export type UserCustomerRelateUserCustomerUpdateRelationInput = {
-  create?: InputMaybe<UserCustomerRelateUserCustomerCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
 };
 
 export type UserDeletePayload = {
@@ -815,30 +937,15 @@ export type UserEdge = {
   node: User;
 };
 
-/** Input to create a new UserIdentityRelateUserIdentity */
-export type UserIdentityRelateUserIdentityCreateInput = {
-  sub: Scalars['String'];
-  type: IdentityType;
+export type UserOrderByInput = {
+  createdAt?: InputMaybe<OrderByDirection>;
 };
 
-/** Input to create a new UserIdentityRelateUserIdentity relation */
-export type UserIdentityRelateUserIdentityCreateRelationInput = {
-  create?: InputMaybe<UserIdentityRelateUserIdentityCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to update a UserIdentityRelateUserIdentity relation */
-export type UserIdentityRelateUserIdentityUpdateRelationInput = {
-  create?: InputMaybe<UserIdentityRelateUserIdentityCreateInput>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to create a new User */
+/** Input to update a User */
 export type UserUpdateInput = {
-  customer?: InputMaybe<UserCustomerRelateUserCustomerUpdateRelationInput>;
+  customer?: InputMaybe<CustomerToUserUpdateCustomerRelation>;
   email?: InputMaybe<Scalars['Email']>;
-  identities?: InputMaybe<Array<UserIdentityRelateUserIdentityUpdateRelationInput>>;
+  identities?: InputMaybe<Array<IdentityToUserUpdateIdentityRelation>>;
   name?: InputMaybe<Scalars['String']>;
 };
 

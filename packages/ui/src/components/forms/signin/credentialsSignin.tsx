@@ -1,7 +1,9 @@
 import { signIn, SignInOptions } from 'next-auth/react';
 import { Button } from '../../button';
 import { Field } from '../input';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form } from '../form';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 interface CredentialsSignupProps {
   image: React.ReactNode;
@@ -92,23 +94,15 @@ export const CredentialsSignin: React.FC<CredentialsSignupProps> = ({
               </div>
               <a
                 className="flex items-center justify-center w-full py-3 mb-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md px-7 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
-                style={{ backgroundColor: '#3b5998' }}
+                style={{ backgroundColor: '#0F9D58' }}
                 href="#!"
                 role="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
+                onClick={async () => await signIn('google')}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 320 512"
-                  className="mr-2 h-3.5 w-3.5"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
-                  />
-                </svg>
-                Continue with Facebook
+                <FontAwesomeIcon icon={faGoogle} />
+                &nbsp; Continue with Google
               </a>
               <a
                 className="flex items-center justify-center w-full py-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md px-7 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"

@@ -15,6 +15,7 @@ schema
 enum IdentityType {
   CREDENTIALS
   GITHUB
+  GOOGLE
 }
 
 enum SubStatus {
