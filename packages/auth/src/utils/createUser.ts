@@ -10,6 +10,7 @@ export const createUser = async (
   email: string,
   sub: string,
   type: IdentityType,
+  name?: string,
 ) => {
   await graphQLClient.request<Mutation, MutationUserCreateArgs>(
     gql`
@@ -24,6 +25,7 @@ export const createUser = async (
     {
       input: {
         email,
+        name,
         identities: [
           {
             create: {

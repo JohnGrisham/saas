@@ -97,13 +97,13 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
 
       switch (account?.provider) {
         case 'credentials':
-          await credentialsSigninHandler(user, email);
+          await credentialsSigninHandler(user, email, name);
         case 'google': {
           const sub = profile?.sub ?? `GSTUB_${user.id}`;
-          await googleSigninHandler(sub, email);
+          await googleSigninHandler(sub, email, name);
         }
         default:
-          await credentialsSigninHandler(user, email);
+          await credentialsSigninHandler(user, email, name);
       }
 
       // const [existingStripeUser = undefined] = (

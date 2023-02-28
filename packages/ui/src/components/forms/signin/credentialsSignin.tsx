@@ -99,7 +99,7 @@ export const CredentialsSignin: React.FC<CredentialsSignupProps> = ({
                 role="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                onClick={async () => await signIn('google')}
+                onClick={async () => await signIn('google', signInOptions)}
               >
                 <FontAwesomeIcon icon={faGoogle} />
                 &nbsp; Continue with Google

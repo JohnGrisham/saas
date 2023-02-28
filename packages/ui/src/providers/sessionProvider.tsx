@@ -54,38 +54,41 @@ const withNextSessionProvider = ({
   </NextAuthSessionProvider>
 );
 
-const AuthenticatedSessionProvider: React.FC<
-  AuthenticatedSessionProviderProps
-> = ({ children }) => {
-  const { data: session, status } = useSession();
-  const [authStatus, setAuthStatus] = React.useState(status);
-  const isAuthSession = isAuthenticatedSession(session);
+const AuthenticatedSessionProvider: React.FC<AuthenticatedSessionProviderProps> =
+  ({ children }) => {
+    const { data: session, status } = useSession();
+    const [authStatus, setAuthStatus] = React.useState(status);
+    const isAuthSession = isAuthenticatedSession(session);
 
-  React.useEffect(() => {
-    if (!isAuthSession && !isAuthScreen()) {
-      setAuthStatus('loading');
-      signIn();
-    } else {
-      setAuthStatus('unauthenticated');
+    React.useEffect(() => {
+      if (!isAuthSession && !isAuthScreen() && status !== 'loading') {
+        setAuthStatus('loading');
+        signIn();
+      } else {
+        setAuthStatus(status);
+      }
+    }, [authStatus, isAuthSession, status]);
+
+    if (authStatus === 'loading') {
+      return <div>Loading...</div>;
     }
-  }, [authStatus, isAuthSession]);
 
-  if (authStatus === 'loading') {
-    return <div>Loading...</div>;
-  }
+    if (!isAuthScreen() && authStatus === 'unauthenticated') {
+      return null;
+    }
 
-  if (isAuthSession) {
-    return (
-      <AuthenticatedSessionContext.Provider
-        value={{ context: { data: session, status: 'authenticated' } }}
-      >
-        {children}
-      </AuthenticatedSessionContext.Provider>
-    );
-  }
+    if (isAuthSession) {
+      return (
+        <AuthenticatedSessionContext.Provider
+          value={{ context: { data: session, status: 'authenticated' } }}
+        >
+          {children}
+        </AuthenticatedSessionContext.Provider>
+      );
+    }
 
-  return <>{children}</>;
-};
+    return <>{children}</>;
+  };
 
 export const SessionProvider: React.FC<
   Omit<AuthenticatedSessionProviderProps, 'AuthSessionProvider'>

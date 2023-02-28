@@ -3,7 +3,11 @@ import { IdentityType } from 'client';
 import { User } from 'next-auth';
 import { isCognitoUser } from 'core';
 
-export const credentialsSigninHandler = async (user: User, email: string) => {
+export const credentialsSigninHandler = async (
+  user: User,
+  email: string,
+  name: string,
+) => {
   const gqlUserRecord = await getUserByEmail(email);
   const cognitoUser = isCognitoUser(user);
   const hasPasswordIdentity = !!gqlUserRecord?.identities?.edges?.find(
@@ -11,7 +15,7 @@ export const credentialsSigninHandler = async (user: User, email: string) => {
   );
 
   if (!gqlUserRecord && cognitoUser) {
-    await createUser(email, user.getUsername(), IdentityType.Credentials);
+    await createUser(email, user.getUsername(), IdentityType.Credentials, name);
   } else if (gqlUserRecord && !hasPasswordIdentity && cognitoUser) {
     await createIdentity(
       user.getUsername(),

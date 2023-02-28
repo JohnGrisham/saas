@@ -68,7 +68,7 @@ export default function Account() {
     }
   }, [session]);
 
-  if (!session?.user?.email || !data) {
+  if (!session?.user?.email || !data?.user) {
     return null;
   }
 
@@ -124,8 +124,8 @@ export default function Account() {
           footer={<p>Please use 64 characters at maximum.</p>}
         >
           <div className="mt-8 mb-4 text-xl font-semibold text-zinc-600">
-            {session.user.name ? (
-              `${session.user.name}`
+            {data.user.name ? (
+              `${data.user.name}`
             ) : (
               <div className="h-8 mb-6">...</div>
             )}
@@ -137,7 +137,7 @@ export default function Account() {
           footer={<p>We will email you to verify the change.</p>}
         >
           <p className="mt-8 mb-4 text-xl font-semibold text-zinc-600">
-            {session.user ? session.user.email : undefined}
+            {data.user.email}
           </p>
         </Card>
       </div>
