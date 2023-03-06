@@ -58,6 +58,9 @@
         "$NEXT_PUBLIC_USER_POOL_CLIENT_ID"
       ]
     },
+    "openai-api#build": {
+      "dependsOn": ["$OPENAI_API_KEY"]
+    },
     "lint": {
       "outputs": []
     }
