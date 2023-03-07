@@ -4,9 +4,11 @@ import CredentialsProvider, {
 } from 'next-auth/providers/credentials';
 import GithubProvider, { GithubProfile } from 'next-auth/providers/github';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
+import NetlifyProvider from 'next-auth/providers/netlify';
 import {
   credentialsSigninHandler,
   googleSigninHandler,
+  netlifySigninHandler,
 } from './signin-handlers';
 import {
   UserByEmailQuery,
@@ -88,6 +90,13 @@ export const github = (config?: OAuthUserConfig<GithubProfile>) =>
     ...config,
   });
 
+export const netlify = (config?: OAuthUserConfig<any>) =>
+  NetlifyProvider({
+    clientId: process.env.NETLIFY_CLIENT_ID as string,
+    clientSecret: process.env.NETLIFY_CLIENT_SECRET as string,
+    ...config,
+  });
+
 export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
   async signIn({ user, account, profile }) {
     try {
@@ -109,6 +118,9 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
         case 'google': {
           const sub = profile?.sub ?? `GSTUB_${user.id}`;
           await googleSigninHandler(sub, email, name);
+        }
+        case 'netlify': {
+          await netlifySigninHandler(user.id, email, name);
         }
         default:
           await credentialsSigninHandler(user, email, name);
@@ -201,9 +213,9 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
 
     return Promise.resolve(token);
   },
-  async session({ session, token }) {
-    if (token.sub) {
-      session.user = token;
+  async session({ session, token: { sub, email, name, picture } }) {
+    if (sub) {
+      session.user = { email, name, image: picture };
     }
 
     return Promise.resolve(session);

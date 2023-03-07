@@ -51,6 +51,18 @@ export default defineConfig({
           process.env.GOOGLE_CLIENT_SECRET,
         );
       }
+
+      if (process.env.NETLIFY_CLIENT_ID) {
+        options.define['process.env.NETLIFY_CLIENT_ID'] = JSON.stringify(
+          process.env.NETLIFY_CLIENT_ID,
+        );
+      }
+
+      if (process.env.NETLIFY_CLIENT_SECRET) {
+        options.define['process.env.NETLIFY_CLIENT_SECRET'] = JSON.stringify(
+          process.env.NETLIFY_CLIENT_SECRET,
+        );
+      }
     }
   },
 });

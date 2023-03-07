@@ -125,7 +125,8 @@ export type IdentityToUserUpdateUserRelation = {
 export enum IdentityType {
   Credentials = 'CREDENTIALS',
   Github = 'GITHUB',
-  Google = 'GOOGLE'
+  Google = 'GOOGLE',
+  Netlify = 'NETLIFY'
 }
 
 /** Input to update a Identity */

@@ -1,5 +1,6 @@
 import { createIdentity, createUser, getUserByEmail } from '../utils';
 import { IdentityType } from 'client';
+import { Profile } from 'next-auth';
 
 export const googleSigninHandler = async (
   sub: string,

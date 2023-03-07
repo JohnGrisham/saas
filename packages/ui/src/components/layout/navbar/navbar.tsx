@@ -168,7 +168,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </Button>
                 <Dropdown listClassNames="right-0" items={profileDropdownItems}>
                   <Avatar
-                    imageSrc="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+                    imageSrc={
+                      session.user?.image ??
+                      'https://mdbcdn.b-cdn.net/img/new/avatars/8.webp'
+                    }
                     width={7}
                   />
                 </Dropdown>

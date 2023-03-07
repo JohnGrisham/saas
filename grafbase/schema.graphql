@@ -24,6 +24,7 @@ enum IdentityType {
   CREDENTIALS
   GITHUB
   GOOGLE
+  NETLIFY
 }
 
 type CognitoUser {
