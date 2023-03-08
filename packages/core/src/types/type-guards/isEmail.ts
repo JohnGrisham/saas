@@ -1,4 +1,4 @@
-import { Scalars } from '../../../client';
+import { Scalars } from 'client';
 
 export const isEmail = (data: unknown): data is Scalars['Email'] => {
   return (

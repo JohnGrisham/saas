@@ -1,7 +1,7 @@
 import { callbacks, providers, jwt } from 'auth';
-import NextAuth from 'next-auth';
+import NextAuth, { type NextAuthOptions } from 'next-auth';
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/signin',
     signOut: '/auth/signout',
@@ -9,4 +9,6 @@ export default NextAuth({
   providers,
   callbacks,
   jwt,
-});
+};
+
+export default NextAuth(authOptions);

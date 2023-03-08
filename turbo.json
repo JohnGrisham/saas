@@ -48,6 +48,7 @@
     },
     "web#build": {
       "dependsOn": [
+        "$AUTH_BEARER_TOKEN",
         "$NEXT_PUBLIC_AWS_REGION",
         "$NEXT_PUBLIC_COGNITO_DOMAIN",
         "$NEXTAUTH_URL",
@@ -57,7 +58,10 @@
         "$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE",
         "$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
         "$NEXT_PUBLIC_USER_POOL_ID",
-        "$NEXT_PUBLIC_USER_POOL_CLIENT_ID"
+        "$NEXT_PUBLIC_USER_POOL_CLIENT_ID",
+        "$NODE_ENV",
+        "$TEAM_ID_VERCEL",
+        "$VERCEL"
       ]
     },
     "api#build": {
