@@ -61,7 +61,7 @@ type Site @model {
   font: String @default(value: "font-cal")
   image: String
   imageBlurhash: String
-  subdomain: String @unique
-  customDomain: String @unique
+  subdomain: String! @unique
+  customDomain: String! @unique
   user: User
 }
