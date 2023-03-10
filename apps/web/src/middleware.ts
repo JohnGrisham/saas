@@ -1,4 +1,3 @@
-import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const config = {
@@ -37,7 +36,7 @@ export default async function middleware(req: NextRequest) {
       ? hostname
           .replace(`.vercel.app`, '')
           .replace(`.platformize.vercel.app`, '')
-      : hostname.replace(`.localhost:3000`, '');
+      : hostname.replace(`.${process.env.NEXT_PUBLIC_ROOT_URL}`, '');
 
   // rewrites for app pages
   if (currentHost == 'app') {
@@ -55,8 +54,11 @@ export default async function middleware(req: NextRequest) {
   }
 
   // rewrite root application to `/home` folder
-  if (hostname === 'localhost:3000' || hostname === 'platformize.vercel.app') {
-    return NextResponse.rewrite(new URL(`/home${path}`, req.url));
+  if (
+    hostname === process.env.NEXT_PUBLIC_ROOT_URL ||
+    hostname === 'platformize.vercel.app'
+  ) {
+    return NextResponse.rewrite(new URL(path, req.url));
   }
 
   // rewrite everything else to `/_sites/[site] dynamic route

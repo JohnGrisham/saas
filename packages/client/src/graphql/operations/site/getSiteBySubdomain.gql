@@ -1,0 +1,10 @@
+query SiteBySubdomain($sub: String!) {
+  site(by: { subdomain: $sub }) {
+    ...SiteParts
+    createdAt
+    updatedAt
+    user {
+      ...UserParts
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Account, Profile, CallbacksOptions } from 'next-auth';
+import { Account, CallbacksOptions, CookiesOptions, Profile } from 'next-auth';
 import CredentialsProvider, {
   CredentialsConfig,
 } from 'next-auth/providers/credentials';
@@ -15,6 +15,7 @@ import {
   UserByEmailQueryVariables,
   graphQLClient,
 } from 'client';
+import { getSiteData, getSitePaths } from './utils';
 import { JWTOptions } from 'next-auth/jwt';
 import { OAuthUserConfig } from 'next-auth/providers';
 import { Auth } from '@aws-amplify/auth';
@@ -23,6 +24,22 @@ import { constructStripe } from 'payments-server';
 import { gql } from 'graphql-request';
 import jsonwebtoken from 'jsonwebtoken';
 import { isCognitoUser } from 'core';
+
+const hostName = new URL(process.env.NEXTAUTH_URL as string).hostname;
+const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://');
+
+export const crossDomainCookies: Partial<CookiesOptions> = {
+  sessionToken: {
+    name: `${useSecureCookies ? '__Secure-' : ''}next-auth.session-token`,
+    options: {
+      httpOnly: true,
+      sameSite: 'lax',
+      path: '/',
+      domain: '.' + hostName,
+      secure: useSecureCookies,
+    },
+  },
+};
 
 export const jwt: Partial<JWTOptions> = {
   encode: ({ secret, token }) => {
@@ -115,12 +132,15 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
       switch (account?.provider) {
         case 'credentials':
           await credentialsSigninHandler(user, email, name);
+          break;
         case 'google': {
           const sub = profile?.sub ?? `GSTUB_${user.id}`;
           await googleSigninHandler(sub, email, name);
+          break;
         }
         case 'netlify': {
           await netlifySigninHandler(user.id, email, name);
+          break;
         }
         default:
           await credentialsSigninHandler(user, email, name);
@@ -223,3 +243,4 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
 };
 
 export const providers = [credentials(), google(), github()];
+export { getSiteData, getSitePaths };

@@ -5,7 +5,6 @@ export async function fetchWithToken(
   url: RequestInfo,
   init?: RequestInit,
 ): Promise<Response> {
-  console.log(url);
   const { token } = await fetchToken();
   return await import('node-fetch').then(({ default: fetch }) =>
     fetch(url, {

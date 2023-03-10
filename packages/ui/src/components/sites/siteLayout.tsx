@@ -1,8 +1,8 @@
+import * as React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Meta } from 'core';
 import Image from 'next/image';
-import { useState, useEffect, useCallback } from 'react';
 import Cookies from 'js-cookie';
 
 interface SiteLayoutProps {
@@ -12,27 +12,27 @@ interface SiteLayoutProps {
   subdomain?: string;
 }
 
-export default function SiteLayout({
+export const SiteLayout: React.FC<SiteLayoutProps> = ({
   meta,
   children,
   subdomain,
-}: SiteLayoutProps) {
-  const [scrolled, setScrolled] = useState(false);
+}) => {
+  const [scrolled, setScrolled] = React.useState(false);
 
-  const onScroll = useCallback(() => {
+  const onScroll = React.useCallback(() => {
     setScrolled(window.pageYOffset > 20);
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, [onScroll]);
 
-  const [closeModal, setCloseModal] = useState<boolean>(
+  const [closeModal, setCloseModal] = React.useState<boolean>(
     !!Cookies.get('closeModal'),
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (closeModal) {
       Cookies.set('closeModal', 'true');
     } else {
@@ -75,10 +75,10 @@ export default function SiteLayout({
           scrolled ? 'drop-shadow-md' : ''
         }  ease top-0 left-0 right-0 z-30 flex h-16 bg-white transition-all duration-150`}
       >
-        <div className="flex items-center justify-center h-full max-w-screen-xl px-10 mx-auto space-x-5 sm:px-20">
+        <div className="mx-auto flex h-full max-w-screen-xl items-center justify-center space-x-5 px-10 sm:px-20">
           <Link href="/" className="flex items-center justify-center">
             {meta?.logo && (
-              <div className="inline-block w-8 h-8 overflow-hidden align-middle rounded-full">
+              <div className="inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
                 <Image
                   alt={meta?.title ?? 'Logo'}
                   height={40}
@@ -87,7 +87,7 @@ export default function SiteLayout({
                 />
               </div>
             )}
-            <span className="inline-block ml-3 font-medium truncate">
+            <span className="ml-3 inline-block truncate font-medium">
               {meta?.title}
             </span>
           </Link>
@@ -124,7 +124,7 @@ export default function SiteLayout({
             </svg>
           </button>
           <div className="text-center lg:text-left">
-            <p className="text-lg text-black font-cal sm:text-2xl">
+            <p className="font-cal text-lg text-black sm:text-2xl">
               Platforms Starter Kit Demo
             </p>
             <p
@@ -151,15 +151,15 @@ export default function SiteLayout({
             } flex w-full flex-col space-y-3 text-center sm:flex-row sm:space-y-0 sm:space-x-3 lg:w-auto`}
           >
             <a
-              className="flex-auto px-5 py-1 text-lg text-black whitespace-no-wrap transition-all duration-150 ease-in-out border border-gray-200 rounded-md font-cal hover:border-black sm:py-3"
-              href="https://app.vercel.pub"
+              className="whitespace-no-wrap font-cal flex-auto rounded-md border border-gray-200 px-5 py-1 text-lg text-black transition-all duration-150 ease-in-out hover:border-black sm:py-3"
+              href="https://app.vercel.app"
               rel="noreferrer"
               target="_blank"
             >
               Create your publication
             </a>
             <a
-              className="flex-auto px-5 py-1 text-lg text-white whitespace-no-wrap transition-all duration-150 ease-in-out bg-black border border-black rounded-md font-cal hover:bg-white hover:text-black sm:py-3"
+              className="whitespace-no-wrap font-cal flex-auto rounded-md border border-black bg-black px-5 py-1 text-lg text-white transition-all duration-150 ease-in-out hover:bg-white hover:text-black sm:py-3"
               href="https://vercel.com/guides/nextjs-multi-tenant-application"
               rel="noreferrer"
               target="_blank"
@@ -171,4 +171,4 @@ export default function SiteLayout({
       )}
     </div>
   );
-}
+};

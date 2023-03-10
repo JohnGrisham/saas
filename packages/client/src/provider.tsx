@@ -15,9 +15,6 @@ export const graphQLClient = new GraphQLClient(
   process.env.API_ENDPOINT as string,
   {
     fetch: fetchWithToken,
-    headers: {
-      'content-type': 'application/json',
-    },
   },
 );
 

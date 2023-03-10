@@ -63,6 +63,12 @@ export default defineConfig({
           process.env.NETLIFY_CLIENT_SECRET,
         );
       }
+
+      if (process.env.NEXTAUTH_URL) {
+        options.define['process.env.NEXTAUTH_URL'] = JSON.stringify(
+          process.env.NEXTAUTH_URL,
+        );
+      }
     }
   },
 });

@@ -1,4 +1,4 @@
-import { callbacks, providers, jwt } from 'auth';
+import { callbacks, crossDomainCookies, providers, jwt } from 'auth';
 import NextAuth, { type NextAuthOptions } from 'next-auth';
 
 export const authOptions: NextAuthOptions = {
@@ -8,6 +8,7 @@ export const authOptions: NextAuthOptions = {
   },
   providers,
   callbacks,
+  cookies: crossDomainCookies,
   jwt,
 };
 

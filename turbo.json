@@ -32,7 +32,8 @@
         "$ISSUER_URL",
         "$NETLIFY_CLIENT_ID",
         "$NETLIFY_CLIENT_SECRET",
-        "$NEXTAUTH_SECRET"
+        "$NEXTAUTH_SECRET",
+        "$NEXTAUTH_URL"
       ]
     },
     "client#build": {
@@ -51,7 +52,6 @@
         "$AUTH_BEARER_TOKEN",
         "$NEXT_PUBLIC_AWS_REGION",
         "$NEXT_PUBLIC_COGNITO_DOMAIN",
-        "$NEXTAUTH_URL",
         "$ISSUER_URL",
         "$NEXTAUTH_SECRET",
         "$NEXT_PUBLIC_ROOT_URL",

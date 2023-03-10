@@ -8,13 +8,13 @@ export const googleSigninHandler = async (
   name: string,
 ) => {
   const gqlUserRecord = await getUserByEmail(email);
-  const hasGoogleIdentity = !!gqlUserRecord?.identities?.edges?.find(
+  const googleIdentity = gqlUserRecord?.identities?.edges?.find(
     (edge) => edge?.node.type === IdentityType.Google,
   );
 
   if (!gqlUserRecord) {
     await createUser(email, sub, IdentityType.Google, name);
-  } else if (gqlUserRecord && !hasGoogleIdentity) {
+  } else if (gqlUserRecord && !googleIdentity) {
     await createIdentity(sub, gqlUserRecord.id, IdentityType.Google);
   }
 };

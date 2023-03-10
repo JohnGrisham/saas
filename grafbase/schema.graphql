@@ -42,7 +42,6 @@ type User @model {
   identities: [Identity!]
   customer: StripeCustomer @resolver(name: "stripe/customer/byEmail")
   cognitoUser: CognitoUser @resolver(name: "cognito/user/byEmail")
-  customer: Customer
   sites: [Site]
 }
 

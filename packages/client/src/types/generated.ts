@@ -100,6 +100,7 @@ export type IdentityToUserCreateUser = {
   email: Scalars['Email'];
   identities?: InputMaybe<Array<IdentityToUserCreateIdentityRelation>>;
   name?: InputMaybe<Scalars['String']>;
+  sites?: InputMaybe<Array<InputMaybe<SiteToUserCreateSiteRelation>>>;
 };
 
 /** Input to link to or create a User for the IdentityToUser relation of Identity */
@@ -149,6 +150,12 @@ export type Mutation = {
   identityDelete?: Maybe<IdentityDeletePayload>;
   /** Update a Identity */
   identityUpdate?: Maybe<IdentityUpdatePayload>;
+  /** Create a Site */
+  siteCreate?: Maybe<SiteCreatePayload>;
+  /** Delete a Site by ID or unique field */
+  siteDelete?: Maybe<SiteDeletePayload>;
+  /** Update a Site */
+  siteUpdate?: Maybe<SiteUpdatePayload>;
   stripe: StripeMutation;
   /** Create a User */
   userCreate?: Maybe<UserCreatePayload>;
@@ -172,6 +179,22 @@ export type MutationIdentityDeleteArgs = {
 export type MutationIdentityUpdateArgs = {
   by: IdentityByInput;
   input: IdentityUpdateInput;
+};
+
+
+export type MutationSiteCreateArgs = {
+  input: SiteCreateInput;
+};
+
+
+export type MutationSiteDeleteArgs = {
+  by: SiteByInput;
+};
+
+
+export type MutationSiteUpdateArgs = {
+  by: SiteByInput;
+  input: SiteUpdateInput;
 };
 
 
@@ -209,6 +232,10 @@ export type Query = {
   identity?: Maybe<Identity>;
   /** Paginated query to fetch the whole list of `Identity`. */
   identityCollection?: Maybe<IdentityConnection>;
+  /** Query a single Site by an ID or a unique field */
+  site?: Maybe<Site>;
+  /** Paginated query to fetch the whole list of `Site`. */
+  siteCollection?: Maybe<SiteConnection>;
   stripe: StripeQuery;
   /** Query a single User by an ID or a unique field */
   user?: Maybe<User>;
@@ -231,6 +258,20 @@ export type QueryIdentityCollectionArgs = {
 };
 
 
+export type QuerySiteArgs = {
+  by: SiteByInput;
+};
+
+
+export type QuerySiteCollectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<SiteOrderByInput>;
+};
+
+
 export type QueryUserArgs = {
   by: UserByInput;
 };
@@ -242,6 +283,135 @@ export type QueryUserCollectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<UserOrderByInput>;
+};
+
+export type Site = {
+  __typename?: 'Site';
+  /** when the model was created */
+  createdAt: Scalars['DateTime'];
+  customDomain: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  font?: Maybe<Scalars['String']>;
+  /** Unique identifier */
+  id: Scalars['ID'];
+  image?: Maybe<Scalars['String']>;
+  imageBlurhash?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  subdomain: Scalars['String'];
+  /** when the model was updated */
+  updatedAt: Scalars['DateTime'];
+  user?: Maybe<User>;
+};
+
+export type SiteByInput = {
+  customDomain?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  subdomain?: InputMaybe<Scalars['String']>;
+};
+
+export type SiteConnection = {
+  __typename?: 'SiteConnection';
+  edges?: Maybe<Array<Maybe<SiteEdge>>>;
+  /** Information to aid in pagination */
+  pageInfo: PageInfo;
+};
+
+/** Input to create a Site */
+export type SiteCreateInput = {
+  customDomain: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  font?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  imageBlurhash?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  subdomain: Scalars['String'];
+  user?: InputMaybe<SiteToUserCreateUserRelation>;
+};
+
+export type SiteCreatePayload = {
+  __typename?: 'SiteCreatePayload';
+  site?: Maybe<Site>;
+};
+
+export type SiteDeletePayload = {
+  __typename?: 'SiteDeletePayload';
+  deletedId: Scalars['ID'];
+};
+
+export type SiteEdge = {
+  __typename?: 'SiteEdge';
+  cursor: Scalars['String'];
+  node: Site;
+};
+
+export type SiteOrderByInput = {
+  createdAt?: InputMaybe<OrderByDirection>;
+};
+
+/** Input to create a Site for the SiteToUser relation of User */
+export type SiteToUserCreateSite = {
+  customDomain: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  font?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  imageBlurhash?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  subdomain: Scalars['String'];
+};
+
+/** Input to link to or create a Site for the SiteToUser relation of User */
+export type SiteToUserCreateSiteRelation = {
+  create?: InputMaybe<SiteToUserCreateSite>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to create a User for the SiteToUser relation of Site */
+export type SiteToUserCreateUser = {
+  email: Scalars['Email'];
+  identities?: InputMaybe<Array<IdentityToUserCreateIdentityRelation>>;
+  name?: InputMaybe<Scalars['String']>;
+  sites?: InputMaybe<Array<InputMaybe<SiteToUserCreateSiteRelation>>>;
+};
+
+/** Input to link to or create a User for the SiteToUser relation of Site */
+export type SiteToUserCreateUserRelation = {
+  create?: InputMaybe<SiteToUserCreateUser>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a Site for the SiteToUser relation of User */
+export type SiteToUserUpdateSiteRelation = {
+  create?: InputMaybe<SiteToUserCreateSite>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a User for the SiteToUser relation of Site */
+export type SiteToUserUpdateUserRelation = {
+  create?: InputMaybe<SiteToUserCreateUser>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to update a Site */
+export type SiteUpdateInput = {
+  customDomain?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  font?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  imageBlurhash?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  subdomain?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<SiteToUserUpdateUserRelation>;
+};
+
+export type SiteUpdatePayload = {
+  __typename?: 'SiteUpdatePayload';
+  site?: Maybe<Site>;
 };
 
 export type StripeAccount = {
@@ -40467,12 +40637,22 @@ export type User = {
   id: Scalars['ID'];
   identities?: Maybe<IdentityConnection>;
   name?: Maybe<Scalars['String']>;
+  sites?: Maybe<SiteConnection>;
   /** when the model was updated */
   updatedAt: Scalars['DateTime'];
 };
 
 
 export type UserIdentitiesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<UserOrderByInput>;
+};
+
+
+export type UserSitesArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
@@ -40497,6 +40677,7 @@ export type UserCreateInput = {
   email: Scalars['Email'];
   identities?: InputMaybe<Array<IdentityToUserCreateIdentityRelation>>;
   name?: InputMaybe<Scalars['String']>;
+  sites?: InputMaybe<Array<InputMaybe<SiteToUserCreateSiteRelation>>>;
 };
 
 export type UserCreatePayload = {
@@ -40524,6 +40705,7 @@ export type UserUpdateInput = {
   email?: InputMaybe<Scalars['Email']>;
   identities?: InputMaybe<Array<IdentityToUserUpdateIdentityRelation>>;
   name?: InputMaybe<Scalars['String']>;
+  sites?: InputMaybe<Array<InputMaybe<SiteToUserUpdateSiteRelation>>>;
 };
 
 export type UserUpdatePayload = {
@@ -40536,6 +40718,8 @@ export type AddressPartsFragment = { __typename?: 'StripeAddress', city?: string
 export type IdentityPartsFragment = { __typename?: 'Identity', id: string, sub: string, type: IdentityType };
 
 export type ProductPartsFragment = { __typename?: 'StripeProduct', id: string, active: boolean, created: number, description?: string | null, images: Array<string>, livemode: boolean, metadata: any, name: string, object: StripeProductObject, shippable?: boolean | null, statementDescriptor?: string | null, unitLabel?: string | null, updated: number, url?: string | null };
+
+export type SitePartsFragment = { __typename?: 'Site', id: string, name?: string | null, description?: string | null, logo?: string | null, font?: string | null, image?: string | null, imageBlurhash?: string | null, subdomain: string, customDomain: string };
 
 export type UserPartsFragment = { __typename?: 'User', id: string, email: string, name?: string | null };
 
@@ -40562,6 +40746,20 @@ export type IdentityCollectionQueryVariables = Exact<{
 
 
 export type IdentityCollectionQuery = { __typename?: 'Query', identityCollection?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', cursor: string, node: { __typename?: 'Identity', createdAt: any, updatedAt: any, id: string, sub: string, type: IdentityType, user: { __typename?: 'User', id: string, email: string, name?: string | null } } } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } | null };
+
+export type SiteByCustomDomainQueryVariables = Exact<{
+  domain: Scalars['String'];
+}>;
+
+
+export type SiteByCustomDomainQuery = { __typename?: 'Query', site?: { __typename?: 'Site', createdAt: any, updatedAt: any, id: string, name?: string | null, description?: string | null, logo?: string | null, font?: string | null, image?: string | null, imageBlurhash?: string | null, subdomain: string, customDomain: string, user?: { __typename?: 'User', id: string, email: string, name?: string | null } | null } | null };
+
+export type SiteBySubdomainQueryVariables = Exact<{
+  sub: Scalars['String'];
+}>;
+
+
+export type SiteBySubdomainQuery = { __typename?: 'Query', site?: { __typename?: 'Site', createdAt: any, updatedAt: any, id: string, name?: string | null, description?: string | null, logo?: string | null, font?: string | null, image?: string | null, imageBlurhash?: string | null, subdomain: string, customDomain: string, user?: { __typename?: 'User', id: string, email: string, name?: string | null } | null } | null };
 
 export type UserByEmailQueryVariables = Exact<{
   email: Scalars['Email'];
@@ -40627,6 +40825,19 @@ export const ProductPartsFragmentDoc = `
   unitLabel
   updated
   url
+}
+    `;
+export const SitePartsFragmentDoc = `
+    fragment SiteParts on Site {
+  id
+  name
+  description
+  logo
+  font
+  image
+  imageBlurhash
+  subdomain
+  customDomain
 }
     `;
 export const UserPartsFragmentDoc = `
@@ -40726,6 +40937,60 @@ export const useIdentityCollectionQuery = <
     useQuery<IdentityCollectionQuery, TError, TData>(
       variables === undefined ? ['IdentityCollection'] : ['IdentityCollection', variables],
       fetcher<IdentityCollectionQuery, IdentityCollectionQueryVariables>(client, IdentityCollectionDocument, variables, headers),
+      options
+    );
+export const SiteByCustomDomainDocument = `
+    query SiteByCustomDomain($domain: String!) {
+  site(by: {customDomain: $domain}) {
+    ...SiteParts
+    createdAt
+    updatedAt
+    user {
+      ...UserParts
+    }
+  }
+}
+    ${SitePartsFragmentDoc}
+${UserPartsFragmentDoc}`;
+export const useSiteByCustomDomainQuery = <
+      TData = SiteByCustomDomainQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: SiteByCustomDomainQueryVariables,
+      options?: UseQueryOptions<SiteByCustomDomainQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SiteByCustomDomainQuery, TError, TData>(
+      ['SiteByCustomDomain', variables],
+      fetcher<SiteByCustomDomainQuery, SiteByCustomDomainQueryVariables>(client, SiteByCustomDomainDocument, variables, headers),
+      options
+    );
+export const SiteBySubdomainDocument = `
+    query SiteBySubdomain($sub: String!) {
+  site(by: {subdomain: $sub}) {
+    ...SiteParts
+    createdAt
+    updatedAt
+    user {
+      ...UserParts
+    }
+  }
+}
+    ${SitePartsFragmentDoc}
+${UserPartsFragmentDoc}`;
+export const useSiteBySubdomainQuery = <
+      TData = SiteBySubdomainQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: SiteBySubdomainQueryVariables,
+      options?: UseQueryOptions<SiteBySubdomainQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SiteBySubdomainQuery, TError, TData>(
+      ['SiteBySubdomain', variables],
+      fetcher<SiteBySubdomainQuery, SiteBySubdomainQueryVariables>(client, SiteBySubdomainDocument, variables, headers),
       options
     );
 export const UserByEmailDocument = `

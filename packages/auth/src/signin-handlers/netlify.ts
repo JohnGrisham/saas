@@ -7,13 +7,13 @@ export const netlifySigninHandler = async (
   name: string,
 ) => {
   const gqlUserRecord = await getUserByEmail(email);
-  const hasNetlifyIdentity = !!gqlUserRecord?.identities?.edges?.find(
+  const netlifyIdentity = !!gqlUserRecord?.identities?.edges?.find(
     (edge) => edge?.node.type === IdentityType.Netlify,
   );
 
   if (!gqlUserRecord) {
     await createUser(email, userId, IdentityType.Netlify, name);
-  } else if (gqlUserRecord && !hasNetlifyIdentity) {
+  } else if (gqlUserRecord && !netlifyIdentity) {
     await createIdentity(userId, gqlUserRecord.id, IdentityType.Netlify);
   }
 };

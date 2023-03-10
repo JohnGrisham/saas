@@ -1,0 +1,11 @@
+fragment SiteParts on Site {
+  id
+  name
+  description
+  logo
+  font
+  image
+  imageBlurhash
+  subdomain
+  customDomain
+}
