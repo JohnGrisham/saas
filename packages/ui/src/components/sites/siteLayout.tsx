@@ -70,15 +70,16 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
         <meta name="twitter:image" content={meta?.ogImage} />
         {subdomain != 'demo' && <meta name="robots" content="noindex" />}
       </Head>
-      <div
+      {/* TODO: only display when in preview mode */}
+      {/* <div
         className={`fixed w-full ${
           scrolled ? 'drop-shadow-md' : ''
         }  ease top-0 left-0 right-0 z-30 flex h-16 bg-white transition-all duration-150`}
       >
-        <div className="mx-auto flex h-full max-w-screen-xl items-center justify-center space-x-5 px-10 sm:px-20">
+        <div className="flex items-center justify-center h-full max-w-screen-xl px-10 mx-auto space-x-5 sm:px-20">
           <Link href="/" className="flex items-center justify-center">
             {meta?.logo && (
-              <div className="inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
+              <div className="inline-block w-8 h-8 overflow-hidden align-middle rounded-full">
                 <Image
                   alt={meta?.title ?? 'Logo'}
                   height={40}
@@ -87,14 +88,14 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
                 />
               </div>
             )}
-            <span className="ml-3 inline-block truncate font-medium">
+            <span className="inline-block ml-3 font-medium truncate">
               {meta?.title}
             </span>
           </Link>
         </div>
-      </div>
+      </div> */}
 
-      <div className="mt-20">{children}</div>
+      <div className="template-container">{children}</div>
 
       {subdomain == 'demo' && (
         <div
@@ -124,7 +125,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
             </svg>
           </button>
           <div className="text-center lg:text-left">
-            <p className="font-cal text-lg text-black sm:text-2xl">
+            <p className="text-lg text-black font-cal sm:text-2xl">
               Platforms Starter Kit Demo
             </p>
             <p
@@ -151,7 +152,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
             } flex w-full flex-col space-y-3 text-center sm:flex-row sm:space-y-0 sm:space-x-3 lg:w-auto`}
           >
             <a
-              className="whitespace-no-wrap font-cal flex-auto rounded-md border border-gray-200 px-5 py-1 text-lg text-black transition-all duration-150 ease-in-out hover:border-black sm:py-3"
+              className="flex-auto px-5 py-1 text-lg text-black whitespace-no-wrap transition-all duration-150 ease-in-out border border-gray-200 rounded-md font-cal hover:border-black sm:py-3"
               href="https://app.vercel.app"
               rel="noreferrer"
               target="_blank"
@@ -159,7 +160,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
               Create your publication
             </a>
             <a
-              className="whitespace-no-wrap font-cal flex-auto rounded-md border border-black bg-black px-5 py-1 text-lg text-white transition-all duration-150 ease-in-out hover:bg-white hover:text-black sm:py-3"
+              className="flex-auto px-5 py-1 text-lg text-white whitespace-no-wrap transition-all duration-150 ease-in-out bg-black border border-black rounded-md font-cal hover:bg-white hover:text-black sm:py-3"
               href="https://vercel.com/guides/nextjs-multi-tenant-application"
               rel="noreferrer"
               target="_blank"

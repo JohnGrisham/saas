@@ -53,9 +53,15 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
+  console.log(hostname);
+
   // rewrite root application to `/home` folder
   if (
-    hostname === process.env.NEXT_PUBLIC_ROOT_URL ||
+    hostname ===
+      process.env.NEXT_PUBLIC_ROOT_URL?.replace(
+        new RegExp(/https?:\/\//),
+        '',
+      ) ||
     hostname === 'platformize.vercel.app'
   ) {
     return NextResponse.rewrite(new URL(path, req.url));

@@ -2,12 +2,17 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import '../styles/globals.css';
 import 'ui/styles.css';
 import type { AppProps } from 'next/app';
-import { Body, Navbar, SessionProvider, ThemeProvider } from 'ui';
+import { Body, SessionProvider, ThemeProvider } from 'ui';
 import { Auth } from '@aws-amplify/auth';
 import { Client as GraphqlClient } from 'client';
 import { StripeClient } from 'payments-client';
+import dynamic from 'next/dynamic';
 // @ts-ignore
 import { theme } from 'tailwind-config/tailwind.config';
+
+const Navbar = dynamic(() => import('ui').then(({ Navbar }) => Navbar), {
+  ssr: false,
+});
 
 const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;
 const STRIPE_PUBLISHABLE_KEY =

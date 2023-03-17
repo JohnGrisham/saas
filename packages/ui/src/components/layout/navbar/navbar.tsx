@@ -122,6 +122,14 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   });
 
+  if (
+    window.location.origin !== process.env.NEXT_PUBLIC_ROOT_URL &&
+    status !== 'authenticated' &&
+    !session
+  ) {
+    return null;
+  }
+
   return (
     <nav className={navbarStyles}>
       <div className="container flex flex-wrap items-center justify-between mx-auto h-14">

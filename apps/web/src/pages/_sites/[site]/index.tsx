@@ -4,6 +4,7 @@ import { SiteLayout, SiteLoader } from 'ui';
 import { getSiteData, getSitePaths } from 'auth';
 import { Meta } from 'core';
 import { Site } from 'client';
+import play from 'templates';
 import { useRouter } from 'next/router';
 
 interface PathProps extends ParsedUrlQuery {
@@ -30,7 +31,11 @@ export default function Index({ stringifiedData }: IndexProps) {
       : `https://${data.subdomain}.vercel.app`,
   } as Meta;
 
-  return <SiteLayout meta={meta} subdomain={data.subdomain ?? undefined} />;
+  return (
+    <SiteLayout meta={meta} subdomain={data.subdomain ?? undefined}>
+      <div dangerouslySetInnerHTML={{ __html: play }}></div>
+    </SiteLayout>
+  );
 }
 
 export const getStaticPaths: GetStaticPaths<PathProps> = async () => {

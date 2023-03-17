@@ -1,0 +1,32 @@
+{
+  "name": "templates",
+  "version": "0.0.0",
+  "types": "index.d.ts",
+  "exports": {
+    ".": "./play-tailwind-main/dist/index.html"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build:play": "cd play-tailwind-main && yarn build",
+    "dev:play": "cd play-tailwind-main && yarn dev",
+    "build": "yarn build:play",
+    "dev": "yarn dev:play",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@parcel/transformer-typescript-tsc": "^2.8.3",
+    "concurrently": "^7.2.2",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
+    "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "parcel": "^2.8.3",
+    "tailwind-config": "*",
+    "tsconfig": "*",
+    "typescript": "^4.5.2",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "core": "*"
+  }
+}
