@@ -18,13 +18,10 @@
     "concurrently": "^7.2.2",
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
-    "html-loader": "^4.2.0",
-    "html-webpack-plugin": "^5.5.0",
     "parcel": "^2.8.3",
     "tailwind-config": "*",
     "tsconfig": "*",
-    "typescript": "^4.5.2",
-    "webpack-cli": "^5.0.1"
+    "typescript": "^4.5.2"
   },
   "dependencies": {
     "core": "*"
