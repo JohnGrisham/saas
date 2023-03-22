@@ -41,7 +41,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
   }, [closeModal]);
 
   return (
-    <div>
+    <>
       <Head>
         <title>{meta?.title}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -95,7 +95,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
         </div>
       </div> */}
 
-      <div className="template-container">{children}</div>
+      <div className="site-container">{children}</div>
 
       {subdomain == 'demo' && (
         <div
@@ -125,7 +125,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
             </svg>
           </button>
           <div className="text-center lg:text-left">
-            <p className="text-lg text-black font-cal sm:text-2xl">
+            <p className="font-cal text-lg text-black sm:text-2xl">
               Platforms Starter Kit Demo
             </p>
             <p
@@ -152,7 +152,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
             } flex w-full flex-col space-y-3 text-center sm:flex-row sm:space-y-0 sm:space-x-3 lg:w-auto`}
           >
             <a
-              className="flex-auto px-5 py-1 text-lg text-black whitespace-no-wrap transition-all duration-150 ease-in-out border border-gray-200 rounded-md font-cal hover:border-black sm:py-3"
+              className="whitespace-no-wrap font-cal flex-auto rounded-md border border-gray-200 px-5 py-1 text-lg text-black transition-all duration-150 ease-in-out hover:border-black sm:py-3"
               href="https://app.vercel.app"
               rel="noreferrer"
               target="_blank"
@@ -160,7 +160,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
               Create your publication
             </a>
             <a
-              className="flex-auto px-5 py-1 text-lg text-white whitespace-no-wrap transition-all duration-150 ease-in-out bg-black border border-black rounded-md font-cal hover:bg-white hover:text-black sm:py-3"
+              className="whitespace-no-wrap font-cal flex-auto rounded-md border border-black bg-black px-5 py-1 text-lg text-white transition-all duration-150 ease-in-out hover:bg-white hover:text-black sm:py-3"
               href="https://vercel.com/guides/nextjs-multi-tenant-application"
               rel="noreferrer"
               target="_blank"
@@ -170,6 +170,6 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };

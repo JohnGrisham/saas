@@ -1,7 +1,7 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 import { SiteLayout, SiteLoader } from 'ui';
-import { getSiteData, getSitePaths } from 'auth';
+import { getSiteData } from 'auth';
 import { Meta } from 'core';
 import { Site } from 'client';
 import play from 'templates';
@@ -19,7 +19,9 @@ export default function Index({ stringifiedData }: IndexProps) {
   const router = useRouter();
   if (router.isFallback) return <SiteLoader />;
 
-  const data = JSON.parse(stringifiedData) as Site;
+  const data: Site = JSON.parse(stringifiedData);
+
+  if (!data) return null;
 
   const meta = {
     title: data.name,
@@ -33,20 +35,24 @@ export default function Index({ stringifiedData }: IndexProps) {
 
   return (
     <SiteLayout meta={meta} subdomain={data.subdomain ?? undefined}>
-      <div dangerouslySetInnerHTML={{ __html: play }}></div>
+      <div
+        className="template-container"
+        dangerouslySetInnerHTML={{ __html: play }}
+      ></div>
     </SiteLayout>
   );
 }
 
 export const getStaticPaths: GetStaticPaths<PathProps> = async () => {
-  const allPaths = await getSitePaths();
+  const allPaths: Array<any> = [];
+  const paths = allPaths.map((path) => ({
+    params: {
+      site: path,
+    },
+  }));
 
   return {
-    paths: allPaths.map((path) => ({
-      params: {
-        site: path,
-      },
-    })),
+    paths,
     fallback: true,
   };
 };
@@ -62,22 +68,22 @@ export const getStaticProps: GetStaticProps<IndexProps, PathProps> = async ({
     subdomain?: string;
     customDomain?: string;
   } = {
-    subdomain: site,
+    customDomain: site,
   };
 
   if (site.includes('.')) {
     filter = {
-      customDomain: site,
+      subdomain: site.split('.')[0],
     };
   }
 
-  const data = await getSiteData(filter);
+  const { site: siteData } = await getSiteData(filter);
 
-  if (!data) return { notFound: true, revalidate: 10 };
+  if (!siteData) return { notFound: true, revalidate: 10 };
 
   return {
     props: {
-      stringifiedData: JSON.stringify(data),
+      stringifiedData: JSON.stringify(siteData),
     },
     revalidate: 3600,
   };

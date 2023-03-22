@@ -8,8 +8,8 @@ import { gql } from 'graphql-request';
 
 export const getSitePaths = async () => {
   graphQLClient.setHeader('x-api-key', process.env.API_KEY as string);
-  const { edges } = await graphQLClient.request<
-    SiteConnection,
+  const { siteCollection } = await graphQLClient.request<
+    { siteCollection: SiteConnection },
     QuerySiteCollectionArgs
   >(
     gql`
@@ -27,7 +27,7 @@ export const getSitePaths = async () => {
   );
 
   const sites =
-    edges
+    siteCollection.edges
       ?.filter((edge) => edge?.node)
       .map((edge) => (edge as SiteEdge).node) ?? [];
 

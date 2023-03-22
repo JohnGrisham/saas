@@ -1,9 +1,14 @@
-import { Site, SiteByInput, QuerySiteArgs, graphQLClient } from 'client';
+import {
+  SiteBySubdomainQuery,
+  SiteByInput,
+  QuerySiteArgs,
+  graphQLClient,
+} from 'client';
 import { gql } from 'graphql-request';
 
 export const getSiteData = async (filter: SiteByInput) => {
   graphQLClient.setHeader('x-api-key', process.env.API_KEY as string);
-  const data = await graphQLClient.request<Site, QuerySiteArgs>(
+  const data = await graphQLClient.request<SiteBySubdomainQuery, QuerySiteArgs>(
     gql`
       query Site($by: SiteByInput!) {
         site(by: $by) {

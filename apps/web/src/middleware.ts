@@ -53,8 +53,6 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  console.log(hostname);
-
   // rewrite root application to `/home` folder
   if (
     hostname ===
