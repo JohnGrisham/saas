@@ -1,10 +1,12 @@
+import * as React from 'react';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 import { SiteLayout, SiteLoader } from 'ui';
-import { getSiteData } from 'auth';
 import { Meta } from 'core';
 import { Site } from 'client';
-import play from 'templates';
+import dynamic from 'next/dynamic';
+import { getSiteData } from 'auth';
+import { TemplateInfo } from 'api';
 import { useRouter } from 'next/router';
 
 interface PathProps extends ParsedUrlQuery {
@@ -13,15 +15,24 @@ interface PathProps extends ParsedUrlQuery {
 
 interface IndexProps {
   stringifiedData: string;
+  template: string;
 }
 
-export default function Index({ stringifiedData }: IndexProps) {
+const Template = dynamic(
+  () => import('templates').then(({ Template }) => Template),
+  {
+    ssr: false,
+  },
+);
+
+export default function Index({ stringifiedData, template }: IndexProps) {
   const router = useRouter();
+  const data: Omit<Site, 'templateData'> = router.isFallback
+    ? null
+    : JSON.parse(stringifiedData);
+
   if (router.isFallback) return <SiteLoader />;
-
-  const data: Site = JSON.parse(stringifiedData);
-
-  if (!data) return null;
+  if (!data || !template) return null;
 
   const meta = {
     title: data.name,
@@ -35,10 +46,7 @@ export default function Index({ stringifiedData }: IndexProps) {
 
   return (
     <SiteLayout meta={meta} subdomain={data.subdomain ?? undefined}>
-      <div
-        className="template-container"
-        dangerouslySetInnerHTML={{ __html: play }}
-      ></div>
+      <Template html={template} />
     </SiteLayout>
   );
 }
@@ -81,9 +89,25 @@ export const getStaticProps: GetStaticProps<IndexProps, PathProps> = async ({
 
   if (!siteData) return { notFound: true, revalidate: 10 };
 
+  const templateInfo: TemplateInfo = {
+    data: siteData.templateData?.data,
+    site: { name: siteData.name, description: siteData.description },
+  };
+  const htmlData = await fetch(
+    `${process.env.NEXT_PUBLIC_ROOT_URL}/api/generate-template`,
+    {
+      method: 'POST',
+      body: JSON.stringify(templateInfo),
+    },
+  );
+
+  const template = await htmlData.text();
+  delete siteData.templateData;
+
   return {
     props: {
       stringifiedData: JSON.stringify(siteData),
+      template,
     },
     revalidate: 3600,
   };

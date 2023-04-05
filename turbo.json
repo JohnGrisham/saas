@@ -19,6 +19,9 @@
     "storybook": {
       "dependsOn": []
     },
+    "test": {
+      "dependsOn": []
+    },
     "auth#build": {
       "dependsOn": [
         "$API_KEY",

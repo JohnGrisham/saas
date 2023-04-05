@@ -69,6 +69,13 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
         <meta name="twitter:description" content={meta?.description} />
         <meta name="twitter:image" content={meta?.ogImage} />
         {subdomain != 'demo' && <meta name="robots" content="noindex" />}
+        <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"
+          integrity="sha512-Eak/29OTpb36LLo2r47IpVzPBLXnAMPAVypbSZiZ4Qkf8p/7S/XRG5xp7OKWPPYfJT6metI+IORkR5G8F900+g=="
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
+          async
+        />
       </Head>
       {/* TODO: only display when in preview mode */}
       {/* <div

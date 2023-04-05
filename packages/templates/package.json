@@ -1,16 +1,18 @@
 {
   "name": "templates",
   "version": "0.0.0",
-  "types": "index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./play-tailwind-main/dist/index.html"
+    ".": "./dist/index.js",
+    "./play-template.html": "./play-tailwind-main/dist/index.html"
   },
   "license": "MIT",
   "scripts": {
     "build:play": "cd play-tailwind-main && yarn build",
     "dev:play": "cd play-tailwind-main && yarn dev",
-    "build": "yarn build:play",
-    "dev": "yarn dev:play",
+    "build": "yarn build:play && tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/play.tsx --format esm,cjs --dts",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
@@ -24,6 +26,8 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
-    "core": "*"
+    "core": "*",
+    "dangerously-set-html-content": "^1.0.13",
+    "yup": "^1.0.2"
   }
 }

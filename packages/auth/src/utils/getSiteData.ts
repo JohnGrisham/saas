@@ -21,6 +21,10 @@ export const getSiteData = async (filter: SiteByInput) => {
           imageBlurhash
           subdomain
           customDomain
+          templateData {
+            id
+            data
+          }
         }
       }
     `,
