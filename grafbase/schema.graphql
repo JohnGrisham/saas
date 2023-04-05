@@ -56,7 +56,6 @@ type TemplateData @model {
   id: ID!
   data: JSON!
   site: Site!
-  user: User!
 }
 
 type Site @model {
@@ -69,6 +68,6 @@ type Site @model {
   imageBlurhash: String
   subdomain: String! @unique
   customDomain: String! @unique
-  user: User
+  user: User!
   templateData: TemplateData
 }
