@@ -1,4 +1,9 @@
-schema
+extend schema
+  @openapi(
+    name: "Stripe"
+    url: "https://api.stripe.com"
+    schema: "https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.json"
+  )
   @auth(
     providers: [
       {
@@ -33,7 +38,7 @@ type User @model {
   name: String
   email: Email! @unique
   identities: [Identity!]
-  customer: Customer
+  customer: JSON @resolver(name: "stripe/customer/byEmail")
 }
 
 type Identity @model {

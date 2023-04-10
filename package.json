@@ -9,7 +9,7 @@
   "scripts": {
     "build": "turbo run build",
     "generate-tailwind-theme": "turbo run generate-tailwind-theme",
-    "gql:dev": "npx grafbase dev",
+    "gql:dev": "npx grafbase@next dev",
     "codegen": "turbo run codegen",
     "dev": "turbo run dev --parallel",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -33,8 +33,11 @@
   },
   "engines": {
     "npm": ">=7.0.0",
-    "node": ">=16.14.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {},
+  "resolutions": {
+    "openid-client": "5.1.10"
+  },
   "packageManager": "yarn@1.22.15"
 }

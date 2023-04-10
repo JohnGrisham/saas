@@ -1,0 +1,9 @@
+{
+  "name": "grafbase",
+  "version": "0.0.0",
+  "main": "schema.graphql",
+  "license": "MIT",
+  "devDependencies": {
+    "stripe": "^11.17.0"
+  }
+}
