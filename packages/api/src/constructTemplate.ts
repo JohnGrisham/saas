@@ -74,6 +74,7 @@ export const constructTemplate = async (
 ) => {
   const template = Handlebars.compile(html);
   const data: Record<string, any> = info.data ?? {};
+  const signedin = data.signedin;
 
   try {
     await schema.validate(data, { abortEarly: false });
@@ -101,7 +102,7 @@ export const constructTemplate = async (
         }),
       );
       const context = Object.fromEntries(generatedData);
-      return template(context);
+      return template({ ...context, signedin });
     }
 
     throw err;

@@ -1,12 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { constructTemplate } from 'api';
+import { TemplateInfo, constructTemplate } from 'api';
 import playHTML from 'templates/play-template.html';
 import { playSchema } from 'templates';
 
 const openai = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     try {
-      const templateInfo = JSON.parse(req.body);
+      const templateInfo: TemplateInfo = JSON.parse(req.body);
+      templateInfo.data.signedin = true;
+
       const template = await constructTemplate(
         templateInfo,
         playSchema,

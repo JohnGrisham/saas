@@ -5,6 +5,8 @@
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.321.1",
+    "@vespaiach/axios-fetch-adapter": "^0.3.1",
+    "openai": "^3.2.1",
     "stripe": "^12.2.0"
   }
 }
