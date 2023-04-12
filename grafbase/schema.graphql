@@ -33,12 +33,16 @@ enum SubStatus {
   UNPAID
 }
 
+type StripeCustomer {
+  email: String
+}
+
 type User @model {
   id: ID!
   name: String
   email: Email! @unique
   identities: [Identity!]
-  customer: JSON @resolver(name: "stripe/customer/byEmail")
+  customer: StripeCustomer @resolver(name: "stripe/customer/byEmail")
 }
 
 type Identity @model {

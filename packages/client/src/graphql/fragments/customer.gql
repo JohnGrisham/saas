@@ -1,4 +1,12 @@
-fragment CustomerParts on Customer {
+fragment CustomerParts on StripeCustomer {
+  balance
+  created
+  currency
+  description
+  email
   id
-  stripeId
+  metadata
+  name
+  object
+  phone
 }

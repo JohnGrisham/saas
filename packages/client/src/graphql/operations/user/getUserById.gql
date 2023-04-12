@@ -5,13 +5,6 @@ query UserByID($id: ID!) {
     updatedAt
     customer {
       ...CustomerParts
-      subscriptions(first: 100) {
-        edges {
-          node {
-            ...SubscriptionParts
-          }
-        }
-      }
     }
     identities(first: 100) {
       edges {

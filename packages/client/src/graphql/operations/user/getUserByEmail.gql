@@ -5,16 +5,6 @@ query UserByEmail($email: Email!) {
     updatedAt
     customer {
       ...CustomerParts
-      subscriptions(first: 100) {
-        edges {
-          node {
-            ...SubscriptionParts
-            product {
-              ...ProductParts
-            }
-          }
-        }
-      }
     }
     identities(first: 100) {
       edges {

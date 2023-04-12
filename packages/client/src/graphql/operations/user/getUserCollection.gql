@@ -7,13 +7,6 @@ query UserCollection($first: Int, $last: Int, $before: String, $after: String) {
         updatedAt
         customer {
           ...CustomerParts
-          subscriptions(first: 100) {
-            edges {
-              node {
-                ...SubscriptionParts
-              }
-            }
-          }
         }
         identities(first: 100) {
           edges {
