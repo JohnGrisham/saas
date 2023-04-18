@@ -1,10 +1,12 @@
 import * as React from 'react';
-import type { GetStaticPaths, GetStaticProps } from 'next';
+import type { GetServerSideProps } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 import { SiteLayout, SiteLoader } from 'ui';
 import { Meta } from 'core';
 import { Site } from 'client';
+import { authOptions } from '../../api/auth/[...nextauth]';
 import dynamic from 'next/dynamic';
+import { getServerSession } from 'next-auth/next';
 import { getSiteData } from 'auth';
 import { TemplateInfo } from 'api';
 import { useRouter } from 'next/router';
@@ -51,24 +53,26 @@ export default function Index({ stringifiedData, template }: IndexProps) {
   );
 }
 
-export const getStaticPaths: GetStaticPaths<PathProps> = async () => {
-  const allPaths: Array<any> = [];
-  const paths = allPaths.map((path) => ({
-    params: {
-      site: path,
-    },
-  }));
+// export const getStaticPaths: GetStaticPaths<PathProps> = async () => {
+//   const allPaths: Array<any> = [];
+//   const paths = allPaths.map((path) => ({
+//     params: {
+//       site: path,
+//     },
+//   }));
 
-  return {
-    paths,
-    fallback: true,
-  };
-};
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// };
 
-export const getStaticProps: GetStaticProps<IndexProps, PathProps> = async ({
-  params,
-}) => {
+export const getServerSideProps: GetServerSideProps<
+  IndexProps,
+  PathProps
+> = async ({ params, req, res }) => {
   if (!params) throw new Error('No path parameters found');
+  const session = await getServerSession(req, res, authOptions);
 
   const { site } = params;
 
@@ -92,6 +96,7 @@ export const getStaticProps: GetStaticProps<IndexProps, PathProps> = async ({
   const templateInfo: TemplateInfo = {
     data: siteData.templateData?.data,
     site: { name: siteData.name, description: siteData.description },
+    signedin: !!session?.user,
   };
   const htmlData = await fetch(
     `${process.env.NEXT_PUBLIC_ROOT_URL}/api/generate-template`,
@@ -109,7 +114,6 @@ export const getStaticProps: GetStaticProps<IndexProps, PathProps> = async ({
       stringifiedData: JSON.stringify(siteData),
       template,
     },
-    revalidate: 3600,
   };
 };
 
