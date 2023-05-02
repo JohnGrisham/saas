@@ -122,6 +122,9 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
           query GetUserByEmail($email: Email!) {
             user(by: { email: $email }) {
               id
+              customer {
+                id
+              }
             }
           }
         `,
