@@ -22,6 +22,15 @@ export type Scalars = {
   JSON: any;
 };
 
+export type CognitoUser = {
+  __typename?: 'CognitoUser';
+  confirmationStatus: Scalars['String'];
+  email: Scalars['Email'];
+  stripeId?: Maybe<Scalars['String']>;
+  sub: Scalars['ID'];
+  userId?: Maybe<Scalars['String']>;
+};
+
 export type Customer = {
   __typename?: 'Customer';
   id: Scalars['ID'];
@@ -40414,6 +40423,7 @@ export type SubscriptionItem = {
 
 export type User = {
   __typename?: 'User';
+  cognitoUser?: Maybe<CognitoUser>;
   /** when the model was created */
   createdAt: Scalars['DateTime'];
   customer?: Maybe<Customer>;
