@@ -1,7 +1,16 @@
-fragment ProductParts on Product {
+fragment ProductParts on StripeProduct {
   id
-  currency
-  interval
+  active
+  created
+  description
+  images
+  livemode
+  metadata
   name
-  price
+  object
+  shippable
+  statementDescriptor
+  unitLabel
+  updated
+  url
 }

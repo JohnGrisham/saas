@@ -3,6 +3,9 @@ extend schema
     name: "Stripe"
     url: "https://api.stripe.com"
     schema: "https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.json"
+    headers: [
+      { name: "Authorization", value: "Bearer {{ env.STRIPE_SECRET_KEY }}" }
+    ]
   )
   @auth(
     providers: [
@@ -23,18 +26,42 @@ enum IdentityType {
   GOOGLE
 }
 
-enum SubStatus {
-  INCOMPLETE
-  INCOMPLETE_EXPIRED
-  TRIALING
-  ACTIVE
-  PAST_DUE
-  CANCELED
-  UNPAID
+type Price {
+  id: ID!
+  product: StripeProduct
 }
 
-type StripeCustomer {
-  email: String
+type SubscriptionItem {
+  id: ID!
+  price: Price!
+}
+
+type Subscription {
+  id: ID!
+  cancelAt: DateTime
+  canceledAt: DateTime
+  cancellationDetails: StripeCancellationDetails
+  createdAt: DateTime!
+  currency: String!
+  currentPeriodStart: DateTime!
+  currentPeriodEnd: DateTime!
+  daysUntilDue: Int
+  defaultPaymentMethod: StripePaymentMethod
+  items: [SubscriptionItem!]!
+  status: StripeSubscriptionStatus!
+}
+
+type Customer {
+  id: ID!
+  subscriptions: [Subscription]!
+}
+
+type CognitoUser {
+  sub: ID!
+  stripeId: String
+  userId: String
+  email: Email! @unique
+  confirmationStatus: String!
 }
 
 type User @model {
@@ -42,7 +69,8 @@ type User @model {
   name: String
   email: Email! @unique
   identities: [Identity!]
-  customer: StripeCustomer @resolver(name: "stripe/customer/byEmail")
+  customer: Customer @resolver(name: "stripe/customer/byEmail")
+  cognitoUser: CognitoUser @resolver(name: "cognito/user/byEmail")
 }
 
 type Identity @model {
@@ -50,40 +78,4 @@ type Identity @model {
   sub: String! @unique
   type: IdentityType!
   user: User!
-}
-
-type Customer @model {
-  id: ID!
-  stripeId: String! @unique
-  subscriptions: [Subscription!]
-  user: User!
-}
-
-type Product @model {
-  id: ID!
-  currency: String!
-  interval: String!
-  name: String! @unique
-  price: String!
-  subscription: Subscription!
-  features: [Feature!]!
-}
-
-type Feature @model {
-  id: ID!
-  name: String! @unique
-  description: String
-  product: Product!
-}
-
-type Subscription @model {
-  id: ID!
-  customer: Customer!
-  product: Product!
-  quantity: Int!
-  status: SubStatus!
-  startDate: Timestamp!
-  endDate: Timestamp
-  trialStart: Timestamp
-  trialEnd: Timestamp
 }

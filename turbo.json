@@ -58,8 +58,18 @@
         "$NEXT_PUBLIC_USER_POOL_CLIENT_ID"
       ]
     },
-    "openai-api#build": {
+    "api#build": {
       "dependsOn": ["$OPENAI_API_KEY"]
+    },
+    "grafbase#build": {
+      "dependsOn": [
+        "$AWS_REGION",
+        "$AWS_ACCESS_KEY",
+        "$AWS_SECRET_ACCESS_KEY",
+        "$COGNITO_USER_POOL_ID",
+        "$STRIPE_SECRET_KEY",
+        "$STRIPE_SECRET_KEY_LIVE"
+      ]
     },
     "lint": {
       "outputs": []

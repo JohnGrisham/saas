@@ -20,250 +20,12 @@ export type Scalars = {
   DateTime: any;
   Email: string;
   JSON: any;
-  Timestamp: any;
 };
 
 export type Customer = {
   __typename?: 'Customer';
-  /** when the model was created */
-  createdAt: Scalars['DateTime'];
-  /** Unique identifier */
   id: Scalars['ID'];
-  stripeId: Scalars['String'];
-  subscriptions?: Maybe<SubscriptionConnection>;
-  /** when the model was updated */
-  updatedAt: Scalars['DateTime'];
-  user: User;
-};
-
-
-export type CustomerSubscriptionsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<CustomerOrderByInput>;
-};
-
-export type CustomerByInput = {
-  id?: InputMaybe<Scalars['ID']>;
-  stripeId?: InputMaybe<Scalars['String']>;
-};
-
-export type CustomerConnection = {
-  __typename?: 'CustomerConnection';
-  edges?: Maybe<Array<Maybe<CustomerEdge>>>;
-  /** Information to aid in pagination */
-  pageInfo: PageInfo;
-};
-
-/** Input to create a Customer */
-export type CustomerCreateInput = {
-  stripeId: Scalars['String'];
-  subscriptions?: InputMaybe<Array<CustomerToSubscriptionCreateSubscriptionRelation>>;
-  user: CustomerToUserCreateUserRelation;
-};
-
-export type CustomerCreatePayload = {
-  __typename?: 'CustomerCreatePayload';
-  customer?: Maybe<Customer>;
-};
-
-export type CustomerDeletePayload = {
-  __typename?: 'CustomerDeletePayload';
-  deletedId: Scalars['ID'];
-};
-
-export type CustomerEdge = {
-  __typename?: 'CustomerEdge';
-  cursor: Scalars['String'];
-  node: Customer;
-};
-
-export type CustomerOrderByInput = {
-  createdAt?: InputMaybe<OrderByDirection>;
-};
-
-/** Input to create a Customer for the CustomerToSubscription relation of Subscription */
-export type CustomerToSubscriptionCreateCustomer = {
-  stripeId: Scalars['String'];
-  subscriptions?: InputMaybe<Array<CustomerToSubscriptionCreateSubscriptionRelation>>;
-  user: CustomerToUserCreateUserRelation;
-};
-
-/** Input to link to or create a Customer for the CustomerToSubscription relation of Subscription */
-export type CustomerToSubscriptionCreateCustomerRelation = {
-  create?: InputMaybe<CustomerToSubscriptionCreateCustomer>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to create a Subscription for the CustomerToSubscription relation of Customer */
-export type CustomerToSubscriptionCreateSubscription = {
-  endDate?: InputMaybe<Scalars['Timestamp']>;
-  product: ProductToSubscriptionCreateProductRelation;
-  quantity: Scalars['Int'];
-  startDate: Scalars['Timestamp'];
-  status: SubStatus;
-  trialEnd?: InputMaybe<Scalars['Timestamp']>;
-  trialStart?: InputMaybe<Scalars['Timestamp']>;
-};
-
-/** Input to link to or create a Subscription for the CustomerToSubscription relation of Customer */
-export type CustomerToSubscriptionCreateSubscriptionRelation = {
-  create?: InputMaybe<CustomerToSubscriptionCreateSubscription>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to link/unlink to or create a Customer for the CustomerToSubscription relation of Subscription */
-export type CustomerToSubscriptionUpdateCustomerRelation = {
-  create?: InputMaybe<CustomerToSubscriptionCreateCustomer>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to link/unlink to or create a Subscription for the CustomerToSubscription relation of Customer */
-export type CustomerToSubscriptionUpdateSubscriptionRelation = {
-  create?: InputMaybe<CustomerToSubscriptionCreateSubscription>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to create a User for the CustomerToUser relation of Customer */
-export type CustomerToUserCreateUser = {
-  email: Scalars['Email'];
-  identities?: InputMaybe<Array<IdentityToUserCreateIdentityRelation>>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** Input to link to or create a User for the CustomerToUser relation of Customer */
-export type CustomerToUserCreateUserRelation = {
-  create?: InputMaybe<CustomerToUserCreateUser>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to link/unlink to or create a User for the CustomerToUser relation of Customer */
-export type CustomerToUserUpdateUserRelation = {
-  create?: InputMaybe<CustomerToUserCreateUser>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to update a Customer */
-export type CustomerUpdateInput = {
-  stripeId?: InputMaybe<Scalars['String']>;
-  subscriptions?: InputMaybe<Array<CustomerToSubscriptionUpdateSubscriptionRelation>>;
-  user?: InputMaybe<CustomerToUserUpdateUserRelation>;
-};
-
-export type CustomerUpdatePayload = {
-  __typename?: 'CustomerUpdatePayload';
-  customer?: Maybe<Customer>;
-};
-
-export type Feature = {
-  __typename?: 'Feature';
-  /** when the model was created */
-  createdAt: Scalars['DateTime'];
-  description?: Maybe<Scalars['String']>;
-  /** Unique identifier */
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  product: Product;
-  /** when the model was updated */
-  updatedAt: Scalars['DateTime'];
-};
-
-export type FeatureByInput = {
-  id?: InputMaybe<Scalars['ID']>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FeatureConnection = {
-  __typename?: 'FeatureConnection';
-  edges?: Maybe<Array<Maybe<FeatureEdge>>>;
-  /** Information to aid in pagination */
-  pageInfo: PageInfo;
-};
-
-/** Input to create a Feature */
-export type FeatureCreateInput = {
-  description?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  product: FeatureToProductCreateProductRelation;
-};
-
-export type FeatureCreatePayload = {
-  __typename?: 'FeatureCreatePayload';
-  feature?: Maybe<Feature>;
-};
-
-export type FeatureDeletePayload = {
-  __typename?: 'FeatureDeletePayload';
-  deletedId: Scalars['ID'];
-};
-
-export type FeatureEdge = {
-  __typename?: 'FeatureEdge';
-  cursor: Scalars['String'];
-  node: Feature;
-};
-
-export type FeatureOrderByInput = {
-  createdAt?: InputMaybe<OrderByDirection>;
-};
-
-/** Input to create a Feature for the FeatureToProduct relation of Product */
-export type FeatureToProductCreateFeature = {
-  description?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-};
-
-/** Input to link to or create a Feature for the FeatureToProduct relation of Product */
-export type FeatureToProductCreateFeatureRelation = {
-  create?: InputMaybe<FeatureToProductCreateFeature>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to create a Product for the FeatureToProduct relation of Feature */
-export type FeatureToProductCreateProduct = {
-  currency: Scalars['String'];
-  features: Array<FeatureToProductCreateFeatureRelation>;
-  interval: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['String'];
-  subscription: ProductToSubscriptionCreateSubscriptionRelation;
-};
-
-/** Input to link to or create a Product for the FeatureToProduct relation of Feature */
-export type FeatureToProductCreateProductRelation = {
-  create?: InputMaybe<FeatureToProductCreateProduct>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to link/unlink to or create a Feature for the FeatureToProduct relation of Product */
-export type FeatureToProductUpdateFeatureRelation = {
-  create?: InputMaybe<FeatureToProductCreateFeature>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to link/unlink to or create a Product for the FeatureToProduct relation of Feature */
-export type FeatureToProductUpdateProductRelation = {
-  create?: InputMaybe<FeatureToProductCreateProduct>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to update a Feature */
-export type FeatureUpdateInput = {
-  description?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  product?: InputMaybe<FeatureToProductUpdateProductRelation>;
-};
-
-export type FeatureUpdatePayload = {
-  __typename?: 'FeatureUpdatePayload';
-  feature?: Maybe<Feature>;
+  subscriptions: Array<Maybe<Subscription>>;
 };
 
 export type Identity = {
@@ -375,84 +137,21 @@ export type IdentityUpdatePayload = {
   identity?: Maybe<Identity>;
 };
 
-/** Possible operations for an Int field */
-export type IntOperationsInput = {
-  decrement?: InputMaybe<Scalars['Int']>;
-  increment?: InputMaybe<Scalars['Int']>;
-  set?: InputMaybe<Scalars['Int']>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Create a Customer */
-  customerCreate?: Maybe<CustomerCreatePayload>;
-  /** Delete a Customer by ID or unique field */
-  customerDelete?: Maybe<CustomerDeletePayload>;
-  /** Update a Customer */
-  customerUpdate?: Maybe<CustomerUpdatePayload>;
-  /** Create a Feature */
-  featureCreate?: Maybe<FeatureCreatePayload>;
-  /** Delete a Feature by ID or unique field */
-  featureDelete?: Maybe<FeatureDeletePayload>;
-  /** Update a Feature */
-  featureUpdate?: Maybe<FeatureUpdatePayload>;
   /** Create a Identity */
   identityCreate?: Maybe<IdentityCreatePayload>;
   /** Delete a Identity by ID or unique field */
   identityDelete?: Maybe<IdentityDeletePayload>;
   /** Update a Identity */
   identityUpdate?: Maybe<IdentityUpdatePayload>;
-  /** Create a Product */
-  productCreate?: Maybe<ProductCreatePayload>;
-  /** Delete a Product by ID or unique field */
-  productDelete?: Maybe<ProductDeletePayload>;
-  /** Update a Product */
-  productUpdate?: Maybe<ProductUpdatePayload>;
   stripe: StripeMutation;
-  /** Create a Subscription */
-  subscriptionCreate?: Maybe<SubscriptionCreatePayload>;
-  /** Delete a Subscription by ID or unique field */
-  subscriptionDelete?: Maybe<SubscriptionDeletePayload>;
-  /** Update a Subscription */
-  subscriptionUpdate?: Maybe<SubscriptionUpdatePayload>;
   /** Create a User */
   userCreate?: Maybe<UserCreatePayload>;
   /** Delete a User by ID or unique field */
   userDelete?: Maybe<UserDeletePayload>;
   /** Update a User */
   userUpdate?: Maybe<UserUpdatePayload>;
-};
-
-
-export type MutationCustomerCreateArgs = {
-  input: CustomerCreateInput;
-};
-
-
-export type MutationCustomerDeleteArgs = {
-  by: CustomerByInput;
-};
-
-
-export type MutationCustomerUpdateArgs = {
-  by: CustomerByInput;
-  input: CustomerUpdateInput;
-};
-
-
-export type MutationFeatureCreateArgs = {
-  input: FeatureCreateInput;
-};
-
-
-export type MutationFeatureDeleteArgs = {
-  by: FeatureByInput;
-};
-
-
-export type MutationFeatureUpdateArgs = {
-  by: FeatureByInput;
-  input: FeatureUpdateInput;
 };
 
 
@@ -469,38 +168,6 @@ export type MutationIdentityDeleteArgs = {
 export type MutationIdentityUpdateArgs = {
   by: IdentityByInput;
   input: IdentityUpdateInput;
-};
-
-
-export type MutationProductCreateArgs = {
-  input: ProductCreateInput;
-};
-
-
-export type MutationProductDeleteArgs = {
-  by: ProductByInput;
-};
-
-
-export type MutationProductUpdateArgs = {
-  by: ProductByInput;
-  input: ProductUpdateInput;
-};
-
-
-export type MutationSubscriptionCreateArgs = {
-  input: SubscriptionCreateInput;
-};
-
-
-export type MutationSubscriptionDeleteArgs = {
-  by: SubscriptionByInput;
-};
-
-
-export type MutationSubscriptionUpdateArgs = {
-  by: SubscriptionByInput;
-  input: SubscriptionUpdateInput;
 };
 
 
@@ -532,189 +199,23 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']>;
 };
 
-export type Product = {
-  __typename?: 'Product';
-  /** when the model was created */
-  createdAt: Scalars['DateTime'];
-  currency: Scalars['String'];
-  features?: Maybe<FeatureConnection>;
-  /** Unique identifier */
+export type Price = {
+  __typename?: 'Price';
   id: Scalars['ID'];
-  interval: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['String'];
-  subscription: Subscription;
-  /** when the model was updated */
-  updatedAt: Scalars['DateTime'];
-};
-
-
-export type ProductFeaturesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ProductOrderByInput>;
-};
-
-export type ProductByInput = {
-  id?: InputMaybe<Scalars['ID']>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type ProductConnection = {
-  __typename?: 'ProductConnection';
-  edges?: Maybe<Array<Maybe<ProductEdge>>>;
-  /** Information to aid in pagination */
-  pageInfo: PageInfo;
-};
-
-/** Input to create a Product */
-export type ProductCreateInput = {
-  currency: Scalars['String'];
-  features: Array<FeatureToProductCreateFeatureRelation>;
-  interval: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['String'];
-  subscription: ProductToSubscriptionCreateSubscriptionRelation;
-};
-
-export type ProductCreatePayload = {
-  __typename?: 'ProductCreatePayload';
-  product?: Maybe<Product>;
-};
-
-export type ProductDeletePayload = {
-  __typename?: 'ProductDeletePayload';
-  deletedId: Scalars['ID'];
-};
-
-export type ProductEdge = {
-  __typename?: 'ProductEdge';
-  cursor: Scalars['String'];
-  node: Product;
-};
-
-export type ProductOrderByInput = {
-  createdAt?: InputMaybe<OrderByDirection>;
-};
-
-/** Input to create a Product for the ProductToSubscription relation of Subscription */
-export type ProductToSubscriptionCreateProduct = {
-  currency: Scalars['String'];
-  features: Array<FeatureToProductCreateFeatureRelation>;
-  interval: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['String'];
-};
-
-/** Input to link to or create a Product for the ProductToSubscription relation of Subscription */
-export type ProductToSubscriptionCreateProductRelation = {
-  create?: InputMaybe<ProductToSubscriptionCreateProduct>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to create a Subscription for the ProductToSubscription relation of Product */
-export type ProductToSubscriptionCreateSubscription = {
-  customer: CustomerToSubscriptionCreateCustomerRelation;
-  endDate?: InputMaybe<Scalars['Timestamp']>;
-  quantity: Scalars['Int'];
-  startDate: Scalars['Timestamp'];
-  status: SubStatus;
-  trialEnd?: InputMaybe<Scalars['Timestamp']>;
-  trialStart?: InputMaybe<Scalars['Timestamp']>;
-};
-
-/** Input to link to or create a Subscription for the ProductToSubscription relation of Product */
-export type ProductToSubscriptionCreateSubscriptionRelation = {
-  create?: InputMaybe<ProductToSubscriptionCreateSubscription>;
-  link?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to link/unlink to or create a Product for the ProductToSubscription relation of Subscription */
-export type ProductToSubscriptionUpdateProductRelation = {
-  create?: InputMaybe<ProductToSubscriptionCreateProduct>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to link/unlink to or create a Subscription for the ProductToSubscription relation of Product */
-export type ProductToSubscriptionUpdateSubscriptionRelation = {
-  create?: InputMaybe<ProductToSubscriptionCreateSubscription>;
-  link?: InputMaybe<Scalars['ID']>;
-  unlink?: InputMaybe<Scalars['ID']>;
-};
-
-/** Input to update a Product */
-export type ProductUpdateInput = {
-  currency?: InputMaybe<Scalars['String']>;
-  features?: InputMaybe<Array<FeatureToProductUpdateFeatureRelation>>;
-  interval?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  price?: InputMaybe<Scalars['String']>;
-  subscription?: InputMaybe<ProductToSubscriptionUpdateSubscriptionRelation>;
-};
-
-export type ProductUpdatePayload = {
-  __typename?: 'ProductUpdatePayload';
-  product?: Maybe<Product>;
+  product?: Maybe<StripeProduct>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  /** Query a single Customer by an ID or a unique field */
-  customer?: Maybe<Customer>;
-  /** Paginated query to fetch the whole list of `Customer`. */
-  customerCollection?: Maybe<CustomerConnection>;
-  /** Query a single Feature by an ID or a unique field */
-  feature?: Maybe<Feature>;
-  /** Paginated query to fetch the whole list of `Feature`. */
-  featureCollection?: Maybe<FeatureConnection>;
   /** Query a single Identity by an ID or a unique field */
   identity?: Maybe<Identity>;
   /** Paginated query to fetch the whole list of `Identity`. */
   identityCollection?: Maybe<IdentityConnection>;
-  /** Query a single Product by an ID or a unique field */
-  product?: Maybe<Product>;
-  /** Paginated query to fetch the whole list of `Product`. */
-  productCollection?: Maybe<ProductConnection>;
   stripe: StripeQuery;
-  /** Query a single Subscription by an ID or a unique field */
-  subscription?: Maybe<Subscription>;
-  /** Paginated query to fetch the whole list of `Subscription`. */
-  subscriptionCollection?: Maybe<SubscriptionConnection>;
   /** Query a single User by an ID or a unique field */
   user?: Maybe<User>;
   /** Paginated query to fetch the whole list of `User`. */
   userCollection?: Maybe<UserConnection>;
-};
-
-
-export type QueryCustomerArgs = {
-  by: CustomerByInput;
-};
-
-
-export type QueryCustomerCollectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<CustomerOrderByInput>;
-};
-
-
-export type QueryFeatureArgs = {
-  by: FeatureByInput;
-};
-
-
-export type QueryFeatureCollectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<FeatureOrderByInput>;
 };
 
 
@@ -729,34 +230,6 @@ export type QueryIdentityCollectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<IdentityOrderByInput>;
-};
-
-
-export type QueryProductArgs = {
-  by: ProductByInput;
-};
-
-
-export type QueryProductCollectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ProductOrderByInput>;
-};
-
-
-export type QuerySubscriptionArgs = {
-  by: SubscriptionByInput;
-};
-
-
-export type QuerySubscriptionCollectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<SubscriptionOrderByInput>;
 };
 
 
@@ -4296,7 +3769,7 @@ export type StripeGetCreditNotesPreviewLinesInput = {
   description?: InputMaybe<Scalars['String']>;
   invoiceLineItem?: InputMaybe<Scalars['String']>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
   type: StripeGetCreditNotesPreviewTypeLines;
   unitAmount?: InputMaybe<Scalars['Int']>;
   unitAmountDecimal?: InputMaybe<Scalars['String']>;
@@ -4307,7 +3780,7 @@ export type StripeGetCreditNotesPreviewLinesLinesInput = {
   description?: InputMaybe<Scalars['String']>;
   invoiceLineItem?: InputMaybe<Scalars['String']>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
   type: StripeGetCreditNotesPreviewLinesTypeLines;
   unitAmount?: InputMaybe<Scalars['Int']>;
   unitAmountDecimal?: InputMaybe<Scalars['String']>;
@@ -4907,14 +4380,14 @@ export type StripeGetInvoicesUpcomingInvoiceItemsInput = {
   discountable?: InputMaybe<Scalars['Boolean']>;
   discounts?: InputMaybe<StripeGetInvoicesUpcomingDiscountsInvoiceItemsUnionInput>;
   invoiceitem?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   period?: InputMaybe<StripeGetInvoicesUpcomingPeriodInvoiceItemsInput>;
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripeGetInvoicesUpcomingPriceDataInvoiceItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
   taxBehavior?: InputMaybe<StripeGetInvoicesUpcomingTaxBehaviorInvoiceItems>;
-  taxCode?: InputMaybe<StripeUnionInput>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxCode?: InputMaybe<Scalars['JSON']>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
   unitAmount?: InputMaybe<Scalars['Int']>;
   unitAmountDecimal?: InputMaybe<Scalars['String']>;
 };
@@ -5005,14 +4478,14 @@ export type StripeGetInvoicesUpcomingLinesInvoiceItemsInput = {
   discountable?: InputMaybe<Scalars['Boolean']>;
   discounts?: InputMaybe<StripeGetInvoicesUpcomingLinesDiscountsInvoiceItemsUnionInput>;
   invoiceitem?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   period?: InputMaybe<StripeGetInvoicesUpcomingLinesPeriodInvoiceItemsInput>;
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripeGetInvoicesUpcomingLinesPriceDataInvoiceItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
   taxBehavior?: InputMaybe<StripeGetInvoicesUpcomingLinesTaxBehaviorInvoiceItems>;
-  taxCode?: InputMaybe<StripeUnionInput>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxCode?: InputMaybe<Scalars['JSON']>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
   unitAmount?: InputMaybe<Scalars['Int']>;
   unitAmountDecimal?: InputMaybe<Scalars['String']>;
 };
@@ -5064,11 +4537,11 @@ export type StripeGetInvoicesUpcomingLinesSubscriptionItemsInput = {
   clearUsage?: InputMaybe<Scalars['Boolean']>;
   deleted?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripeGetInvoicesUpcomingLinesPriceDataSubscriptionItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripeGetInvoicesUpcomingLinesSubscriptionProrationBehavior {
@@ -5100,7 +4573,7 @@ export enum StripeGetInvoicesUpcomingLinesTaxBehaviorPriceDataSubscriptionItems 
 }
 
 export type StripeGetInvoicesUpcomingLinesTaxCustomerDetailsInput = {
-  ipAddress?: InputMaybe<StripeUnionInput>;
+  ipAddress?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripeGetInvoicesUpcomingLinesTaxIdsCustomerDetailsInput = {
@@ -5205,11 +4678,11 @@ export type StripeGetInvoicesUpcomingSubscriptionItemsInput = {
   clearUsage?: InputMaybe<Scalars['Boolean']>;
   deleted?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripeGetInvoicesUpcomingPriceDataSubscriptionItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripeGetInvoicesUpcomingSubscriptionProrationBehavior {
@@ -5219,6 +4692,10 @@ export enum StripeGetInvoicesUpcomingSubscriptionProrationBehavior {
 }
 
 export enum StripeGetInvoicesUpcomingSubscriptionResumeAt {
+  Now = 'NOW'
+}
+
+export enum StripeGetInvoicesUpcomingSubscriptionTrialEnd {
   Now = 'NOW'
 }
 
@@ -5241,7 +4718,7 @@ export enum StripeGetInvoicesUpcomingTaxBehaviorPriceDataSubscriptionItems {
 }
 
 export type StripeGetInvoicesUpcomingTaxCustomerDetailsInput = {
-  ipAddress?: InputMaybe<StripeUnionInput>;
+  ipAddress?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripeGetInvoicesUpcomingTaxIdsCustomerDetailsInput = {
@@ -6734,9 +6211,9 @@ export type StripeIdentityVerificationReport = {
   idNumber?: Maybe<StripeGelatoIdNumberReport>;
   livemode: Scalars['Boolean'];
   object: StripeIdentityVerificationReportObject;
-  options: StripeGelatoVerificationReportOptions;
+  options?: Maybe<StripeGelatoVerificationReportOptions>;
   selfie?: Maybe<StripeGelatoSelfieReport>;
-  type: StripeIdentityVerificationReportType;
+  type?: Maybe<StripeIdentityVerificationReportType>;
   verificationSession?: Maybe<Scalars['String']>;
 };
 
@@ -6761,10 +6238,10 @@ export type StripeIdentityVerificationSession = {
   livemode: Scalars['Boolean'];
   metadata: Scalars['JSON'];
   object: StripeIdentityVerificationSessionObject;
-  options: StripeGelatoVerificationSessionOptions;
+  options?: Maybe<StripeGelatoVerificationSessionOptions>;
   redaction?: Maybe<StripeVerificationSessionRedaction>;
   status: StripeIdentityVerificationSessionStatus;
-  type: StripeIdentityVerificationSessionType;
+  type?: Maybe<StripeIdentityVerificationSessionType>;
   url?: Maybe<Scalars['String']>;
   verifiedOutputs?: Maybe<StripeGelatoVerifiedOutputs>;
 };
@@ -7163,6 +6640,8 @@ export enum StripeInvoiceitemObject {
   Invoiceitem = 'INVOICEITEM'
 }
 
+export type StripeInvoiceitemUnion = StripeInvoiceitem;
+
 export type StripeInvoicesFromInvoice = {
   __typename?: 'StripeInvoicesFromInvoice';
   action: Scalars['String'];
@@ -7351,6 +6830,7 @@ export type StripeIssuingAuthorizationMerchantData = {
   networkId: Scalars['String'];
   postalCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
+  terminalId?: Maybe<Scalars['String']>;
 };
 
 export type StripeIssuingAuthorizationNetworkData = {
@@ -9940,7 +9420,7 @@ export type StripeLineItem = {
   discountable: Scalars['Boolean'];
   discounts?: Maybe<Array<StripeDiscountUnion>>;
   id: Scalars['String'];
-  invoiceItem?: Maybe<Scalars['String']>;
+  invoiceItem?: Maybe<StripeInvoiceitemUnion>;
   livemode: Scalars['Boolean'];
   metadata: Scalars['JSON'];
   object: StripeLineItemObject;
@@ -9949,8 +9429,8 @@ export type StripeLineItem = {
   proration: Scalars['Boolean'];
   prorationDetails?: Maybe<StripeInvoicesLineItemsProrationDetails>;
   quantity?: Maybe<Scalars['Int']>;
-  subscription?: Maybe<Scalars['String']>;
-  subscriptionItem?: Maybe<Scalars['String']>;
+  subscription?: Maybe<StripeSubscriptionUnion>;
+  subscriptionItem?: Maybe<StripeSubscriptionItemUnion>;
   taxAmounts?: Maybe<Array<StripeInvoiceTaxAmount>>;
   taxRates?: Maybe<Array<StripeTaxRate>>;
   type: StripeLineItemType;
@@ -13467,6 +12947,7 @@ export enum StripePaymentMethodDetailsIdealBic {
   Moyonl21 = 'MOYONL21',
   Rabonl2U = 'RABONL2U',
   Rbrbnl21 = 'RBRBNL21',
+  Revoie23 = 'REVOIE23',
   Revolt21 = 'REVOLT21',
   Snsbnl2A = 'SNSBNL2A',
   Trionl2U = 'TRIONL2U'
@@ -13766,6 +13247,7 @@ export enum StripePaymentMethodIdealBic {
   Moyonl21 = 'MOYONL21',
   Rabonl2U = 'RABONL2U',
   Rbrbnl21 = 'RBRBNL21',
+  Revoie23 = 'REVOIE23',
   Revolt21 = 'REVOLT21',
   Snsbnl2A = 'SNSBNL2A',
   Trionl2U = 'TRIONL2U'
@@ -13778,7 +13260,6 @@ export type StripePaymentMethodKlarna = {
 
 export type StripePaymentMethodLink = {
   __typename?: 'StripePaymentMethodLink';
-  country?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   persistentToken?: Maybe<Scalars['String']>;
 };
@@ -15308,7 +14789,7 @@ export type StripePostAccountsAccountBankAccountsIdInput = {
   expMonth?: InputMaybe<Scalars['String']>;
   expYear?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -15350,7 +14831,7 @@ export type StripePostAccountsAccountBusinessProfileInput = {
   supportAddress?: InputMaybe<StripePostAccountsAccountSupportAddressBusinessProfileInput>;
   supportEmail?: InputMaybe<Scalars['String']>;
   supportPhone?: InputMaybe<Scalars['String']>;
-  supportUrl?: InputMaybe<StripeUnionInput>;
+  supportUrl?: InputMaybe<Scalars['JSON']>;
   url?: InputMaybe<Scalars['String']>;
 };
 
@@ -15419,8 +14900,8 @@ export type StripePostAccountsAccountCardPaymentsCapabilitiesInput = {
 export type StripePostAccountsAccountCardPaymentsSettingsInput = {
   declineOn?: InputMaybe<StripePostAccountsAccountDeclineOnCardPaymentsSettingsInput>;
   statementDescriptorPrefix?: InputMaybe<Scalars['String']>;
-  statementDescriptorPrefixKana?: InputMaybe<StripeUnionInput>;
-  statementDescriptorPrefixKanji?: InputMaybe<StripeUnionInput>;
+  statementDescriptorPrefixKana?: InputMaybe<Scalars['JSON']>;
+  statementDescriptorPrefixKanji?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostAccountsAccountCartesBancairesPaymentsCapabilitiesInput = {
@@ -15580,7 +15061,7 @@ export type StripePostAccountsAccountExternalAccountsIdInput = {
   expMonth?: InputMaybe<Scalars['String']>;
   expYear?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -15630,7 +15111,7 @@ export type StripePostAccountsAccountIndividualInput = {
   firstName?: InputMaybe<Scalars['String']>;
   firstNameKana?: InputMaybe<Scalars['String']>;
   firstNameKanji?: InputMaybe<Scalars['String']>;
-  fullNameAliases?: InputMaybe<StripeUnionInput>;
+  fullNameAliases?: InputMaybe<Scalars['JSON']>;
   gender?: InputMaybe<Scalars['String']>;
   idNumber?: InputMaybe<Scalars['String']>;
   idNumberSecondary?: InputMaybe<Scalars['String']>;
@@ -15638,7 +15119,7 @@ export type StripePostAccountsAccountIndividualInput = {
   lastNameKana?: InputMaybe<Scalars['String']>;
   lastNameKanji?: InputMaybe<Scalars['String']>;
   maidenName?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   phone?: InputMaybe<Scalars['String']>;
   politicalExposure?: InputMaybe<StripePostAccountsAccountPoliticalExposureIndividual>;
   registeredAddress?: InputMaybe<StripePostAccountsAccountRegisteredAddressIndividualInput>;
@@ -15658,7 +15139,7 @@ export type StripePostAccountsAccountInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
   externalAccount?: InputMaybe<Scalars['String']>;
   individual?: InputMaybe<StripePostAccountsAccountIndividualInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   settings?: InputMaybe<StripePostAccountsAccountSettingsInput>;
   tosAcceptance?: InputMaybe<StripePostAccountsAccountTosAcceptanceInput>;
 };
@@ -15795,7 +15276,7 @@ export type StripePostAccountsAccountPeopleInput = {
   firstName?: InputMaybe<Scalars['String']>;
   firstNameKana?: InputMaybe<Scalars['String']>;
   firstNameKanji?: InputMaybe<Scalars['String']>;
-  fullNameAliases?: InputMaybe<StripeUnionInput>;
+  fullNameAliases?: InputMaybe<Scalars['JSON']>;
   gender?: InputMaybe<Scalars['String']>;
   idNumber?: InputMaybe<Scalars['String']>;
   idNumberSecondary?: InputMaybe<Scalars['String']>;
@@ -15803,7 +15284,7 @@ export type StripePostAccountsAccountPeopleInput = {
   lastNameKana?: InputMaybe<Scalars['String']>;
   lastNameKanji?: InputMaybe<Scalars['String']>;
   maidenName?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   nationality?: InputMaybe<Scalars['String']>;
   personToken?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
@@ -15889,7 +15370,7 @@ export type StripePostAccountsAccountPeoplePersonInput = {
   firstName?: InputMaybe<Scalars['String']>;
   firstNameKana?: InputMaybe<Scalars['String']>;
   firstNameKanji?: InputMaybe<Scalars['String']>;
-  fullNameAliases?: InputMaybe<StripeUnionInput>;
+  fullNameAliases?: InputMaybe<Scalars['JSON']>;
   gender?: InputMaybe<Scalars['String']>;
   idNumber?: InputMaybe<Scalars['String']>;
   idNumberSecondary?: InputMaybe<Scalars['String']>;
@@ -15897,7 +15378,7 @@ export type StripePostAccountsAccountPeoplePersonInput = {
   lastNameKana?: InputMaybe<Scalars['String']>;
   lastNameKanji?: InputMaybe<Scalars['String']>;
   maidenName?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   nationality?: InputMaybe<Scalars['String']>;
   personToken?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
@@ -15925,7 +15406,7 @@ export type StripePostAccountsAccountPeoplePersonRelationshipInput = {
   director?: InputMaybe<Scalars['Boolean']>;
   executive?: InputMaybe<Scalars['Boolean']>;
   owner?: InputMaybe<Scalars['Boolean']>;
-  percentOwnership?: InputMaybe<StripeUnionInput>;
+  percentOwnership?: InputMaybe<Scalars['JSON']>;
   representative?: InputMaybe<Scalars['Boolean']>;
   title?: InputMaybe<Scalars['String']>;
 };
@@ -15952,7 +15433,7 @@ export type StripePostAccountsAccountPeopleRelationshipInput = {
   director?: InputMaybe<Scalars['Boolean']>;
   executive?: InputMaybe<Scalars['Boolean']>;
   owner?: InputMaybe<Scalars['Boolean']>;
-  percentOwnership?: InputMaybe<StripeUnionInput>;
+  percentOwnership?: InputMaybe<Scalars['JSON']>;
   representative?: InputMaybe<Scalars['Boolean']>;
   title?: InputMaybe<Scalars['String']>;
 };
@@ -16037,7 +15518,7 @@ export type StripePostAccountsAccountPersonsInput = {
   firstName?: InputMaybe<Scalars['String']>;
   firstNameKana?: InputMaybe<Scalars['String']>;
   firstNameKanji?: InputMaybe<Scalars['String']>;
-  fullNameAliases?: InputMaybe<StripeUnionInput>;
+  fullNameAliases?: InputMaybe<Scalars['JSON']>;
   gender?: InputMaybe<Scalars['String']>;
   idNumber?: InputMaybe<Scalars['String']>;
   idNumberSecondary?: InputMaybe<Scalars['String']>;
@@ -16045,7 +15526,7 @@ export type StripePostAccountsAccountPersonsInput = {
   lastNameKana?: InputMaybe<Scalars['String']>;
   lastNameKanji?: InputMaybe<Scalars['String']>;
   maidenName?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   nationality?: InputMaybe<Scalars['String']>;
   personToken?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
@@ -16131,7 +15612,7 @@ export type StripePostAccountsAccountPersonsPersonInput = {
   firstName?: InputMaybe<Scalars['String']>;
   firstNameKana?: InputMaybe<Scalars['String']>;
   firstNameKanji?: InputMaybe<Scalars['String']>;
-  fullNameAliases?: InputMaybe<StripeUnionInput>;
+  fullNameAliases?: InputMaybe<Scalars['JSON']>;
   gender?: InputMaybe<Scalars['String']>;
   idNumber?: InputMaybe<Scalars['String']>;
   idNumberSecondary?: InputMaybe<Scalars['String']>;
@@ -16139,7 +15620,7 @@ export type StripePostAccountsAccountPersonsPersonInput = {
   lastNameKana?: InputMaybe<Scalars['String']>;
   lastNameKanji?: InputMaybe<Scalars['String']>;
   maidenName?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   nationality?: InputMaybe<Scalars['String']>;
   personToken?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
@@ -16167,7 +15648,7 @@ export type StripePostAccountsAccountPersonsPersonRelationshipInput = {
   director?: InputMaybe<Scalars['Boolean']>;
   executive?: InputMaybe<Scalars['Boolean']>;
   owner?: InputMaybe<Scalars['Boolean']>;
-  percentOwnership?: InputMaybe<StripeUnionInput>;
+  percentOwnership?: InputMaybe<Scalars['JSON']>;
   representative?: InputMaybe<Scalars['Boolean']>;
   title?: InputMaybe<Scalars['String']>;
 };
@@ -16194,7 +15675,7 @@ export type StripePostAccountsAccountPersonsRelationshipInput = {
   director?: InputMaybe<Scalars['Boolean']>;
   executive?: InputMaybe<Scalars['Boolean']>;
   owner?: InputMaybe<Scalars['Boolean']>;
-  percentOwnership?: InputMaybe<StripeUnionInput>;
+  percentOwnership?: InputMaybe<Scalars['JSON']>;
   representative?: InputMaybe<Scalars['Boolean']>;
   title?: InputMaybe<Scalars['String']>;
 };
@@ -16236,7 +15717,7 @@ export type StripePostAccountsAccountRejectInput = {
 };
 
 export type StripePostAccountsAccountSchedulePayoutsSettingsInput = {
-  delayDays?: InputMaybe<StripeUnionInput>;
+  delayDays?: InputMaybe<Scalars['JSON']>;
   interval?: InputMaybe<StripePostAccountsAccountIntervalSchedulePayoutsSettings>;
   monthlyAnchor?: InputMaybe<Scalars['Int']>;
   weeklyAnchor?: InputMaybe<StripePostAccountsAccountWeeklyAnchorSchedulePayoutsSettings>;
@@ -16475,7 +15956,7 @@ export type StripePostAccountsBusinessProfileInput = {
   supportAddress?: InputMaybe<StripePostAccountsSupportAddressBusinessProfileInput>;
   supportEmail?: InputMaybe<Scalars['String']>;
   supportPhone?: InputMaybe<Scalars['String']>;
-  supportUrl?: InputMaybe<StripeUnionInput>;
+  supportUrl?: InputMaybe<Scalars['JSON']>;
   url?: InputMaybe<Scalars['String']>;
 };
 
@@ -16539,8 +16020,8 @@ export type StripePostAccountsCardPaymentsCapabilitiesInput = {
 export type StripePostAccountsCardPaymentsSettingsInput = {
   declineOn?: InputMaybe<StripePostAccountsDeclineOnCardPaymentsSettingsInput>;
   statementDescriptorPrefix?: InputMaybe<Scalars['String']>;
-  statementDescriptorPrefixKana?: InputMaybe<StripeUnionInput>;
-  statementDescriptorPrefixKanji?: InputMaybe<StripeUnionInput>;
+  statementDescriptorPrefixKana?: InputMaybe<Scalars['JSON']>;
+  statementDescriptorPrefixKanji?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostAccountsCartesBancairesPaymentsCapabilitiesInput = {
@@ -16597,10 +16078,6 @@ export type StripePostAccountsDeclineOnCardPaymentsSettingsInput = {
   avsFailure?: InputMaybe<Scalars['Boolean']>;
   cvcFailure?: InputMaybe<Scalars['Boolean']>;
 };
-
-export enum StripePostAccountsDelayDaysSchedulePayoutsSettings {
-  Minimum = 'MINIMUM'
-}
 
 export type StripePostAccountsDobIndividualInput = {
   day: Scalars['Int'];
@@ -16670,7 +16147,7 @@ export type StripePostAccountsIndividualInput = {
   firstName?: InputMaybe<Scalars['String']>;
   firstNameKana?: InputMaybe<Scalars['String']>;
   firstNameKanji?: InputMaybe<Scalars['String']>;
-  fullNameAliases?: InputMaybe<StripeUnionInput>;
+  fullNameAliases?: InputMaybe<Scalars['JSON']>;
   gender?: InputMaybe<Scalars['String']>;
   idNumber?: InputMaybe<Scalars['String']>;
   idNumberSecondary?: InputMaybe<Scalars['String']>;
@@ -16678,7 +16155,7 @@ export type StripePostAccountsIndividualInput = {
   lastNameKana?: InputMaybe<Scalars['String']>;
   lastNameKanji?: InputMaybe<Scalars['String']>;
   maidenName?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   phone?: InputMaybe<Scalars['String']>;
   politicalExposure?: InputMaybe<StripePostAccountsPoliticalExposureIndividual>;
   registeredAddress?: InputMaybe<StripePostAccountsRegisteredAddressIndividualInput>;
@@ -16700,7 +16177,7 @@ export type StripePostAccountsInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
   externalAccount?: InputMaybe<Scalars['String']>;
   individual?: InputMaybe<StripePostAccountsIndividualInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   settings?: InputMaybe<StripePostAccountsSettingsInput>;
   tosAcceptance?: InputMaybe<StripePostAccountsTosAcceptanceInput>;
   type?: InputMaybe<StripePostAccountsType>;
@@ -16790,7 +16267,7 @@ export type StripePostAccountsRegisteredAddressIndividualInput = {
 };
 
 export type StripePostAccountsSchedulePayoutsSettingsInput = {
-  delayDays?: InputMaybe<StripeUnionInput>;
+  delayDays?: InputMaybe<Scalars['JSON']>;
   interval?: InputMaybe<StripePostAccountsIntervalSchedulePayoutsSettings>;
   monthlyAnchor?: InputMaybe<Scalars['Int']>;
   weeklyAnchor?: InputMaybe<StripePostAccountsWeeklyAnchorSchedulePayoutsSettings>;
@@ -16897,7 +16374,7 @@ export type StripePostApplePayDomainsInput = {
 
 export type StripePostApplicationFeesFeeRefundsIdInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostApplicationFeesIdRefundInput = {
@@ -16954,22 +16431,22 @@ export type StripePostBillingPortalConfigurationsBusinessProfileInput = {
 
 export type StripePostBillingPortalConfigurationsCancellationReasonSubscriptionCancelFeaturesInput = {
   enabled: Scalars['Boolean'];
-  options: StripeUnionInput;
+  options: Scalars['JSON'];
 };
 
 export type StripePostBillingPortalConfigurationsConfigurationBusinessProfileInput = {
   headline?: InputMaybe<Scalars['String']>;
-  privacyPolicyUrl?: InputMaybe<StripeUnionInput>;
-  termsOfServiceUrl?: InputMaybe<StripeUnionInput>;
+  privacyPolicyUrl?: InputMaybe<Scalars['JSON']>;
+  termsOfServiceUrl?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostBillingPortalConfigurationsConfigurationCancellationReasonSubscriptionCancelFeaturesInput = {
   enabled: Scalars['Boolean'];
-  options?: InputMaybe<StripeUnionInput>;
+  options?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostBillingPortalConfigurationsConfigurationCustomerUpdateFeaturesInput = {
-  allowedUpdates?: InputMaybe<StripeUnionInput>;
+  allowedUpdates?: InputMaybe<Scalars['JSON']>;
   enabled?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -16985,11 +16462,11 @@ export type StripePostBillingPortalConfigurationsConfigurationFeaturesInput = {
 export type StripePostBillingPortalConfigurationsConfigurationInput = {
   active?: InputMaybe<Scalars['Boolean']>;
   businessProfile?: InputMaybe<StripePostBillingPortalConfigurationsConfigurationBusinessProfileInput>;
-  defaultReturnUrl?: InputMaybe<StripeUnionInput>;
+  defaultReturnUrl?: InputMaybe<Scalars['JSON']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   features?: InputMaybe<StripePostBillingPortalConfigurationsConfigurationFeaturesInput>;
   loginPage?: InputMaybe<StripePostBillingPortalConfigurationsConfigurationLoginPageInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostBillingPortalConfigurationsConfigurationInvoiceHistoryFeaturesInput = {
@@ -17043,14 +16520,14 @@ export type StripePostBillingPortalConfigurationsConfigurationSubscriptionPauseF
 };
 
 export type StripePostBillingPortalConfigurationsConfigurationSubscriptionUpdateFeaturesInput = {
-  defaultAllowedUpdates?: InputMaybe<StripeUnionInput>;
+  defaultAllowedUpdates?: InputMaybe<Scalars['JSON']>;
   enabled?: InputMaybe<Scalars['Boolean']>;
   products?: InputMaybe<StripePostBillingPortalConfigurationsConfigurationProductsSubscriptionUpdateFeaturesUnionInput>;
   prorationBehavior?: InputMaybe<StripePostBillingPortalConfigurationsConfigurationProrationBehaviorSubscriptionUpdateFeatures>;
 };
 
 export type StripePostBillingPortalConfigurationsCustomerUpdateFeaturesInput = {
-  allowedUpdates?: InputMaybe<StripeUnionInput>;
+  allowedUpdates?: InputMaybe<Scalars['JSON']>;
   enabled: Scalars['Boolean'];
 };
 
@@ -17065,7 +16542,7 @@ export type StripePostBillingPortalConfigurationsFeaturesInput = {
 
 export type StripePostBillingPortalConfigurationsInput = {
   businessProfile: StripePostBillingPortalConfigurationsBusinessProfileInput;
-  defaultReturnUrl?: InputMaybe<StripeUnionInput>;
+  defaultReturnUrl?: InputMaybe<Scalars['JSON']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   features: StripePostBillingPortalConfigurationsFeaturesInput;
   loginPage?: InputMaybe<StripePostBillingPortalConfigurationsLoginPageInput>;
@@ -17123,7 +16600,7 @@ export type StripePostBillingPortalConfigurationsSubscriptionPauseFeaturesInput 
 };
 
 export type StripePostBillingPortalConfigurationsSubscriptionUpdateFeaturesInput = {
-  defaultAllowedUpdates: StripeUnionInput;
+  defaultAllowedUpdates: Scalars['JSON'];
   enabled: Scalars['Boolean'];
   products: StripePostBillingPortalConfigurationsProductsSubscriptionUpdateFeaturesUnionInput;
   prorationBehavior?: InputMaybe<StripePostBillingPortalConfigurationsProrationBehaviorSubscriptionUpdateFeatures>;
@@ -17316,7 +16793,7 @@ export type StripePostChargesChargeDisputeEvidenceInput = {
 export type StripePostChargesChargeDisputeInput = {
   evidence?: InputMaybe<StripePostChargesChargeDisputeEvidenceInput>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   submit?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -17329,7 +16806,7 @@ export type StripePostChargesChargeInput = {
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   fraudDetails?: InputMaybe<StripePostChargesChargeFraudDetailsInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   receiptEmail?: InputMaybe<Scalars['String']>;
   shipping?: InputMaybe<StripePostChargesChargeShippingInput>;
   transferGroup?: InputMaybe<Scalars['String']>;
@@ -17339,7 +16816,7 @@ export type StripePostChargesChargeRefundInput = {
   amount?: InputMaybe<Scalars['Int']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   instructionsEmail?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   paymentIntent?: InputMaybe<Scalars['String']>;
   reason?: InputMaybe<StripePostChargesChargeRefundReason>;
   refundApplicationFee?: InputMaybe<Scalars['Boolean']>;
@@ -17358,7 +16835,7 @@ export type StripePostChargesChargeRefundsInput = {
   customer?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   instructionsEmail?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   origin?: InputMaybe<StripePostChargesChargeRefundsOrigin>;
   paymentIntent?: InputMaybe<Scalars['String']>;
   reason?: InputMaybe<StripePostChargesChargeRefundsReason>;
@@ -17378,7 +16855,7 @@ export enum StripePostChargesChargeRefundsReason {
 
 export type StripePostChargesChargeRefundsRefundInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostChargesChargeShippingInput = {
@@ -17410,7 +16887,7 @@ export type StripePostChargesInput = {
   description?: InputMaybe<Scalars['String']>;
   destination?: InputMaybe<StripePostChargesDestinationUnionInput>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   onBehalfOf?: InputMaybe<Scalars['String']>;
   radarOptions?: InputMaybe<StripePostChargesRadarOptionsInput>;
   receiptEmail?: InputMaybe<Scalars['String']>;
@@ -17946,7 +17423,7 @@ export type StripePostCheckoutSessionsInvoiceCreationInput = {
 };
 
 export type StripePostCheckoutSessionsInvoiceDataInvoiceCreationInput = {
-  accountTaxIds?: InputMaybe<StripeUnionInput>;
+  accountTaxIds?: InputMaybe<Scalars['JSON']>;
   customFields?: InputMaybe<StripePostCheckoutSessionsCustomFieldsInvoiceDataInvoiceCreationUnionInput>;
   description?: InputMaybe<Scalars['String']>;
   footer?: InputMaybe<Scalars['String']>;
@@ -18022,7 +17499,7 @@ export enum StripePostCheckoutSessionsLocale {
 }
 
 export type StripePostCheckoutSessionsMandateOptionsAcssDebitPaymentMethodOptionsInput = {
-  customMandateUrl?: InputMaybe<StripeUnionInput>;
+  customMandateUrl?: InputMaybe<Scalars['JSON']>;
   defaultFor?: InputMaybe<Array<StripePostCheckoutSessionsDefaultForMandateOptionsAcssDebitPaymentMethodOptions>>;
   intervalDescription?: InputMaybe<Scalars['String']>;
   paymentSchedule?: InputMaybe<StripePostCheckoutSessionsPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions>;
@@ -18197,6 +17674,11 @@ export type StripePostCheckoutSessionsProductDataPriceDataLineItemsInput = {
 
 export enum StripePostCheckoutSessionsPromotionsConsentCollection {
   Auto = 'AUTO',
+  None = 'NONE'
+}
+
+export enum StripePostCheckoutSessionsProrationBehaviorSubscriptionData {
+  CreateProrations = 'CREATE_PRORATIONS',
   None = 'NONE'
 }
 
@@ -18422,10 +17904,12 @@ export enum StripePostCheckoutSessionsSubmitType {
 
 export type StripePostCheckoutSessionsSubscriptionDataInput = {
   applicationFeePercent?: InputMaybe<Scalars['Float']>;
+  billingCycleAnchor?: InputMaybe<Scalars['Int']>;
   defaultTaxRates?: InputMaybe<Array<Scalars['String']>>;
   description?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Scalars['JSON']>;
   onBehalfOf?: InputMaybe<Scalars['String']>;
+  prorationBehavior?: InputMaybe<StripePostCheckoutSessionsProrationBehaviorSubscriptionData>;
   transferData?: InputMaybe<StripePostCheckoutSessionsTransferDataSubscriptionDataInput>;
   trialEnd?: InputMaybe<Scalars['Int']>;
   trialPeriodDays?: InputMaybe<Scalars['Int']>;
@@ -18539,7 +18023,7 @@ export type StripePostCouponsAppliesToInput = {
 export type StripePostCouponsCouponInput = {
   currencyOptions?: InputMaybe<Scalars['JSON']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -18559,7 +18043,7 @@ export type StripePostCouponsInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
   id?: InputMaybe<Scalars['String']>;
   maxRedemptions?: InputMaybe<Scalars['Int']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   percentOff?: InputMaybe<Scalars['Float']>;
   redeemBy?: InputMaybe<Scalars['Int']>;
@@ -18595,7 +18079,7 @@ export type StripePostCreditNotesLinesInput = {
   description?: InputMaybe<Scalars['String']>;
   invoiceLineItem?: InputMaybe<Scalars['String']>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
   type: StripePostCreditNotesTypeLines;
   unitAmount?: InputMaybe<Scalars['Int']>;
   unitAmountDecimal?: InputMaybe<Scalars['String']>;
@@ -18687,13 +18171,13 @@ export type StripePostCustomersCustomerBalanceTransactionsInput = {
   currency: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostCustomersCustomerBalanceTransactionsTransactionInput = {
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostCustomersCustomerBankAccountInput = {
@@ -18778,7 +18262,7 @@ export type StripePostCustomersCustomerBankAccountsIdInput = {
   expMonth?: InputMaybe<Scalars['String']>;
   expYear?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   owner?: InputMaybe<StripePostCustomersCustomerBankAccountsIdOwnerInput>;
 };
@@ -18900,7 +18384,7 @@ export type StripePostCustomersCustomerCardsIdInput = {
   expMonth?: InputMaybe<Scalars['String']>;
   expYear?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   owner?: InputMaybe<StripePostCustomersCustomerCardsIdOwnerInput>;
 };
@@ -18994,7 +18478,7 @@ export type StripePostCustomersCustomerInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
   invoicePrefix?: InputMaybe<Scalars['String']>;
   invoiceSettings?: InputMaybe<StripePostCustomersCustomerInvoiceSettingsInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   nextInvoiceSequence?: InputMaybe<Scalars['Int']>;
   phone?: InputMaybe<Scalars['String']>;
@@ -19118,7 +18602,7 @@ export type StripePostCustomersCustomerSourcesIdInput = {
   expMonth?: InputMaybe<Scalars['String']>;
   expYear?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   owner?: InputMaybe<StripePostCustomersCustomerSourcesIdOwnerInput>;
 };
@@ -19166,7 +18650,7 @@ export type StripePostCustomersCustomerSubscriptionsAddInvoiceItemsInput = {
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostCustomersCustomerSubscriptionsPriceDataAddInvoiceItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostCustomersCustomerSubscriptionsAmountTypeMandateOptionsCardPaymentMethodOptionsPaymentSettings {
@@ -19264,10 +18748,10 @@ export type StripePostCustomersCustomerSubscriptionsInput = {
   daysUntilDue?: InputMaybe<Scalars['Int']>;
   defaultPaymentMethod?: InputMaybe<Scalars['String']>;
   defaultSource?: InputMaybe<Scalars['String']>;
-  defaultTaxRates?: InputMaybe<StripeUnionInput>;
+  defaultTaxRates?: InputMaybe<Scalars['JSON']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   items?: InputMaybe<Array<StripePostCustomersCustomerSubscriptionsItemsInput>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   offSession?: InputMaybe<Scalars['Boolean']>;
   paymentBehavior?: InputMaybe<StripePostCustomersCustomerSubscriptionsPaymentBehavior>;
   paymentSettings?: InputMaybe<StripePostCustomersCustomerSubscriptionsPaymentSettingsInput>;
@@ -19275,7 +18759,7 @@ export type StripePostCustomersCustomerSubscriptionsInput = {
   promotionCode?: InputMaybe<Scalars['String']>;
   prorationBehavior?: InputMaybe<StripePostCustomersCustomerSubscriptionsProrationBehavior>;
   transferData?: InputMaybe<StripePostCustomersCustomerSubscriptionsTransferDataInput>;
-  trialEnd?: InputMaybe<StripeUnionInput>;
+  trialEnd?: InputMaybe<Scalars['JSON']>;
   trialFromPlan?: InputMaybe<Scalars['Boolean']>;
   trialPeriodDays?: InputMaybe<Scalars['Int']>;
   trialSettings?: InputMaybe<StripePostCustomersCustomerSubscriptionsTrialSettingsInput>;
@@ -19301,7 +18785,7 @@ export type StripePostCustomersCustomerSubscriptionsItemsInput = {
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostCustomersCustomerSubscriptionsPriceDataItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostCustomersCustomerSubscriptionsMandateOptionsAcssDebitPaymentMethodOptionsPaymentSettingsInput = {
@@ -19345,13 +18829,13 @@ export type StripePostCustomersCustomerSubscriptionsPaymentMethodOptionsPaymentS
   bancontact?: InputMaybe<StripePostCustomersCustomerSubscriptionsBancontactPaymentMethodOptionsPaymentSettingsUnionInput>;
   card?: InputMaybe<StripePostCustomersCustomerSubscriptionsCardPaymentMethodOptionsPaymentSettingsUnionInput>;
   customerBalance?: InputMaybe<StripePostCustomersCustomerSubscriptionsCustomerBalancePaymentMethodOptionsPaymentSettingsUnionInput>;
-  konbini?: InputMaybe<StripeUnionInput>;
+  konbini?: InputMaybe<Scalars['JSON']>;
   usBankAccount?: InputMaybe<StripePostCustomersCustomerSubscriptionsUsBankAccountPaymentMethodOptionsPaymentSettingsUnionInput>;
 };
 
 export type StripePostCustomersCustomerSubscriptionsPaymentSettingsInput = {
   paymentMethodOptions?: InputMaybe<StripePostCustomersCustomerSubscriptionsPaymentMethodOptionsPaymentSettingsInput>;
-  paymentMethodTypes?: InputMaybe<StripeUnionInput>;
+  paymentMethodTypes?: InputMaybe<Scalars['JSON']>;
   saveDefaultPaymentMethod?: InputMaybe<StripePostCustomersCustomerSubscriptionsSaveDefaultPaymentMethodPaymentSettings>;
 };
 
@@ -19431,7 +18915,7 @@ export type StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdAddInvo
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdPriceDataAddInvoiceItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdAmountTypeMandateOptionsCardPaymentMethodOptionsPaymentSettings {
@@ -19536,7 +19020,7 @@ export type StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdInput =
   automaticTax?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdAutomaticTaxInput>;
   billingCycleAnchor?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdBillingCycleAnchor>;
   billingThresholds?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdBillingThresholdsUnionInput>;
-  cancelAt?: InputMaybe<StripeUnionInput>;
+  cancelAt?: InputMaybe<Scalars['JSON']>;
   cancelAtPeriodEnd?: InputMaybe<Scalars['Boolean']>;
   cancellationDetails?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdCancellationDetailsInput>;
   collectionMethod?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdCollectionMethod>;
@@ -19544,10 +19028,10 @@ export type StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdInput =
   daysUntilDue?: InputMaybe<Scalars['Int']>;
   defaultPaymentMethod?: InputMaybe<Scalars['String']>;
   defaultSource?: InputMaybe<Scalars['String']>;
-  defaultTaxRates?: InputMaybe<StripeUnionInput>;
+  defaultTaxRates?: InputMaybe<Scalars['JSON']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   items?: InputMaybe<Array<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdItemsInput>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   offSession?: InputMaybe<Scalars['Boolean']>;
   pauseCollection?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdPauseCollectionUnionInput>;
   paymentBehavior?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdPaymentBehavior>;
@@ -19557,7 +19041,7 @@ export type StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdInput =
   prorationBehavior?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdProrationBehavior>;
   prorationDate?: InputMaybe<Scalars['Int']>;
   transferData?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdTransferDataUnionInput>;
-  trialEnd?: InputMaybe<StripeUnionInput>;
+  trialEnd?: InputMaybe<Scalars['JSON']>;
   trialFromPlan?: InputMaybe<Scalars['Boolean']>;
   trialSettings?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdTrialSettingsInput>;
 };
@@ -19581,11 +19065,11 @@ export type StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdItemsIn
   clearUsage?: InputMaybe<Scalars['Boolean']>;
   deleted?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdPriceDataItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdMandateOptionsAcssDebitPaymentMethodOptionsPaymentSettingsInput = {
@@ -19639,13 +19123,13 @@ export type StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdPayment
   bancontact?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdBancontactPaymentMethodOptionsPaymentSettingsUnionInput>;
   card?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdCardPaymentMethodOptionsPaymentSettingsUnionInput>;
   customerBalance?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdCustomerBalancePaymentMethodOptionsPaymentSettingsUnionInput>;
-  konbini?: InputMaybe<StripeUnionInput>;
+  konbini?: InputMaybe<Scalars['JSON']>;
   usBankAccount?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdUsBankAccountPaymentMethodOptionsPaymentSettingsUnionInput>;
 };
 
 export type StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdPaymentSettingsInput = {
   paymentMethodOptions?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdPaymentMethodOptionsPaymentSettingsInput>;
-  paymentMethodTypes?: InputMaybe<StripeUnionInput>;
+  paymentMethodTypes?: InputMaybe<Scalars['JSON']>;
   saveDefaultPaymentMethod?: InputMaybe<StripePostCustomersCustomerSubscriptionsSubscriptionExposedIdSaveDefaultPaymentMethodPaymentSettings>;
 };
 
@@ -19873,7 +19357,7 @@ export enum StripePostCustomersCustomerTaxIdsType {
 }
 
 export type StripePostCustomersCustomerTaxInput = {
-  ipAddress?: InputMaybe<StripeUnionInput>;
+  ipAddress?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostCustomersInput = {
@@ -19886,7 +19370,7 @@ export type StripePostCustomersInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
   invoicePrefix?: InputMaybe<Scalars['String']>;
   invoiceSettings?: InputMaybe<StripePostCustomersInvoiceSettingsInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   nextInvoiceSequence?: InputMaybe<Scalars['Int']>;
   paymentMethod?: InputMaybe<Scalars['String']>;
@@ -19944,7 +19428,7 @@ export type StripePostCustomersTaxIdDataInput = {
 };
 
 export type StripePostCustomersTaxInput = {
-  ipAddress?: InputMaybe<StripeUnionInput>;
+  ipAddress?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostCustomersTypeTaxIdData {
@@ -20038,7 +19522,7 @@ export type StripePostDisputesDisputeEvidenceInput = {
 export type StripePostDisputesDisputeInput = {
   evidence?: InputMaybe<StripePostDisputesDisputeEvidenceInput>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   submit?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -20053,13 +19537,13 @@ export type StripePostFileLinksInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
   expiresAt?: InputMaybe<Scalars['Int']>;
   file: Scalars['String'];
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostFileLinksLinkInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
-  expiresAt?: InputMaybe<StripeUnionInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  expiresAt?: InputMaybe<Scalars['JSON']>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostFinancialConnectionsAccountsAccountDisconnectInput = {
@@ -20202,14 +19686,14 @@ export type StripePostInvoiceitemsInput = {
   discounts?: InputMaybe<StripePostInvoiceitemsDiscountsUnionInput>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   invoice?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   period?: InputMaybe<StripePostInvoiceitemsPeriodInput>;
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostInvoiceitemsPriceDataInput>;
   quantity?: InputMaybe<Scalars['Int']>;
   subscription?: InputMaybe<Scalars['String']>;
   taxBehavior?: InputMaybe<StripePostInvoiceitemsTaxBehavior>;
-  taxCode?: InputMaybe<StripeUnionInput>;
+  taxCode?: InputMaybe<Scalars['JSON']>;
   taxRates?: InputMaybe<Array<Scalars['String']>>;
   unitAmount?: InputMaybe<Scalars['Int']>;
   unitAmountDecimal?: InputMaybe<Scalars['String']>;
@@ -20231,14 +19715,14 @@ export type StripePostInvoiceitemsInvoiceitemInput = {
   discountable?: InputMaybe<Scalars['Boolean']>;
   discounts?: InputMaybe<StripePostInvoiceitemsInvoiceitemDiscountsUnionInput>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   period?: InputMaybe<StripePostInvoiceitemsInvoiceitemPeriodInput>;
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostInvoiceitemsInvoiceitemPriceDataInput>;
   quantity?: InputMaybe<Scalars['Int']>;
   taxBehavior?: InputMaybe<StripePostInvoiceitemsInvoiceitemTaxBehavior>;
-  taxCode?: InputMaybe<StripeUnionInput>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxCode?: InputMaybe<Scalars['JSON']>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
   unitAmount?: InputMaybe<Scalars['Int']>;
   unitAmountDecimal?: InputMaybe<Scalars['String']>;
 };
@@ -20404,7 +19888,7 @@ export type StripePostInvoicesFromInvoiceInput = {
 };
 
 export type StripePostInvoicesInput = {
-  accountTaxIds?: InputMaybe<StripeUnionInput>;
+  accountTaxIds?: InputMaybe<Scalars['JSON']>;
   applicationFeeAmount?: InputMaybe<Scalars['Int']>;
   autoAdvance?: InputMaybe<Scalars['Boolean']>;
   automaticTax?: InputMaybe<StripePostInvoicesAutomaticTaxInput>;
@@ -20422,7 +19906,7 @@ export type StripePostInvoicesInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
   footer?: InputMaybe<Scalars['String']>;
   fromInvoice?: InputMaybe<StripePostInvoicesFromInvoiceInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   onBehalfOf?: InputMaybe<Scalars['String']>;
   paymentSettings?: InputMaybe<StripePostInvoicesPaymentSettingsInput>;
   pendingInvoiceItemsBehavior?: InputMaybe<StripePostInvoicesPendingInvoiceItemsBehavior>;
@@ -20550,7 +20034,7 @@ export type StripePostInvoicesInvoiceFixedAmountShippingRateDataShippingCostInpu
 };
 
 export type StripePostInvoicesInvoiceInput = {
-  accountTaxIds?: InputMaybe<StripeUnionInput>;
+  accountTaxIds?: InputMaybe<Scalars['JSON']>;
   applicationFeeAmount?: InputMaybe<Scalars['Int']>;
   autoAdvance?: InputMaybe<Scalars['Boolean']>;
   automaticTax?: InputMaybe<StripePostInvoicesInvoiceAutomaticTaxInput>;
@@ -20559,14 +20043,14 @@ export type StripePostInvoicesInvoiceInput = {
   daysUntilDue?: InputMaybe<Scalars['Int']>;
   defaultPaymentMethod?: InputMaybe<Scalars['String']>;
   defaultSource?: InputMaybe<Scalars['String']>;
-  defaultTaxRates?: InputMaybe<StripeUnionInput>;
+  defaultTaxRates?: InputMaybe<Scalars['JSON']>;
   description?: InputMaybe<Scalars['String']>;
   discounts?: InputMaybe<StripePostInvoicesInvoiceDiscountsUnionInput>;
   dueDate?: InputMaybe<Scalars['Int']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   footer?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
-  onBehalfOf?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
+  onBehalfOf?: InputMaybe<Scalars['JSON']>;
   paymentSettings?: InputMaybe<StripePostInvoicesInvoicePaymentSettingsInput>;
   renderingOptions?: InputMaybe<StripePostInvoicesInvoiceRenderingOptionsUnionInput>;
   shippingCost?: InputMaybe<StripePostInvoicesInvoiceShippingCostUnionInput>;
@@ -20617,14 +20101,14 @@ export type StripePostInvoicesInvoicePaymentMethodOptionsPaymentSettingsInput = 
   bancontact?: InputMaybe<StripePostInvoicesInvoiceBancontactPaymentMethodOptionsPaymentSettingsUnionInput>;
   card?: InputMaybe<StripePostInvoicesInvoiceCardPaymentMethodOptionsPaymentSettingsUnionInput>;
   customerBalance?: InputMaybe<StripePostInvoicesInvoiceCustomerBalancePaymentMethodOptionsPaymentSettingsUnionInput>;
-  konbini?: InputMaybe<StripeUnionInput>;
+  konbini?: InputMaybe<Scalars['JSON']>;
   usBankAccount?: InputMaybe<StripePostInvoicesInvoiceUsBankAccountPaymentMethodOptionsPaymentSettingsUnionInput>;
 };
 
 export type StripePostInvoicesInvoicePaymentSettingsInput = {
   defaultMandate?: InputMaybe<Scalars['String']>;
   paymentMethodOptions?: InputMaybe<StripePostInvoicesInvoicePaymentMethodOptionsPaymentSettingsInput>;
-  paymentMethodTypes?: InputMaybe<StripeUnionInput>;
+  paymentMethodTypes?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostInvoicesInvoicePermissionsFinancialConnectionsUsBankAccountPaymentMethodOptionsPaymentSettings {
@@ -20791,14 +20275,14 @@ export type StripePostInvoicesPaymentMethodOptionsPaymentSettingsInput = {
   bancontact?: InputMaybe<StripePostInvoicesBancontactPaymentMethodOptionsPaymentSettingsUnionInput>;
   card?: InputMaybe<StripePostInvoicesCardPaymentMethodOptionsPaymentSettingsUnionInput>;
   customerBalance?: InputMaybe<StripePostInvoicesCustomerBalancePaymentMethodOptionsPaymentSettingsUnionInput>;
-  konbini?: InputMaybe<StripeUnionInput>;
+  konbini?: InputMaybe<Scalars['JSON']>;
   usBankAccount?: InputMaybe<StripePostInvoicesUsBankAccountPaymentMethodOptionsPaymentSettingsUnionInput>;
 };
 
 export type StripePostInvoicesPaymentSettingsInput = {
   defaultMandate?: InputMaybe<Scalars['String']>;
   paymentMethodOptions?: InputMaybe<StripePostInvoicesPaymentMethodOptionsPaymentSettingsInput>;
-  paymentMethodTypes?: InputMaybe<StripeUnionInput>;
+  paymentMethodTypes?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostInvoicesPendingInvoiceItemsBehavior {
@@ -20932,17 +20416,17 @@ export enum StripePostInvoicesVerificationMethodUsBankAccountPaymentMethodOption
 export type StripePostIssuingAuthorizationsAuthorizationApproveInput = {
   amount?: InputMaybe<Scalars['Int']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingAuthorizationsAuthorizationDeclineInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingAuthorizationsAuthorizationInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingCardholdersAddressBillingInput = {
@@ -24425,7 +23909,7 @@ export enum StripePostIssuingCardsCardCategoriesSpendingLimitsSpendingControls {
 export type StripePostIssuingCardsCardInput = {
   cancellationReason?: InputMaybe<StripePostIssuingCardsCardCancellationReason>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   pin?: InputMaybe<StripePostIssuingCardsCardPinInput>;
   spendingControls?: InputMaybe<StripePostIssuingCardsCardSpendingControlsInput>;
   status?: InputMaybe<StripePostIssuingCardsCardStatus>;
@@ -24838,16 +24322,16 @@ export enum StripePostIssuingCardsTypeShipping {
 }
 
 export type StripePostIssuingDisputesCanceledEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
-  canceledAt?: InputMaybe<StripeUnionInput>;
-  cancellationPolicyProvided?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
+  canceledAt?: InputMaybe<Scalars['JSON']>;
+  cancellationPolicyProvided?: InputMaybe<Scalars['JSON']>;
   cancellationReason?: InputMaybe<Scalars['String']>;
-  expectedAt?: InputMaybe<StripeUnionInput>;
+  expectedAt?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
   productDescription?: InputMaybe<Scalars['String']>;
   productType?: InputMaybe<Scalars['String']>;
   returnStatus?: InputMaybe<Scalars['String']>;
-  returnedAt?: InputMaybe<StripeUnionInput>;
+  returnedAt?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingDisputesCanceledEvidenceUnionInput = {
@@ -24856,16 +24340,16 @@ export type StripePostIssuingDisputesCanceledEvidenceUnionInput = {
 };
 
 export type StripePostIssuingDisputesDisputeCanceledEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
-  canceledAt?: InputMaybe<StripeUnionInput>;
-  cancellationPolicyProvided?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
+  canceledAt?: InputMaybe<Scalars['JSON']>;
+  cancellationPolicyProvided?: InputMaybe<Scalars['JSON']>;
   cancellationReason?: InputMaybe<Scalars['String']>;
-  expectedAt?: InputMaybe<StripeUnionInput>;
+  expectedAt?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
   productDescription?: InputMaybe<Scalars['String']>;
   productType?: InputMaybe<Scalars['String']>;
   returnStatus?: InputMaybe<Scalars['String']>;
-  returnedAt?: InputMaybe<StripeUnionInput>;
+  returnedAt?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingDisputesDisputeCanceledEvidenceUnionInput = {
@@ -24874,10 +24358,10 @@ export type StripePostIssuingDisputesDisputeCanceledEvidenceUnionInput = {
 };
 
 export type StripePostIssuingDisputesDisputeDuplicateEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
-  cardStatement?: InputMaybe<StripeUnionInput>;
-  cashReceipt?: InputMaybe<StripeUnionInput>;
-  checkImage?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
+  cardStatement?: InputMaybe<Scalars['JSON']>;
+  cashReceipt?: InputMaybe<Scalars['JSON']>;
+  checkImage?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
   originalTransaction?: InputMaybe<Scalars['String']>;
 };
@@ -24899,7 +24383,7 @@ export type StripePostIssuingDisputesDisputeEvidenceInput = {
 };
 
 export type StripePostIssuingDisputesDisputeFraudulentEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
 };
 
@@ -24912,16 +24396,16 @@ export type StripePostIssuingDisputesDisputeInput = {
   amount?: InputMaybe<Scalars['Int']>;
   evidence?: InputMaybe<StripePostIssuingDisputesDisputeEvidenceInput>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingDisputesDisputeMerchandiseNotAsDescribedEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
-  receivedAt?: InputMaybe<StripeUnionInput>;
+  receivedAt?: InputMaybe<Scalars['JSON']>;
   returnDescription?: InputMaybe<Scalars['String']>;
   returnStatus?: InputMaybe<Scalars['String']>;
-  returnedAt?: InputMaybe<StripeUnionInput>;
+  returnedAt?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingDisputesDisputeMerchandiseNotAsDescribedEvidenceUnionInput = {
@@ -24930,8 +24414,8 @@ export type StripePostIssuingDisputesDisputeMerchandiseNotAsDescribedEvidenceUni
 };
 
 export type StripePostIssuingDisputesDisputeNotReceivedEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
-  expectedAt?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
+  expectedAt?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
   productDescription?: InputMaybe<Scalars['String']>;
   productType?: InputMaybe<Scalars['String']>;
@@ -24943,7 +24427,7 @@ export type StripePostIssuingDisputesDisputeNotReceivedEvidenceUnionInput = {
 };
 
 export type StripePostIssuingDisputesDisputeOtherEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
   productDescription?: InputMaybe<Scalars['String']>;
   productType?: InputMaybe<Scalars['String']>;
@@ -24965,11 +24449,11 @@ export enum StripePostIssuingDisputesDisputeReasonEvidence {
 }
 
 export type StripePostIssuingDisputesDisputeServiceNotAsDescribedEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
-  canceledAt?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
+  canceledAt?: InputMaybe<Scalars['JSON']>;
   cancellationReason?: InputMaybe<Scalars['String']>;
   explanation?: InputMaybe<Scalars['String']>;
-  receivedAt?: InputMaybe<StripeUnionInput>;
+  receivedAt?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingDisputesDisputeServiceNotAsDescribedEvidenceUnionInput = {
@@ -24979,14 +24463,14 @@ export type StripePostIssuingDisputesDisputeServiceNotAsDescribedEvidenceUnionIn
 
 export type StripePostIssuingDisputesDisputeSubmitInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingDisputesDuplicateEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
-  cardStatement?: InputMaybe<StripeUnionInput>;
-  cashReceipt?: InputMaybe<StripeUnionInput>;
-  checkImage?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
+  cardStatement?: InputMaybe<Scalars['JSON']>;
+  cashReceipt?: InputMaybe<Scalars['JSON']>;
+  checkImage?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
   originalTransaction?: InputMaybe<Scalars['String']>;
 };
@@ -25008,7 +24492,7 @@ export type StripePostIssuingDisputesEvidenceInput = {
 };
 
 export type StripePostIssuingDisputesFraudulentEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
 };
 
@@ -25027,12 +24511,12 @@ export type StripePostIssuingDisputesInput = {
 };
 
 export type StripePostIssuingDisputesMerchandiseNotAsDescribedEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
-  receivedAt?: InputMaybe<StripeUnionInput>;
+  receivedAt?: InputMaybe<Scalars['JSON']>;
   returnDescription?: InputMaybe<Scalars['String']>;
   returnStatus?: InputMaybe<Scalars['String']>;
-  returnedAt?: InputMaybe<StripeUnionInput>;
+  returnedAt?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingDisputesMerchandiseNotAsDescribedEvidenceUnionInput = {
@@ -25041,8 +24525,8 @@ export type StripePostIssuingDisputesMerchandiseNotAsDescribedEvidenceUnionInput
 };
 
 export type StripePostIssuingDisputesNotReceivedEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
-  expectedAt?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
+  expectedAt?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
   productDescription?: InputMaybe<Scalars['String']>;
   productType?: InputMaybe<Scalars['String']>;
@@ -25054,7 +24538,7 @@ export type StripePostIssuingDisputesNotReceivedEvidenceUnionInput = {
 };
 
 export type StripePostIssuingDisputesOtherEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
   explanation?: InputMaybe<Scalars['String']>;
   productDescription?: InputMaybe<Scalars['String']>;
   productType?: InputMaybe<Scalars['String']>;
@@ -25076,11 +24560,11 @@ export enum StripePostIssuingDisputesReasonEvidence {
 }
 
 export type StripePostIssuingDisputesServiceNotAsDescribedEvidenceInput = {
-  additionalDocumentation?: InputMaybe<StripeUnionInput>;
-  canceledAt?: InputMaybe<StripeUnionInput>;
+  additionalDocumentation?: InputMaybe<Scalars['JSON']>;
+  canceledAt?: InputMaybe<Scalars['JSON']>;
   cancellationReason?: InputMaybe<Scalars['String']>;
   explanation?: InputMaybe<Scalars['String']>;
-  receivedAt?: InputMaybe<StripeUnionInput>;
+  receivedAt?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostIssuingDisputesServiceNotAsDescribedEvidenceUnionInput = {
@@ -25099,7 +24583,7 @@ export type StripePostIssuingSettlementsSettlementInput = {
 
 export type StripePostIssuingTransactionsTransactionInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostLinkAccountSessionsAccountHolderInput = {
@@ -25383,7 +24867,7 @@ export type StripePostPaymentIntentsBankTransferCustomerBalancePaymentMethodOpti
 
 export type StripePostPaymentIntentsBillingDetailsPaymentMethodDataInput = {
   address?: InputMaybe<StripePostPaymentIntentsAddressBillingDetailsPaymentMethodDataUnionInput>;
-  email?: InputMaybe<StripeUnionInput>;
+  email?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
@@ -25425,8 +24909,8 @@ export type StripePostPaymentIntentsCardPaymentMethodOptionsInput = {
   network?: InputMaybe<StripePostPaymentIntentsNetworkCardPaymentMethodOptions>;
   requestThreeDSecure?: InputMaybe<StripePostPaymentIntentsRequestThreeDSecureCardPaymentMethodOptions>;
   setupFutureUsage?: InputMaybe<Scalars['String']>;
-  statementDescriptorSuffixKana?: InputMaybe<StripeUnionInput>;
-  statementDescriptorSuffixKanji?: InputMaybe<StripeUnionInput>;
+  statementDescriptorSuffixKana?: InputMaybe<Scalars['JSON']>;
+  statementDescriptorSuffixKanji?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostPaymentIntentsCardPaymentMethodOptionsUnionInput = {
@@ -25583,7 +25067,7 @@ export type StripePostPaymentIntentsInput = {
   mandate?: InputMaybe<Scalars['String']>;
   mandateData?: InputMaybe<StripePostPaymentIntentsMandateDataInput>;
   metadata?: InputMaybe<Scalars['JSON']>;
-  offSession?: InputMaybe<StripeUnionInput>;
+  offSession?: InputMaybe<Scalars['JSON']>;
   onBehalfOf?: InputMaybe<Scalars['String']>;
   paymentMethod?: InputMaybe<Scalars['String']>;
   paymentMethodData?: InputMaybe<StripePostPaymentIntentsPaymentMethodDataInput>;
@@ -25845,7 +25329,7 @@ export type StripePostPaymentIntentsIntentBankTransferCustomerBalancePaymentMeth
 
 export type StripePostPaymentIntentsIntentBillingDetailsPaymentMethodDataInput = {
   address?: InputMaybe<StripePostPaymentIntentsIntentAddressBillingDetailsPaymentMethodDataUnionInput>;
-  email?: InputMaybe<StripeUnionInput>;
+  email?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
@@ -25889,6 +25373,7 @@ export type StripePostPaymentIntentsIntentCaptureInput = {
   amountToCapture?: InputMaybe<Scalars['Int']>;
   applicationFeeAmount?: InputMaybe<Scalars['Int']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   statementDescriptor?: InputMaybe<Scalars['String']>;
   statementDescriptorSuffix?: InputMaybe<Scalars['String']>;
   transferData?: InputMaybe<StripePostPaymentIntentsIntentCaptureTransferDataInput>;
@@ -25912,8 +25397,8 @@ export type StripePostPaymentIntentsIntentCardPaymentMethodOptionsInput = {
   network?: InputMaybe<StripePostPaymentIntentsIntentNetworkCardPaymentMethodOptions>;
   requestThreeDSecure?: InputMaybe<StripePostPaymentIntentsIntentRequestThreeDSecureCardPaymentMethodOptions>;
   setupFutureUsage?: InputMaybe<Scalars['String']>;
-  statementDescriptorSuffixKana?: InputMaybe<StripeUnionInput>;
-  statementDescriptorSuffixKanji?: InputMaybe<StripeUnionInput>;
+  statementDescriptorSuffixKana?: InputMaybe<Scalars['JSON']>;
+  statementDescriptorSuffixKanji?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostPaymentIntentsIntentCardPaymentMethodOptionsUnionInput = {
@@ -26180,7 +25665,7 @@ export type StripePostPaymentIntentsIntentConfirmBankTransferCustomerBalancePaym
 
 export type StripePostPaymentIntentsIntentConfirmBillingDetailsPaymentMethodDataInput = {
   address?: InputMaybe<StripePostPaymentIntentsIntentConfirmAddressBillingDetailsPaymentMethodDataUnionInput>;
-  email?: InputMaybe<StripeUnionInput>;
+  email?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
@@ -26222,8 +25707,8 @@ export type StripePostPaymentIntentsIntentConfirmCardPaymentMethodOptionsInput =
   network?: InputMaybe<StripePostPaymentIntentsIntentConfirmNetworkCardPaymentMethodOptions>;
   requestThreeDSecure?: InputMaybe<StripePostPaymentIntentsIntentConfirmRequestThreeDSecureCardPaymentMethodOptions>;
   setupFutureUsage?: InputMaybe<Scalars['String']>;
-  statementDescriptorSuffixKana?: InputMaybe<StripeUnionInput>;
-  statementDescriptorSuffixKanji?: InputMaybe<StripeUnionInput>;
+  statementDescriptorSuffixKana?: InputMaybe<Scalars['JSON']>;
+  statementDescriptorSuffixKanji?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostPaymentIntentsIntentConfirmCardPaymentMethodOptionsUnionInput = {
@@ -26365,13 +25850,13 @@ export type StripePostPaymentIntentsIntentConfirmInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
   mandate?: InputMaybe<Scalars['String']>;
   mandateData?: InputMaybe<StripePostPaymentIntentsIntentConfirmMandateDataOrStripePostPaymentIntentsIntentConfirmMandateDataUnionInput>;
-  offSession?: InputMaybe<StripeUnionInput>;
+  offSession?: InputMaybe<Scalars['JSON']>;
   paymentMethod?: InputMaybe<Scalars['String']>;
   paymentMethodData?: InputMaybe<StripePostPaymentIntentsIntentConfirmPaymentMethodDataInput>;
   paymentMethodOptions?: InputMaybe<StripePostPaymentIntentsIntentConfirmPaymentMethodOptionsInput>;
   paymentMethodTypes?: InputMaybe<Array<Scalars['String']>>;
   radarOptions?: InputMaybe<StripePostPaymentIntentsIntentConfirmRadarOptionsInput>;
-  receiptEmail?: InputMaybe<StripeUnionInput>;
+  receiptEmail?: InputMaybe<Scalars['JSON']>;
   returnUrl?: InputMaybe<Scalars['String']>;
   setupFutureUsage?: InputMaybe<Scalars['String']>;
   shipping?: InputMaybe<StripePostPaymentIntentsIntentConfirmShippingUnionInput>;
@@ -26412,8 +25897,8 @@ export type StripePostPaymentIntentsIntentConfirmKlarnaPaymentMethodOptionsUnion
 
 export type StripePostPaymentIntentsIntentConfirmKonbiniPaymentMethodOptionsInput = {
   confirmationNumber?: InputMaybe<Scalars['String']>;
-  expiresAfterDays?: InputMaybe<StripeUnionInput>;
-  expiresAt?: InputMaybe<StripeUnionInput>;
+  expiresAfterDays?: InputMaybe<Scalars['JSON']>;
+  expiresAt?: InputMaybe<Scalars['JSON']>;
   productDescription?: InputMaybe<Scalars['String']>;
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsIntentConfirmSetupFutureUsageKonbiniPaymentMethodOptions>;
 };
@@ -26443,7 +25928,7 @@ export type StripePostPaymentIntentsIntentConfirmMandateDataOrStripePostPaymentI
 };
 
 export type StripePostPaymentIntentsIntentConfirmMandateOptionsAcssDebitPaymentMethodOptionsInput = {
-  customMandateUrl?: InputMaybe<StripeUnionInput>;
+  customMandateUrl?: InputMaybe<Scalars['JSON']>;
   intervalDescription?: InputMaybe<Scalars['String']>;
   paymentSchedule?: InputMaybe<StripePostPaymentIntentsIntentConfirmPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions>;
   transactionType?: InputMaybe<StripePostPaymentIntentsIntentConfirmTransactionTypeMandateOptionsAcssDebitPaymentMethodOptions>;
@@ -26562,7 +26047,7 @@ export type StripePostPaymentIntentsIntentConfirmPaymentMethodOptionsInput = {
   giropay?: InputMaybe<StripePostPaymentIntentsIntentConfirmGiropayPaymentMethodOptionsUnionInput>;
   grabpay?: InputMaybe<StripePostPaymentIntentsIntentConfirmGrabpayPaymentMethodOptionsUnionInput>;
   ideal?: InputMaybe<StripePostPaymentIntentsIntentConfirmIdealPaymentMethodOptionsUnionInput>;
-  interacPresent?: InputMaybe<StripeUnionInput>;
+  interacPresent?: InputMaybe<Scalars['JSON']>;
   klarna?: InputMaybe<StripePostPaymentIntentsIntentConfirmKlarnaPaymentMethodOptionsUnionInput>;
   konbini?: InputMaybe<StripePostPaymentIntentsIntentConfirmKonbiniPaymentMethodOptionsUnionInput>;
   link?: InputMaybe<StripePostPaymentIntentsIntentConfirmLinkPaymentMethodOptionsUnionInput>;
@@ -27021,18 +26506,18 @@ export type StripePostPaymentIntentsIntentIncrementAuthorizationTransferDataInpu
 
 export type StripePostPaymentIntentsIntentInput = {
   amount?: InputMaybe<Scalars['Int']>;
-  applicationFeeAmount?: InputMaybe<StripeUnionInput>;
+  applicationFeeAmount?: InputMaybe<Scalars['JSON']>;
   captureMethod?: InputMaybe<StripePostPaymentIntentsIntentCaptureMethod>;
   currency?: InputMaybe<Scalars['String']>;
   customer?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   paymentMethod?: InputMaybe<Scalars['String']>;
   paymentMethodData?: InputMaybe<StripePostPaymentIntentsIntentPaymentMethodDataInput>;
   paymentMethodOptions?: InputMaybe<StripePostPaymentIntentsIntentPaymentMethodOptionsInput>;
   paymentMethodTypes?: InputMaybe<Array<Scalars['String']>>;
-  receiptEmail?: InputMaybe<StripeUnionInput>;
+  receiptEmail?: InputMaybe<Scalars['JSON']>;
   setupFutureUsage?: InputMaybe<Scalars['String']>;
   shipping?: InputMaybe<StripePostPaymentIntentsIntentShippingUnionInput>;
   statementDescriptor?: InputMaybe<Scalars['String']>;
@@ -27075,8 +26560,8 @@ export type StripePostPaymentIntentsIntentKlarnaPaymentMethodOptionsUnionInput =
 
 export type StripePostPaymentIntentsIntentKonbiniPaymentMethodOptionsInput = {
   confirmationNumber?: InputMaybe<Scalars['String']>;
-  expiresAfterDays?: InputMaybe<StripeUnionInput>;
-  expiresAt?: InputMaybe<StripeUnionInput>;
+  expiresAfterDays?: InputMaybe<Scalars['JSON']>;
+  expiresAt?: InputMaybe<Scalars['JSON']>;
   productDescription?: InputMaybe<Scalars['String']>;
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsIntentSetupFutureUsageKonbiniPaymentMethodOptions>;
 };
@@ -27098,7 +26583,7 @@ export type StripePostPaymentIntentsIntentLinkPaymentMethodOptionsUnionInput = {
 };
 
 export type StripePostPaymentIntentsIntentMandateOptionsAcssDebitPaymentMethodOptionsInput = {
-  customMandateUrl?: InputMaybe<StripeUnionInput>;
+  customMandateUrl?: InputMaybe<Scalars['JSON']>;
   intervalDescription?: InputMaybe<Scalars['String']>;
   paymentSchedule?: InputMaybe<StripePostPaymentIntentsIntentPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions>;
   transactionType?: InputMaybe<StripePostPaymentIntentsIntentTransactionTypeMandateOptionsAcssDebitPaymentMethodOptions>;
@@ -27212,7 +26697,7 @@ export type StripePostPaymentIntentsIntentPaymentMethodOptionsInput = {
   giropay?: InputMaybe<StripePostPaymentIntentsIntentGiropayPaymentMethodOptionsUnionInput>;
   grabpay?: InputMaybe<StripePostPaymentIntentsIntentGrabpayPaymentMethodOptionsUnionInput>;
   ideal?: InputMaybe<StripePostPaymentIntentsIntentIdealPaymentMethodOptionsUnionInput>;
-  interacPresent?: InputMaybe<StripeUnionInput>;
+  interacPresent?: InputMaybe<Scalars['JSON']>;
   klarna?: InputMaybe<StripePostPaymentIntentsIntentKlarnaPaymentMethodOptionsUnionInput>;
   konbini?: InputMaybe<StripePostPaymentIntentsIntentKonbiniPaymentMethodOptionsUnionInput>;
   link?: InputMaybe<StripePostPaymentIntentsIntentLinkPaymentMethodOptionsUnionInput>;
@@ -27591,8 +27076,8 @@ export type StripePostPaymentIntentsKlarnaPaymentMethodOptionsUnionInput = {
 
 export type StripePostPaymentIntentsKonbiniPaymentMethodOptionsInput = {
   confirmationNumber?: InputMaybe<Scalars['String']>;
-  expiresAfterDays?: InputMaybe<StripeUnionInput>;
-  expiresAt?: InputMaybe<StripeUnionInput>;
+  expiresAfterDays?: InputMaybe<Scalars['JSON']>;
+  expiresAt?: InputMaybe<Scalars['JSON']>;
   productDescription?: InputMaybe<Scalars['String']>;
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsSetupFutureUsageKonbiniPaymentMethodOptions>;
 };
@@ -27618,7 +27103,7 @@ export type StripePostPaymentIntentsMandateDataInput = {
 };
 
 export type StripePostPaymentIntentsMandateOptionsAcssDebitPaymentMethodOptionsInput = {
-  customMandateUrl?: InputMaybe<StripeUnionInput>;
+  customMandateUrl?: InputMaybe<Scalars['JSON']>;
   intervalDescription?: InputMaybe<Scalars['String']>;
   paymentSchedule?: InputMaybe<StripePostPaymentIntentsPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions>;
   transactionType?: InputMaybe<StripePostPaymentIntentsTransactionTypeMandateOptionsAcssDebitPaymentMethodOptions>;
@@ -27737,7 +27222,7 @@ export type StripePostPaymentIntentsPaymentMethodOptionsInput = {
   giropay?: InputMaybe<StripePostPaymentIntentsGiropayPaymentMethodOptionsUnionInput>;
   grabpay?: InputMaybe<StripePostPaymentIntentsGrabpayPaymentMethodOptionsUnionInput>;
   ideal?: InputMaybe<StripePostPaymentIntentsIdealPaymentMethodOptionsUnionInput>;
-  interacPresent?: InputMaybe<StripeUnionInput>;
+  interacPresent?: InputMaybe<Scalars['JSON']>;
   klarna?: InputMaybe<StripePostPaymentIntentsKlarnaPaymentMethodOptionsUnionInput>;
   konbini?: InputMaybe<StripePostPaymentIntentsKonbiniPaymentMethodOptionsUnionInput>;
   link?: InputMaybe<StripePostPaymentIntentsLinkPaymentMethodOptionsUnionInput>;
@@ -28433,11 +27918,11 @@ export type StripePostPaymentLinksInvoiceCreationInput = {
 };
 
 export type StripePostPaymentLinksInvoiceDataInvoiceCreationInput = {
-  accountTaxIds?: InputMaybe<StripeUnionInput>;
+  accountTaxIds?: InputMaybe<Scalars['JSON']>;
   customFields?: InputMaybe<StripePostPaymentLinksCustomFieldsInvoiceDataInvoiceCreationUnionInput>;
   description?: InputMaybe<Scalars['String']>;
   footer?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   renderingOptions?: InputMaybe<StripePostPaymentLinksRenderingOptionsInvoiceDataInvoiceCreationUnionInput>;
 };
 
@@ -28778,7 +28263,7 @@ export type StripePostPaymentLinksPaymentLinkInput = {
   lineItems?: InputMaybe<Array<StripePostPaymentLinksPaymentLinkLineItemsInput>>;
   metadata?: InputMaybe<Scalars['JSON']>;
   paymentMethodCollection?: InputMaybe<StripePostPaymentLinksPaymentLinkPaymentMethodCollection>;
-  paymentMethodTypes?: InputMaybe<StripeUnionInput>;
+  paymentMethodTypes?: InputMaybe<Scalars['JSON']>;
   shippingAddressCollection?: InputMaybe<StripePostPaymentLinksPaymentLinkShippingAddressCollectionUnionInput>;
 };
 
@@ -28788,11 +28273,11 @@ export type StripePostPaymentLinksPaymentLinkInvoiceCreationInput = {
 };
 
 export type StripePostPaymentLinksPaymentLinkInvoiceDataInvoiceCreationInput = {
-  accountTaxIds?: InputMaybe<StripeUnionInput>;
+  accountTaxIds?: InputMaybe<Scalars['JSON']>;
   customFields?: InputMaybe<StripePostPaymentLinksPaymentLinkCustomFieldsInvoiceDataInvoiceCreationUnionInput>;
   description?: InputMaybe<Scalars['String']>;
   footer?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   renderingOptions?: InputMaybe<StripePostPaymentLinksPaymentLinkRenderingOptionsInvoiceDataInvoiceCreationUnionInput>;
 };
 
@@ -29144,7 +28629,7 @@ export enum StripePostPaymentMethodsBankP24 {
 
 export type StripePostPaymentMethodsBillingDetailsInput = {
   address?: InputMaybe<StripePostPaymentMethodsAddressBillingDetailsUnionInput>;
-  email?: InputMaybe<StripeUnionInput>;
+  email?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
@@ -29262,7 +28747,7 @@ export type StripePostPaymentMethodsPaymentMethodAttachInput = {
 
 export type StripePostPaymentMethodsPaymentMethodBillingDetailsInput = {
   address?: InputMaybe<StripePostPaymentMethodsPaymentMethodAddressBillingDetailsUnionInput>;
-  email?: InputMaybe<StripeUnionInput>;
+  email?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
@@ -29281,7 +28766,7 @@ export type StripePostPaymentMethodsPaymentMethodInput = {
   card?: InputMaybe<StripePostPaymentMethodsPaymentMethodCardInput>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   link?: InputMaybe<Scalars['JSON']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   usBankAccount?: InputMaybe<StripePostPaymentMethodsPaymentMethodUsBankAccountInput>;
 };
 
@@ -29364,7 +28849,7 @@ export type StripePostPayoutsPayoutCancelInput = {
 
 export type StripePostPayoutsPayoutInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostPayoutsPayoutReverseInput = {
@@ -29401,7 +28886,7 @@ export type StripePostPlansInput = {
   id?: InputMaybe<Scalars['String']>;
   interval: StripePostPlansInterval;
   intervalCount?: InputMaybe<Scalars['Int']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   nickname?: InputMaybe<Scalars['String']>;
   product?: InputMaybe<StripePostPlansProductUnionInput>;
   tiers?: InputMaybe<Array<StripePostPlansTiersInput>>;
@@ -29421,7 +28906,7 @@ export enum StripePostPlansInterval {
 export type StripePostPlansPlanInput = {
   active?: InputMaybe<Scalars['Boolean']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   nickname?: InputMaybe<Scalars['String']>;
   product?: InputMaybe<Scalars['String']>;
   trialPeriodDays?: InputMaybe<Scalars['Int']>;
@@ -29452,7 +28937,7 @@ export type StripePostPlansTiersInput = {
   flatAmountDecimal?: InputMaybe<Scalars['String']>;
   unitAmount?: InputMaybe<Scalars['Int']>;
   unitAmountDecimal?: InputMaybe<Scalars['String']>;
-  upTo: StripeUnionInput;
+  upTo: Scalars['JSON'];
 };
 
 export enum StripePostPlansTiersMode {
@@ -29520,10 +29005,10 @@ export enum StripePostPricesIntervalRecurring {
 
 export type StripePostPricesPriceInput = {
   active?: InputMaybe<Scalars['Boolean']>;
-  currencyOptions?: InputMaybe<StripeUnionInput>;
+  currencyOptions?: InputMaybe<Scalars['JSON']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   lookupKey?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   nickname?: InputMaybe<Scalars['String']>;
   taxBehavior?: InputMaybe<StripePostPricesPriceTaxBehavior>;
   transferLookupKey?: InputMaybe<Scalars['Boolean']>;
@@ -29568,7 +29053,7 @@ export type StripePostPricesTiersInput = {
   flatAmountDecimal?: InputMaybe<Scalars['String']>;
   unitAmount?: InputMaybe<Scalars['Int']>;
   unitAmountDecimal?: InputMaybe<Scalars['String']>;
-  upTo: StripeUnionInput;
+  upTo: Scalars['JSON'];
 };
 
 export enum StripePostPricesTiersMode {
@@ -29600,15 +29085,15 @@ export type StripePostProductsIdInput = {
   defaultPrice?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  images?: InputMaybe<StripeUnionInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  images?: InputMaybe<Scalars['JSON']>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   packageDimensions?: InputMaybe<StripePostProductsIdPackageDimensionsUnionInput>;
   shippable?: InputMaybe<Scalars['Boolean']>;
   statementDescriptor?: InputMaybe<Scalars['String']>;
-  taxCode?: InputMaybe<StripeUnionInput>;
+  taxCode?: InputMaybe<Scalars['JSON']>;
   unitLabel?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<StripeUnionInput>;
+  url?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostProductsIdPackageDimensionsInput = {
@@ -29680,7 +29165,7 @@ export type StripePostPromotionCodesInput = {
 export type StripePostPromotionCodesPromotionCodeInput = {
   active?: InputMaybe<Scalars['Boolean']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   restrictions?: InputMaybe<StripePostPromotionCodesPromotionCodeRestrictionsInput>;
 };
 
@@ -29720,12 +29205,12 @@ export type StripePostQuotesFromQuoteInput = {
 };
 
 export type StripePostQuotesInput = {
-  applicationFeeAmount?: InputMaybe<StripeUnionInput>;
-  applicationFeePercent?: InputMaybe<StripeUnionInput>;
+  applicationFeeAmount?: InputMaybe<Scalars['JSON']>;
+  applicationFeePercent?: InputMaybe<Scalars['JSON']>;
   automaticTax?: InputMaybe<StripePostQuotesAutomaticTaxInput>;
   collectionMethod?: InputMaybe<StripePostQuotesCollectionMethod>;
   customer?: InputMaybe<Scalars['String']>;
-  defaultTaxRates?: InputMaybe<StripeUnionInput>;
+  defaultTaxRates?: InputMaybe<Scalars['JSON']>;
   description?: InputMaybe<Scalars['String']>;
   discounts?: InputMaybe<StripePostQuotesDiscountsUnionInput>;
   expand?: InputMaybe<Array<Scalars['String']>>;
@@ -29736,7 +29221,7 @@ export type StripePostQuotesInput = {
   invoiceSettings?: InputMaybe<StripePostQuotesInvoiceSettingsInput>;
   lineItems?: InputMaybe<Array<StripePostQuotesLineItemsInput>>;
   metadata?: InputMaybe<Scalars['JSON']>;
-  onBehalfOf?: InputMaybe<StripeUnionInput>;
+  onBehalfOf?: InputMaybe<Scalars['JSON']>;
   subscriptionData?: InputMaybe<StripePostQuotesSubscriptionDataInput>;
   testClock?: InputMaybe<Scalars['String']>;
   transferData?: InputMaybe<StripePostQuotesTransferDataUnionInput>;
@@ -29757,7 +29242,7 @@ export type StripePostQuotesLineItemsInput = {
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostQuotesPriceDataLineItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostQuotesPriceDataLineItemsInput = {
@@ -29802,12 +29287,12 @@ export type StripePostQuotesQuoteFinalizeInput = {
 };
 
 export type StripePostQuotesQuoteInput = {
-  applicationFeeAmount?: InputMaybe<StripeUnionInput>;
-  applicationFeePercent?: InputMaybe<StripeUnionInput>;
+  applicationFeeAmount?: InputMaybe<Scalars['JSON']>;
+  applicationFeePercent?: InputMaybe<Scalars['JSON']>;
   automaticTax?: InputMaybe<StripePostQuotesQuoteAutomaticTaxInput>;
   collectionMethod?: InputMaybe<StripePostQuotesQuoteCollectionMethod>;
   customer?: InputMaybe<Scalars['String']>;
-  defaultTaxRates?: InputMaybe<StripeUnionInput>;
+  defaultTaxRates?: InputMaybe<Scalars['JSON']>;
   description?: InputMaybe<Scalars['String']>;
   discounts?: InputMaybe<StripePostQuotesQuoteDiscountsUnionInput>;
   expand?: InputMaybe<Array<Scalars['String']>>;
@@ -29817,7 +29302,7 @@ export type StripePostQuotesQuoteInput = {
   invoiceSettings?: InputMaybe<StripePostQuotesQuoteInvoiceSettingsInput>;
   lineItems?: InputMaybe<Array<StripePostQuotesQuoteLineItemsInput>>;
   metadata?: InputMaybe<Scalars['JSON']>;
-  onBehalfOf?: InputMaybe<StripeUnionInput>;
+  onBehalfOf?: InputMaybe<Scalars['JSON']>;
   subscriptionData?: InputMaybe<StripePostQuotesQuoteSubscriptionDataInput>;
   transferData?: InputMaybe<StripePostQuotesQuoteTransferDataUnionInput>;
 };
@@ -29838,7 +29323,7 @@ export type StripePostQuotesQuoteLineItemsInput = {
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostQuotesQuotePriceDataLineItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostQuotesQuotePriceDataLineItemsInput = {
@@ -29857,8 +29342,8 @@ export type StripePostQuotesQuoteRecurringPriceDataLineItemsInput = {
 
 export type StripePostQuotesQuoteSubscriptionDataInput = {
   description?: InputMaybe<Scalars['String']>;
-  effectiveDate?: InputMaybe<StripeUnionInput>;
-  trialPeriodDays?: InputMaybe<StripeUnionInput>;
+  effectiveDate?: InputMaybe<Scalars['JSON']>;
+  trialPeriodDays?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostQuotesQuoteTaxBehaviorPriceDataLineItems {
@@ -29885,8 +29370,8 @@ export type StripePostQuotesRecurringPriceDataLineItemsInput = {
 
 export type StripePostQuotesSubscriptionDataInput = {
   description?: InputMaybe<Scalars['String']>;
-  effectiveDate?: InputMaybe<StripeUnionInput>;
-  trialPeriodDays?: InputMaybe<StripeUnionInput>;
+  effectiveDate?: InputMaybe<Scalars['JSON']>;
+  trialPeriodDays?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostQuotesTaxBehaviorPriceDataLineItems {
@@ -29945,7 +29430,7 @@ export type StripePostRefundsInput = {
   customer?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   instructionsEmail?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   origin?: InputMaybe<StripePostRefundsOrigin>;
   paymentIntent?: InputMaybe<Scalars['String']>;
   reason?: InputMaybe<StripePostRefundsReason>;
@@ -29969,7 +29454,7 @@ export type StripePostRefundsRefundCancelInput = {
 
 export type StripePostRefundsRefundInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostReportingReportRunsInput = {
@@ -30775,7 +30260,7 @@ export enum StripePostSetupIntentsBankP24PaymentMethodData {
 
 export type StripePostSetupIntentsBillingDetailsPaymentMethodDataInput = {
   address?: InputMaybe<StripePostSetupIntentsAddressBillingDetailsPaymentMethodDataUnionInput>;
-  email?: InputMaybe<StripeUnionInput>;
+  email?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
@@ -31022,7 +30507,7 @@ export enum StripePostSetupIntentsIntentBankP24PaymentMethodData {
 
 export type StripePostSetupIntentsIntentBillingDetailsPaymentMethodDataInput = {
   address?: InputMaybe<StripePostSetupIntentsIntentAddressBillingDetailsPaymentMethodDataUnionInput>;
-  email?: InputMaybe<StripeUnionInput>;
+  email?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
@@ -31206,7 +30691,7 @@ export enum StripePostSetupIntentsIntentConfirmBankP24PaymentMethodData {
 
 export type StripePostSetupIntentsIntentConfirmBillingDetailsPaymentMethodDataInput = {
   address?: InputMaybe<StripePostSetupIntentsIntentConfirmAddressBillingDetailsPaymentMethodDataUnionInput>;
-  email?: InputMaybe<StripeUnionInput>;
+  email?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
@@ -31307,7 +30792,7 @@ export type StripePostSetupIntentsIntentConfirmMandateDataOrStripePostSetupInten
 };
 
 export type StripePostSetupIntentsIntentConfirmMandateOptionsAcssDebitPaymentMethodOptionsInput = {
-  customMandateUrl?: InputMaybe<StripeUnionInput>;
+  customMandateUrl?: InputMaybe<Scalars['JSON']>;
   defaultFor?: InputMaybe<Array<StripePostSetupIntentsIntentConfirmDefaultForMandateOptionsAcssDebitPaymentMethodOptions>>;
   intervalDescription?: InputMaybe<Scalars['String']>;
   paymentSchedule?: InputMaybe<StripePostSetupIntentsIntentConfirmPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions>;
@@ -31560,7 +31045,7 @@ export type StripePostSetupIntentsIntentInput = {
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   flowDirections?: InputMaybe<Array<StripePostSetupIntentsIntentFlowDirections>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   paymentMethod?: InputMaybe<Scalars['String']>;
   paymentMethodData?: InputMaybe<StripePostSetupIntentsIntentPaymentMethodDataInput>;
   paymentMethodOptions?: InputMaybe<StripePostSetupIntentsIntentPaymentMethodOptionsInput>;
@@ -31584,7 +31069,7 @@ export type StripePostSetupIntentsIntentLinkPaymentMethodOptionsInput = {
 };
 
 export type StripePostSetupIntentsIntentMandateOptionsAcssDebitPaymentMethodOptionsInput = {
-  customMandateUrl?: InputMaybe<StripeUnionInput>;
+  customMandateUrl?: InputMaybe<Scalars['JSON']>;
   defaultFor?: InputMaybe<Array<StripePostSetupIntentsIntentDefaultForMandateOptionsAcssDebitPaymentMethodOptions>>;
   intervalDescription?: InputMaybe<Scalars['String']>;
   paymentSchedule?: InputMaybe<StripePostSetupIntentsIntentPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions>;
@@ -31803,7 +31288,7 @@ export type StripePostSetupIntentsMandateDataInput = {
 };
 
 export type StripePostSetupIntentsMandateOptionsAcssDebitPaymentMethodOptionsInput = {
-  customMandateUrl?: InputMaybe<StripeUnionInput>;
+  customMandateUrl?: InputMaybe<Scalars['JSON']>;
   defaultFor?: InputMaybe<Array<StripePostSetupIntentsDefaultForMandateOptionsAcssDebitPaymentMethodOptions>>;
   intervalDescription?: InputMaybe<Scalars['String']>;
   paymentSchedule?: InputMaybe<StripePostSetupIntentsPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions>;
@@ -32054,7 +31539,7 @@ export type StripePostShippingRatesShippingRateTokenInput = {
   active?: InputMaybe<Scalars['Boolean']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   fixedAmount?: InputMaybe<StripePostShippingRatesShippingRateTokenFixedAmountInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   taxBehavior?: InputMaybe<StripePostShippingRatesShippingRateTokenTaxBehavior>;
 };
 
@@ -32161,7 +31646,7 @@ export type StripePostSourcesItemsSourceOrderInput = {
 
 export type StripePostSourcesMandateInput = {
   acceptance?: InputMaybe<StripePostSourcesAcceptanceMandateInput>;
-  amount?: InputMaybe<StripeUnionInput>;
+  amount?: InputMaybe<Scalars['JSON']>;
   currency?: InputMaybe<Scalars['String']>;
   interval?: InputMaybe<StripePostSourcesIntervalMandate>;
   notificationMethod?: InputMaybe<StripePostSourcesNotificationMethodMandate>;
@@ -32246,7 +31731,7 @@ export type StripePostSourcesSourceInput = {
   amount?: InputMaybe<Scalars['Int']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   mandate?: InputMaybe<StripePostSourcesSourceMandateInput>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   owner?: InputMaybe<StripePostSourcesSourceOwnerInput>;
   sourceOrder?: InputMaybe<StripePostSourcesSourceSourceOrderInput>;
 };
@@ -32268,7 +31753,7 @@ export type StripePostSourcesSourceItemsSourceOrderInput = {
 
 export type StripePostSourcesSourceMandateInput = {
   acceptance?: InputMaybe<StripePostSourcesSourceAcceptanceMandateInput>;
-  amount?: InputMaybe<StripeUnionInput>;
+  amount?: InputMaybe<Scalars['JSON']>;
   currency?: InputMaybe<Scalars['String']>;
   interval?: InputMaybe<StripePostSourcesSourceIntervalMandate>;
   notificationMethod?: InputMaybe<StripePostSourcesSourceNotificationMethodMandate>;
@@ -32385,7 +31870,7 @@ export type StripePostSubscriptionItemsInput = {
   prorationDate?: InputMaybe<Scalars['Int']>;
   quantity?: InputMaybe<Scalars['Int']>;
   subscription: Scalars['String'];
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostSubscriptionItemsIntervalRecurringPriceData {
@@ -32407,7 +31892,7 @@ export type StripePostSubscriptionItemsItemBillingThresholdsUnionInput = {
 export type StripePostSubscriptionItemsItemInput = {
   billingThresholds?: InputMaybe<StripePostSubscriptionItemsItemBillingThresholdsUnionInput>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   offSession?: InputMaybe<Scalars['Boolean']>;
   paymentBehavior?: InputMaybe<StripePostSubscriptionItemsItemPaymentBehavior>;
   price?: InputMaybe<Scalars['String']>;
@@ -32415,7 +31900,7 @@ export type StripePostSubscriptionItemsItemInput = {
   prorationBehavior?: InputMaybe<StripePostSubscriptionItemsItemProrationBehavior>;
   prorationDate?: InputMaybe<Scalars['Int']>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostSubscriptionItemsItemIntervalRecurringPriceData {
@@ -32494,7 +31979,7 @@ export type StripePostSubscriptionItemsSubscriptionItemUsageRecordsInput = {
   action?: InputMaybe<StripePostSubscriptionItemsSubscriptionItemUsageRecordsAction>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   quantity: Scalars['Int'];
-  timestamp?: InputMaybe<StripeUnionInput>;
+  timestamp?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostSubscriptionItemsTaxBehaviorPriceData {
@@ -32507,7 +31992,7 @@ export type StripePostSubscriptionSchedulesAddInvoiceItemsPhasesInput = {
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostSubscriptionSchedulesPriceDataAddInvoiceItemsPhasesInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostSubscriptionSchedulesAutomaticTaxDefaultSettingsInput = {
@@ -32576,7 +32061,7 @@ export type StripePostSubscriptionSchedulesDefaultSettingsInput = {
   defaultPaymentMethod?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   invoiceSettings?: InputMaybe<StripePostSubscriptionSchedulesInvoiceSettingsDefaultSettingsInput>;
-  onBehalfOf?: InputMaybe<StripeUnionInput>;
+  onBehalfOf?: InputMaybe<Scalars['JSON']>;
   transferData?: InputMaybe<StripePostSubscriptionSchedulesTransferDataDefaultSettingsUnionInput>;
 };
 
@@ -32593,9 +32078,9 @@ export type StripePostSubscriptionSchedulesInput = {
   endBehavior?: InputMaybe<StripePostSubscriptionSchedulesEndBehavior>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   fromSubscription?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   phases?: InputMaybe<Array<StripePostSubscriptionSchedulesPhasesInput>>;
-  startDate?: InputMaybe<StripeUnionInput>;
+  startDate?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostSubscriptionSchedulesIntervalRecurringPriceDataItemsPhases {
@@ -32619,7 +32104,7 @@ export type StripePostSubscriptionSchedulesItemsPhasesInput = {
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostSubscriptionSchedulesPriceDataItemsPhasesInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostSubscriptionSchedulesPhasesInput = {
@@ -32632,7 +32117,7 @@ export type StripePostSubscriptionSchedulesPhasesInput = {
   coupon?: InputMaybe<Scalars['String']>;
   currency?: InputMaybe<Scalars['String']>;
   defaultPaymentMethod?: InputMaybe<Scalars['String']>;
-  defaultTaxRates?: InputMaybe<StripeUnionInput>;
+  defaultTaxRates?: InputMaybe<Scalars['JSON']>;
   description?: InputMaybe<Scalars['String']>;
   endDate?: InputMaybe<Scalars['Int']>;
   invoiceSettings?: InputMaybe<StripePostSubscriptionSchedulesInvoiceSettingsPhasesInput>;
@@ -32678,7 +32163,7 @@ export type StripePostSubscriptionSchedulesScheduleAddInvoiceItemsPhasesInput = 
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostSubscriptionSchedulesSchedulePriceDataAddInvoiceItemsPhasesInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostSubscriptionSchedulesScheduleAutomaticTaxDefaultSettingsInput = {
@@ -32753,7 +32238,7 @@ export type StripePostSubscriptionSchedulesScheduleDefaultSettingsInput = {
   defaultPaymentMethod?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   invoiceSettings?: InputMaybe<StripePostSubscriptionSchedulesScheduleInvoiceSettingsDefaultSettingsInput>;
-  onBehalfOf?: InputMaybe<StripeUnionInput>;
+  onBehalfOf?: InputMaybe<Scalars['JSON']>;
   transferData?: InputMaybe<StripePostSubscriptionSchedulesScheduleTransferDataDefaultSettingsUnionInput>;
 };
 
@@ -32768,7 +32253,7 @@ export type StripePostSubscriptionSchedulesScheduleInput = {
   defaultSettings?: InputMaybe<StripePostSubscriptionSchedulesScheduleDefaultSettingsInput>;
   endBehavior?: InputMaybe<StripePostSubscriptionSchedulesScheduleEndBehavior>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   phases?: InputMaybe<Array<StripePostSubscriptionSchedulesSchedulePhasesInput>>;
   prorationBehavior?: InputMaybe<StripePostSubscriptionSchedulesScheduleProrationBehavior>;
 };
@@ -32794,7 +32279,7 @@ export type StripePostSubscriptionSchedulesScheduleItemsPhasesInput = {
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostSubscriptionSchedulesSchedulePriceDataItemsPhasesInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostSubscriptionSchedulesSchedulePhasesInput = {
@@ -32806,19 +32291,19 @@ export type StripePostSubscriptionSchedulesSchedulePhasesInput = {
   collectionMethod?: InputMaybe<StripePostSubscriptionSchedulesScheduleCollectionMethodPhases>;
   coupon?: InputMaybe<Scalars['String']>;
   defaultPaymentMethod?: InputMaybe<Scalars['String']>;
-  defaultTaxRates?: InputMaybe<StripeUnionInput>;
+  defaultTaxRates?: InputMaybe<Scalars['JSON']>;
   description?: InputMaybe<Scalars['String']>;
-  endDate?: InputMaybe<StripeUnionInput>;
+  endDate?: InputMaybe<Scalars['JSON']>;
   invoiceSettings?: InputMaybe<StripePostSubscriptionSchedulesScheduleInvoiceSettingsPhasesInput>;
   items: Array<StripePostSubscriptionSchedulesScheduleItemsPhasesInput>;
   iterations?: InputMaybe<Scalars['Int']>;
   metadata?: InputMaybe<Scalars['JSON']>;
   onBehalfOf?: InputMaybe<Scalars['String']>;
   prorationBehavior?: InputMaybe<StripePostSubscriptionSchedulesScheduleProrationBehaviorPhases>;
-  startDate?: InputMaybe<StripeUnionInput>;
+  startDate?: InputMaybe<Scalars['JSON']>;
   transferData?: InputMaybe<StripePostSubscriptionSchedulesScheduleTransferDataPhasesInput>;
   trial?: InputMaybe<Scalars['Boolean']>;
-  trialEnd?: InputMaybe<StripeUnionInput>;
+  trialEnd?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostSubscriptionSchedulesSchedulePriceDataAddInvoiceItemsPhasesInput = {
@@ -32928,7 +32413,7 @@ export type StripePostSubscriptionsAddInvoiceItemsInput = {
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostSubscriptionsPriceDataAddInvoiceItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostSubscriptionsAmountTypeMandateOptionsCardPaymentMethodOptionsPaymentSettings {
@@ -33027,20 +32512,20 @@ export type StripePostSubscriptionsInput = {
   daysUntilDue?: InputMaybe<Scalars['Int']>;
   defaultPaymentMethod?: InputMaybe<Scalars['String']>;
   defaultSource?: InputMaybe<Scalars['String']>;
-  defaultTaxRates?: InputMaybe<StripeUnionInput>;
+  defaultTaxRates?: InputMaybe<Scalars['JSON']>;
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   items?: InputMaybe<Array<StripePostSubscriptionsItemsInput>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   offSession?: InputMaybe<Scalars['Boolean']>;
-  onBehalfOf?: InputMaybe<StripeUnionInput>;
+  onBehalfOf?: InputMaybe<Scalars['JSON']>;
   paymentBehavior?: InputMaybe<StripePostSubscriptionsPaymentBehavior>;
   paymentSettings?: InputMaybe<StripePostSubscriptionsPaymentSettingsInput>;
   pendingInvoiceItemInterval?: InputMaybe<StripePostSubscriptionsPendingInvoiceItemIntervalUnionInput>;
   promotionCode?: InputMaybe<Scalars['String']>;
   prorationBehavior?: InputMaybe<StripePostSubscriptionsProrationBehavior>;
   transferData?: InputMaybe<StripePostSubscriptionsTransferDataInput>;
-  trialEnd?: InputMaybe<StripeUnionInput>;
+  trialEnd?: InputMaybe<Scalars['JSON']>;
   trialFromPlan?: InputMaybe<Scalars['Boolean']>;
   trialPeriodDays?: InputMaybe<Scalars['Int']>;
   trialSettings?: InputMaybe<StripePostSubscriptionsTrialSettingsInput>;
@@ -33066,7 +32551,7 @@ export type StripePostSubscriptionsItemsInput = {
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostSubscriptionsPriceDataItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostSubscriptionsMandateOptionsAcssDebitPaymentMethodOptionsPaymentSettingsInput = {
@@ -33110,13 +32595,13 @@ export type StripePostSubscriptionsPaymentMethodOptionsPaymentSettingsInput = {
   bancontact?: InputMaybe<StripePostSubscriptionsBancontactPaymentMethodOptionsPaymentSettingsUnionInput>;
   card?: InputMaybe<StripePostSubscriptionsCardPaymentMethodOptionsPaymentSettingsUnionInput>;
   customerBalance?: InputMaybe<StripePostSubscriptionsCustomerBalancePaymentMethodOptionsPaymentSettingsUnionInput>;
-  konbini?: InputMaybe<StripeUnionInput>;
+  konbini?: InputMaybe<Scalars['JSON']>;
   usBankAccount?: InputMaybe<StripePostSubscriptionsUsBankAccountPaymentMethodOptionsPaymentSettingsUnionInput>;
 };
 
 export type StripePostSubscriptionsPaymentSettingsInput = {
   paymentMethodOptions?: InputMaybe<StripePostSubscriptionsPaymentMethodOptionsPaymentSettingsInput>;
-  paymentMethodTypes?: InputMaybe<StripeUnionInput>;
+  paymentMethodTypes?: InputMaybe<Scalars['JSON']>;
   saveDefaultPaymentMethod?: InputMaybe<StripePostSubscriptionsSaveDefaultPaymentMethodPaymentSettings>;
 };
 
@@ -33196,7 +32681,7 @@ export type StripePostSubscriptionsSubscriptionExposedIdAddInvoiceItemsInput = {
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdPriceDataAddInvoiceItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export enum StripePostSubscriptionsSubscriptionExposedIdAmountTypeMandateOptionsCardPaymentMethodOptionsPaymentSettings {
@@ -33301,7 +32786,7 @@ export type StripePostSubscriptionsSubscriptionExposedIdInput = {
   automaticTax?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdAutomaticTaxInput>;
   billingCycleAnchor?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdBillingCycleAnchor>;
   billingThresholds?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdBillingThresholdsUnionInput>;
-  cancelAt?: InputMaybe<StripeUnionInput>;
+  cancelAt?: InputMaybe<Scalars['JSON']>;
   cancelAtPeriodEnd?: InputMaybe<Scalars['Boolean']>;
   cancellationDetails?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdCancellationDetailsInput>;
   collectionMethod?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdCollectionMethod>;
@@ -33309,13 +32794,13 @@ export type StripePostSubscriptionsSubscriptionExposedIdInput = {
   daysUntilDue?: InputMaybe<Scalars['Int']>;
   defaultPaymentMethod?: InputMaybe<Scalars['String']>;
   defaultSource?: InputMaybe<Scalars['String']>;
-  defaultTaxRates?: InputMaybe<StripeUnionInput>;
+  defaultTaxRates?: InputMaybe<Scalars['JSON']>;
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   items?: InputMaybe<Array<StripePostSubscriptionsSubscriptionExposedIdItemsInput>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   offSession?: InputMaybe<Scalars['Boolean']>;
-  onBehalfOf?: InputMaybe<StripeUnionInput>;
+  onBehalfOf?: InputMaybe<Scalars['JSON']>;
   pauseCollection?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdPauseCollectionUnionInput>;
   paymentBehavior?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdPaymentBehavior>;
   paymentSettings?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdPaymentSettingsInput>;
@@ -33324,7 +32809,7 @@ export type StripePostSubscriptionsSubscriptionExposedIdInput = {
   prorationBehavior?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdProrationBehavior>;
   prorationDate?: InputMaybe<Scalars['Int']>;
   transferData?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdTransferDataUnionInput>;
-  trialEnd?: InputMaybe<StripeUnionInput>;
+  trialEnd?: InputMaybe<Scalars['JSON']>;
   trialFromPlan?: InputMaybe<Scalars['Boolean']>;
   trialSettings?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdTrialSettingsInput>;
 };
@@ -33348,11 +32833,11 @@ export type StripePostSubscriptionsSubscriptionExposedIdItemsInput = {
   clearUsage?: InputMaybe<Scalars['Boolean']>;
   deleted?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   price?: InputMaybe<Scalars['String']>;
   priceData?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdPriceDataItemsInput>;
   quantity?: InputMaybe<Scalars['Int']>;
-  taxRates?: InputMaybe<StripeUnionInput>;
+  taxRates?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostSubscriptionsSubscriptionExposedIdMandateOptionsAcssDebitPaymentMethodOptionsPaymentSettingsInput = {
@@ -33406,13 +32891,13 @@ export type StripePostSubscriptionsSubscriptionExposedIdPaymentMethodOptionsPaym
   bancontact?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdBancontactPaymentMethodOptionsPaymentSettingsUnionInput>;
   card?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdCardPaymentMethodOptionsPaymentSettingsUnionInput>;
   customerBalance?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdCustomerBalancePaymentMethodOptionsPaymentSettingsUnionInput>;
-  konbini?: InputMaybe<StripeUnionInput>;
+  konbini?: InputMaybe<Scalars['JSON']>;
   usBankAccount?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdUsBankAccountPaymentMethodOptionsPaymentSettingsUnionInput>;
 };
 
 export type StripePostSubscriptionsSubscriptionExposedIdPaymentSettingsInput = {
   paymentMethodOptions?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdPaymentMethodOptionsPaymentSettingsInput>;
-  paymentMethodTypes?: InputMaybe<StripeUnionInput>;
+  paymentMethodTypes?: InputMaybe<Scalars['JSON']>;
   saveDefaultPaymentMethod?: InputMaybe<StripePostSubscriptionsSubscriptionExposedIdSaveDefaultPaymentMethodPaymentSettings>;
 };
 
@@ -33741,7 +33226,7 @@ export type StripePostTaxRatesTaxRateInput = {
   displayName?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   jurisdiction?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   state?: InputMaybe<Scalars['String']>;
   taxType?: InputMaybe<StripePostTaxRatesTaxRateTaxType>;
 };
@@ -33815,7 +33300,7 @@ export type StripePostTerminalConfigurationsAudTippingInput = {
 };
 
 export type StripePostTerminalConfigurationsBbposWiseposEInput = {
-  splashscreen?: InputMaybe<StripeUnionInput>;
+  splashscreen?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostTerminalConfigurationsCadTippingInput = {
@@ -33837,7 +33322,7 @@ export type StripePostTerminalConfigurationsConfigurationAudTippingInput = {
 };
 
 export type StripePostTerminalConfigurationsConfigurationBbposWiseposEInput = {
-  splashscreen?: InputMaybe<StripeUnionInput>;
+  splashscreen?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostTerminalConfigurationsConfigurationBbposWiseposEUnionInput = {
@@ -33953,7 +33438,7 @@ export type StripePostTerminalConfigurationsConfigurationUsdTippingInput = {
 };
 
 export type StripePostTerminalConfigurationsConfigurationVerifoneP400Input = {
-  splashscreen?: InputMaybe<StripeUnionInput>;
+  splashscreen?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostTerminalConfigurationsConfigurationVerifoneP400UnionInput = {
@@ -34057,7 +33542,7 @@ export type StripePostTerminalConfigurationsUsdTippingInput = {
 };
 
 export type StripePostTerminalConfigurationsVerifoneP400Input = {
-  splashscreen?: InputMaybe<StripeUnionInput>;
+  splashscreen?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostTerminalConnectionTokensInput = {
@@ -34079,7 +33564,7 @@ export type StripePostTerminalLocationsInput = {
   configurationOverrides?: InputMaybe<Scalars['String']>;
   displayName: Scalars['String'];
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostTerminalLocationsLocationAddressInput = {
@@ -34096,14 +33581,14 @@ export type StripePostTerminalLocationsLocationInput = {
   configurationOverrides?: InputMaybe<Scalars['String']>;
   displayName?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostTerminalReadersInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
   label?: InputMaybe<Scalars['String']>;
   location?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   registrationCode: Scalars['String'];
 };
 
@@ -34114,7 +33599,7 @@ export type StripePostTerminalReadersReaderCancelActionInput = {
 export type StripePostTerminalReadersReaderInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
   label?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostTerminalReadersReaderProcessPaymentIntentInput = {
@@ -34618,7 +34103,7 @@ export type StripePostTokensIndividualAccountInput = {
   firstName?: InputMaybe<Scalars['String']>;
   firstNameKana?: InputMaybe<Scalars['String']>;
   firstNameKanji?: InputMaybe<Scalars['String']>;
-  fullNameAliases?: InputMaybe<StripeUnionInput>;
+  fullNameAliases?: InputMaybe<Scalars['JSON']>;
   gender?: InputMaybe<Scalars['String']>;
   idNumber?: InputMaybe<Scalars['String']>;
   idNumberSecondary?: InputMaybe<Scalars['String']>;
@@ -34626,7 +34111,7 @@ export type StripePostTokensIndividualAccountInput = {
   lastNameKana?: InputMaybe<Scalars['String']>;
   lastNameKanji?: InputMaybe<Scalars['String']>;
   maidenName?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   phone?: InputMaybe<Scalars['String']>;
   politicalExposure?: InputMaybe<StripePostTokensPoliticalExposureIndividualAccount>;
   registeredAddress?: InputMaybe<StripePostTokensRegisteredAddressIndividualAccountInput>;
@@ -34665,7 +34150,7 @@ export type StripePostTokensPersonInput = {
   firstName?: InputMaybe<Scalars['String']>;
   firstNameKana?: InputMaybe<Scalars['String']>;
   firstNameKanji?: InputMaybe<Scalars['String']>;
-  fullNameAliases?: InputMaybe<StripeUnionInput>;
+  fullNameAliases?: InputMaybe<Scalars['JSON']>;
   gender?: InputMaybe<Scalars['String']>;
   idNumber?: InputMaybe<Scalars['String']>;
   idNumberSecondary?: InputMaybe<Scalars['String']>;
@@ -34673,7 +34158,7 @@ export type StripePostTokensPersonInput = {
   lastNameKana?: InputMaybe<Scalars['String']>;
   lastNameKanji?: InputMaybe<Scalars['String']>;
   maidenName?: InputMaybe<Scalars['String']>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   nationality?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   politicalExposure?: InputMaybe<Scalars['String']>;
@@ -34714,7 +34199,7 @@ export type StripePostTokensRelationshipPersonInput = {
   director?: InputMaybe<Scalars['Boolean']>;
   executive?: InputMaybe<Scalars['Boolean']>;
   owner?: InputMaybe<Scalars['Boolean']>;
-  percentOwnership?: InputMaybe<StripeUnionInput>;
+  percentOwnership?: InputMaybe<Scalars['JSON']>;
   representative?: InputMaybe<Scalars['Boolean']>;
   title?: InputMaybe<Scalars['String']>;
 };
@@ -34742,7 +34227,7 @@ export type StripePostTopupsInput = {
   currency: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   source?: InputMaybe<Scalars['String']>;
   statementDescriptor?: InputMaybe<Scalars['String']>;
   transferGroup?: InputMaybe<Scalars['String']>;
@@ -34755,14 +34240,14 @@ export type StripePostTopupsTopupCancelInput = {
 export type StripePostTopupsTopupInput = {
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostTransfersIdReversalsInput = {
   amount?: InputMaybe<Scalars['Int']>;
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   refundApplicationFee?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -34787,12 +34272,12 @@ export enum StripePostTransfersSourceType {
 export type StripePostTransfersTransferInput = {
   description?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostTransfersTransferReversalsIdInput = {
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostTreasuryCreditReversalsInput = {
@@ -35021,7 +34506,7 @@ export type StripePostTreasuryOutboundPaymentsAddressBillingDetailsDestinationPa
 
 export type StripePostTreasuryOutboundPaymentsBillingDetailsDestinationPaymentMethodDataInput = {
   address?: InputMaybe<StripePostTreasuryOutboundPaymentsAddressBillingDetailsDestinationPaymentMethodDataUnionInput>;
-  email?: InputMaybe<StripeUnionInput>;
+  email?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
@@ -35129,7 +34614,7 @@ export type StripePostWebhookEndpointsInput = {
   description?: InputMaybe<Scalars['String']>;
   enabledEvents: Array<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   url: Scalars['String'];
 };
 
@@ -35138,7 +34623,7 @@ export type StripePostWebhookEndpointsWebhookEndpointInput = {
   disabled?: InputMaybe<Scalars['Boolean']>;
   enabledEvents?: InputMaybe<Array<Scalars['String']>>;
   expand?: InputMaybe<Array<Scalars['String']>>;
-  metadata?: InputMaybe<StripeUnionInput>;
+  metadata?: InputMaybe<Scalars['JSON']>;
   url?: InputMaybe<Scalars['String']>;
 };
 
@@ -37819,13 +37304,36 @@ export enum StripeSetupAttemptPaymentMethodDetailsBancontactPreferredLanguage {
 
 export type StripeSetupAttemptPaymentMethodDetailsCard = {
   __typename?: 'StripeSetupAttemptPaymentMethodDetailsCard';
+  brand?: Maybe<Scalars['String']>;
+  checks?: Maybe<StripePaymentMethodDetailsCardChecks>;
+  country?: Maybe<Scalars['String']>;
+  expMonth?: Maybe<Scalars['Int']>;
+  expYear?: Maybe<Scalars['Int']>;
+  fingerprint?: Maybe<Scalars['String']>;
+  funding?: Maybe<Scalars['String']>;
+  last4?: Maybe<Scalars['String']>;
+  network?: Maybe<Scalars['String']>;
   threeDSecure?: Maybe<StripeThreeDSecureDetails>;
+  wallet?: Maybe<StripeSetupAttemptPaymentMethodDetailsCardWallet>;
 };
 
 export type StripeSetupAttemptPaymentMethodDetailsCardPresent = {
   __typename?: 'StripeSetupAttemptPaymentMethodDetailsCardPresent';
   generatedCard?: Maybe<StripePaymentMethodUnion>;
 };
+
+export type StripeSetupAttemptPaymentMethodDetailsCardWallet = {
+  __typename?: 'StripeSetupAttemptPaymentMethodDetailsCardWallet';
+  applePay?: Maybe<Scalars['JSON']>;
+  googlePay?: Maybe<Scalars['JSON']>;
+  type: StripeSetupAttemptPaymentMethodDetailsCardWalletType;
+};
+
+export enum StripeSetupAttemptPaymentMethodDetailsCardWalletType {
+  ApplePay = 'APPLE_PAY',
+  GooglePay = 'GOOGLE_PAY',
+  Link = 'LINK'
+}
 
 export type StripeSetupAttemptPaymentMethodDetailsIdeal = {
   __typename?: 'StripeSetupAttemptPaymentMethodDetailsIdeal';
@@ -37866,6 +37374,7 @@ export enum StripeSetupAttemptPaymentMethodDetailsIdealBic {
   Moyonl21 = 'MOYONL21',
   Rabonl2U = 'RABONL2U',
   Rbrbnl21 = 'RBRBNL21',
+  Revoie23 = 'REVOIE23',
   Revolt21 = 'REVOLT21',
   Snsbnl2A = 'SNSBNL2A',
   Trionl2U = 'TRIONL2U'
@@ -38771,6 +38280,8 @@ export enum StripeSubscriptionItemObject {
   SubscriptionItem = 'SUBSCRIPTION_ITEM'
 }
 
+export type StripeSubscriptionItemUnion = StripeSubscriptionItem;
+
 export type StripeSubscriptionItems = {
   __typename?: 'StripeSubscriptionItems';
   hasMore: Scalars['Boolean'];
@@ -39073,7 +38584,7 @@ export type StripeTaxCalculation = {
   lineItems?: Maybe<StripeTaxCalculationLineItems>;
   livemode: Scalars['Boolean'];
   object: StripeTaxCalculationObject;
-  shippingCost?: Maybe<StripeTaxProductResourceShippingCost>;
+  shippingCost?: Maybe<StripeTaxProductResourceTaxCalculationShippingCost>;
   taxAmountExclusive: Scalars['Int'];
   taxAmountInclusive: Scalars['Int'];
   taxBreakdown: Array<StripeTaxProductResourceTaxBreakdown>;
@@ -39393,20 +38904,6 @@ export type StripeTaxProductResourcePostalAddress = {
   state?: Maybe<Scalars['String']>;
 };
 
-export type StripeTaxProductResourceShippingCost = {
-  __typename?: 'StripeTaxProductResourceShippingCost';
-  amount: Scalars['Int'];
-  amountTax: Scalars['Int'];
-  shippingRate?: Maybe<Scalars['String']>;
-  taxBehavior: StripeTaxProductResourceShippingCostTaxBehavior;
-  taxCode: Scalars['String'];
-};
-
-export enum StripeTaxProductResourceShippingCostTaxBehavior {
-  Exclusive = 'EXCLUSIVE',
-  Inclusive = 'INCLUSIVE'
-}
-
 export type StripeTaxProductResourceTaxBreakdown = {
   __typename?: 'StripeTaxProductResourceTaxBreakdown';
   amount: Scalars['Int'];
@@ -39414,6 +38911,21 @@ export type StripeTaxProductResourceTaxBreakdown = {
   taxRateDetails: StripeTaxProductResourceTaxRateDetails;
   taxableAmount: Scalars['Int'];
 };
+
+export type StripeTaxProductResourceTaxCalculationShippingCost = {
+  __typename?: 'StripeTaxProductResourceTaxCalculationShippingCost';
+  amount: Scalars['Int'];
+  amountTax: Scalars['Int'];
+  shippingRate?: Maybe<Scalars['String']>;
+  taxBehavior: StripeTaxProductResourceTaxCalculationShippingCostTaxBehavior;
+  taxBreakdown?: Maybe<Array<StripeTaxProductResourceLineItemTaxBreakdown>>;
+  taxCode: Scalars['String'];
+};
+
+export enum StripeTaxProductResourceTaxCalculationShippingCostTaxBehavior {
+  Exclusive = 'EXCLUSIVE',
+  Inclusive = 'INCLUSIVE'
+}
 
 export type StripeTaxProductResourceTaxRateDetails = {
   __typename?: 'StripeTaxProductResourceTaxRateDetails';
@@ -39445,6 +38957,19 @@ export type StripeTaxProductResourceTaxTransactionResourceReversal = {
   __typename?: 'StripeTaxProductResourceTaxTransactionResourceReversal';
   originalTransaction?: Maybe<Scalars['String']>;
 };
+
+export type StripeTaxProductResourceTaxTransactionShippingCost = {
+  __typename?: 'StripeTaxProductResourceTaxTransactionShippingCost';
+  amount: Scalars['Int'];
+  amountTax: Scalars['Int'];
+  taxBehavior: StripeTaxProductResourceTaxTransactionShippingCostTaxBehavior;
+  taxCode: Scalars['String'];
+};
+
+export enum StripeTaxProductResourceTaxTransactionShippingCostTaxBehavior {
+  Exclusive = 'EXCLUSIVE',
+  Inclusive = 'INCLUSIVE'
+}
 
 export type StripeTaxRate = {
   __typename?: 'StripeTaxRate';
@@ -39496,7 +39021,7 @@ export type StripeTaxTransaction = {
   object: StripeTaxTransactionObject;
   reference: Scalars['String'];
   reversal?: Maybe<StripeTaxProductResourceTaxTransactionResourceReversal>;
-  shippingCost?: Maybe<StripeTaxProductResourceShippingCost>;
+  shippingCost?: Maybe<StripeTaxProductResourceTaxTransactionShippingCost>;
   taxDate: Scalars['Int'];
   type: StripeTaxTransactionType;
 };
@@ -40792,7 +40317,7 @@ export enum StripeTreasuryTransactionsResourceFlowDetailsType {
 
 export type StripeUnionInput = {
   int?: InputMaybe<Scalars['Int']>;
-  stripePostAccountsDelayDaysSchedulePayoutsSettings?: InputMaybe<StripePostAccountsDelayDaysSchedulePayoutsSettings>;
+  stripeGetInvoicesUpcomingSubscriptionTrialEnd?: InputMaybe<StripeGetInvoicesUpcomingSubscriptionTrialEnd>;
 };
 
 export type StripeUsBankAccountNetworks = {
@@ -40865,99 +40390,33 @@ export enum StripeWebhookEndpointObject {
   WebhookEndpoint = 'WEBHOOK_ENDPOINT'
 }
 
-export enum SubStatus {
-  Active = 'ACTIVE',
-  Canceled = 'CANCELED',
-  Incomplete = 'INCOMPLETE',
-  IncompleteExpired = 'INCOMPLETE_EXPIRED',
-  PastDue = 'PAST_DUE',
-  Trialing = 'TRIALING',
-  Unpaid = 'UNPAID'
-}
-
 export type Subscription = {
   __typename?: 'Subscription';
-  /** when the model was created */
+  cancelAt?: Maybe<Scalars['DateTime']>;
+  canceledAt?: Maybe<Scalars['DateTime']>;
+  cancellationDetails?: Maybe<StripeCancellationDetails>;
   createdAt: Scalars['DateTime'];
-  customer: Customer;
-  endDate?: Maybe<Scalars['Timestamp']>;
-  /** Unique identifier */
+  currency: Scalars['String'];
+  currentPeriodEnd: Scalars['DateTime'];
+  currentPeriodStart: Scalars['DateTime'];
+  daysUntilDue?: Maybe<Scalars['Int']>;
+  defaultPaymentMethod?: Maybe<StripePaymentMethod>;
   id: Scalars['ID'];
-  product: Product;
-  quantity: Scalars['Int'];
-  startDate: Scalars['Timestamp'];
-  status: SubStatus;
-  trialEnd?: Maybe<Scalars['Timestamp']>;
-  trialStart?: Maybe<Scalars['Timestamp']>;
-  /** when the model was updated */
-  updatedAt: Scalars['DateTime'];
+  items: Array<SubscriptionItem>;
+  status: StripeSubscriptionStatus;
 };
 
-export type SubscriptionByInput = {
-  id?: InputMaybe<Scalars['ID']>;
-};
-
-export type SubscriptionConnection = {
-  __typename?: 'SubscriptionConnection';
-  edges?: Maybe<Array<Maybe<SubscriptionEdge>>>;
-  /** Information to aid in pagination */
-  pageInfo: PageInfo;
-};
-
-/** Input to create a Subscription */
-export type SubscriptionCreateInput = {
-  customer: CustomerToSubscriptionCreateCustomerRelation;
-  endDate?: InputMaybe<Scalars['Timestamp']>;
-  product: ProductToSubscriptionCreateProductRelation;
-  quantity: Scalars['Int'];
-  startDate: Scalars['Timestamp'];
-  status: SubStatus;
-  trialEnd?: InputMaybe<Scalars['Timestamp']>;
-  trialStart?: InputMaybe<Scalars['Timestamp']>;
-};
-
-export type SubscriptionCreatePayload = {
-  __typename?: 'SubscriptionCreatePayload';
-  subscription?: Maybe<Subscription>;
-};
-
-export type SubscriptionDeletePayload = {
-  __typename?: 'SubscriptionDeletePayload';
-  deletedId: Scalars['ID'];
-};
-
-export type SubscriptionEdge = {
-  __typename?: 'SubscriptionEdge';
-  cursor: Scalars['String'];
-  node: Subscription;
-};
-
-export type SubscriptionOrderByInput = {
-  createdAt?: InputMaybe<OrderByDirection>;
-};
-
-/** Input to update a Subscription */
-export type SubscriptionUpdateInput = {
-  customer?: InputMaybe<CustomerToSubscriptionUpdateCustomerRelation>;
-  endDate?: InputMaybe<Scalars['Timestamp']>;
-  product?: InputMaybe<ProductToSubscriptionUpdateProductRelation>;
-  quantity?: InputMaybe<IntOperationsInput>;
-  startDate?: InputMaybe<Scalars['Timestamp']>;
-  status?: InputMaybe<SubStatus>;
-  trialEnd?: InputMaybe<Scalars['Timestamp']>;
-  trialStart?: InputMaybe<Scalars['Timestamp']>;
-};
-
-export type SubscriptionUpdatePayload = {
-  __typename?: 'SubscriptionUpdatePayload';
-  subscription?: Maybe<Subscription>;
+export type SubscriptionItem = {
+  __typename?: 'SubscriptionItem';
+  id: Scalars['ID'];
+  price: Price;
 };
 
 export type User = {
   __typename?: 'User';
   /** when the model was created */
   createdAt: Scalars['DateTime'];
-  customer?: Maybe<StripeCustomer>;
+  customer?: Maybe<Customer>;
   email: Scalars['Email'];
   /** Unique identifier */
   id: Scalars['ID'];
@@ -41027,31 +40486,15 @@ export type UserUpdatePayload = {
   user?: Maybe<User>;
 };
 
-export type CustomerPartsFragment = { __typename?: 'StripeCustomer', balance?: number | null, created: number, currency?: string | null, description?: string | null, email?: string | null, id: string, metadata?: any | null, name?: string | null, object: StripeCustomerObject, phone?: string | null };
-
-export type FeaturePartsFragment = { __typename?: 'Feature', id: string, name: string, description?: string | null };
+export type CustomerPartsFragment = { __typename?: 'Customer', id: string };
 
 export type IdentityPartsFragment = { __typename?: 'Identity', id: string, sub: string, type: IdentityType };
 
-export type ProductPartsFragment = { __typename?: 'Product', id: string, currency: string, interval: string, name: string, price: string };
+export type ProductPartsFragment = { __typename?: 'StripeProduct', id: string, active: boolean, created: number, description?: string | null, images: Array<string>, livemode: boolean, metadata: any, name: string, object: StripeProductObject, shippable?: boolean | null, statementDescriptor?: string | null, unitLabel?: string | null, updated: number, url?: string | null };
 
-export type SubscriptionPartsFragment = { __typename?: 'Subscription', id: string, startDate: any, endDate?: any | null, quantity: number, status: SubStatus, trialStart?: any | null, trialEnd?: any | null };
+export type SubscriptionPartsFragment = { __typename?: 'StripeSubscription', id: string, status: StripeSubscriptionStatus, trialStart?: number | null, trialEnd?: number | null };
 
 export type UserPartsFragment = { __typename?: 'User', id: string, email: string, name?: string | null };
-
-export type FeatureByIdQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type FeatureByIdQuery = { __typename?: 'Query', feature?: { __typename?: 'Feature', id: string, name: string, description?: string | null } | null };
-
-export type FeatureByNameQueryVariables = Exact<{
-  name: Scalars['String'];
-}>;
-
-
-export type FeatureByNameQuery = { __typename?: 'Query', feature?: { __typename?: 'Feature', id: string, name: string, description?: string | null } | null };
 
 export type IdentityByIdQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -41077,40 +40520,19 @@ export type IdentityCollectionQueryVariables = Exact<{
 
 export type IdentityCollectionQuery = { __typename?: 'Query', identityCollection?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', cursor: string, node: { __typename?: 'Identity', createdAt: any, updatedAt: any, id: string, sub: string, type: IdentityType, user: { __typename?: 'User', id: string, email: string, name?: string | null } } } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } | null };
 
-export type ProductByIdQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type ProductByIdQuery = { __typename?: 'Query', product?: { __typename?: 'Product', createdAt: any, updatedAt: any, id: string, currency: string, interval: string, name: string, price: string, features?: { __typename?: 'FeatureConnection', edges?: Array<{ __typename?: 'FeatureEdge', node: { __typename?: 'Feature', id: string, name: string, description?: string | null } } | null> | null } | null } | null };
-
-export type ProductByNameQueryVariables = Exact<{
-  name: Scalars['String'];
-}>;
-
-
-export type ProductByNameQuery = { __typename?: 'Query', product?: { __typename?: 'Product', createdAt: any, updatedAt: any, id: string, currency: string, interval: string, name: string, price: string, features?: { __typename?: 'FeatureConnection', edges?: Array<{ __typename?: 'FeatureEdge', node: { __typename?: 'Feature', id: string, name: string, description?: string | null } } | null> | null } | null } | null };
-
-export type SubscriptionByIdQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type SubscriptionByIdQuery = { __typename?: 'Query', subscription?: { __typename?: 'Subscription', createdAt: any, updatedAt: any, id: string, startDate: any, endDate?: any | null, quantity: number, status: SubStatus, trialStart?: any | null, trialEnd?: any | null } | null };
-
 export type UserByEmailQueryVariables = Exact<{
   email: Scalars['Email'];
 }>;
 
 
-export type UserByEmailQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', balance?: number | null, created: number, currency?: string | null, description?: string | null, email?: string | null, id: string, metadata?: any | null, name?: string | null, object: StripeCustomerObject, phone?: string | null } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
+export type UserByEmailQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'Customer', id: string } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
 
 export type UserByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type UserByIdQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', balance?: number | null, created: number, currency?: string | null, description?: string | null, email?: string | null, id: string, metadata?: any | null, name?: string | null, object: StripeCustomerObject, phone?: string | null } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
+export type UserByIdQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'Customer', id: string } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
 
 export type UserCollectionQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
@@ -41120,27 +40542,11 @@ export type UserCollectionQueryVariables = Exact<{
 }>;
 
 
-export type UserCollectionQuery = { __typename?: 'Query', userCollection?: { __typename?: 'UserConnection', edges?: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', balance?: number | null, created: number, currency?: string | null, description?: string | null, email?: string | null, id: string, metadata?: any | null, name?: string | null, object: StripeCustomerObject, phone?: string | null } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', cursor: string, node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } | null } } | null> | null } | null };
+export type UserCollectionQuery = { __typename?: 'Query', userCollection?: { __typename?: 'UserConnection', edges?: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'Customer', id: string } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', cursor: string, node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } | null } } | null> | null } | null };
 
 export const CustomerPartsFragmentDoc = `
-    fragment CustomerParts on StripeCustomer {
-  balance
-  created
-  currency
-  description
-  email
+    fragment CustomerParts on Customer {
   id
-  metadata
-  name
-  object
-  phone
-}
-    `;
-export const FeaturePartsFragmentDoc = `
-    fragment FeatureParts on Feature {
-  id
-  name
-  description
 }
     `;
 export const IdentityPartsFragmentDoc = `
@@ -41151,20 +40557,26 @@ export const IdentityPartsFragmentDoc = `
 }
     `;
 export const ProductPartsFragmentDoc = `
-    fragment ProductParts on Product {
+    fragment ProductParts on StripeProduct {
   id
-  currency
-  interval
+  active
+  created
+  description
+  images
+  livemode
+  metadata
   name
-  price
+  object
+  shippable
+  statementDescriptor
+  unitLabel
+  updated
+  url
 }
     `;
 export const SubscriptionPartsFragmentDoc = `
-    fragment SubscriptionParts on Subscription {
+    fragment SubscriptionParts on StripeSubscription {
   id
-  startDate
-  endDate
-  quantity
   status
   trialStart
   trialEnd
@@ -41177,48 +40589,6 @@ export const UserPartsFragmentDoc = `
   name
 }
     `;
-export const FeatureByIdDocument = `
-    query FeatureById($id: ID!) {
-  feature(by: {id: $id}) {
-    ...FeatureParts
-  }
-}
-    ${FeaturePartsFragmentDoc}`;
-export const useFeatureByIdQuery = <
-      TData = FeatureByIdQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables: FeatureByIdQueryVariables,
-      options?: UseQueryOptions<FeatureByIdQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<FeatureByIdQuery, TError, TData>(
-      ['FeatureById', variables],
-      fetcher<FeatureByIdQuery, FeatureByIdQueryVariables>(client, FeatureByIdDocument, variables, headers),
-      options
-    );
-export const FeatureByNameDocument = `
-    query FeatureByName($name: String!) {
-  feature(by: {name: $name}) {
-    ...FeatureParts
-  }
-}
-    ${FeaturePartsFragmentDoc}`;
-export const useFeatureByNameQuery = <
-      TData = FeatureByNameQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables: FeatureByNameQueryVariables,
-      options?: UseQueryOptions<FeatureByNameQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<FeatureByNameQuery, TError, TData>(
-      ['FeatureByName', variables],
-      fetcher<FeatureByNameQuery, FeatureByNameQueryVariables>(client, FeatureByNameDocument, variables, headers),
-      options
-    );
 export const IdentityByIdDocument = `
     query IdentityById($id: ID!) {
   identity(by: {id: $id}) {
@@ -41309,91 +40679,6 @@ export const useIdentityCollectionQuery = <
     useQuery<IdentityCollectionQuery, TError, TData>(
       variables === undefined ? ['IdentityCollection'] : ['IdentityCollection', variables],
       fetcher<IdentityCollectionQuery, IdentityCollectionQueryVariables>(client, IdentityCollectionDocument, variables, headers),
-      options
-    );
-export const ProductByIdDocument = `
-    query ProductById($id: ID!) {
-  product(by: {id: $id}) {
-    ...ProductParts
-    createdAt
-    updatedAt
-    features(first: 100) {
-      edges {
-        node {
-          ...FeatureParts
-        }
-      }
-    }
-  }
-}
-    ${ProductPartsFragmentDoc}
-${FeaturePartsFragmentDoc}`;
-export const useProductByIdQuery = <
-      TData = ProductByIdQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables: ProductByIdQueryVariables,
-      options?: UseQueryOptions<ProductByIdQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<ProductByIdQuery, TError, TData>(
-      ['ProductById', variables],
-      fetcher<ProductByIdQuery, ProductByIdQueryVariables>(client, ProductByIdDocument, variables, headers),
-      options
-    );
-export const ProductByNameDocument = `
-    query ProductByName($name: String!) {
-  product(by: {name: $name}) {
-    ...ProductParts
-    createdAt
-    updatedAt
-    features(first: 100) {
-      edges {
-        node {
-          ...FeatureParts
-        }
-      }
-    }
-  }
-}
-    ${ProductPartsFragmentDoc}
-${FeaturePartsFragmentDoc}`;
-export const useProductByNameQuery = <
-      TData = ProductByNameQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables: ProductByNameQueryVariables,
-      options?: UseQueryOptions<ProductByNameQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<ProductByNameQuery, TError, TData>(
-      ['ProductByName', variables],
-      fetcher<ProductByNameQuery, ProductByNameQueryVariables>(client, ProductByNameDocument, variables, headers),
-      options
-    );
-export const SubscriptionByIdDocument = `
-    query SubscriptionById($id: ID!) {
-  subscription(by: {id: $id}) {
-    ...SubscriptionParts
-    createdAt
-    updatedAt
-  }
-}
-    ${SubscriptionPartsFragmentDoc}`;
-export const useSubscriptionByIdQuery = <
-      TData = SubscriptionByIdQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables: SubscriptionByIdQueryVariables,
-      options?: UseQueryOptions<SubscriptionByIdQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<SubscriptionByIdQuery, TError, TData>(
-      ['SubscriptionById', variables],
-      fetcher<SubscriptionByIdQuery, SubscriptionByIdQueryVariables>(client, SubscriptionByIdDocument, variables, headers),
       options
     );
 export const UserByEmailDocument = `

@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "main": "schema.graphql",
   "license": "MIT",
-  "devDependencies": {
-    "stripe": "^11.17.0"
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.321.1",
+    "stripe": "^12.2.0"
   }
 }

@@ -1,8 +1,5 @@
-fragment SubscriptionParts on Subscription {
+fragment SubscriptionParts on StripeSubscription {
   id
-  startDate
-  endDate
-  quantity
   status
   trialStart
   trialEnd

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ChatCompletionRequestMessageRoleEnum, openAI } from 'openai-api';
+import { ChatCompletionRequestMessageRoleEnum, openAI } from 'api';
 
 const openai = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
