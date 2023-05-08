@@ -26,36 +26,6 @@ enum IdentityType {
   GOOGLE
 }
 
-type Price {
-  id: ID!
-  product: StripeProduct
-}
-
-type SubscriptionItem {
-  id: ID!
-  price: Price!
-}
-
-type Subscription {
-  id: ID!
-  cancelAt: DateTime
-  canceledAt: DateTime
-  cancellationDetails: StripeCancellationDetails
-  createdAt: DateTime!
-  currency: String!
-  currentPeriodStart: DateTime!
-  currentPeriodEnd: DateTime!
-  daysUntilDue: Int
-  defaultPaymentMethod: StripePaymentMethod
-  items: [SubscriptionItem!]!
-  status: StripeSubscriptionStatus!
-}
-
-type Customer {
-  id: ID!
-  subscriptions: [Subscription]!
-}
-
 type CognitoUser {
   sub: ID!
   stripeId: String
@@ -69,7 +39,7 @@ type User @model {
   name: String
   email: Email! @unique
   identities: [Identity!]
-  customer: Customer @resolver(name: "stripe/customer/byEmail")
+  customer: StripeCustomer @resolver(name: "stripe/customer/byEmail")
   cognitoUser: CognitoUser @resolver(name: "cognito/user/byEmail")
 }
 

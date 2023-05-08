@@ -1,3 +1,0 @@
-fragment CustomerParts on Customer {
-  id
-}

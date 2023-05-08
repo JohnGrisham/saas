@@ -2,6 +2,7 @@
   "name": "saas",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -9,7 +10,7 @@
   "scripts": {
     "build": "turbo run build",
     "generate-tailwind-theme": "turbo run generate-tailwind-theme",
-    "gql:dev": "npx grafbase@next dev",
+    "gql:dev": "npx grafbase@latest dev",
     "codegen": "turbo run codegen",
     "dev": "turbo run dev --parallel",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
