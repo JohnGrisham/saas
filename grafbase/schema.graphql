@@ -7,11 +7,6 @@ extend schema
       { name: "Authorization", value: "Bearer {{ env.STRIPE_SECRET_KEY }}" }
     ]
   )
-  @openapi(
-    name: "OpenAI"
-    url: "https://api.openai.com/v1/"
-    schema: "https://raw.githubusercontent.com/openai/openai-openapi/master/openapi.yaml"
-  )
   @auth(
     providers: [
       {
@@ -40,16 +35,8 @@ type CognitoUser {
   confirmationStatus: String!
 }
 
-extend type Query {
-  ask(prompt: String!, model: String): [Choice] @resolver(name: "openai/ask")
-}
-
 type Message {
   content: String
-}
-
-type Choice {
-  message: Message
 }
 
 type User @model {
