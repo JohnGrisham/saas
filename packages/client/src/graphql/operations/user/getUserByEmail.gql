@@ -4,17 +4,7 @@ query UserByEmail($email: Email!) {
     createdAt
     updatedAt
     customer {
-      ...CustomerParts
-      subscriptions(first: 100) {
-        edges {
-          node {
-            ...SubscriptionParts
-            product {
-              ...ProductParts
-            }
-          }
-        }
-      }
+      id
     }
     identities(first: 100) {
       edges {

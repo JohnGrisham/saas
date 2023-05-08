@@ -1,5 +1,0 @@
-query FeatureById($id: ID!) {
-  feature(by: { id: $id }) {
-    ...FeatureParts
-  }
-}

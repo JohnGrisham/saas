@@ -8,11 +8,17 @@ import {
   credentialsSigninHandler,
   googleSigninHandler,
 } from './signin-handlers';
+import {
+  UserByEmailQuery,
+  UserByEmailQueryVariables,
+  graphQLClient,
+} from 'client';
 import { JWTOptions } from 'next-auth/jwt';
 import { OAuthUserConfig } from 'next-auth/providers';
 import { Auth } from '@aws-amplify/auth';
 import { JWT } from 'next-auth/jwt';
-import { graphQLClient } from 'client';
+import { constructStripe } from 'payments-server';
+import { gql } from 'graphql-request';
 import jsonwebtoken from 'jsonwebtoken';
 import { isCognitoUser } from 'core';
 
@@ -86,6 +92,8 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
   async signIn({ user, account, profile }) {
     try {
       graphQLClient.setHeader('x-api-key', process.env.API_KEY as string);
+      let stripeId = '';
+      const stripe = constructStripe();
       const name = user.name ?? '';
       const email: string = isCognitoUser(user)
         ? user.attributes.email
@@ -106,52 +114,99 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
           await credentialsSigninHandler(user, email, name);
       }
 
-      // const [existingStripeUser = undefined] = (
-      //   await stripe.customers.list({ email })
-      // ).data;
+      const { user: userRecord } = await graphQLClient.request<
+        UserByEmailQuery,
+        UserByEmailQueryVariables
+      >(
+        gql`
+          query GetUserByEmail($email: Email!) {
+            user(by: { email: $email }) {
+              id
+              customer {
+                id
+              }
+            }
+          }
+        `,
+        {
+          email,
+        },
+      );
 
-      // if (!existingStripeUser) {
-      //   const cognitoUser = isCognitoUser(user);
-      //   const sub = cognitoUser
-      //     ? user.getUsername()
-      //     : account?.providerAccountId;
+      if (!userRecord?.customer) {
+        const cognitoUser = isCognitoUser(user);
+        const sub = cognitoUser
+          ? user.getUsername()
+          : account?.providerAccountId ?? '';
 
-      //   if (!sub) {
-      //     throw new Error('Failed to get an account ID for this provider');
-      //   }
+        const newStripeCustomer = await stripe.customers.create({
+          name,
+          email,
+          metadata: {
+            sub,
+            userId: userRecord?.id ?? '',
+          },
+        });
+        stripeId = newStripeCustomer.id;
 
-      //   const newStripeCustomer = await stripe.customers.create({
-      //     name,
-      //     email,
-      //     metadata: {
-      //       sub,
-      //     },
-      //   });
+        const [starterProduct] = (
+          await stripe.products.search({ query: "name~'Starter'" })
+        ).data;
+        const price =
+          typeof starterProduct.default_price === 'string'
+            ? starterProduct.default_price
+            : starterProduct.default_price?.unit_amount_decimal ?? '0';
 
-      //   const [starterProduct] = (
-      //     await stripe.products.search({ query: "name~'Starter'" })
-      //   ).data;
-      //   const price =
-      //     typeof starterProduct.default_price === 'string'
-      //       ? starterProduct.default_price
-      //       : starterProduct.default_price?.unit_amount_decimal ?? '0';
+        await stripe.subscriptions.create({
+          customer: newStripeCustomer.id,
+          items: [{ price, quantity: 1 }],
+          trial_period_days: 7,
+        });
+      } else {
+        stripeId = userRecord.customer.id;
+      }
 
-      //   await stripe.subscriptions.create({
-      //     customer: newStripeCustomer.id,
-      //     items: [{ price, quantity: 1 }],
-      //     trial_period_days: 7,
-      //   });
-      // } else if (isCognitoUser(user)) {
-      //   // await Auth.updateUserAttributes(user, {
-      //   //   'custom:userId': existingStripeUser.metadata.userId,
-      //   // });
-      // }
+      if (isCognitoUser(user) && userRecord) {
+        await Auth.updateUserAttributes(user, {
+          'custom:userId': userRecord.id,
+          'custom:stripeId': stripeId,
+        });
+      }
 
       return true;
     } catch (err: any) {
       console.error(err.message);
       return false;
     }
+  },
+  async jwt({ user, token }) {
+    if (user) {
+      let currentUser = user as unknown;
+      let tokenResponse: JWT = token;
+
+      if (isCognitoUser(currentUser)) {
+        const session = currentUser.getSignInUserSession();
+
+        tokenResponse = {
+          ...token,
+          sub: currentUser.getUsername(),
+          email: currentUser.attributes.email,
+          accessToken: session?.getAccessToken().getJwtToken(),
+          refreshToken: session?.getRefreshToken().getToken(),
+        };
+      }
+
+      return Promise.resolve(tokenResponse);
+    }
+
+    return Promise.resolve(token);
+  },
+  async session({ session, token }) {
+    if (token.sub) {
+      session.user = token;
+    }
+
+    return Promise.resolve(session);
   },
 };
 

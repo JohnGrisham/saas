@@ -1,4 +1,0 @@
-fragment CustomerParts on Customer {
-  id
-  stripeId
-}

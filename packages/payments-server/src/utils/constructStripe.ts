@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 
-export const constructStripe = (appInfo: Stripe.AppInfo) =>
+export const constructStripe = (appInfo?: Stripe.AppInfo) =>
   new Stripe(
     process.env.STRIPE_SECRET_KEY_LIVE ?? process.env.STRIPE_SECRET_KEY ?? '',
     {

@@ -4,14 +4,7 @@ query UserByID($id: ID!) {
     createdAt
     updatedAt
     customer {
-      ...CustomerParts
-      subscriptions(first: 100) {
-        edges {
-          node {
-            ...SubscriptionParts
-          }
-        }
-      }
+      id
     }
     identities(first: 100) {
       edges {

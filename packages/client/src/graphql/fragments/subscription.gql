@@ -1,9 +1,0 @@
-fragment SubscriptionParts on Subscription {
-  id
-  startDate
-  endDate
-  quantity
-  status
-  trialStart
-  trialEnd
-}
