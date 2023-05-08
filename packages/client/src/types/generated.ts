@@ -40591,7 +40591,7 @@ export type UserSubscriptionsQueryVariables = Exact<{
 }>;
 
 
-export type UserSubscriptionsQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', id: string, subscriptions?: { __typename?: 'StripeCustomerSubscriptions', nodes: Array<{ __typename?: 'StripeSubscription', id: string, items: { __typename?: 'StripeSubscriptionItems', nodes: Array<{ __typename?: 'StripeSubscriptionItem', id: string, price: { __typename?: 'StripePrice', id: string, product: { __typename?: 'StripeDeletedProduct', id: string, deleted: boolean } | { __typename?: 'StripeProduct', id: string, name: string } | { __typename?: 'StripeString' } } }> } }> } | null } | null } | null };
+export type UserSubscriptionsQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', id: string, subscriptions?: { __typename?: 'StripeCustomerSubscriptions', nodes: Array<{ __typename?: 'StripeSubscription', id: string, items: { __typename?: 'StripeSubscriptionItems', nodes: Array<{ __typename?: 'StripeSubscriptionItem', id: string, price: { __typename?: 'StripePrice', id: string, product: { __typename?: 'StripeDeletedProduct', id: string, deleted: boolean } | { __typename?: 'StripeProduct', id: string, active: boolean, created: number, description?: string | null, images: Array<string>, livemode: boolean, metadata: any, name: string, object: StripeProductObject, shippable?: boolean | null, statementDescriptor?: string | null, unitLabel?: string | null, updated: number, url?: string | null } | { __typename?: 'StripeString' } } }> } }> } | null } | null } | null };
 
 export const AddressPartsFragmentDoc = `
     fragment AddressParts on StripeAddress {
@@ -40856,8 +40856,7 @@ export const UserSubscriptionsDocument = `
                 id
                 product {
                   ... on StripeProduct {
-                    id
-                    name
+                    ...ProductParts
                   }
                   ... on StripeDeletedProduct {
                     id
@@ -40872,7 +40871,8 @@ export const UserSubscriptionsDocument = `
     }
   }
 }
-    ${UserPartsFragmentDoc}`;
+    ${UserPartsFragmentDoc}
+${ProductPartsFragmentDoc}`;
 export const useUserSubscriptionsQuery = <
       TData = UserSubscriptionsQuery,
       TError = unknown

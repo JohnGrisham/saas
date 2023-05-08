@@ -13,8 +13,7 @@ query UserSubscriptions($email: Email!) {
                 id
                 product {
                   ... on StripeProduct {
-                    id
-                    name
+                    ...ProductParts
                   }
                   ... on StripeDeletedProduct {
                     id
