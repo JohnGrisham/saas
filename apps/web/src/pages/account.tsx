@@ -47,7 +47,12 @@ export default function Account() {
     const subWithProduct = subItems.find(
       (item) => item.price.product.__typename === 'StripeProduct',
     );
-    const product = subWithProduct?.price.product as StripeProduct;
+
+    if (!subWithProduct) {
+      return null;
+    }
+
+    const product = subWithProduct.price.product as StripeProduct;
     return { ...subWithProduct, price: { ...subWithProduct?.price, product } };
   }, [data]);
 
@@ -96,7 +101,7 @@ export default function Account() {
           title="Your Plan"
           description={
             subscription
-              ? `You are currently on the ${subscription.price.product} plan.`
+              ? `You are currently on the ${subscription.price.product.name} plan.`
               : ''
           }
           footer={
@@ -119,7 +124,11 @@ export default function Account() {
             {loading ? (
               <div className="mb-6 h-12">...</div>
             ) : subscription ? (
-              `${subscription.price.unitAmount}/${subscription.price.recurring?.interval}/${subscription.price.currency}`
+              `${
+                subscription.price.unitAmount
+              }/${subscription.price.recurring?.interval.toLowerCase()}/${
+                subscription.price.currency
+              }`
             ) : (
               <Link href="/">Choose your plan</Link>
             )}

@@ -91,7 +91,7 @@ export const getServerSideProps: GetServerSideProps<
 
   const { site: siteData } = await getSiteData(filter);
 
-  if (!siteData) return { notFound: true, revalidate: 10 };
+  if (!siteData) return { notFound: true, props: { revalidate: 10 } };
 
   const templateInfo: TemplateInfo = {
     data: siteData.templateData?.data,

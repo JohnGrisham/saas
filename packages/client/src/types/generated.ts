@@ -4133,6 +4133,7 @@ export enum StripeGetCustomersCustomerPaymentMethodsType {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -5169,6 +5170,7 @@ export enum StripeGetPaymentMethodsType {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -6891,6 +6893,7 @@ export enum StripeInvoicesPaymentSettingsPaymentMethodTypes {
   Konbini = 'KONBINI',
   Link = 'LINK',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Promptpay = 'PROMPTPAY',
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
@@ -9766,9 +9769,16 @@ export type StripeMandatePaymentMethodDetails = {
   card?: Maybe<Scalars['JSON']>;
   cashapp?: Maybe<Scalars['JSON']>;
   link?: Maybe<Scalars['JSON']>;
+  paypal?: Maybe<StripeMandatePaypal>;
   sepaDebit?: Maybe<StripeMandateSepaDebit>;
   type: Scalars['String'];
   usBankAccount?: Maybe<Scalars['JSON']>;
+};
+
+export type StripeMandatePaypal = {
+  __typename?: 'StripeMandatePaypal';
+  billingAgreementId?: Maybe<Scalars['String']>;
+  payerId?: Maybe<Scalars['String']>;
 };
 
 export type StripeMandateSepaDebit = {
@@ -11850,6 +11860,7 @@ export type StripePaymentIntentPaymentMethodOptions = {
   oxxo?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsOxxoUnion>;
   p24?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsP24Union>;
   paynow?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPaynowUnion>;
+  paypal?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPaypalUnion>;
   pix?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPixUnion>;
   promptpay?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPromptpayUnion>;
   sepaDebit?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIntentPaymentMethodOptionsSepaDebitUnion>;
@@ -12099,6 +12110,8 @@ export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMe
 
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPaynowUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsPaynow;
 
+export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPaypalUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsPaypal;
+
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPixUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsPix;
 
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPromptpayUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsPromptpay;
@@ -12207,6 +12220,7 @@ export enum StripePaymentLinkPaymentMethodTypes {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -12653,6 +12667,7 @@ export type StripePaymentMethod = {
   oxxo?: Maybe<Scalars['JSON']>;
   p24?: Maybe<StripePaymentMethodP24>;
   paynow?: Maybe<Scalars['JSON']>;
+  paypal?: Maybe<StripePaymentMethodPaypal>;
   pix?: Maybe<Scalars['JSON']>;
   promptpay?: Maybe<Scalars['JSON']>;
   radarOptions?: Maybe<StripeRadarRadarOptions>;
@@ -12789,6 +12804,7 @@ export type StripePaymentMethodDetails = {
   oxxo?: Maybe<StripePaymentMethodDetailsOxxo>;
   p24?: Maybe<StripePaymentMethodDetailsP24>;
   paynow?: Maybe<StripePaymentMethodDetailsPaynow>;
+  paypal?: Maybe<StripePaymentMethodDetailsPaypal>;
   pix?: Maybe<StripePaymentMethodDetailsPix>;
   promptpay?: Maybe<StripePaymentMethodDetailsPromptpay>;
   sepaDebit?: Maybe<StripePaymentMethodDetailsSepaDebit>;
@@ -12891,6 +12907,7 @@ export type StripePaymentMethodDetailsCard = {
   last4?: Maybe<Scalars['String']>;
   mandate?: Maybe<Scalars['String']>;
   network?: Maybe<Scalars['String']>;
+  networkToken?: Maybe<StripePaymentMethodDetailsCardNetworkToken>;
   threeDSecure?: Maybe<StripeThreeDSecureDetails>;
   wallet?: Maybe<StripePaymentMethodDetailsCardWallet>;
 };
@@ -12921,6 +12938,11 @@ export enum StripePaymentMethodDetailsCardInstallmentsPlanInterval {
 export enum StripePaymentMethodDetailsCardInstallmentsPlanType {
   FixedCount = 'FIXED_COUNT'
 }
+
+export type StripePaymentMethodDetailsCardNetworkToken = {
+  __typename?: 'StripePaymentMethodDetailsCardNetworkToken';
+  used: Scalars['Boolean'];
+};
 
 export type StripePaymentMethodDetailsCardPresent = {
   __typename?: 'StripePaymentMethodDetailsCardPresent';
@@ -13257,6 +13279,15 @@ export enum StripePaymentMethodDetailsP24Bank {
 export type StripePaymentMethodDetailsPaynow = {
   __typename?: 'StripePaymentMethodDetailsPaynow';
   reference?: Maybe<Scalars['String']>;
+};
+
+export type StripePaymentMethodDetailsPaypal = {
+  __typename?: 'StripePaymentMethodDetailsPaypal';
+  payerEmail?: Maybe<Scalars['String']>;
+  payerId?: Maybe<Scalars['String']>;
+  payerName?: Maybe<Scalars['String']>;
+  sellerProtection?: Maybe<StripePaypalSellerProtection>;
+  transactionId?: Maybe<Scalars['String']>;
 };
 
 export type StripePaymentMethodDetailsPix = {
@@ -13734,6 +13765,23 @@ export enum StripePaymentMethodOptionsPaynowSetupFutureUsage {
   None = 'NONE'
 }
 
+export type StripePaymentMethodOptionsPaypal = {
+  __typename?: 'StripePaymentMethodOptionsPaypal';
+  captureMethod?: Maybe<StripePaymentMethodOptionsPaypalCaptureMethod>;
+  preferredLocale?: Maybe<Scalars['String']>;
+  reference?: Maybe<Scalars['String']>;
+  setupFutureUsage?: Maybe<StripePaymentMethodOptionsPaypalSetupFutureUsage>;
+};
+
+export enum StripePaymentMethodOptionsPaypalCaptureMethod {
+  Manual = 'MANUAL'
+}
+
+export enum StripePaymentMethodOptionsPaypalSetupFutureUsage {
+  None = 'NONE',
+  OffSession = 'OFF_SESSION'
+}
+
 export type StripePaymentMethodOptionsPix = {
   __typename?: 'StripePaymentMethodOptionsPix';
   expiresAfterSeconds?: Maybe<Scalars['Int']>;
@@ -13825,6 +13873,11 @@ export enum StripePaymentMethodP24Bank {
   VolkswagenBank = 'VOLKSWAGEN_BANK'
 }
 
+export type StripePaymentMethodPaypal = {
+  __typename?: 'StripePaymentMethodPaypal';
+  payerId?: Maybe<Scalars['String']>;
+};
+
 export type StripePaymentMethodSepaDebit = {
   __typename?: 'StripePaymentMethodSepaDebit';
   bankCode?: Maybe<Scalars['String']>;
@@ -13865,6 +13918,7 @@ export enum StripePaymentMethodType {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -14475,6 +14529,23 @@ export enum StripePayoutReconciliationStatus {
 export enum StripePayoutType {
   BankAccount = 'BANK_ACCOUNT',
   Card = 'CARD'
+}
+
+export type StripePaypalSellerProtection = {
+  __typename?: 'StripePaypalSellerProtection';
+  disputeCategories?: Maybe<Array<StripePaypalSellerProtectionDisputeCategories>>;
+  status: StripePaypalSellerProtectionStatus;
+};
+
+export enum StripePaypalSellerProtectionDisputeCategories {
+  Fraudulent = 'FRAUDULENT',
+  ProductNotReceived = 'PRODUCT_NOT_RECEIVED'
+}
+
+export enum StripePaypalSellerProtectionStatus {
+  Eligible = 'ELIGIBLE',
+  NotEligible = 'NOT_ELIGIBLE',
+  PartiallyEligible = 'PARTIALLY_ELIGIBLE'
 }
 
 export type StripePeriod = {
@@ -17703,6 +17774,7 @@ export type StripePostCheckoutSessionsPaymentMethodOptionsInput = {
   oxxo?: InputMaybe<StripePostCheckoutSessionsOxxoPaymentMethodOptionsInput>;
   p24?: InputMaybe<StripePostCheckoutSessionsP24PaymentMethodOptionsInput>;
   paynow?: InputMaybe<StripePostCheckoutSessionsPaynowPaymentMethodOptionsInput>;
+  paypal?: InputMaybe<StripePostCheckoutSessionsPaypalPaymentMethodOptionsInput>;
   pix?: InputMaybe<StripePostCheckoutSessionsPixPaymentMethodOptionsInput>;
   sepaDebit?: InputMaybe<StripePostCheckoutSessionsSepaDebitPaymentMethodOptionsInput>;
   sofort?: InputMaybe<StripePostCheckoutSessionsSofortPaymentMethodOptionsInput>;
@@ -17733,6 +17805,7 @@ export enum StripePostCheckoutSessionsPaymentMethodTypes {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -17752,6 +17825,14 @@ export type StripePostCheckoutSessionsPaynowPaymentMethodOptionsInput = {
   setupFutureUsage?: InputMaybe<StripePostCheckoutSessionsSetupFutureUsagePaynowPaymentMethodOptions>;
 };
 
+export type StripePostCheckoutSessionsPaypalPaymentMethodOptionsInput = {
+  captureMethod?: InputMaybe<Scalars['String']>;
+  preferredLocale?: InputMaybe<StripePostCheckoutSessionsPreferredLocalePaypalPaymentMethodOptions>;
+  reference?: InputMaybe<Scalars['String']>;
+  riskCorrelationId?: InputMaybe<Scalars['String']>;
+  setupFutureUsage?: InputMaybe<Scalars['String']>;
+};
+
 export enum StripePostCheckoutSessionsPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
   Balances = 'BALANCES',
   Ownership = 'OWNERSHIP',
@@ -17766,6 +17847,30 @@ export type StripePostCheckoutSessionsPhoneNumberCollectionInput = {
 export type StripePostCheckoutSessionsPixPaymentMethodOptionsInput = {
   expiresAfterSeconds?: InputMaybe<Scalars['Int']>;
 };
+
+export enum StripePostCheckoutSessionsPreferredLocalePaypalPaymentMethodOptions {
+  CsCz = 'CS_CZ',
+  DaDk = 'DA_DK',
+  DeAt = 'DE_AT',
+  DeDe = 'DE_DE',
+  DeLu = 'DE_LU',
+  ElGr = 'EL_GR',
+  EnGb = 'EN_GB',
+  EnUs = 'EN_US',
+  EsEs = 'ES_ES',
+  FiFi = 'FI_FI',
+  FrBe = 'FR_BE',
+  FrFr = 'FR_FR',
+  FrLu = 'FR_LU',
+  HuHu = 'HU_HU',
+  ItIt = 'IT_IT',
+  NlBe = 'NL_BE',
+  NlNl = 'NL_NL',
+  PlPl = 'PL_PL',
+  PtPt = 'PT_PT',
+  SkSk = 'SK_SK',
+  SvSe = 'SV_SE'
+}
 
 export type StripePostCheckoutSessionsPriceDataLineItemsInput = {
   currency: Scalars['String'];
@@ -25479,6 +25584,7 @@ export type StripePostPaymentIntentsIntentConfirmPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostPaymentIntentsIntentConfirmP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostPaymentIntentsIntentConfirmRadarOptionsPaymentMethodDataInput>;
@@ -25515,6 +25621,7 @@ export type StripePostPaymentIntentsIntentConfirmPaymentMethodOptionsInput = {
   oxxo?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmOxxoPaymentMethodOptionsUnionInput>;
   p24?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmP24PaymentMethodOptionsUnionInput>;
   paynow?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmPaynowPaymentMethodOptionsUnionInput>;
+  paypal?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmPaypalPaymentMethodOptionsUnionInput>;
   pix?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmPixPaymentMethodOptionsUnionInput>;
   promptpay?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmPromptpayPaymentMethodOptionsUnionInput>;
   sepaDebit?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmSepaDebitPaymentMethodOptionsUnionInput>;
@@ -25531,6 +25638,14 @@ export enum StripePostPaymentIntentsIntentConfirmPaymentScheduleMandateOptionsAc
 
 export type StripePostPaymentIntentsIntentConfirmPaynowPaymentMethodOptionsInput = {
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsIntentConfirmSetupFutureUsagePaynowPaymentMethodOptions>;
+};
+
+export type StripePostPaymentIntentsIntentConfirmPaypalPaymentMethodOptionsInput = {
+  captureMethod?: InputMaybe<Scalars['String']>;
+  preferredLocale?: InputMaybe<StripePostPaymentIntentsIntentConfirmPreferredLocalePaypalPaymentMethodOptions>;
+  reference?: InputMaybe<Scalars['String']>;
+  riskCorrelationId?: InputMaybe<Scalars['String']>;
+  setupFutureUsage?: InputMaybe<Scalars['String']>;
 };
 
 export enum StripePostPaymentIntentsIntentConfirmPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
@@ -25603,6 +25718,30 @@ export enum StripePostPaymentIntentsIntentConfirmPreferredLocaleKlarnaPaymentMet
   PlPl = 'PL_PL',
   PtPt = 'PT_PT',
   SvFi = 'SV_FI',
+  SvSe = 'SV_SE'
+}
+
+export enum StripePostPaymentIntentsIntentConfirmPreferredLocalePaypalPaymentMethodOptions {
+  CsCz = 'CS_CZ',
+  DaDk = 'DA_DK',
+  DeAt = 'DE_AT',
+  DeDe = 'DE_DE',
+  DeLu = 'DE_LU',
+  ElGr = 'EL_GR',
+  EnGb = 'EN_GB',
+  EnUs = 'EN_US',
+  EsEs = 'ES_ES',
+  FiFi = 'FI_FI',
+  FrBe = 'FR_BE',
+  FrFr = 'FR_FR',
+  FrLu = 'FR_LU',
+  HuHu = 'HU_HU',
+  ItIt = 'IT_IT',
+  NlBe = 'NL_BE',
+  NlNl = 'NL_NL',
+  PlPl = 'PL_PL',
+  PtPt = 'PT_PT',
+  SkSk = 'SK_SK',
   SvSe = 'SV_SE'
 }
 
@@ -25764,6 +25903,7 @@ export enum StripePostPaymentIntentsIntentConfirmTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -26030,6 +26170,7 @@ export type StripePostPaymentIntentsIntentPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostPaymentIntentsIntentP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostPaymentIntentsIntentRadarOptionsPaymentMethodDataInput>;
@@ -26066,6 +26207,7 @@ export type StripePostPaymentIntentsIntentPaymentMethodOptionsInput = {
   oxxo?: InputMaybe<StripeStringOrPostPaymentIntentsIntentOxxoPaymentMethodOptionsUnionInput>;
   p24?: InputMaybe<StripeStringOrPostPaymentIntentsIntentP24PaymentMethodOptionsUnionInput>;
   paynow?: InputMaybe<StripeStringOrPostPaymentIntentsIntentPaynowPaymentMethodOptionsUnionInput>;
+  paypal?: InputMaybe<StripeStringOrPostPaymentIntentsIntentPaypalPaymentMethodOptionsUnionInput>;
   pix?: InputMaybe<StripeStringOrPostPaymentIntentsIntentPixPaymentMethodOptionsUnionInput>;
   promptpay?: InputMaybe<StripeStringOrPostPaymentIntentsIntentPromptpayPaymentMethodOptionsUnionInput>;
   sepaDebit?: InputMaybe<StripeStringOrPostPaymentIntentsIntentSepaDebitPaymentMethodOptionsUnionInput>;
@@ -26082,6 +26224,14 @@ export enum StripePostPaymentIntentsIntentPaymentScheduleMandateOptionsAcssDebit
 
 export type StripePostPaymentIntentsIntentPaynowPaymentMethodOptionsInput = {
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsIntentSetupFutureUsagePaynowPaymentMethodOptions>;
+};
+
+export type StripePostPaymentIntentsIntentPaypalPaymentMethodOptionsInput = {
+  captureMethod?: InputMaybe<Scalars['String']>;
+  preferredLocale?: InputMaybe<StripePostPaymentIntentsIntentPreferredLocalePaypalPaymentMethodOptions>;
+  reference?: InputMaybe<Scalars['String']>;
+  riskCorrelationId?: InputMaybe<Scalars['String']>;
+  setupFutureUsage?: InputMaybe<Scalars['String']>;
 };
 
 export enum StripePostPaymentIntentsIntentPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
@@ -26154,6 +26304,30 @@ export enum StripePostPaymentIntentsIntentPreferredLocaleKlarnaPaymentMethodOpti
   PlPl = 'PL_PL',
   PtPt = 'PT_PT',
   SvFi = 'SV_FI',
+  SvSe = 'SV_SE'
+}
+
+export enum StripePostPaymentIntentsIntentPreferredLocalePaypalPaymentMethodOptions {
+  CsCz = 'CS_CZ',
+  DaDk = 'DA_DK',
+  DeAt = 'DE_AT',
+  DeDe = 'DE_DE',
+  DeLu = 'DE_LU',
+  ElGr = 'EL_GR',
+  EnGb = 'EN_GB',
+  EnUs = 'EN_US',
+  EsEs = 'ES_ES',
+  FiFi = 'FI_FI',
+  FrBe = 'FR_BE',
+  FrFr = 'FR_FR',
+  FrLu = 'FR_LU',
+  HuHu = 'HU_HU',
+  ItIt = 'IT_IT',
+  NlBe = 'NL_BE',
+  NlNl = 'NL_NL',
+  PlPl = 'PL_PL',
+  PtPt = 'PT_PT',
+  SkSk = 'SK_SK',
   SvSe = 'SV_SE'
 }
 
@@ -26311,6 +26485,7 @@ export enum StripePostPaymentIntentsIntentTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -26486,6 +26661,7 @@ export type StripePostPaymentIntentsPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostPaymentIntentsP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostPaymentIntentsRadarOptionsPaymentMethodDataInput>;
@@ -26522,6 +26698,7 @@ export type StripePostPaymentIntentsPaymentMethodOptionsInput = {
   oxxo?: InputMaybe<StripeStringOrPostPaymentIntentsOxxoPaymentMethodOptionsUnionInput>;
   p24?: InputMaybe<StripeStringOrPostPaymentIntentsP24PaymentMethodOptionsUnionInput>;
   paynow?: InputMaybe<StripeStringOrPostPaymentIntentsPaynowPaymentMethodOptionsUnionInput>;
+  paypal?: InputMaybe<StripeStringOrPostPaymentIntentsPaypalPaymentMethodOptionsUnionInput>;
   pix?: InputMaybe<StripeStringOrPostPaymentIntentsPixPaymentMethodOptionsUnionInput>;
   promptpay?: InputMaybe<StripeStringOrPostPaymentIntentsPromptpayPaymentMethodOptionsUnionInput>;
   sepaDebit?: InputMaybe<StripeStringOrPostPaymentIntentsSepaDebitPaymentMethodOptionsUnionInput>;
@@ -26538,6 +26715,14 @@ export enum StripePostPaymentIntentsPaymentScheduleMandateOptionsAcssDebitPaymen
 
 export type StripePostPaymentIntentsPaynowPaymentMethodOptionsInput = {
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsSetupFutureUsagePaynowPaymentMethodOptions>;
+};
+
+export type StripePostPaymentIntentsPaypalPaymentMethodOptionsInput = {
+  captureMethod?: InputMaybe<Scalars['String']>;
+  preferredLocale?: InputMaybe<StripePostPaymentIntentsPreferredLocalePaypalPaymentMethodOptions>;
+  reference?: InputMaybe<Scalars['String']>;
+  riskCorrelationId?: InputMaybe<Scalars['String']>;
+  setupFutureUsage?: InputMaybe<Scalars['String']>;
 };
 
 export enum StripePostPaymentIntentsPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
@@ -26610,6 +26795,30 @@ export enum StripePostPaymentIntentsPreferredLocaleKlarnaPaymentMethodOptions {
   PlPl = 'PL_PL',
   PtPt = 'PT_PT',
   SvFi = 'SV_FI',
+  SvSe = 'SV_SE'
+}
+
+export enum StripePostPaymentIntentsPreferredLocalePaypalPaymentMethodOptions {
+  CsCz = 'CS_CZ',
+  DaDk = 'DA_DK',
+  DeAt = 'DE_AT',
+  DeDe = 'DE_DE',
+  DeLu = 'DE_LU',
+  ElGr = 'EL_GR',
+  EnGb = 'EN_GB',
+  EnUs = 'EN_US',
+  EsEs = 'ES_ES',
+  FiFi = 'FI_FI',
+  FrBe = 'FR_BE',
+  FrFr = 'FR_FR',
+  FrLu = 'FR_LU',
+  HuHu = 'HU_HU',
+  ItIt = 'IT_IT',
+  NlBe = 'NL_BE',
+  NlNl = 'NL_NL',
+  PlPl = 'PL_PL',
+  PtPt = 'PT_PT',
+  SkSk = 'SK_SK',
   SvSe = 'SV_SE'
 }
 
@@ -26782,6 +26991,7 @@ export enum StripePostPaymentIntentsTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -27601,6 +27811,7 @@ export enum StripePostPaymentLinksPaymentMethodTypes {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -27901,6 +28112,7 @@ export type StripePostPaymentMethodsInput = {
   p24?: InputMaybe<StripePostPaymentMethodsP24Input>;
   paymentMethod?: InputMaybe<Scalars['String']>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostPaymentMethodsRadarOptionsInput>;
@@ -28002,6 +28214,7 @@ export enum StripePostPaymentMethodsType {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -30013,6 +30226,7 @@ export type StripePostSetupIntentsIntentConfirmPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostSetupIntentsIntentConfirmP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostSetupIntentsIntentConfirmRadarOptionsPaymentMethodDataInput>;
@@ -30028,6 +30242,7 @@ export type StripePostSetupIntentsIntentConfirmPaymentMethodOptionsInput = {
   blik?: InputMaybe<StripePostSetupIntentsIntentConfirmBlikPaymentMethodOptionsInput>;
   card?: InputMaybe<StripePostSetupIntentsIntentConfirmCardPaymentMethodOptionsInput>;
   link?: InputMaybe<StripePostSetupIntentsIntentConfirmLinkPaymentMethodOptionsInput>;
+  paypal?: InputMaybe<StripePostSetupIntentsIntentConfirmPaypalPaymentMethodOptionsInput>;
   sepaDebit?: InputMaybe<StripePostSetupIntentsIntentConfirmSepaDebitPaymentMethodOptionsInput>;
   usBankAccount?: InputMaybe<StripePostSetupIntentsIntentConfirmUsBankAccountPaymentMethodOptionsInput>;
 };
@@ -30037,6 +30252,10 @@ export enum StripePostSetupIntentsIntentConfirmPaymentScheduleMandateOptionsAcss
   Interval = 'INTERVAL',
   Sporadic = 'SPORADIC'
 }
+
+export type StripePostSetupIntentsIntentConfirmPaypalPaymentMethodOptionsInput = {
+  billingAgreementId?: InputMaybe<Scalars['String']>;
+};
 
 export enum StripePostSetupIntentsIntentConfirmPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
   Balances = 'BALANCES',
@@ -30106,6 +30325,7 @@ export enum StripePostSetupIntentsIntentConfirmTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -30286,6 +30506,7 @@ export type StripePostSetupIntentsIntentPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostSetupIntentsIntentP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostSetupIntentsIntentRadarOptionsPaymentMethodDataInput>;
@@ -30301,6 +30522,7 @@ export type StripePostSetupIntentsIntentPaymentMethodOptionsInput = {
   blik?: InputMaybe<StripePostSetupIntentsIntentBlikPaymentMethodOptionsInput>;
   card?: InputMaybe<StripePostSetupIntentsIntentCardPaymentMethodOptionsInput>;
   link?: InputMaybe<StripePostSetupIntentsIntentLinkPaymentMethodOptionsInput>;
+  paypal?: InputMaybe<StripePostSetupIntentsIntentPaypalPaymentMethodOptionsInput>;
   sepaDebit?: InputMaybe<StripePostSetupIntentsIntentSepaDebitPaymentMethodOptionsInput>;
   usBankAccount?: InputMaybe<StripePostSetupIntentsIntentUsBankAccountPaymentMethodOptionsInput>;
 };
@@ -30310,6 +30532,10 @@ export enum StripePostSetupIntentsIntentPaymentScheduleMandateOptionsAcssDebitPa
   Interval = 'INTERVAL',
   Sporadic = 'SPORADIC'
 }
+
+export type StripePostSetupIntentsIntentPaypalPaymentMethodOptionsInput = {
+  billingAgreementId?: InputMaybe<Scalars['String']>;
+};
 
 export enum StripePostSetupIntentsIntentPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
   Balances = 'BALANCES',
@@ -30375,6 +30601,7 @@ export enum StripePostSetupIntentsIntentTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -30511,6 +30738,7 @@ export type StripePostSetupIntentsPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostSetupIntentsP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostSetupIntentsRadarOptionsPaymentMethodDataInput>;
@@ -30526,6 +30754,7 @@ export type StripePostSetupIntentsPaymentMethodOptionsInput = {
   blik?: InputMaybe<StripePostSetupIntentsBlikPaymentMethodOptionsInput>;
   card?: InputMaybe<StripePostSetupIntentsCardPaymentMethodOptionsInput>;
   link?: InputMaybe<StripePostSetupIntentsLinkPaymentMethodOptionsInput>;
+  paypal?: InputMaybe<StripePostSetupIntentsPaypalPaymentMethodOptionsInput>;
   sepaDebit?: InputMaybe<StripePostSetupIntentsSepaDebitPaymentMethodOptionsInput>;
   usBankAccount?: InputMaybe<StripePostSetupIntentsUsBankAccountPaymentMethodOptionsInput>;
 };
@@ -30535,6 +30764,10 @@ export enum StripePostSetupIntentsPaymentScheduleMandateOptionsAcssDebitPaymentM
   Interval = 'INTERVAL',
   Sporadic = 'SPORADIC'
 }
+
+export type StripePostSetupIntentsPaypalPaymentMethodOptionsInput = {
+  billingAgreementId?: InputMaybe<Scalars['String']>;
+};
 
 export enum StripePostSetupIntentsPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
   Balances = 'BALANCES',
@@ -30610,6 +30843,7 @@ export enum StripePostSetupIntentsTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -36228,6 +36462,7 @@ export type StripeSetupAttemptPaymentMethodDetails = {
   ideal?: Maybe<StripeSetupAttemptPaymentMethodDetailsIdeal>;
   klarna?: Maybe<Scalars['JSON']>;
   link?: Maybe<Scalars['JSON']>;
+  paypal?: Maybe<Scalars['JSON']>;
   sepaDebit?: Maybe<Scalars['JSON']>;
   sofort?: Maybe<StripeSetupAttemptPaymentMethodDetailsSofort>;
   type: Scalars['String'];
@@ -36426,6 +36661,7 @@ export type StripeSetupIntentPaymentMethodOptions = {
   blik?: Maybe<StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsBlikUnion>;
   card?: Maybe<StripeSetupIntentPaymentMethodOptionsCard>;
   link?: Maybe<StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsLinkUnion>;
+  paypal?: Maybe<StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsPaypalUnion>;
   sepaDebit?: Maybe<StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsSepaDebitUnion>;
   usBankAccount?: Maybe<StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsUsBankAccountUnion>;
 };
@@ -36553,6 +36789,11 @@ export enum StripeSetupIntentPaymentMethodOptionsMandateOptionsBlikType {
   OnSession = 'ON_SESSION'
 }
 
+export type StripeSetupIntentPaymentMethodOptionsPaypal = {
+  __typename?: 'StripeSetupIntentPaymentMethodOptionsPaypal';
+  billingAgreementId?: Maybe<Scalars['String']>;
+};
+
 export type StripeSetupIntentPaymentMethodOptionsSepaDebit = {
   __typename?: 'StripeSetupIntentPaymentMethodOptionsSepaDebit';
   mandateOptions?: Maybe<Scalars['JSON']>;
@@ -36589,6 +36830,8 @@ export type StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntent
 export type StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsBlikUnion = StripeSetupIntentPaymentMethodOptionsBlik | StripeSetupIntentTypeSpecificPaymentMethodOptionsClient;
 
 export type StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsLinkUnion = StripeSetupIntentPaymentMethodOptionsLink | StripeSetupIntentTypeSpecificPaymentMethodOptionsClient;
+
+export type StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsPaypalUnion = StripeSetupIntentPaymentMethodOptionsPaypal | StripeSetupIntentTypeSpecificPaymentMethodOptionsClient;
 
 export type StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsSepaDebitUnion = StripeSetupIntentPaymentMethodOptionsSepaDebit | StripeSetupIntentTypeSpecificPaymentMethodOptionsClient;
 
@@ -37999,6 +38242,11 @@ export type StripeStringOrPostPaymentIntentsIntentConfirmPaynowPaymentMethodOpti
   stripePostPaymentIntentsIntentConfirmPaynowPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentConfirmPaynowPaymentMethodOptionsInput>;
 };
 
+export type StripeStringOrPostPaymentIntentsIntentConfirmPaypalPaymentMethodOptionsUnionInput = {
+  string?: InputMaybe<Scalars['String']>;
+  stripePostPaymentIntentsIntentConfirmPaypalPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentConfirmPaypalPaymentMethodOptionsInput>;
+};
+
 export type StripeStringOrPostPaymentIntentsIntentConfirmPixPaymentMethodOptionsUnionInput = {
   string?: InputMaybe<Scalars['String']>;
   stripePostPaymentIntentsIntentConfirmPixPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentConfirmPixPaymentMethodOptionsInput>;
@@ -38099,6 +38347,11 @@ export type StripeStringOrPostPaymentIntentsIntentPaynowPaymentMethodOptionsUnio
   stripePostPaymentIntentsIntentPaynowPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentPaynowPaymentMethodOptionsInput>;
 };
 
+export type StripeStringOrPostPaymentIntentsIntentPaypalPaymentMethodOptionsUnionInput = {
+  string?: InputMaybe<Scalars['String']>;
+  stripePostPaymentIntentsIntentPaypalPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentPaypalPaymentMethodOptionsInput>;
+};
+
 export type StripeStringOrPostPaymentIntentsIntentPixPaymentMethodOptionsUnionInput = {
   string?: InputMaybe<Scalars['String']>;
   stripePostPaymentIntentsIntentPixPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentPixPaymentMethodOptionsInput>;
@@ -38167,6 +38420,11 @@ export type StripeStringOrPostPaymentIntentsP24PaymentMethodOptionsUnionInput = 
 export type StripeStringOrPostPaymentIntentsPaynowPaymentMethodOptionsUnionInput = {
   string?: InputMaybe<Scalars['String']>;
   stripePostPaymentIntentsPaynowPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsPaynowPaymentMethodOptionsInput>;
+};
+
+export type StripeStringOrPostPaymentIntentsPaypalPaymentMethodOptionsUnionInput = {
+  string?: InputMaybe<Scalars['String']>;
+  stripePostPaymentIntentsPaypalPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsPaypalPaymentMethodOptionsInput>;
 };
 
 export type StripeStringOrPostPaymentIntentsPixPaymentMethodOptionsUnionInput = {
@@ -38881,6 +39139,7 @@ export enum StripeSubscriptionsResourcePaymentSettingsPaymentMethodTypes {
   Konbini = 'KONBINI',
   Link = 'LINK',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Promptpay = 'PROMPTPAY',
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
@@ -40938,7 +41197,7 @@ export type UserSubscriptionsQueryVariables = Exact<{
 }>;
 
 
-export type UserSubscriptionsQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', id: string, subscriptions?: { __typename?: 'StripeCustomerSubscriptions', nodes: Array<{ __typename?: 'StripeSubscription', id: string, items: { __typename?: 'StripeSubscriptionItems', nodes: Array<{ __typename?: 'StripeSubscriptionItem', id: string, quantity?: number | null, price: { __typename?: 'StripePrice', id: string, active: boolean, currency: string, unitAmount?: number | null, recurring?: { __typename?: 'StripeRecurring', interval: StripeRecurringInterval } | null, product: { __typename?: 'StripeDeletedProduct', id: string, deleted: boolean } | { __typename?: 'StripeProduct', id: string, active: boolean, created: number, description?: string | null, images: Array<string>, livemode: boolean, metadata: any, name: string, object: StripeProductObject, shippable?: boolean | null, statementDescriptor?: string | null, unitLabel?: string | null, updated: number, url?: string | null } | { __typename?: 'StripeString' } } }> } }> } | null } | null } | null };
+export type UserSubscriptionsQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', id: string, subscriptions?: { __typename?: 'StripeCustomerSubscriptions', nodes: Array<{ __typename?: 'StripeSubscription', id: string, items: { __typename?: 'StripeSubscriptionItems', nodes: Array<{ __typename?: 'StripeSubscriptionItem', id: string, quantity?: number | null, price: { __typename?: 'StripePrice', id: string, active: boolean, currency: string, unitAmount?: number | null, recurring?: { __typename?: 'StripeRecurring', interval: StripeRecurringInterval } | null, product: { __typename: 'StripeDeletedProduct', id: string, deleted: boolean } | { __typename: 'StripeProduct', id: string, active: boolean, created: number, description?: string | null, images: Array<string>, livemode: boolean, metadata: any, name: string, object: StripeProductObject, shippable?: boolean | null, statementDescriptor?: string | null, unitLabel?: string | null, updated: number, url?: string | null } | { __typename: 'StripeString' } } }> } }> } | null } | null } | null };
 
 export const AddressPartsFragmentDoc = `
     fragment AddressParts on StripeAddress {
@@ -41287,6 +41546,7 @@ export const UserSubscriptionsDocument = `
                     id
                     deleted
                   }
+                  __typename
                 }
               }
             }

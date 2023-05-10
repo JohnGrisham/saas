@@ -26,6 +26,7 @@ query UserSubscriptions($email: Email!) {
                     id
                     deleted
                   }
+                  __typename
                 }
               }
             }
