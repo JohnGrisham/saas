@@ -9,8 +9,15 @@ query UserSubscriptions($email: Email!) {
           items {
             nodes {
               id
+              quantity
               price {
                 id
+                active
+                currency
+                recurring {
+                  interval
+                }
+                unitAmount
                 product {
                   ... on StripeProduct {
                     ...ProductParts

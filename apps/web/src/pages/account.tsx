@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Accordion, Button, useAuthSession } from 'ui';
+import { StripeProduct, useGetUserSubscriptions } from 'client';
 import Link from 'next/link';
 import { useState, ReactNode } from 'react';
-import { useGetUserByEmailQuery } from 'client';
 
 const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;
 
@@ -16,12 +16,12 @@ interface Props {
 function Card({ title, description, footer, children }: Props) {
   return (
     <Accordion header={title} initialCollapsed={false}>
-      <div className="w-full max-w-3xl m-auto my-8 border rounded-md p border-zinc-700">
+      <div className="p m-auto my-8 w-full max-w-3xl rounded-md border border-zinc-700">
         <div className="px-5 py-4 dark:bg-white">
           <p className="text-zinc-400">{description}</p>
           {children}
         </div>
-        <div className="p-4 text-white border-t rounded-b-md border-zinc-700 bg-zinc-900">
+        <div className="rounded-b-md border-t border-zinc-700 bg-zinc-900 p-4 text-white">
           {footer}
         </div>
       </div>
@@ -34,14 +34,21 @@ export default function Account() {
   const {
     context: { data: session },
   } = useAuthSession();
-  const { data } = useGetUserByEmailQuery(session.user.email);
+  const { data } = useGetUserSubscriptions(session.user.email);
 
   const subscription = React.useMemo(() => {
-    if (!data?.user?.customer?.subscriptions?.edges?.length) {
+    if (!data?.user?.customer?.subscriptions?.nodes?.length) {
       return null;
     }
 
-    return data.user.customer.subscriptions.edges[0]?.node;
+    const subItems = data.user.customer.subscriptions.nodes.flatMap(
+      (sub) => sub.items.nodes,
+    );
+    const subWithProduct = subItems.find(
+      (item) => item.price.product.__typename === 'StripeProduct',
+    );
+    const product = subWithProduct?.price.product as StripeProduct;
+    return { ...subWithProduct, price: { ...subWithProduct?.price, product } };
   }, [data]);
 
   const redirectToCustomerPortal = async () => {
@@ -74,12 +81,12 @@ export default function Account() {
 
   return (
     <section className="mb-32 min-w-[60%] bg-inherit">
-      <div className="max-w-6xl px-4 pt-8 pb-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 pt-8 pb-8 sm:px-6 sm:pt-24 lg:px-8">
         <div className="sm:align-center dark:text-white sm:flex sm:flex-col">
           <h1 className="text-4xl font-extrabold sm:text-center sm:text-6xl">
             Account
           </h1>
-          <p className="max-w-2xl m-auto mt-5 text-xl sm:text-center sm:text-2xl">
+          <p className="m-auto mt-5 max-w-2xl text-xl sm:text-center sm:text-2xl">
             We partnered with Stripe for a simplified billing.
           </p>
         </div>
@@ -89,7 +96,7 @@ export default function Account() {
           title="Your Plan"
           description={
             subscription
-              ? `You are currently on the ${subscription.product.name} plan.`
+              ? `You are currently on the ${subscription.price.product} plan.`
               : ''
           }
           footer={
@@ -110,9 +117,9 @@ export default function Account() {
         >
           <div className="mt-8 mb-4 text-xl font-semibold text-zinc-600">
             {loading ? (
-              <div className="h-12 mb-6">...</div>
+              <div className="mb-6 h-12">...</div>
             ) : subscription ? (
-              `${subscription.product.price}/${subscription.product.interval}/${subscription.product.currency}`
+              `${subscription.price.unitAmount}/${subscription.price.recurring?.interval}/${subscription.price.currency}`
             ) : (
               <Link href="/">Choose your plan</Link>
             )}
@@ -127,7 +134,7 @@ export default function Account() {
             {data.user.name ? (
               `${data.user.name}`
             ) : (
-              <div className="h-8 mb-6">...</div>
+              <div className="mb-6 h-8">...</div>
             )}
           </div>
         </Card>
