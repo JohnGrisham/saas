@@ -6,11 +6,16 @@
       "outputs": ["dist/**", ".next/**"]
     },
     "codegen": {
-      "dependsOn": []
+      "dependsOn": ["^gql:dev"]
+    },
+    "gql:dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": ["^dev"]
     },
     "dev": {
       "cache": false,
-      "dependsOn": ["^dev", "ui#build"]
+      "dependsOn": ["^dev", "client#build", "ui#build"]
     },
     "generate-tailwind-theme": {
       "cache": false,
@@ -39,8 +44,11 @@
         "$NEXTAUTH_URL"
       ]
     },
+    "client#codegen": {
+      "dependsOn": ["grafbase#dev"]
+    },
     "client#build": {
-      "dependsOn": ["$API_ENDPOINT"]
+      "dependsOn": ["$API_ENDPOINT", "client#codegen"]
     },
     "payments-server#build": {
       "dependsOn": [
@@ -69,6 +77,10 @@
     },
     "api#build": {
       "dependsOn": ["$OPENAI_API_KEY"]
+    },
+    "grafbase#dev": {
+      "cache": false,
+      "persistent": true
     },
     "grafbase#build": {
       "dependsOn": [

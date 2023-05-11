@@ -5,14 +5,15 @@
   "license": "MIT",
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "grafbase"
   ],
   "scripts": {
     "build": "turbo run build",
     "generate-tailwind-theme": "turbo run generate-tailwind-theme",
-    "gql:dev": "npx grafbase@latest dev",
     "codegen": "turbo run codegen",
     "dev": "turbo run dev --parallel",
+    "gql:dev": "turbo run gql:dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "storybook": "turbo run storybook"
