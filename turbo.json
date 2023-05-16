@@ -6,16 +6,26 @@
       "outputs": ["dist/**", ".next/**"]
     },
     "codegen": {
-      "dependsOn": ["^gql:dev"]
+      "cache": false,
+      "dependsOn": []
     },
     "gql:dev": {
       "cache": false,
       "persistent": true,
-      "dependsOn": ["^dev"]
+      "dependsOn": []
     },
     "dev": {
       "cache": false,
-      "dependsOn": ["^dev", "client#build", "ui#build"]
+      "dependsOn": [
+        "^dev",
+        "api#build",
+        "auth#build",
+        "client#build",
+        "payments-client#build",
+        "payments-server#build",
+        "templates#build",
+        "ui#build"
+      ]
     },
     "generate-tailwind-theme": {
       "cache": false,
@@ -29,6 +39,7 @@
     },
     "auth#build": {
       "dependsOn": [
+        "client#build",
         "$API_KEY",
         "$COGNITO_CLIENT_ID",
         "$COGNITO_CLIENT_SECRET",
@@ -44,11 +55,8 @@
         "$NEXTAUTH_URL"
       ]
     },
-    "client#codegen": {
-      "dependsOn": ["grafbase#dev"]
-    },
     "client#build": {
-      "dependsOn": ["$API_ENDPOINT", "client#codegen"]
+      "dependsOn": ["$API_ENDPOINT"]
     },
     "payments-server#build": {
       "dependsOn": [
@@ -57,6 +65,9 @@
         "$STRIPE_WEBHOOK_SECRET",
         "$STRIPE_WEBHOOK_SECRET_LIVE"
       ]
+    },
+    "payments-client#build": {
+      "dependsOn": []
     },
     "web#build": {
       "dependsOn": [
@@ -76,11 +87,7 @@
       ]
     },
     "api#build": {
-      "dependsOn": ["$OPENAI_API_KEY"]
-    },
-    "grafbase#dev": {
-      "cache": false,
-      "persistent": true
+      "dependsOn": ["client#build", "$OPENAI_API_KEY"]
     },
     "grafbase#build": {
       "dependsOn": [
@@ -91,6 +98,9 @@
         "$STRIPE_SECRET_KEY",
         "$STRIPE_SECRET_KEY_LIVE"
       ]
+    },
+    "templates#build": {
+      "dependsOn": []
     },
     "lint": {
       "outputs": []

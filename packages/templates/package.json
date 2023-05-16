@@ -9,8 +9,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "build:play": "cd play-tailwind-main && yarn build",
-    "dev:play": "cd play-tailwind-main && yarn dev",
+    "install:play": "cd play-template-main && yarn",
+    "build:play": "cd play-tailwind-main && yarn && yarn build",
+    "dev:play": "cd play-tailwind-main && yarn && yarn dev",
     "build": "yarn build:play && tsup src/index.ts --format esm,cjs --dts",
     "dev": "tsup src/play.tsx --format esm,cjs --dts",
     "clean": "rm -rf dist"

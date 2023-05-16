@@ -8,7 +8,6 @@
     "stripe": "^12.2.0"
   },
   "scripts": {
-    "gql:dev": "npx grafbase@latest dev",
-    "dev": "yarn gql:dev --disable-watch"
+    "gql:dev": "npx grafbase@latest dev"
   }
 }
