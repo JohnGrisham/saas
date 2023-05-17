@@ -48,8 +48,6 @@
         "$GOOGLE_CLIENT_ID",
         "$GOOGLE_CLIENT_SECRET",
         "$ISSUER_URL",
-        "$NETLIFY_CLIENT_ID",
-        "$NETLIFY_CLIENT_SECRET",
         "$NEXTAUTH_SECRET",
         "$NEXTAUTH_URL"
       ]

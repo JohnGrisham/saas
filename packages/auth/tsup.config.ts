@@ -52,18 +52,6 @@ export default defineConfig({
         );
       }
 
-      if (process.env.NETLIFY_CLIENT_ID) {
-        options.define['process.env.NETLIFY_CLIENT_ID'] = JSON.stringify(
-          process.env.NETLIFY_CLIENT_ID,
-        );
-      }
-
-      if (process.env.NETLIFY_CLIENT_SECRET) {
-        options.define['process.env.NETLIFY_CLIENT_SECRET'] = JSON.stringify(
-          process.env.NETLIFY_CLIENT_SECRET,
-        );
-      }
-
       if (process.env.NEXTAUTH_URL) {
         options.define['process.env.NEXTAUTH_URL'] = JSON.stringify(
           process.env.NEXTAUTH_URL,

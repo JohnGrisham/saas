@@ -8,7 +8,6 @@ export * from './dropdown';
 export * from './forms';
 export * from './layout';
 export * from './modal';
-export * from './sites';
 export * from './stepper';
 export * from './table';
 export * from './toggle';

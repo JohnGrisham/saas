@@ -4,18 +4,15 @@ import CredentialsProvider, {
 } from 'next-auth/providers/credentials';
 import GithubProvider, { GithubProfile } from 'next-auth/providers/github';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
-import NetlifyProvider from 'next-auth/providers/netlify';
 import {
   credentialsSigninHandler,
   googleSigninHandler,
-  netlifySigninHandler,
 } from './signin-handlers';
 import {
   UserByEmailQuery,
   UserByEmailQueryVariables,
   graphQLClient,
 } from 'client';
-import { getSiteData, getSitePaths } from './utils';
 import { JWTOptions } from 'next-auth/jwt';
 import { OAuthUserConfig } from 'next-auth/providers';
 import { Auth } from '@aws-amplify/auth';
@@ -107,13 +104,6 @@ export const github = (config?: OAuthUserConfig<GithubProfile>) =>
     ...config,
   });
 
-export const netlify = (config?: OAuthUserConfig<any>) =>
-  NetlifyProvider({
-    clientId: process.env.NETLIFY_CLIENT_ID as string,
-    clientSecret: process.env.NETLIFY_CLIENT_SECRET as string,
-    ...config,
-  });
-
 export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
   async signIn({ user, account, profile }) {
     try {
@@ -136,10 +126,6 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
         case 'google': {
           const sub = profile?.sub ?? `GSTUB_${user.id}`;
           await googleSigninHandler(sub, email, name);
-          break;
-        }
-        case 'netlify': {
-          await netlifySigninHandler(user.id, email, name);
           break;
         }
         default:
@@ -243,4 +229,3 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
 };
 
 export const providers = [credentials(), google(), github()];
-export { getSiteData, getSitePaths };
