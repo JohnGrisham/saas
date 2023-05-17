@@ -8,6 +8,11 @@ module.exports = {
       use: ['@svgr/webpack'],
     });
 
+    config.module.rules.push({
+      test: /\.html$/i,
+      loader: 'html-loader',
+    });
+
     return config;
   },
 };

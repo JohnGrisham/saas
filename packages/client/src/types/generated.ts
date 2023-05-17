@@ -2092,7 +2092,27 @@ export type StripeCreditNoteTaxAmount = {
   amount: Scalars['Int'];
   inclusive: Scalars['Boolean'];
   taxRate: StripeStringOrTaxRateUnion;
+  taxabilityReason?: Maybe<StripeCreditNoteTaxAmountTaxabilityReason>;
+  taxableAmount?: Maybe<Scalars['Int']>;
 };
+
+export enum StripeCreditNoteTaxAmountTaxabilityReason {
+  CustomerExempt = 'CUSTOMER_EXEMPT',
+  NotCollecting = 'NOT_COLLECTING',
+  NotSubjectToTax = 'NOT_SUBJECT_TO_TAX',
+  NotSupported = 'NOT_SUPPORTED',
+  PortionProductExempt = 'PORTION_PRODUCT_EXEMPT',
+  PortionReducedRated = 'PORTION_REDUCED_RATED',
+  PortionStandardRated = 'PORTION_STANDARD_RATED',
+  ProductExempt = 'PRODUCT_EXEMPT',
+  ProductExemptHoliday = 'PRODUCT_EXEMPT_HOLIDAY',
+  ProportionallyRated = 'PROPORTIONALLY_RATED',
+  ReducedRated = 'REDUCED_RATED',
+  ReverseCharge = 'REVERSE_CHARGE',
+  StandardRated = 'STANDARD_RATED',
+  TaxableBasisReduced = 'TAXABLE_BASIS_REDUCED',
+  ZeroRated = 'ZERO_RATED'
+}
 
 export enum StripeCreditNoteType {
   PostPayment = 'POST_PAYMENT',
@@ -3874,6 +3894,7 @@ export enum StripeGetCustomersCustomerPaymentMethodsType {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -4910,6 +4931,7 @@ export enum StripeGetPaymentMethodsType {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -6536,7 +6558,27 @@ export type StripeInvoiceTaxAmount = {
   amount: Scalars['Int'];
   inclusive: Scalars['Boolean'];
   taxRate: StripeStringOrTaxRateUnion;
+  taxabilityReason?: Maybe<StripeInvoiceTaxAmountTaxabilityReason>;
+  taxableAmount?: Maybe<Scalars['Int']>;
 };
+
+export enum StripeInvoiceTaxAmountTaxabilityReason {
+  CustomerExempt = 'CUSTOMER_EXEMPT',
+  NotCollecting = 'NOT_COLLECTING',
+  NotSubjectToTax = 'NOT_SUBJECT_TO_TAX',
+  NotSupported = 'NOT_SUPPORTED',
+  PortionProductExempt = 'PORTION_PRODUCT_EXEMPT',
+  PortionReducedRated = 'PORTION_REDUCED_RATED',
+  PortionStandardRated = 'PORTION_STANDARD_RATED',
+  ProductExempt = 'PRODUCT_EXEMPT',
+  ProductExemptHoliday = 'PRODUCT_EXEMPT_HOLIDAY',
+  ProportionallyRated = 'PROPORTIONALLY_RATED',
+  ReducedRated = 'REDUCED_RATED',
+  ReverseCharge = 'REVERSE_CHARGE',
+  StandardRated = 'STANDARD_RATED',
+  TaxableBasisReduced = 'TAXABLE_BASIS_REDUCED',
+  ZeroRated = 'ZERO_RATED'
+}
 
 export type StripeInvoiceThresholdReason = {
   __typename?: 'StripeInvoiceThresholdReason';
@@ -6632,6 +6674,7 @@ export enum StripeInvoicesPaymentSettingsPaymentMethodTypes {
   Konbini = 'KONBINI',
   Link = 'LINK',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Promptpay = 'PROMPTPAY',
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
@@ -9384,7 +9427,30 @@ export type StripeLineItemsTaxAmount = {
   __typename?: 'StripeLineItemsTaxAmount';
   amount: Scalars['Int'];
   rate: StripeTaxRate;
+  taxabilityReason?: Maybe<StripeLineItemsTaxAmountTaxabilityReason>;
+  taxableAmount?: Maybe<Scalars['Int']>;
 };
+
+export enum StripeLineItemsTaxAmountTaxabilityReason {
+  CustomerExempt = 'CUSTOMER_EXEMPT',
+  ExcludedTerritory = 'EXCLUDED_TERRITORY',
+  JurisdictionUnsupported = 'JURISDICTION_UNSUPPORTED',
+  NotCollecting = 'NOT_COLLECTING',
+  NotSubjectToTax = 'NOT_SUBJECT_TO_TAX',
+  NotSupported = 'NOT_SUPPORTED',
+  PortionProductExempt = 'PORTION_PRODUCT_EXEMPT',
+  PortionReducedRated = 'PORTION_REDUCED_RATED',
+  PortionStandardRated = 'PORTION_STANDARD_RATED',
+  ProductExempt = 'PRODUCT_EXEMPT',
+  ProductExemptHoliday = 'PRODUCT_EXEMPT_HOLIDAY',
+  ProportionallyRated = 'PROPORTIONALLY_RATED',
+  ReducedRated = 'REDUCED_RATED',
+  ReverseCharge = 'REVERSE_CHARGE',
+  StandardRated = 'STANDARD_RATED',
+  TaxableBasisReduced = 'TAXABLE_BASIS_REDUCED',
+  VatExempt = 'VAT_EXEMPT',
+  ZeroRated = 'ZERO_RATED'
+}
 
 export type StripeLinkedAccountOptionsUsBankAccount = {
   __typename?: 'StripeLinkedAccountOptionsUsBankAccount';
@@ -9507,9 +9573,16 @@ export type StripeMandatePaymentMethodDetails = {
   card?: Maybe<Scalars['JSON']>;
   cashapp?: Maybe<Scalars['JSON']>;
   link?: Maybe<Scalars['JSON']>;
+  paypal?: Maybe<StripeMandatePaypal>;
   sepaDebit?: Maybe<StripeMandateSepaDebit>;
   type: Scalars['String'];
   usBankAccount?: Maybe<Scalars['JSON']>;
+};
+
+export type StripeMandatePaypal = {
+  __typename?: 'StripeMandatePaypal';
+  billingAgreementId?: Maybe<Scalars['String']>;
+  payerId?: Maybe<Scalars['String']>;
 };
 
 export type StripeMandateSepaDebit = {
@@ -9537,245 +9610,245 @@ export enum StripeMandateType {
 
 export type StripeMutation = {
   __typename?: 'StripeMutation';
-  deleteAccountsAccount: StripeDeletedAccount;
-  deleteAccountsAccountBankAccountsId: StripeDeletedExternalAccount;
-  deleteAccountsAccountExternalAccountsId: StripeDeletedExternalAccount;
-  deleteAccountsAccountPeoplePerson: StripeDeletedPerson;
-  deleteAccountsAccountPersonsPerson: StripeDeletedPerson;
-  deleteApplePayDomainsDomain: StripeDeletedApplePayDomain;
-  deleteCouponsCoupon: StripeDeletedCoupon;
-  deleteCustomersCustomer: StripeDeletedCustomer;
-  deleteCustomersCustomerBankAccountsId: StripeDeletedPaymentSourceOrPaymentSourceUnion;
-  deleteCustomersCustomerCardsId: StripeDeletedPaymentSourceOrPaymentSourceUnion;
-  deleteCustomersCustomerDiscount: StripeDeletedDiscount;
-  deleteCustomersCustomerSourcesId: StripeDeletedPaymentSourceOrPaymentSourceUnion;
-  deleteCustomersCustomerSubscriptionsSubscriptionExposedId: StripeSubscription;
-  deleteCustomersCustomerSubscriptionsSubscriptionExposedIdDiscount: StripeDeletedDiscount;
-  deleteCustomersCustomerTaxIdsId: StripeDeletedTaxId;
-  deleteEphemeralKeysKey: StripeEphemeralKey;
-  deleteInvoiceitemsInvoiceitem: StripeDeletedInvoiceitem;
-  deleteInvoicesInvoice: StripeDeletedInvoice;
-  deletePlansPlan: StripeDeletedPlan;
-  deleteProductsId: StripeDeletedProduct;
-  deleteRadarValueListItemsItem: StripeDeletedRadarValueListItem;
-  deleteRadarValueListsValueList: StripeDeletedRadarValueList;
-  deleteSubscriptionItemsItem: StripeDeletedSubscriptionItem;
-  deleteSubscriptionsSubscriptionExposedId: StripeSubscription;
-  deleteSubscriptionsSubscriptionExposedIdDiscount: StripeDeletedDiscount;
-  deleteTerminalConfigurationsConfiguration: StripeDeletedTerminalConfiguration;
-  deleteTerminalLocationsLocation: StripeDeletedTerminalLocation;
-  deleteTerminalReadersReader: StripeDeletedTerminalReader;
-  deleteTestHelpersTestClocksTestClock: StripeDeletedTestHelpersTestClock;
-  deleteWebhookEndpointsWebhookEndpoint: StripeDeletedWebhookEndpoint;
-  postAccountLinks: StripeAccountLink;
-  postAccounts: StripeAccount;
-  postAccountsAccount: StripeAccount;
-  postAccountsAccountBankAccounts: StripeExternalAccount;
-  postAccountsAccountBankAccountsId: StripeExternalAccount;
-  postAccountsAccountCapabilitiesCapability: StripeCapability;
-  postAccountsAccountExternalAccounts: StripeExternalAccount;
-  postAccountsAccountExternalAccountsId: StripeExternalAccount;
-  postAccountsAccountLoginLinks: StripeLoginLink;
-  postAccountsAccountPeople: StripePerson;
-  postAccountsAccountPeoplePerson: StripePerson;
-  postAccountsAccountPersons: StripePerson;
-  postAccountsAccountPersonsPerson: StripePerson;
-  postAccountsAccountReject: StripeAccount;
-  postApplePayDomains: StripeApplePayDomain;
-  postApplicationFeesFeeRefundsId: StripeFeeRefund;
-  postApplicationFeesIdRefund: StripeApplicationFee;
-  postApplicationFeesIdRefunds: StripeFeeRefund;
-  postAppsSecrets: StripeAppsSecret;
-  postAppsSecretsDelete: StripeAppsSecret;
-  postBillingPortalConfigurations: StripeBillingPortalConfiguration;
-  postBillingPortalConfigurationsConfiguration: StripeBillingPortalConfiguration;
-  postBillingPortalSessions: StripeBillingPortalSession;
-  postCharges: StripeCharge;
-  postChargesCharge: StripeCharge;
-  postChargesChargeCapture: StripeCharge;
-  postChargesChargeDispute: StripeDispute;
-  postChargesChargeDisputeClose: StripeDispute;
-  postChargesChargeRefund: StripeCharge;
-  postChargesChargeRefunds: StripeRefund;
-  postChargesChargeRefundsRefund: StripeRefund;
-  postCheckoutSessions: StripeCheckoutSession;
-  postCheckoutSessionsSessionExpire: StripeCheckoutSession;
-  postCoupons: StripeCoupon;
-  postCouponsCoupon: StripeCoupon;
-  postCreditNotes: StripeCreditNote;
-  postCreditNotesId: StripeCreditNote;
-  postCreditNotesIdVoid: StripeCreditNote;
-  postCustomers: StripeCustomer;
-  postCustomersCustomer: StripeCustomer;
-  postCustomersCustomerBalanceTransactions: StripeCustomerBalanceTransaction;
-  postCustomersCustomerBalanceTransactionsTransaction: StripeCustomerBalanceTransaction;
-  postCustomersCustomerBankAccounts: StripePaymentSource;
-  postCustomersCustomerBankAccountsId: StripeSourceOrBankAccountOrCardUnion;
-  postCustomersCustomerBankAccountsIdVerify: StripeBankAccount;
-  postCustomersCustomerCards: StripePaymentSource;
-  postCustomersCustomerCardsId: StripeSourceOrBankAccountOrCardUnion;
-  postCustomersCustomerCashBalance: StripeCashBalance;
-  postCustomersCustomerFundingInstructions: StripeFundingInstructions;
-  postCustomersCustomerSources: StripePaymentSource;
-  postCustomersCustomerSourcesId: StripeSourceOrBankAccountOrCardUnion;
-  postCustomersCustomerSourcesIdVerify: StripeBankAccount;
-  postCustomersCustomerSubscriptions: StripeSubscription;
-  postCustomersCustomerSubscriptionsSubscriptionExposedId: StripeSubscription;
-  postCustomersCustomerTaxIds: StripeTaxId;
-  postDisputesDispute: StripeDispute;
-  postDisputesDisputeClose: StripeDispute;
-  postEphemeralKeys: StripeEphemeralKey;
-  postFileLinks: StripeFileLink;
-  postFileLinksLink: StripeFileLink;
-  postFiles: StripeFile;
-  postFinancialConnectionsAccountsAccountDisconnect: StripeFinancialConnectionsAccount;
-  postFinancialConnectionsAccountsAccountRefresh: StripeFinancialConnectionsAccount;
-  postFinancialConnectionsSessions: StripeFinancialConnectionsSession;
-  postIdentityVerificationSessions: StripeIdentityVerificationSession;
-  postIdentityVerificationSessionsSession: StripeIdentityVerificationSession;
-  postIdentityVerificationSessionsSessionCancel: StripeIdentityVerificationSession;
-  postIdentityVerificationSessionsSessionRedact: StripeIdentityVerificationSession;
-  postInvoiceitems: StripeInvoiceitem;
-  postInvoiceitemsInvoiceitem: StripeInvoiceitem;
-  postInvoices: StripeInvoice;
-  postInvoicesInvoice: StripeInvoice;
-  postInvoicesInvoiceFinalize: StripeInvoice;
-  postInvoicesInvoiceMarkUncollectible: StripeInvoice;
-  postInvoicesInvoicePay: StripeInvoice;
-  postInvoicesInvoiceSend: StripeInvoice;
-  postInvoicesInvoiceVoid: StripeInvoice;
-  postIssuingAuthorizationsAuthorization: StripeIssuingAuthorization;
-  postIssuingAuthorizationsAuthorizationApprove: StripeIssuingAuthorization;
-  postIssuingAuthorizationsAuthorizationDecline: StripeIssuingAuthorization;
-  postIssuingCardholders: StripeIssuingCardholder;
-  postIssuingCardholdersCardholder: StripeIssuingCardholder;
-  postIssuingCards: StripeIssuingCard;
-  postIssuingCardsCard: StripeIssuingCard;
-  postIssuingDisputes: StripeIssuingDispute;
-  postIssuingDisputesDispute: StripeIssuingDispute;
-  postIssuingDisputesDisputeSubmit: StripeIssuingDispute;
-  postIssuingSettlementsSettlement: StripeIssuingSettlement;
-  postIssuingTransactionsTransaction: StripeIssuingTransaction;
-  postLinkAccountSessions: StripeFinancialConnectionsSession;
-  postLinkedAccountsAccountDisconnect: StripeFinancialConnectionsAccount;
-  postLinkedAccountsAccountRefresh: StripeFinancialConnectionsAccount;
-  postPaymentIntents: StripePaymentIntent;
-  postPaymentIntentsIntent: StripePaymentIntent;
-  postPaymentIntentsIntentApplyCustomerBalance: StripePaymentIntent;
-  postPaymentIntentsIntentCancel: StripePaymentIntent;
-  postPaymentIntentsIntentCapture: StripePaymentIntent;
-  postPaymentIntentsIntentConfirm: StripePaymentIntent;
-  postPaymentIntentsIntentIncrementAuthorization: StripePaymentIntent;
-  postPaymentIntentsIntentVerifyMicrodeposits: StripePaymentIntent;
-  postPaymentLinks: StripePaymentLink;
-  postPaymentLinksPaymentLink: StripePaymentLink;
-  postPaymentMethods: StripePaymentMethod;
-  postPaymentMethodsPaymentMethod: StripePaymentMethod;
-  postPaymentMethodsPaymentMethodAttach: StripePaymentMethod;
-  postPaymentMethodsPaymentMethodDetach: StripePaymentMethod;
-  postPayouts: StripePayout;
-  postPayoutsPayout: StripePayout;
-  postPayoutsPayoutCancel: StripePayout;
-  postPayoutsPayoutReverse: StripePayout;
-  postPlans: StripePlan;
-  postPlansPlan: StripePlan;
-  postPrices: StripePrice;
-  postPricesPrice: StripePrice;
-  postProducts: StripeProduct;
-  postProductsId: StripeProduct;
-  postPromotionCodes: StripePromotionCode;
-  postPromotionCodesPromotionCode: StripePromotionCode;
-  postQuotes: StripeQuote;
-  postQuotesQuote: StripeQuote;
-  postQuotesQuoteAccept: StripeQuote;
-  postQuotesQuoteCancel: StripeQuote;
-  postQuotesQuoteFinalize: StripeQuote;
-  postRadarValueListItems: StripeRadarValueListItem;
-  postRadarValueLists: StripeRadarValueList;
-  postRadarValueListsValueList: StripeRadarValueList;
-  postRefunds: StripeRefund;
-  postRefundsRefund: StripeRefund;
-  postRefundsRefundCancel: StripeRefund;
-  postReportingReportRuns: StripeReportingReportRun;
-  postReviewsReviewApprove: StripeReview;
-  postSetupIntents: StripeSetupIntent;
-  postSetupIntentsIntent: StripeSetupIntent;
-  postSetupIntentsIntentCancel: StripeSetupIntent;
-  postSetupIntentsIntentConfirm: StripeSetupIntent;
-  postSetupIntentsIntentVerifyMicrodeposits: StripeSetupIntent;
-  postShippingRates: StripeShippingRate;
-  postShippingRatesShippingRateToken: StripeShippingRate;
-  postSources: StripeSource;
-  postSourcesSource: StripeSource;
-  postSourcesSourceVerify: StripeSource;
-  postSubscriptionItems: StripeSubscriptionItem;
-  postSubscriptionItemsItem: StripeSubscriptionItem;
-  postSubscriptionItemsSubscriptionItemUsageRecords: StripeUsageRecord;
-  postSubscriptionSchedules: StripeSubscriptionSchedule;
-  postSubscriptionSchedulesSchedule: StripeSubscriptionSchedule;
-  postSubscriptionSchedulesScheduleCancel: StripeSubscriptionSchedule;
-  postSubscriptionSchedulesScheduleRelease: StripeSubscriptionSchedule;
-  postSubscriptions: StripeSubscription;
-  postSubscriptionsSubscriptionExposedId: StripeSubscription;
-  postSubscriptionsSubscriptionResume: StripeSubscription;
-  postTaxCalculations: StripeTaxCalculation;
-  postTaxRates: StripeTaxRate;
-  postTaxRatesTaxRate: StripeTaxRate;
-  postTaxTransactionsCreateFromCalculation: StripeTaxTransaction;
-  postTaxTransactionsCreateReversal: StripeTaxTransaction;
-  postTerminalConfigurations: StripeTerminalConfiguration;
-  postTerminalConfigurationsConfiguration: StripeDeletedTerminalConfigurationOrTerminalConfigurationUnion;
-  postTerminalConnectionTokens: StripeTerminalConnectionToken;
-  postTerminalLocations: StripeTerminalLocation;
-  postTerminalLocationsLocation: StripeDeletedTerminalLocationOrTerminalLocationUnion;
-  postTerminalReaders: StripeTerminalReader;
-  postTerminalReadersReader: StripeDeletedTerminalReaderOrTerminalReaderUnion;
-  postTerminalReadersReaderCancelAction: StripeTerminalReader;
-  postTerminalReadersReaderProcessPaymentIntent: StripeTerminalReader;
-  postTerminalReadersReaderProcessSetupIntent: StripeTerminalReader;
-  postTerminalReadersReaderRefundPayment: StripeTerminalReader;
-  postTerminalReadersReaderSetReaderDisplay: StripeTerminalReader;
-  postTestHelpersCustomersCustomerFundCashBalance: StripeCustomerCashBalanceTransaction;
-  postTestHelpersIssuingCardsCardShippingDeliver: StripeIssuingCard;
-  postTestHelpersIssuingCardsCardShippingFail: StripeIssuingCard;
-  postTestHelpersIssuingCardsCardShippingReturn: StripeIssuingCard;
-  postTestHelpersIssuingCardsCardShippingShip: StripeIssuingCard;
-  postTestHelpersRefundsRefundExpire: StripeRefund;
-  postTestHelpersTerminalReadersReaderPresentPaymentMethod: StripeTerminalReader;
-  postTestHelpersTestClocks: StripeTestHelpersTestClock;
-  postTestHelpersTestClocksTestClockAdvance: StripeTestHelpersTestClock;
-  postTestHelpersTreasuryInboundTransfersIdFail: StripeTreasuryInboundTransfer;
-  postTestHelpersTreasuryInboundTransfersIdReturn: StripeTreasuryInboundTransfer;
-  postTestHelpersTreasuryInboundTransfersIdSucceed: StripeTreasuryInboundTransfer;
-  postTestHelpersTreasuryOutboundPaymentsIdFail: StripeTreasuryOutboundPayment;
-  postTestHelpersTreasuryOutboundPaymentsIdPost: StripeTreasuryOutboundPayment;
-  postTestHelpersTreasuryOutboundPaymentsIdReturn: StripeTreasuryOutboundPayment;
-  postTestHelpersTreasuryOutboundTransfersOutboundTransferFail: StripeTreasuryOutboundTransfer;
-  postTestHelpersTreasuryOutboundTransfersOutboundTransferPost: StripeTreasuryOutboundTransfer;
-  postTestHelpersTreasuryOutboundTransfersOutboundTransferReturn: StripeTreasuryOutboundTransfer;
-  postTestHelpersTreasuryReceivedCredits: StripeTreasuryReceivedCredit;
-  postTestHelpersTreasuryReceivedDebits: StripeTreasuryReceivedDebit;
-  postTokens: StripeToken;
-  postTopups: StripeTopup;
-  postTopupsTopup: StripeTopup;
-  postTopupsTopupCancel: StripeTopup;
-  postTransfers: StripeTransfer;
-  postTransfersIdReversals: StripeTransferReversal;
-  postTransfersTransfer: StripeTransfer;
-  postTransfersTransferReversalsId: StripeTransferReversal;
-  postTreasuryCreditReversals: StripeTreasuryCreditReversal;
-  postTreasuryDebitReversals: StripeTreasuryDebitReversal;
-  postTreasuryFinancialAccounts: StripeTreasuryFinancialAccount;
-  postTreasuryFinancialAccountsFinancialAccount: StripeTreasuryFinancialAccount;
-  postTreasuryFinancialAccountsFinancialAccountFeatures: StripeTreasuryFinancialAccountFeatures;
-  postTreasuryInboundTransfers: StripeTreasuryInboundTransfer;
-  postTreasuryInboundTransfersInboundTransferCancel: StripeTreasuryInboundTransfer;
-  postTreasuryOutboundPayments: StripeTreasuryOutboundPayment;
-  postTreasuryOutboundPaymentsIdCancel: StripeTreasuryOutboundPayment;
-  postTreasuryOutboundTransfers: StripeTreasuryOutboundTransfer;
-  postTreasuryOutboundTransfersOutboundTransferCancel: StripeTreasuryOutboundTransfer;
-  postWebhookEndpoints: StripeWebhookEndpoint;
-  postWebhookEndpointsWebhookEndpoint: StripeWebhookEndpoint;
+  deleteAccountsAccount?: Maybe<StripeDeletedAccount>;
+  deleteAccountsAccountBankAccountsId?: Maybe<StripeDeletedExternalAccount>;
+  deleteAccountsAccountExternalAccountsId?: Maybe<StripeDeletedExternalAccount>;
+  deleteAccountsAccountPeoplePerson?: Maybe<StripeDeletedPerson>;
+  deleteAccountsAccountPersonsPerson?: Maybe<StripeDeletedPerson>;
+  deleteApplePayDomainsDomain?: Maybe<StripeDeletedApplePayDomain>;
+  deleteCouponsCoupon?: Maybe<StripeDeletedCoupon>;
+  deleteCustomersCustomer?: Maybe<StripeDeletedCustomer>;
+  deleteCustomersCustomerBankAccountsId?: Maybe<StripeDeletedPaymentSourceOrPaymentSourceUnion>;
+  deleteCustomersCustomerCardsId?: Maybe<StripeDeletedPaymentSourceOrPaymentSourceUnion>;
+  deleteCustomersCustomerDiscount?: Maybe<StripeDeletedDiscount>;
+  deleteCustomersCustomerSourcesId?: Maybe<StripeDeletedPaymentSourceOrPaymentSourceUnion>;
+  deleteCustomersCustomerSubscriptionsSubscriptionExposedId?: Maybe<StripeSubscription>;
+  deleteCustomersCustomerSubscriptionsSubscriptionExposedIdDiscount?: Maybe<StripeDeletedDiscount>;
+  deleteCustomersCustomerTaxIdsId?: Maybe<StripeDeletedTaxId>;
+  deleteEphemeralKeysKey?: Maybe<StripeEphemeralKey>;
+  deleteInvoiceitemsInvoiceitem?: Maybe<StripeDeletedInvoiceitem>;
+  deleteInvoicesInvoice?: Maybe<StripeDeletedInvoice>;
+  deletePlansPlan?: Maybe<StripeDeletedPlan>;
+  deleteProductsId?: Maybe<StripeDeletedProduct>;
+  deleteRadarValueListItemsItem?: Maybe<StripeDeletedRadarValueListItem>;
+  deleteRadarValueListsValueList?: Maybe<StripeDeletedRadarValueList>;
+  deleteSubscriptionItemsItem?: Maybe<StripeDeletedSubscriptionItem>;
+  deleteSubscriptionsSubscriptionExposedId?: Maybe<StripeSubscription>;
+  deleteSubscriptionsSubscriptionExposedIdDiscount?: Maybe<StripeDeletedDiscount>;
+  deleteTerminalConfigurationsConfiguration?: Maybe<StripeDeletedTerminalConfiguration>;
+  deleteTerminalLocationsLocation?: Maybe<StripeDeletedTerminalLocation>;
+  deleteTerminalReadersReader?: Maybe<StripeDeletedTerminalReader>;
+  deleteTestHelpersTestClocksTestClock?: Maybe<StripeDeletedTestHelpersTestClock>;
+  deleteWebhookEndpointsWebhookEndpoint?: Maybe<StripeDeletedWebhookEndpoint>;
+  postAccountLinks?: Maybe<StripeAccountLink>;
+  postAccounts?: Maybe<StripeAccount>;
+  postAccountsAccount?: Maybe<StripeAccount>;
+  postAccountsAccountBankAccounts?: Maybe<StripeExternalAccount>;
+  postAccountsAccountBankAccountsId?: Maybe<StripeExternalAccount>;
+  postAccountsAccountCapabilitiesCapability?: Maybe<StripeCapability>;
+  postAccountsAccountExternalAccounts?: Maybe<StripeExternalAccount>;
+  postAccountsAccountExternalAccountsId?: Maybe<StripeExternalAccount>;
+  postAccountsAccountLoginLinks?: Maybe<StripeLoginLink>;
+  postAccountsAccountPeople?: Maybe<StripePerson>;
+  postAccountsAccountPeoplePerson?: Maybe<StripePerson>;
+  postAccountsAccountPersons?: Maybe<StripePerson>;
+  postAccountsAccountPersonsPerson?: Maybe<StripePerson>;
+  postAccountsAccountReject?: Maybe<StripeAccount>;
+  postApplePayDomains?: Maybe<StripeApplePayDomain>;
+  postApplicationFeesFeeRefundsId?: Maybe<StripeFeeRefund>;
+  postApplicationFeesIdRefund?: Maybe<StripeApplicationFee>;
+  postApplicationFeesIdRefunds?: Maybe<StripeFeeRefund>;
+  postAppsSecrets?: Maybe<StripeAppsSecret>;
+  postAppsSecretsDelete?: Maybe<StripeAppsSecret>;
+  postBillingPortalConfigurations?: Maybe<StripeBillingPortalConfiguration>;
+  postBillingPortalConfigurationsConfiguration?: Maybe<StripeBillingPortalConfiguration>;
+  postBillingPortalSessions?: Maybe<StripeBillingPortalSession>;
+  postCharges?: Maybe<StripeCharge>;
+  postChargesCharge?: Maybe<StripeCharge>;
+  postChargesChargeCapture?: Maybe<StripeCharge>;
+  postChargesChargeDispute?: Maybe<StripeDispute>;
+  postChargesChargeDisputeClose?: Maybe<StripeDispute>;
+  postChargesChargeRefund?: Maybe<StripeCharge>;
+  postChargesChargeRefunds?: Maybe<StripeRefund>;
+  postChargesChargeRefundsRefund?: Maybe<StripeRefund>;
+  postCheckoutSessions?: Maybe<StripeCheckoutSession>;
+  postCheckoutSessionsSessionExpire?: Maybe<StripeCheckoutSession>;
+  postCoupons?: Maybe<StripeCoupon>;
+  postCouponsCoupon?: Maybe<StripeCoupon>;
+  postCreditNotes?: Maybe<StripeCreditNote>;
+  postCreditNotesId?: Maybe<StripeCreditNote>;
+  postCreditNotesIdVoid?: Maybe<StripeCreditNote>;
+  postCustomers?: Maybe<StripeCustomer>;
+  postCustomersCustomer?: Maybe<StripeCustomer>;
+  postCustomersCustomerBalanceTransactions?: Maybe<StripeCustomerBalanceTransaction>;
+  postCustomersCustomerBalanceTransactionsTransaction?: Maybe<StripeCustomerBalanceTransaction>;
+  postCustomersCustomerBankAccounts?: Maybe<StripePaymentSource>;
+  postCustomersCustomerBankAccountsId?: Maybe<StripeSourceOrBankAccountOrCardUnion>;
+  postCustomersCustomerBankAccountsIdVerify?: Maybe<StripeBankAccount>;
+  postCustomersCustomerCards?: Maybe<StripePaymentSource>;
+  postCustomersCustomerCardsId?: Maybe<StripeSourceOrBankAccountOrCardUnion>;
+  postCustomersCustomerCashBalance?: Maybe<StripeCashBalance>;
+  postCustomersCustomerFundingInstructions?: Maybe<StripeFundingInstructions>;
+  postCustomersCustomerSources?: Maybe<StripePaymentSource>;
+  postCustomersCustomerSourcesId?: Maybe<StripeSourceOrBankAccountOrCardUnion>;
+  postCustomersCustomerSourcesIdVerify?: Maybe<StripeBankAccount>;
+  postCustomersCustomerSubscriptions?: Maybe<StripeSubscription>;
+  postCustomersCustomerSubscriptionsSubscriptionExposedId?: Maybe<StripeSubscription>;
+  postCustomersCustomerTaxIds?: Maybe<StripeTaxId>;
+  postDisputesDispute?: Maybe<StripeDispute>;
+  postDisputesDisputeClose?: Maybe<StripeDispute>;
+  postEphemeralKeys?: Maybe<StripeEphemeralKey>;
+  postFileLinks?: Maybe<StripeFileLink>;
+  postFileLinksLink?: Maybe<StripeFileLink>;
+  postFiles?: Maybe<StripeFile>;
+  postFinancialConnectionsAccountsAccountDisconnect?: Maybe<StripeFinancialConnectionsAccount>;
+  postFinancialConnectionsAccountsAccountRefresh?: Maybe<StripeFinancialConnectionsAccount>;
+  postFinancialConnectionsSessions?: Maybe<StripeFinancialConnectionsSession>;
+  postIdentityVerificationSessions?: Maybe<StripeIdentityVerificationSession>;
+  postIdentityVerificationSessionsSession?: Maybe<StripeIdentityVerificationSession>;
+  postIdentityVerificationSessionsSessionCancel?: Maybe<StripeIdentityVerificationSession>;
+  postIdentityVerificationSessionsSessionRedact?: Maybe<StripeIdentityVerificationSession>;
+  postInvoiceitems?: Maybe<StripeInvoiceitem>;
+  postInvoiceitemsInvoiceitem?: Maybe<StripeInvoiceitem>;
+  postInvoices?: Maybe<StripeInvoice>;
+  postInvoicesInvoice?: Maybe<StripeInvoice>;
+  postInvoicesInvoiceFinalize?: Maybe<StripeInvoice>;
+  postInvoicesInvoiceMarkUncollectible?: Maybe<StripeInvoice>;
+  postInvoicesInvoicePay?: Maybe<StripeInvoice>;
+  postInvoicesInvoiceSend?: Maybe<StripeInvoice>;
+  postInvoicesInvoiceVoid?: Maybe<StripeInvoice>;
+  postIssuingAuthorizationsAuthorization?: Maybe<StripeIssuingAuthorization>;
+  postIssuingAuthorizationsAuthorizationApprove?: Maybe<StripeIssuingAuthorization>;
+  postIssuingAuthorizationsAuthorizationDecline?: Maybe<StripeIssuingAuthorization>;
+  postIssuingCardholders?: Maybe<StripeIssuingCardholder>;
+  postIssuingCardholdersCardholder?: Maybe<StripeIssuingCardholder>;
+  postIssuingCards?: Maybe<StripeIssuingCard>;
+  postIssuingCardsCard?: Maybe<StripeIssuingCard>;
+  postIssuingDisputes?: Maybe<StripeIssuingDispute>;
+  postIssuingDisputesDispute?: Maybe<StripeIssuingDispute>;
+  postIssuingDisputesDisputeSubmit?: Maybe<StripeIssuingDispute>;
+  postIssuingSettlementsSettlement?: Maybe<StripeIssuingSettlement>;
+  postIssuingTransactionsTransaction?: Maybe<StripeIssuingTransaction>;
+  postLinkAccountSessions?: Maybe<StripeFinancialConnectionsSession>;
+  postLinkedAccountsAccountDisconnect?: Maybe<StripeFinancialConnectionsAccount>;
+  postLinkedAccountsAccountRefresh?: Maybe<StripeFinancialConnectionsAccount>;
+  postPaymentIntents?: Maybe<StripePaymentIntent>;
+  postPaymentIntentsIntent?: Maybe<StripePaymentIntent>;
+  postPaymentIntentsIntentApplyCustomerBalance?: Maybe<StripePaymentIntent>;
+  postPaymentIntentsIntentCancel?: Maybe<StripePaymentIntent>;
+  postPaymentIntentsIntentCapture?: Maybe<StripePaymentIntent>;
+  postPaymentIntentsIntentConfirm?: Maybe<StripePaymentIntent>;
+  postPaymentIntentsIntentIncrementAuthorization?: Maybe<StripePaymentIntent>;
+  postPaymentIntentsIntentVerifyMicrodeposits?: Maybe<StripePaymentIntent>;
+  postPaymentLinks?: Maybe<StripePaymentLink>;
+  postPaymentLinksPaymentLink?: Maybe<StripePaymentLink>;
+  postPaymentMethods?: Maybe<StripePaymentMethod>;
+  postPaymentMethodsPaymentMethod?: Maybe<StripePaymentMethod>;
+  postPaymentMethodsPaymentMethodAttach?: Maybe<StripePaymentMethod>;
+  postPaymentMethodsPaymentMethodDetach?: Maybe<StripePaymentMethod>;
+  postPayouts?: Maybe<StripePayout>;
+  postPayoutsPayout?: Maybe<StripePayout>;
+  postPayoutsPayoutCancel?: Maybe<StripePayout>;
+  postPayoutsPayoutReverse?: Maybe<StripePayout>;
+  postPlans?: Maybe<StripePlan>;
+  postPlansPlan?: Maybe<StripePlan>;
+  postPrices?: Maybe<StripePrice>;
+  postPricesPrice?: Maybe<StripePrice>;
+  postProducts?: Maybe<StripeProduct>;
+  postProductsId?: Maybe<StripeProduct>;
+  postPromotionCodes?: Maybe<StripePromotionCode>;
+  postPromotionCodesPromotionCode?: Maybe<StripePromotionCode>;
+  postQuotes?: Maybe<StripeQuote>;
+  postQuotesQuote?: Maybe<StripeQuote>;
+  postQuotesQuoteAccept?: Maybe<StripeQuote>;
+  postQuotesQuoteCancel?: Maybe<StripeQuote>;
+  postQuotesQuoteFinalize?: Maybe<StripeQuote>;
+  postRadarValueListItems?: Maybe<StripeRadarValueListItem>;
+  postRadarValueLists?: Maybe<StripeRadarValueList>;
+  postRadarValueListsValueList?: Maybe<StripeRadarValueList>;
+  postRefunds?: Maybe<StripeRefund>;
+  postRefundsRefund?: Maybe<StripeRefund>;
+  postRefundsRefundCancel?: Maybe<StripeRefund>;
+  postReportingReportRuns?: Maybe<StripeReportingReportRun>;
+  postReviewsReviewApprove?: Maybe<StripeReview>;
+  postSetupIntents?: Maybe<StripeSetupIntent>;
+  postSetupIntentsIntent?: Maybe<StripeSetupIntent>;
+  postSetupIntentsIntentCancel?: Maybe<StripeSetupIntent>;
+  postSetupIntentsIntentConfirm?: Maybe<StripeSetupIntent>;
+  postSetupIntentsIntentVerifyMicrodeposits?: Maybe<StripeSetupIntent>;
+  postShippingRates?: Maybe<StripeShippingRate>;
+  postShippingRatesShippingRateToken?: Maybe<StripeShippingRate>;
+  postSources?: Maybe<StripeSource>;
+  postSourcesSource?: Maybe<StripeSource>;
+  postSourcesSourceVerify?: Maybe<StripeSource>;
+  postSubscriptionItems?: Maybe<StripeSubscriptionItem>;
+  postSubscriptionItemsItem?: Maybe<StripeSubscriptionItem>;
+  postSubscriptionItemsSubscriptionItemUsageRecords?: Maybe<StripeUsageRecord>;
+  postSubscriptionSchedules?: Maybe<StripeSubscriptionSchedule>;
+  postSubscriptionSchedulesSchedule?: Maybe<StripeSubscriptionSchedule>;
+  postSubscriptionSchedulesScheduleCancel?: Maybe<StripeSubscriptionSchedule>;
+  postSubscriptionSchedulesScheduleRelease?: Maybe<StripeSubscriptionSchedule>;
+  postSubscriptions?: Maybe<StripeSubscription>;
+  postSubscriptionsSubscriptionExposedId?: Maybe<StripeSubscription>;
+  postSubscriptionsSubscriptionResume?: Maybe<StripeSubscription>;
+  postTaxCalculations?: Maybe<StripeTaxCalculation>;
+  postTaxRates?: Maybe<StripeTaxRate>;
+  postTaxRatesTaxRate?: Maybe<StripeTaxRate>;
+  postTaxTransactionsCreateFromCalculation?: Maybe<StripeTaxTransaction>;
+  postTaxTransactionsCreateReversal?: Maybe<StripeTaxTransaction>;
+  postTerminalConfigurations?: Maybe<StripeTerminalConfiguration>;
+  postTerminalConfigurationsConfiguration?: Maybe<StripeDeletedTerminalConfigurationOrTerminalConfigurationUnion>;
+  postTerminalConnectionTokens?: Maybe<StripeTerminalConnectionToken>;
+  postTerminalLocations?: Maybe<StripeTerminalLocation>;
+  postTerminalLocationsLocation?: Maybe<StripeDeletedTerminalLocationOrTerminalLocationUnion>;
+  postTerminalReaders?: Maybe<StripeTerminalReader>;
+  postTerminalReadersReader?: Maybe<StripeDeletedTerminalReaderOrTerminalReaderUnion>;
+  postTerminalReadersReaderCancelAction?: Maybe<StripeTerminalReader>;
+  postTerminalReadersReaderProcessPaymentIntent?: Maybe<StripeTerminalReader>;
+  postTerminalReadersReaderProcessSetupIntent?: Maybe<StripeTerminalReader>;
+  postTerminalReadersReaderRefundPayment?: Maybe<StripeTerminalReader>;
+  postTerminalReadersReaderSetReaderDisplay?: Maybe<StripeTerminalReader>;
+  postTestHelpersCustomersCustomerFundCashBalance?: Maybe<StripeCustomerCashBalanceTransaction>;
+  postTestHelpersIssuingCardsCardShippingDeliver?: Maybe<StripeIssuingCard>;
+  postTestHelpersIssuingCardsCardShippingFail?: Maybe<StripeIssuingCard>;
+  postTestHelpersIssuingCardsCardShippingReturn?: Maybe<StripeIssuingCard>;
+  postTestHelpersIssuingCardsCardShippingShip?: Maybe<StripeIssuingCard>;
+  postTestHelpersRefundsRefundExpire?: Maybe<StripeRefund>;
+  postTestHelpersTerminalReadersReaderPresentPaymentMethod?: Maybe<StripeTerminalReader>;
+  postTestHelpersTestClocks?: Maybe<StripeTestHelpersTestClock>;
+  postTestHelpersTestClocksTestClockAdvance?: Maybe<StripeTestHelpersTestClock>;
+  postTestHelpersTreasuryInboundTransfersIdFail?: Maybe<StripeTreasuryInboundTransfer>;
+  postTestHelpersTreasuryInboundTransfersIdReturn?: Maybe<StripeTreasuryInboundTransfer>;
+  postTestHelpersTreasuryInboundTransfersIdSucceed?: Maybe<StripeTreasuryInboundTransfer>;
+  postTestHelpersTreasuryOutboundPaymentsIdFail?: Maybe<StripeTreasuryOutboundPayment>;
+  postTestHelpersTreasuryOutboundPaymentsIdPost?: Maybe<StripeTreasuryOutboundPayment>;
+  postTestHelpersTreasuryOutboundPaymentsIdReturn?: Maybe<StripeTreasuryOutboundPayment>;
+  postTestHelpersTreasuryOutboundTransfersOutboundTransferFail?: Maybe<StripeTreasuryOutboundTransfer>;
+  postTestHelpersTreasuryOutboundTransfersOutboundTransferPost?: Maybe<StripeTreasuryOutboundTransfer>;
+  postTestHelpersTreasuryOutboundTransfersOutboundTransferReturn?: Maybe<StripeTreasuryOutboundTransfer>;
+  postTestHelpersTreasuryReceivedCredits?: Maybe<StripeTreasuryReceivedCredit>;
+  postTestHelpersTreasuryReceivedDebits?: Maybe<StripeTreasuryReceivedDebit>;
+  postTokens?: Maybe<StripeToken>;
+  postTopups?: Maybe<StripeTopup>;
+  postTopupsTopup?: Maybe<StripeTopup>;
+  postTopupsTopupCancel?: Maybe<StripeTopup>;
+  postTransfers?: Maybe<StripeTransfer>;
+  postTransfersIdReversals?: Maybe<StripeTransferReversal>;
+  postTransfersTransfer?: Maybe<StripeTransfer>;
+  postTransfersTransferReversalsId?: Maybe<StripeTransferReversal>;
+  postTreasuryCreditReversals?: Maybe<StripeTreasuryCreditReversal>;
+  postTreasuryDebitReversals?: Maybe<StripeTreasuryDebitReversal>;
+  postTreasuryFinancialAccounts?: Maybe<StripeTreasuryFinancialAccount>;
+  postTreasuryFinancialAccountsFinancialAccount?: Maybe<StripeTreasuryFinancialAccount>;
+  postTreasuryFinancialAccountsFinancialAccountFeatures?: Maybe<StripeTreasuryFinancialAccountFeatures>;
+  postTreasuryInboundTransfers?: Maybe<StripeTreasuryInboundTransfer>;
+  postTreasuryInboundTransfersInboundTransferCancel?: Maybe<StripeTreasuryInboundTransfer>;
+  postTreasuryOutboundPayments?: Maybe<StripeTreasuryOutboundPayment>;
+  postTreasuryOutboundPaymentsIdCancel?: Maybe<StripeTreasuryOutboundPayment>;
+  postTreasuryOutboundTransfers?: Maybe<StripeTreasuryOutboundTransfer>;
+  postTreasuryOutboundTransfersOutboundTransferCancel?: Maybe<StripeTreasuryOutboundTransfer>;
+  postWebhookEndpoints?: Maybe<StripeWebhookEndpoint>;
+  postWebhookEndpointsWebhookEndpoint?: Maybe<StripeWebhookEndpoint>;
 };
 
 
@@ -11591,6 +11664,7 @@ export type StripePaymentIntentPaymentMethodOptions = {
   oxxo?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsOxxoUnion>;
   p24?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsP24Union>;
   paynow?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPaynowUnion>;
+  paypal?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPaypalUnion>;
   pix?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPixUnion>;
   promptpay?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPromptpayUnion>;
   sepaDebit?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIntentPaymentMethodOptionsSepaDebitUnion>;
@@ -11840,6 +11914,8 @@ export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMe
 
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPaynowUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsPaynow;
 
+export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPaypalUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsPaypal;
+
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPixUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsPix;
 
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsPromptpayUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsPromptpay;
@@ -11948,6 +12024,7 @@ export enum StripePaymentLinkPaymentMethodTypes {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -12373,8 +12450,8 @@ export type StripePaymentMethod = {
   blik?: Maybe<Scalars['JSON']>;
   boleto?: Maybe<StripePaymentMethodBoleto>;
   card?: Maybe<StripePaymentMethodCard>;
-  cardPresent?: Maybe<Scalars['JSON']>;
-  cashapp?: Maybe<Scalars['JSON']>;
+  cardPresent?: Maybe<StripePaymentMethodCardPresent>;
+  cashapp?: Maybe<StripePaymentMethodCashapp>;
   created: Scalars['Int'];
   customer?: Maybe<StripeStringOrCustomerUnion>;
   customerBalance?: Maybe<Scalars['JSON']>;
@@ -12384,7 +12461,7 @@ export type StripePaymentMethod = {
   grabpay?: Maybe<Scalars['JSON']>;
   id: Scalars['String'];
   ideal?: Maybe<StripePaymentMethodIdeal>;
-  interacPresent?: Maybe<Scalars['JSON']>;
+  interacPresent?: Maybe<StripePaymentMethodInteracPresent>;
   klarna?: Maybe<StripePaymentMethodKlarna>;
   konbini?: Maybe<Scalars['JSON']>;
   link?: Maybe<StripePaymentMethodLink>;
@@ -12394,6 +12471,7 @@ export type StripePaymentMethod = {
   oxxo?: Maybe<Scalars['JSON']>;
   p24?: Maybe<StripePaymentMethodP24>;
   paynow?: Maybe<Scalars['JSON']>;
+  paypal?: Maybe<StripePaymentMethodPaypal>;
   pix?: Maybe<Scalars['JSON']>;
   promptpay?: Maybe<Scalars['JSON']>;
   radarOptions?: Maybe<StripeRadarRadarOptions>;
@@ -12462,12 +12540,41 @@ export type StripePaymentMethodCardGeneratedCard = {
   setupAttempt?: Maybe<StripeStringOrSetupAttemptUnion>;
 };
 
+export type StripePaymentMethodCardPresent = {
+  __typename?: 'StripePaymentMethodCardPresent';
+  brand?: Maybe<Scalars['String']>;
+  cardholderName?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  expMonth: Scalars['Int'];
+  expYear: Scalars['Int'];
+  fingerprint?: Maybe<Scalars['String']>;
+  funding?: Maybe<Scalars['String']>;
+  last4?: Maybe<Scalars['String']>;
+  networks?: Maybe<StripePaymentMethodCardPresentNetworks>;
+  readMethod?: Maybe<StripePaymentMethodCardPresentReadMethod>;
+};
+
+export type StripePaymentMethodCardPresentNetworks = {
+  __typename?: 'StripePaymentMethodCardPresentNetworks';
+  available: Array<Scalars['String']>;
+  preferred?: Maybe<Scalars['String']>;
+};
+
+export enum StripePaymentMethodCardPresentReadMethod {
+  ContactlessEmv = 'CONTACTLESS_EMV',
+  ContactlessMagstripeMode = 'CONTACTLESS_MAGSTRIPE_MODE',
+  ContactEmv = 'CONTACT_EMV',
+  MagneticStripeFallback = 'MAGNETIC_STRIPE_FALLBACK',
+  MagneticStripeTrack_2 = 'MAGNETIC_STRIPE_TRACK_2'
+}
+
 export type StripePaymentMethodCardWallet = {
   __typename?: 'StripePaymentMethodCardWallet';
   amexExpressCheckout?: Maybe<Scalars['JSON']>;
   applePay?: Maybe<Scalars['JSON']>;
   dynamicLast4?: Maybe<Scalars['String']>;
   googlePay?: Maybe<Scalars['JSON']>;
+  link?: Maybe<Scalars['JSON']>;
   masterpass?: Maybe<StripePaymentMethodCardWalletMasterpass>;
   samsungPay?: Maybe<Scalars['JSON']>;
   type: StripePaymentMethodCardWalletType;
@@ -12500,6 +12607,12 @@ export type StripePaymentMethodCardWalletVisaCheckout = {
   shippingAddress?: Maybe<StripeAddress>;
 };
 
+export type StripePaymentMethodCashapp = {
+  __typename?: 'StripePaymentMethodCashapp';
+  buyerId?: Maybe<Scalars['String']>;
+  cashtag?: Maybe<Scalars['String']>;
+};
+
 export type StripePaymentMethodDetails = {
   __typename?: 'StripePaymentMethodDetails';
   achCreditTransfer?: Maybe<StripePaymentMethodDetailsAchCreditTransfer>;
@@ -12515,7 +12628,7 @@ export type StripePaymentMethodDetails = {
   boleto?: Maybe<StripePaymentMethodDetailsBoleto>;
   card?: Maybe<StripePaymentMethodDetailsCard>;
   cardPresent?: Maybe<StripePaymentMethodDetailsCardPresent>;
-  cashapp?: Maybe<Scalars['JSON']>;
+  cashapp?: Maybe<StripePaymentMethodDetailsCashapp>;
   customerBalance?: Maybe<Scalars['JSON']>;
   eps?: Maybe<StripePaymentMethodDetailsEps>;
   fpx?: Maybe<StripePaymentMethodDetailsFpx>;
@@ -12530,6 +12643,7 @@ export type StripePaymentMethodDetails = {
   oxxo?: Maybe<StripePaymentMethodDetailsOxxo>;
   p24?: Maybe<StripePaymentMethodDetailsP24>;
   paynow?: Maybe<StripePaymentMethodDetailsPaynow>;
+  paypal?: Maybe<StripePaymentMethodDetailsPaypal>;
   pix?: Maybe<StripePaymentMethodDetailsPix>;
   promptpay?: Maybe<StripePaymentMethodDetailsPromptpay>;
   sepaDebit?: Maybe<StripePaymentMethodDetailsSepaDebit>;
@@ -12632,6 +12746,7 @@ export type StripePaymentMethodDetailsCard = {
   last4?: Maybe<Scalars['String']>;
   mandate?: Maybe<Scalars['String']>;
   network?: Maybe<Scalars['String']>;
+  networkToken?: Maybe<StripePaymentMethodDetailsCardNetworkToken>;
   threeDSecure?: Maybe<StripeThreeDSecureDetails>;
   wallet?: Maybe<StripePaymentMethodDetailsCardWallet>;
 };
@@ -12662,6 +12777,11 @@ export enum StripePaymentMethodDetailsCardInstallmentsPlanInterval {
 export enum StripePaymentMethodDetailsCardInstallmentsPlanType {
   FixedCount = 'FIXED_COUNT'
 }
+
+export type StripePaymentMethodDetailsCardNetworkToken = {
+  __typename?: 'StripePaymentMethodDetailsCardNetworkToken';
+  used: Scalars['Boolean'];
+};
 
 export type StripePaymentMethodDetailsCardPresent = {
   __typename?: 'StripePaymentMethodDetailsCardPresent';
@@ -12718,6 +12838,7 @@ export type StripePaymentMethodDetailsCardWallet = {
   applePay?: Maybe<Scalars['JSON']>;
   dynamicLast4?: Maybe<Scalars['String']>;
   googlePay?: Maybe<Scalars['JSON']>;
+  link?: Maybe<Scalars['JSON']>;
   masterpass?: Maybe<StripePaymentMethodDetailsCardWalletMasterpass>;
   samsungPay?: Maybe<Scalars['JSON']>;
   type: StripePaymentMethodDetailsCardWalletType;
@@ -12748,6 +12869,12 @@ export type StripePaymentMethodDetailsCardWalletVisaCheckout = {
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   shippingAddress?: Maybe<StripeAddress>;
+};
+
+export type StripePaymentMethodDetailsCashapp = {
+  __typename?: 'StripePaymentMethodDetailsCashapp';
+  buyerId?: Maybe<Scalars['String']>;
+  cashtag?: Maybe<Scalars['String']>;
 };
 
 export type StripePaymentMethodDetailsEps = {
@@ -13000,6 +13127,15 @@ export type StripePaymentMethodDetailsPaynow = {
   reference?: Maybe<Scalars['String']>;
 };
 
+export type StripePaymentMethodDetailsPaypal = {
+  __typename?: 'StripePaymentMethodDetailsPaypal';
+  payerEmail?: Maybe<Scalars['String']>;
+  payerId?: Maybe<Scalars['String']>;
+  payerName?: Maybe<Scalars['String']>;
+  sellerProtection?: Maybe<StripePaypalSellerProtection>;
+  transactionId?: Maybe<Scalars['String']>;
+};
+
 export type StripePaymentMethodDetailsPix = {
   __typename?: 'StripePaymentMethodDetailsPix';
   bankTransactionId?: Maybe<Scalars['String']>;
@@ -13174,6 +13310,29 @@ export enum StripePaymentMethodIdealBic {
   Revolt21 = 'REVOLT21',
   Snsbnl2A = 'SNSBNL2A',
   Trionl2U = 'TRIONL2U'
+}
+
+export type StripePaymentMethodInteracPresent = {
+  __typename?: 'StripePaymentMethodInteracPresent';
+  brand?: Maybe<Scalars['String']>;
+  cardholderName?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  expMonth: Scalars['Int'];
+  expYear: Scalars['Int'];
+  fingerprint?: Maybe<Scalars['String']>;
+  funding?: Maybe<Scalars['String']>;
+  last4?: Maybe<Scalars['String']>;
+  networks?: Maybe<StripePaymentMethodCardPresentNetworks>;
+  preferredLocales?: Maybe<Array<Scalars['String']>>;
+  readMethod?: Maybe<StripePaymentMethodInteracPresentReadMethod>;
+};
+
+export enum StripePaymentMethodInteracPresentReadMethod {
+  ContactlessEmv = 'CONTACTLESS_EMV',
+  ContactlessMagstripeMode = 'CONTACTLESS_MAGSTRIPE_MODE',
+  ContactEmv = 'CONTACT_EMV',
+  MagneticStripeFallback = 'MAGNETIC_STRIPE_FALLBACK',
+  MagneticStripeTrack_2 = 'MAGNETIC_STRIPE_TRACK_2'
 }
 
 export type StripePaymentMethodKlarna = {
@@ -13475,6 +13634,23 @@ export enum StripePaymentMethodOptionsPaynowSetupFutureUsage {
   None = 'NONE'
 }
 
+export type StripePaymentMethodOptionsPaypal = {
+  __typename?: 'StripePaymentMethodOptionsPaypal';
+  captureMethod?: Maybe<StripePaymentMethodOptionsPaypalCaptureMethod>;
+  preferredLocale?: Maybe<Scalars['String']>;
+  reference?: Maybe<Scalars['String']>;
+  setupFutureUsage?: Maybe<StripePaymentMethodOptionsPaypalSetupFutureUsage>;
+};
+
+export enum StripePaymentMethodOptionsPaypalCaptureMethod {
+  Manual = 'MANUAL'
+}
+
+export enum StripePaymentMethodOptionsPaypalSetupFutureUsage {
+  None = 'NONE',
+  OffSession = 'OFF_SESSION'
+}
+
 export type StripePaymentMethodOptionsPix = {
   __typename?: 'StripePaymentMethodOptionsPix';
   expiresAfterSeconds?: Maybe<Scalars['Int']>;
@@ -13566,6 +13742,11 @@ export enum StripePaymentMethodP24Bank {
   VolkswagenBank = 'VOLKSWAGEN_BANK'
 }
 
+export type StripePaymentMethodPaypal = {
+  __typename?: 'StripePaymentMethodPaypal';
+  payerId?: Maybe<Scalars['String']>;
+};
+
 export type StripePaymentMethodSepaDebit = {
   __typename?: 'StripePaymentMethodSepaDebit';
   bankCode?: Maybe<Scalars['String']>;
@@ -13606,6 +13787,7 @@ export enum StripePaymentMethodType {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -14218,6 +14400,23 @@ export enum StripePayoutType {
   Card = 'CARD'
 }
 
+export type StripePaypalSellerProtection = {
+  __typename?: 'StripePaypalSellerProtection';
+  disputeCategories?: Maybe<Array<StripePaypalSellerProtectionDisputeCategories>>;
+  status: StripePaypalSellerProtectionStatus;
+};
+
+export enum StripePaypalSellerProtectionDisputeCategories {
+  Fraudulent = 'FRAUDULENT',
+  ProductNotReceived = 'PRODUCT_NOT_RECEIVED'
+}
+
+export enum StripePaypalSellerProtectionStatus {
+  Eligible = 'ELIGIBLE',
+  NotEligible = 'NOT_ELIGIBLE',
+  PartiallyEligible = 'PARTIALLY_ELIGIBLE'
+}
+
 export type StripePeriod = {
   __typename?: 'StripePeriod';
   end?: Maybe<Scalars['Int']>;
@@ -14422,6 +14621,8 @@ export type StripePortalFlowsFlow = {
   __typename?: 'StripePortalFlowsFlow';
   afterCompletion: StripePortalFlowsFlowAfterCompletion;
   subscriptionCancel?: Maybe<StripePortalFlowsFlowSubscriptionCancel>;
+  subscriptionUpdate?: Maybe<StripePortalFlowsFlowSubscriptionUpdate>;
+  subscriptionUpdateConfirm?: Maybe<StripePortalFlowsFlowSubscriptionUpdateConfirm>;
   type: StripePortalFlowsFlowType;
 };
 
@@ -14443,10 +14644,37 @@ export type StripePortalFlowsFlowSubscriptionCancel = {
   subscription: Scalars['String'];
 };
 
+export type StripePortalFlowsFlowSubscriptionUpdate = {
+  __typename?: 'StripePortalFlowsFlowSubscriptionUpdate';
+  subscription: Scalars['String'];
+};
+
+export type StripePortalFlowsFlowSubscriptionUpdateConfirm = {
+  __typename?: 'StripePortalFlowsFlowSubscriptionUpdateConfirm';
+  discounts?: Maybe<Array<StripePortalFlowsSubscriptionUpdateConfirmDiscount>>;
+  items: Array<StripePortalFlowsSubscriptionUpdateConfirmItem>;
+  subscription: Scalars['String'];
+};
+
 export enum StripePortalFlowsFlowType {
   PaymentMethodUpdate = 'PAYMENT_METHOD_UPDATE',
-  SubscriptionCancel = 'SUBSCRIPTION_CANCEL'
+  SubscriptionCancel = 'SUBSCRIPTION_CANCEL',
+  SubscriptionUpdate = 'SUBSCRIPTION_UPDATE',
+  SubscriptionUpdateConfirm = 'SUBSCRIPTION_UPDATE_CONFIRM'
 }
+
+export type StripePortalFlowsSubscriptionUpdateConfirmDiscount = {
+  __typename?: 'StripePortalFlowsSubscriptionUpdateConfirmDiscount';
+  coupon?: Maybe<Scalars['String']>;
+  promotionCode?: Maybe<Scalars['String']>;
+};
+
+export type StripePortalFlowsSubscriptionUpdateConfirmItem = {
+  __typename?: 'StripePortalFlowsSubscriptionUpdateConfirmItem';
+  id?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['String']>;
+  quantity?: Maybe<Scalars['Int']>;
+};
 
 export type StripePortalInvoiceList = {
   __typename?: 'StripePortalInvoiceList';
@@ -16476,9 +16704,16 @@ export type StripePostBillingPortalSessionsAfterCompletionFlowDataInput = {
   type: StripePostBillingPortalSessionsTypeAfterCompletionFlowData;
 };
 
+export type StripePostBillingPortalSessionsDiscountsSubscriptionUpdateConfirmFlowDataInput = {
+  coupon?: InputMaybe<Scalars['String']>;
+  promotionCode?: InputMaybe<Scalars['String']>;
+};
+
 export type StripePostBillingPortalSessionsFlowDataInput = {
   afterCompletion?: InputMaybe<StripePostBillingPortalSessionsAfterCompletionFlowDataInput>;
   subscriptionCancel?: InputMaybe<StripePostBillingPortalSessionsSubscriptionCancelFlowDataInput>;
+  subscriptionUpdate?: InputMaybe<StripePostBillingPortalSessionsSubscriptionUpdateFlowDataInput>;
+  subscriptionUpdateConfirm?: InputMaybe<StripePostBillingPortalSessionsSubscriptionUpdateConfirmFlowDataInput>;
   type: StripePostBillingPortalSessionsTypeFlowData;
 };
 
@@ -16494,6 +16729,12 @@ export type StripePostBillingPortalSessionsInput = {
   locale?: InputMaybe<StripePostBillingPortalSessionsLocale>;
   onBehalfOf?: InputMaybe<Scalars['String']>;
   returnUrl?: InputMaybe<Scalars['String']>;
+};
+
+export type StripePostBillingPortalSessionsItemsSubscriptionUpdateConfirmFlowDataInput = {
+  id: Scalars['String'];
+  price?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Int']>;
 };
 
 export enum StripePostBillingPortalSessionsLocale {
@@ -16554,6 +16795,16 @@ export type StripePostBillingPortalSessionsSubscriptionCancelFlowDataInput = {
   subscription: Scalars['String'];
 };
 
+export type StripePostBillingPortalSessionsSubscriptionUpdateConfirmFlowDataInput = {
+  discounts?: InputMaybe<Array<StripePostBillingPortalSessionsDiscountsSubscriptionUpdateConfirmFlowDataInput>>;
+  items: Array<StripePostBillingPortalSessionsItemsSubscriptionUpdateConfirmFlowDataInput>;
+  subscription: Scalars['String'];
+};
+
+export type StripePostBillingPortalSessionsSubscriptionUpdateFlowDataInput = {
+  subscription: Scalars['String'];
+};
+
 export enum StripePostBillingPortalSessionsTypeAfterCompletionFlowData {
   HostedConfirmation = 'HOSTED_CONFIRMATION',
   PortalHomepage = 'PORTAL_HOMEPAGE',
@@ -16562,7 +16813,9 @@ export enum StripePostBillingPortalSessionsTypeAfterCompletionFlowData {
 
 export enum StripePostBillingPortalSessionsTypeFlowData {
   PaymentMethodUpdate = 'PAYMENT_METHOD_UPDATE',
-  SubscriptionCancel = 'SUBSCRIPTION_CANCEL'
+  SubscriptionCancel = 'SUBSCRIPTION_CANCEL',
+  SubscriptionUpdate = 'SUBSCRIPTION_UPDATE',
+  SubscriptionUpdateConfirm = 'SUBSCRIPTION_UPDATE_CONFIRM'
 }
 
 export type StripePostChargesAddressShippingInput = {
@@ -17444,6 +17697,7 @@ export type StripePostCheckoutSessionsPaymentMethodOptionsInput = {
   oxxo?: InputMaybe<StripePostCheckoutSessionsOxxoPaymentMethodOptionsInput>;
   p24?: InputMaybe<StripePostCheckoutSessionsP24PaymentMethodOptionsInput>;
   paynow?: InputMaybe<StripePostCheckoutSessionsPaynowPaymentMethodOptionsInput>;
+  paypal?: InputMaybe<StripePostCheckoutSessionsPaypalPaymentMethodOptionsInput>;
   pix?: InputMaybe<StripePostCheckoutSessionsPixPaymentMethodOptionsInput>;
   sepaDebit?: InputMaybe<StripePostCheckoutSessionsSepaDebitPaymentMethodOptionsInput>;
   sofort?: InputMaybe<StripePostCheckoutSessionsSofortPaymentMethodOptionsInput>;
@@ -17474,6 +17728,7 @@ export enum StripePostCheckoutSessionsPaymentMethodTypes {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -17493,6 +17748,14 @@ export type StripePostCheckoutSessionsPaynowPaymentMethodOptionsInput = {
   setupFutureUsage?: InputMaybe<StripePostCheckoutSessionsSetupFutureUsagePaynowPaymentMethodOptions>;
 };
 
+export type StripePostCheckoutSessionsPaypalPaymentMethodOptionsInput = {
+  captureMethod?: InputMaybe<Scalars['String']>;
+  preferredLocale?: InputMaybe<StripePostCheckoutSessionsPreferredLocalePaypalPaymentMethodOptions>;
+  reference?: InputMaybe<Scalars['String']>;
+  riskCorrelationId?: InputMaybe<Scalars['String']>;
+  setupFutureUsage?: InputMaybe<Scalars['String']>;
+};
+
 export enum StripePostCheckoutSessionsPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
   Balances = 'BALANCES',
   Ownership = 'OWNERSHIP',
@@ -17507,6 +17770,30 @@ export type StripePostCheckoutSessionsPhoneNumberCollectionInput = {
 export type StripePostCheckoutSessionsPixPaymentMethodOptionsInput = {
   expiresAfterSeconds?: InputMaybe<Scalars['Int']>;
 };
+
+export enum StripePostCheckoutSessionsPreferredLocalePaypalPaymentMethodOptions {
+  CsCz = 'CS_CZ',
+  DaDk = 'DA_DK',
+  DeAt = 'DE_AT',
+  DeDe = 'DE_DE',
+  DeLu = 'DE_LU',
+  ElGr = 'EL_GR',
+  EnGb = 'EN_GB',
+  EnUs = 'EN_US',
+  EsEs = 'ES_ES',
+  FiFi = 'FI_FI',
+  FrBe = 'FR_BE',
+  FrFr = 'FR_FR',
+  FrLu = 'FR_LU',
+  HuHu = 'HU_HU',
+  ItIt = 'IT_IT',
+  NlBe = 'NL_BE',
+  NlNl = 'NL_NL',
+  PlPl = 'PL_PL',
+  PtPt = 'PT_PT',
+  SkSk = 'SK_SK',
+  SvSe = 'SV_SE'
+}
 
 export type StripePostCheckoutSessionsPriceDataLineItemsInput = {
   currency: Scalars['String'];
@@ -25220,6 +25507,7 @@ export type StripePostPaymentIntentsIntentConfirmPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostPaymentIntentsIntentConfirmP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostPaymentIntentsIntentConfirmRadarOptionsPaymentMethodDataInput>;
@@ -25256,6 +25544,7 @@ export type StripePostPaymentIntentsIntentConfirmPaymentMethodOptionsInput = {
   oxxo?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmOxxoPaymentMethodOptionsUnionInput>;
   p24?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmP24PaymentMethodOptionsUnionInput>;
   paynow?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmPaynowPaymentMethodOptionsUnionInput>;
+  paypal?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmPaypalPaymentMethodOptionsUnionInput>;
   pix?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmPixPaymentMethodOptionsUnionInput>;
   promptpay?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmPromptpayPaymentMethodOptionsUnionInput>;
   sepaDebit?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmSepaDebitPaymentMethodOptionsUnionInput>;
@@ -25272,6 +25561,14 @@ export enum StripePostPaymentIntentsIntentConfirmPaymentScheduleMandateOptionsAc
 
 export type StripePostPaymentIntentsIntentConfirmPaynowPaymentMethodOptionsInput = {
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsIntentConfirmSetupFutureUsagePaynowPaymentMethodOptions>;
+};
+
+export type StripePostPaymentIntentsIntentConfirmPaypalPaymentMethodOptionsInput = {
+  captureMethod?: InputMaybe<Scalars['String']>;
+  preferredLocale?: InputMaybe<StripePostPaymentIntentsIntentConfirmPreferredLocalePaypalPaymentMethodOptions>;
+  reference?: InputMaybe<Scalars['String']>;
+  riskCorrelationId?: InputMaybe<Scalars['String']>;
+  setupFutureUsage?: InputMaybe<Scalars['String']>;
 };
 
 export enum StripePostPaymentIntentsIntentConfirmPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
@@ -25344,6 +25641,30 @@ export enum StripePostPaymentIntentsIntentConfirmPreferredLocaleKlarnaPaymentMet
   PlPl = 'PL_PL',
   PtPt = 'PT_PT',
   SvFi = 'SV_FI',
+  SvSe = 'SV_SE'
+}
+
+export enum StripePostPaymentIntentsIntentConfirmPreferredLocalePaypalPaymentMethodOptions {
+  CsCz = 'CS_CZ',
+  DaDk = 'DA_DK',
+  DeAt = 'DE_AT',
+  DeDe = 'DE_DE',
+  DeLu = 'DE_LU',
+  ElGr = 'EL_GR',
+  EnGb = 'EN_GB',
+  EnUs = 'EN_US',
+  EsEs = 'ES_ES',
+  FiFi = 'FI_FI',
+  FrBe = 'FR_BE',
+  FrFr = 'FR_FR',
+  FrLu = 'FR_LU',
+  HuHu = 'HU_HU',
+  ItIt = 'IT_IT',
+  NlBe = 'NL_BE',
+  NlNl = 'NL_NL',
+  PlPl = 'PL_PL',
+  PtPt = 'PT_PT',
+  SkSk = 'SK_SK',
   SvSe = 'SV_SE'
 }
 
@@ -25505,6 +25826,7 @@ export enum StripePostPaymentIntentsIntentConfirmTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -25771,6 +26093,7 @@ export type StripePostPaymentIntentsIntentPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostPaymentIntentsIntentP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostPaymentIntentsIntentRadarOptionsPaymentMethodDataInput>;
@@ -25807,6 +26130,7 @@ export type StripePostPaymentIntentsIntentPaymentMethodOptionsInput = {
   oxxo?: InputMaybe<StripeStringOrPostPaymentIntentsIntentOxxoPaymentMethodOptionsUnionInput>;
   p24?: InputMaybe<StripeStringOrPostPaymentIntentsIntentP24PaymentMethodOptionsUnionInput>;
   paynow?: InputMaybe<StripeStringOrPostPaymentIntentsIntentPaynowPaymentMethodOptionsUnionInput>;
+  paypal?: InputMaybe<StripeStringOrPostPaymentIntentsIntentPaypalPaymentMethodOptionsUnionInput>;
   pix?: InputMaybe<StripeStringOrPostPaymentIntentsIntentPixPaymentMethodOptionsUnionInput>;
   promptpay?: InputMaybe<StripeStringOrPostPaymentIntentsIntentPromptpayPaymentMethodOptionsUnionInput>;
   sepaDebit?: InputMaybe<StripeStringOrPostPaymentIntentsIntentSepaDebitPaymentMethodOptionsUnionInput>;
@@ -25823,6 +26147,14 @@ export enum StripePostPaymentIntentsIntentPaymentScheduleMandateOptionsAcssDebit
 
 export type StripePostPaymentIntentsIntentPaynowPaymentMethodOptionsInput = {
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsIntentSetupFutureUsagePaynowPaymentMethodOptions>;
+};
+
+export type StripePostPaymentIntentsIntentPaypalPaymentMethodOptionsInput = {
+  captureMethod?: InputMaybe<Scalars['String']>;
+  preferredLocale?: InputMaybe<StripePostPaymentIntentsIntentPreferredLocalePaypalPaymentMethodOptions>;
+  reference?: InputMaybe<Scalars['String']>;
+  riskCorrelationId?: InputMaybe<Scalars['String']>;
+  setupFutureUsage?: InputMaybe<Scalars['String']>;
 };
 
 export enum StripePostPaymentIntentsIntentPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
@@ -25895,6 +26227,30 @@ export enum StripePostPaymentIntentsIntentPreferredLocaleKlarnaPaymentMethodOpti
   PlPl = 'PL_PL',
   PtPt = 'PT_PT',
   SvFi = 'SV_FI',
+  SvSe = 'SV_SE'
+}
+
+export enum StripePostPaymentIntentsIntentPreferredLocalePaypalPaymentMethodOptions {
+  CsCz = 'CS_CZ',
+  DaDk = 'DA_DK',
+  DeAt = 'DE_AT',
+  DeDe = 'DE_DE',
+  DeLu = 'DE_LU',
+  ElGr = 'EL_GR',
+  EnGb = 'EN_GB',
+  EnUs = 'EN_US',
+  EsEs = 'ES_ES',
+  FiFi = 'FI_FI',
+  FrBe = 'FR_BE',
+  FrFr = 'FR_FR',
+  FrLu = 'FR_LU',
+  HuHu = 'HU_HU',
+  ItIt = 'IT_IT',
+  NlBe = 'NL_BE',
+  NlNl = 'NL_NL',
+  PlPl = 'PL_PL',
+  PtPt = 'PT_PT',
+  SkSk = 'SK_SK',
   SvSe = 'SV_SE'
 }
 
@@ -26052,6 +26408,7 @@ export enum StripePostPaymentIntentsIntentTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -26227,6 +26584,7 @@ export type StripePostPaymentIntentsPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostPaymentIntentsP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostPaymentIntentsRadarOptionsPaymentMethodDataInput>;
@@ -26263,6 +26621,7 @@ export type StripePostPaymentIntentsPaymentMethodOptionsInput = {
   oxxo?: InputMaybe<StripeStringOrPostPaymentIntentsOxxoPaymentMethodOptionsUnionInput>;
   p24?: InputMaybe<StripeStringOrPostPaymentIntentsP24PaymentMethodOptionsUnionInput>;
   paynow?: InputMaybe<StripeStringOrPostPaymentIntentsPaynowPaymentMethodOptionsUnionInput>;
+  paypal?: InputMaybe<StripeStringOrPostPaymentIntentsPaypalPaymentMethodOptionsUnionInput>;
   pix?: InputMaybe<StripeStringOrPostPaymentIntentsPixPaymentMethodOptionsUnionInput>;
   promptpay?: InputMaybe<StripeStringOrPostPaymentIntentsPromptpayPaymentMethodOptionsUnionInput>;
   sepaDebit?: InputMaybe<StripeStringOrPostPaymentIntentsSepaDebitPaymentMethodOptionsUnionInput>;
@@ -26279,6 +26638,14 @@ export enum StripePostPaymentIntentsPaymentScheduleMandateOptionsAcssDebitPaymen
 
 export type StripePostPaymentIntentsPaynowPaymentMethodOptionsInput = {
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsSetupFutureUsagePaynowPaymentMethodOptions>;
+};
+
+export type StripePostPaymentIntentsPaypalPaymentMethodOptionsInput = {
+  captureMethod?: InputMaybe<Scalars['String']>;
+  preferredLocale?: InputMaybe<StripePostPaymentIntentsPreferredLocalePaypalPaymentMethodOptions>;
+  reference?: InputMaybe<Scalars['String']>;
+  riskCorrelationId?: InputMaybe<Scalars['String']>;
+  setupFutureUsage?: InputMaybe<Scalars['String']>;
 };
 
 export enum StripePostPaymentIntentsPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
@@ -26351,6 +26718,30 @@ export enum StripePostPaymentIntentsPreferredLocaleKlarnaPaymentMethodOptions {
   PlPl = 'PL_PL',
   PtPt = 'PT_PT',
   SvFi = 'SV_FI',
+  SvSe = 'SV_SE'
+}
+
+export enum StripePostPaymentIntentsPreferredLocalePaypalPaymentMethodOptions {
+  CsCz = 'CS_CZ',
+  DaDk = 'DA_DK',
+  DeAt = 'DE_AT',
+  DeDe = 'DE_DE',
+  DeLu = 'DE_LU',
+  ElGr = 'EL_GR',
+  EnGb = 'EN_GB',
+  EnUs = 'EN_US',
+  EsEs = 'ES_ES',
+  FiFi = 'FI_FI',
+  FrBe = 'FR_BE',
+  FrFr = 'FR_FR',
+  FrLu = 'FR_LU',
+  HuHu = 'HU_HU',
+  ItIt = 'IT_IT',
+  NlBe = 'NL_BE',
+  NlNl = 'NL_NL',
+  PlPl = 'PL_PL',
+  PtPt = 'PT_PT',
+  SkSk = 'SK_SK',
   SvSe = 'SV_SE'
 }
 
@@ -26523,6 +26914,7 @@ export enum StripePostPaymentIntentsTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -27342,6 +27734,7 @@ export enum StripePostPaymentLinksPaymentMethodTypes {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -27642,6 +28035,7 @@ export type StripePostPaymentMethodsInput = {
   p24?: InputMaybe<StripePostPaymentMethodsP24Input>;
   paymentMethod?: InputMaybe<Scalars['String']>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostPaymentMethodsRadarOptionsInput>;
@@ -27743,6 +28137,7 @@ export enum StripePostPaymentMethodsType {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -29754,6 +30149,7 @@ export type StripePostSetupIntentsIntentConfirmPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostSetupIntentsIntentConfirmP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostSetupIntentsIntentConfirmRadarOptionsPaymentMethodDataInput>;
@@ -29769,6 +30165,7 @@ export type StripePostSetupIntentsIntentConfirmPaymentMethodOptionsInput = {
   blik?: InputMaybe<StripePostSetupIntentsIntentConfirmBlikPaymentMethodOptionsInput>;
   card?: InputMaybe<StripePostSetupIntentsIntentConfirmCardPaymentMethodOptionsInput>;
   link?: InputMaybe<StripePostSetupIntentsIntentConfirmLinkPaymentMethodOptionsInput>;
+  paypal?: InputMaybe<StripePostSetupIntentsIntentConfirmPaypalPaymentMethodOptionsInput>;
   sepaDebit?: InputMaybe<StripePostSetupIntentsIntentConfirmSepaDebitPaymentMethodOptionsInput>;
   usBankAccount?: InputMaybe<StripePostSetupIntentsIntentConfirmUsBankAccountPaymentMethodOptionsInput>;
 };
@@ -29778,6 +30175,10 @@ export enum StripePostSetupIntentsIntentConfirmPaymentScheduleMandateOptionsAcss
   Interval = 'INTERVAL',
   Sporadic = 'SPORADIC'
 }
+
+export type StripePostSetupIntentsIntentConfirmPaypalPaymentMethodOptionsInput = {
+  billingAgreementId?: InputMaybe<Scalars['String']>;
+};
 
 export enum StripePostSetupIntentsIntentConfirmPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
   Balances = 'BALANCES',
@@ -29847,6 +30248,7 @@ export enum StripePostSetupIntentsIntentConfirmTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -30027,6 +30429,7 @@ export type StripePostSetupIntentsIntentPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostSetupIntentsIntentP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostSetupIntentsIntentRadarOptionsPaymentMethodDataInput>;
@@ -30042,6 +30445,7 @@ export type StripePostSetupIntentsIntentPaymentMethodOptionsInput = {
   blik?: InputMaybe<StripePostSetupIntentsIntentBlikPaymentMethodOptionsInput>;
   card?: InputMaybe<StripePostSetupIntentsIntentCardPaymentMethodOptionsInput>;
   link?: InputMaybe<StripePostSetupIntentsIntentLinkPaymentMethodOptionsInput>;
+  paypal?: InputMaybe<StripePostSetupIntentsIntentPaypalPaymentMethodOptionsInput>;
   sepaDebit?: InputMaybe<StripePostSetupIntentsIntentSepaDebitPaymentMethodOptionsInput>;
   usBankAccount?: InputMaybe<StripePostSetupIntentsIntentUsBankAccountPaymentMethodOptionsInput>;
 };
@@ -30051,6 +30455,10 @@ export enum StripePostSetupIntentsIntentPaymentScheduleMandateOptionsAcssDebitPa
   Interval = 'INTERVAL',
   Sporadic = 'SPORADIC'
 }
+
+export type StripePostSetupIntentsIntentPaypalPaymentMethodOptionsInput = {
+  billingAgreementId?: InputMaybe<Scalars['String']>;
+};
 
 export enum StripePostSetupIntentsIntentPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
   Balances = 'BALANCES',
@@ -30116,6 +30524,7 @@ export enum StripePostSetupIntentsIntentTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -30252,6 +30661,7 @@ export type StripePostSetupIntentsPaymentMethodDataInput = {
   oxxo?: InputMaybe<Scalars['JSON']>;
   p24?: InputMaybe<StripePostSetupIntentsP24PaymentMethodDataInput>;
   paynow?: InputMaybe<Scalars['JSON']>;
+  paypal?: InputMaybe<Scalars['JSON']>;
   pix?: InputMaybe<Scalars['JSON']>;
   promptpay?: InputMaybe<Scalars['JSON']>;
   radarOptions?: InputMaybe<StripePostSetupIntentsRadarOptionsPaymentMethodDataInput>;
@@ -30267,6 +30677,7 @@ export type StripePostSetupIntentsPaymentMethodOptionsInput = {
   blik?: InputMaybe<StripePostSetupIntentsBlikPaymentMethodOptionsInput>;
   card?: InputMaybe<StripePostSetupIntentsCardPaymentMethodOptionsInput>;
   link?: InputMaybe<StripePostSetupIntentsLinkPaymentMethodOptionsInput>;
+  paypal?: InputMaybe<StripePostSetupIntentsPaypalPaymentMethodOptionsInput>;
   sepaDebit?: InputMaybe<StripePostSetupIntentsSepaDebitPaymentMethodOptionsInput>;
   usBankAccount?: InputMaybe<StripePostSetupIntentsUsBankAccountPaymentMethodOptionsInput>;
 };
@@ -30276,6 +30687,10 @@ export enum StripePostSetupIntentsPaymentScheduleMandateOptionsAcssDebitPaymentM
   Interval = 'INTERVAL',
   Sporadic = 'SPORADIC'
 }
+
+export type StripePostSetupIntentsPaypalPaymentMethodOptionsInput = {
+  billingAgreementId?: InputMaybe<Scalars['String']>;
+};
 
 export enum StripePostSetupIntentsPermissionsFinancialConnectionsUsBankAccountPaymentMethodOptions {
   Balances = 'BALANCES',
@@ -30351,6 +30766,7 @@ export enum StripePostSetupIntentsTypePaymentMethodData {
   Link = 'LINK',
   Oxxo = 'OXXO',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Pix = 'PIX',
   Promptpay = 'PROMPTPAY',
   P_24 = 'P_24',
@@ -31986,6 +32402,8 @@ export type StripePostTaxRatesTaxRateInput = {
 };
 
 export enum StripePostTaxRatesTaxRateTaxType {
+  AmusementTax = 'AMUSEMENT_TAX',
+  CommunicationsTax = 'COMMUNICATIONS_TAX',
   Gst = 'GST',
   Hst = 'HST',
   Igst = 'IGST',
@@ -31999,6 +32417,8 @@ export enum StripePostTaxRatesTaxRateTaxType {
 }
 
 export enum StripePostTaxRatesTaxType {
+  AmusementTax = 'AMUSEMENT_TAX',
+  CommunicationsTax = 'COMMUNICATIONS_TAX',
   Gst = 'GST',
   Hst = 'HST',
   Igst = 'IGST',
@@ -33446,218 +33866,218 @@ export type StripePromotionCodesResourceRestrictions = {
 
 export type StripeQuery = {
   __typename?: 'StripeQuery';
-  account: StripeAccount;
-  accounts: StripeGetAccounts;
-  accountsAccount: StripeAccount;
-  accountsAccountBankAccountsId: StripeExternalAccount;
-  accountsAccountExternalAccounts: StripeGetAccountsAccountExternalAccounts;
-  accountsAccountExternalAccountsId: StripeExternalAccount;
-  accountsAccountPeople: StripeGetAccountsAccountPeople;
-  accountsAccountPeoplePerson: StripePerson;
-  accountsAccountPersons: StripeGetAccountsAccountPersons;
-  accountsAccountPersonsPerson: StripePerson;
-  applePayDomain: StripeApplePayDomain;
-  applePayDomains: StripeGetApplePayDomains;
-  applicationFee: StripeApplicationFee;
-  applicationFees: StripeGetApplicationFees;
-  appsSecret: StripeAppsSecret;
-  appsSecrets: StripeGetAppsSecrets;
-  balance: StripeBalance;
-  balanceHistory: StripeGetBalanceHistory;
-  balanceHistoryId: StripeBalanceTransaction;
-  balanceTransactions: StripeGetBalanceTransactions;
-  balanceTransactionsId: StripeBalanceTransaction;
-  bankAccount: StripeBankAccount;
-  bankAccounts: StripeGetCustomersCustomerBankAccounts;
-  billingPortalConfiguration: StripeBillingPortalConfiguration;
-  billingPortalConfigurations: StripeGetBillingPortalConfigurations;
-  capabilities: StripeGetAccountsAccountCapabilities;
-  capability: StripeCapability;
-  card: StripeCard;
-  cards: StripeGetCustomersCustomerCards;
-  cashBalance: StripeCashBalance;
-  charge: StripeCharge;
-  charges: StripeGetCharges;
-  chargesChargeDispute: StripeDispute;
-  chargesChargeRefunds: StripeGetChargesChargeRefunds;
-  chargesChargeRefundsRefund: StripeRefund;
-  chargesSearch: StripeGetChargesSearch;
-  checkoutSession: StripeCheckoutSession;
-  checkoutSessions: StripeGetCheckoutSessions;
-  checkoutSessionsSessionLineItems: StripeGetCheckoutSessionsSessionLineItems;
-  countrySpec: StripeCountrySpec;
-  countrySpecs: StripeGetCountrySpecs;
-  coupon: StripeCoupon;
-  coupons: StripeGetCoupons;
-  creditNotes: StripeGetCreditNotes;
-  creditNotesCreditNoteLines: StripeGetCreditNotesCreditNoteLines;
-  creditNotesId: StripeCreditNote;
-  creditNotesPreview: StripeCreditNote;
-  creditNotesPreviewLines: StripeGetCreditNotesPreviewLines;
-  customerBalanceTransaction: StripeCustomerBalanceTransaction;
-  customerBalanceTransactions: StripeGetCustomersCustomerBalanceTransactions;
-  customerCashBalanceTransaction: StripeCustomerCashBalanceTransaction;
-  customerCashBalanceTransactions: StripeGetCustomersCustomerCashBalanceTransactions;
-  customers: StripeGetCustomers;
-  customersCustomer: StripeDeletedCustomerOrCustomerUnion;
-  customersCustomerDiscount: StripeDiscount;
-  customersCustomerPaymentMethods: StripeGetCustomersCustomerPaymentMethods;
-  customersCustomerPaymentMethodsPaymentMethod: StripePaymentMethod;
-  customersCustomerSources: StripeGetCustomersCustomerSources;
-  customersCustomerSubscriptions: StripeGetCustomersCustomerSubscriptions;
-  customersCustomerSubscriptionsSubscriptionExposedId: StripeSubscription;
-  customersCustomerSubscriptionsSubscriptionExposedIdDiscount: StripeDiscount;
-  customersSearch: StripeGetCustomersSearch;
-  disputes: StripeGetDisputes;
-  disputesDispute: StripeDispute;
-  event: StripeEvent;
-  events: StripeGetEvents;
-  exchangeRate: StripeExchangeRate;
-  exchangeRates: StripeGetExchangeRates;
-  feeRefund: StripeFeeRefund;
-  feeRefunds: StripeGetApplicationFeesIdRefunds;
-  file: StripeFile;
-  fileLink: StripeFileLink;
-  fileLinks: StripeGetFileLinks;
-  files: StripeGetFiles;
-  financialConnectionsAccounts: StripeGetFinancialConnectionsAccounts;
-  financialConnectionsAccountsAccount: StripeFinancialConnectionsAccount;
-  financialConnectionsAccountsAccountOwners: StripeGetFinancialConnectionsAccountsAccountOwners;
-  financialConnectionsSessionsSession: StripeFinancialConnectionsSession;
-  identityVerificationReport: StripeIdentityVerificationReport;
-  identityVerificationReports: StripeGetIdentityVerificationReports;
-  identityVerificationSession: StripeIdentityVerificationSession;
-  identityVerificationSessions: StripeGetIdentityVerificationSessions;
-  invoiceitem: StripeInvoiceitem;
-  invoiceitems: StripeGetInvoiceitems;
-  invoices: StripeGetInvoices;
-  invoicesInvoice: StripeInvoice;
-  invoicesInvoiceLines: StripeGetInvoicesInvoiceLines;
-  invoicesSearch: StripeGetInvoicesSearch;
-  invoicesUpcoming: StripeInvoice;
-  invoicesUpcomingLines: StripeGetInvoicesUpcomingLines;
-  issuingAuthorization: StripeIssuingAuthorization;
-  issuingAuthorizations: StripeGetIssuingAuthorizations;
-  issuingCard: StripeIssuingCard;
-  issuingCardholder: StripeIssuingCardholder;
-  issuingCardholders: StripeGetIssuingCardholders;
-  issuingCards: StripeGetIssuingCards;
-  issuingDispute: StripeIssuingDispute;
-  issuingDisputes: StripeGetIssuingDisputes;
-  issuingSettlement: StripeIssuingSettlement;
-  issuingSettlements: StripeGetIssuingSettlements;
-  issuingTransaction: StripeIssuingTransaction;
-  issuingTransactions: StripeGetIssuingTransactions;
-  linkAccountSessionsSession: StripeFinancialConnectionsSession;
-  linkedAccounts: StripeGetLinkedAccounts;
-  linkedAccountsAccount: StripeFinancialConnectionsAccount;
-  linkedAccountsAccountOwners: StripeGetLinkedAccountsAccountOwners;
-  mandate: StripeMandate;
-  paymentIntent: StripePaymentIntent;
-  paymentIntents: StripeGetPaymentIntents;
-  paymentIntentsSearch: StripeGetPaymentIntentsSearch;
-  paymentLink: StripePaymentLink;
-  paymentLinks: StripeGetPaymentLinks;
-  paymentLinksPaymentLinkLineItems: StripeGetPaymentLinksPaymentLinkLineItems;
-  paymentMethods: StripeGetPaymentMethods;
-  paymentMethodsPaymentMethod: StripePaymentMethod;
-  paymentSource: StripePaymentSource;
-  payout: StripePayout;
-  payouts: StripeGetPayouts;
-  plan: StripePlan;
-  plans: StripeGetPlans;
-  price: StripePrice;
-  prices: StripeGetPrices;
-  pricesSearch: StripeGetPricesSearch;
-  product: StripeProduct;
-  products: StripeGetProducts;
-  productsSearch: StripeGetProductsSearch;
-  promotionCode: StripePromotionCode;
-  promotionCodes: StripeGetPromotionCodes;
-  quote: StripeQuote;
-  quotes: StripeGetQuotes;
-  quotesQuoteComputedUpfrontLineItems: StripeGetQuotesQuoteComputedUpfrontLineItems;
-  quotesQuoteLineItems: StripeGetQuotesQuoteLineItems;
-  radarEarlyFraudWarning: StripeRadarEarlyFraudWarning;
-  radarEarlyFraudWarnings: StripeGetRadarEarlyFraudWarnings;
-  radarValueList: StripeRadarValueList;
-  radarValueListItem: StripeRadarValueListItem;
-  radarValueListItems: StripeGetRadarValueListItems;
-  radarValueLists: StripeGetRadarValueLists;
-  refunds: StripeGetRefunds;
-  refundsRefund: StripeRefund;
-  reportingReportRun: StripeReportingReportRun;
-  reportingReportRuns: StripeGetReportingReportRuns;
-  reportingReportType: StripeReportingReportType;
-  reportingReportTypes: StripeGetReportingReportTypes;
-  review: StripeReview;
-  reviews: StripeGetReviews;
-  scheduledQueryRun: StripeScheduledQueryRun;
-  scheduledQueryRuns: StripeGetSigmaScheduledQueryRuns;
-  setupAttempts: StripeGetSetupAttempts;
-  setupIntent: StripeSetupIntent;
-  setupIntents: StripeGetSetupIntents;
-  shippingRate: StripeShippingRate;
-  shippingRates: StripeGetShippingRates;
-  source: StripeSource;
-  sourceMandateNotification: StripeSourceMandateNotification;
-  sourceTransaction: StripeSourceTransaction;
-  sourceTransactions: StripeGetSourcesSourceSourceTransactions;
-  subscriptionItem: StripeSubscriptionItem;
-  subscriptionItems: StripeGetSubscriptionItems;
-  subscriptionSchedule: StripeSubscriptionSchedule;
-  subscriptionSchedules: StripeGetSubscriptionSchedules;
-  subscriptions: StripeGetSubscriptions;
-  subscriptionsSearch: StripeGetSubscriptionsSearch;
-  subscriptionsSubscriptionExposedId: StripeSubscription;
-  taxCalculationLineItems: StripeGetTaxCalculationsCalculationLineItems;
-  taxCode: StripeTaxCode;
-  taxCodes: StripeGetTaxCodes;
-  taxId: StripeTaxId;
-  taxIds: StripeGetCustomersCustomerTaxIds;
-  taxRate: StripeTaxRate;
-  taxRates: StripeGetTaxRates;
-  taxTransaction: StripeTaxTransaction;
-  taxTransactionLineItems: StripeGetTaxTransactionsTransactionLineItems;
-  terminalConfigurations: StripeGetTerminalConfigurations;
-  terminalConfigurationsConfiguration: StripeDeletedTerminalConfigurationOrTerminalConfigurationUnion;
-  terminalLocations: StripeGetTerminalLocations;
-  terminalLocationsLocation: StripeDeletedTerminalLocationOrTerminalLocationUnion;
-  terminalReaders: StripeGetTerminalReaders;
-  terminalReadersReader: StripeDeletedTerminalReaderOrTerminalReaderUnion;
-  testHelpersTestClock: StripeTestHelpersTestClock;
-  testHelpersTestClocks: StripeGetTestHelpersTestClocks;
-  token: StripeToken;
-  topup: StripeTopup;
-  topups: StripeGetTopups;
-  transfer: StripeTransfer;
-  transferReversal: StripeTransferReversal;
-  transferReversals: StripeGetTransfersIdReversals;
-  transfers: StripeGetTransfers;
-  treasuryCreditReversal: StripeTreasuryCreditReversal;
-  treasuryCreditReversals: StripeGetTreasuryCreditReversals;
-  treasuryDebitReversal: StripeTreasuryDebitReversal;
-  treasuryDebitReversals: StripeGetTreasuryDebitReversals;
-  treasuryFinancialAccount: StripeTreasuryFinancialAccount;
-  treasuryFinancialAccountFeatures: StripeTreasuryFinancialAccountFeatures;
-  treasuryFinancialAccounts: StripeGetTreasuryFinancialAccounts;
-  treasuryInboundTransfer: StripeTreasuryInboundTransfer;
-  treasuryInboundTransfers: StripeGetTreasuryInboundTransfers;
-  treasuryOutboundPayment: StripeTreasuryOutboundPayment;
-  treasuryOutboundPayments: StripeGetTreasuryOutboundPayments;
-  treasuryOutboundTransfer: StripeTreasuryOutboundTransfer;
-  treasuryOutboundTransfers: StripeGetTreasuryOutboundTransfers;
-  treasuryReceivedCredit: StripeTreasuryReceivedCredit;
-  treasuryReceivedCredits: StripeGetTreasuryReceivedCredits;
-  treasuryReceivedDebit: StripeTreasuryReceivedDebit;
-  treasuryReceivedDebits: StripeGetTreasuryReceivedDebits;
-  treasuryTransaction: StripeTreasuryTransaction;
-  treasuryTransactionEntries: StripeGetTreasuryTransactionEntries;
-  treasuryTransactionEntry: StripeTreasuryTransactionEntry;
-  treasuryTransactions: StripeGetTreasuryTransactions;
-  usageRecordSummaries: StripeGetSubscriptionItemsSubscriptionItemUsageRecordSummaries;
-  webhookEndpoint: StripeWebhookEndpoint;
-  webhookEndpoints: StripeGetWebhookEndpoints;
+  account?: Maybe<StripeAccount>;
+  accounts?: Maybe<StripeGetAccounts>;
+  accountsAccount?: Maybe<StripeAccount>;
+  accountsAccountBankAccountsId?: Maybe<StripeExternalAccount>;
+  accountsAccountExternalAccounts?: Maybe<StripeGetAccountsAccountExternalAccounts>;
+  accountsAccountExternalAccountsId?: Maybe<StripeExternalAccount>;
+  accountsAccountPeople?: Maybe<StripeGetAccountsAccountPeople>;
+  accountsAccountPeoplePerson?: Maybe<StripePerson>;
+  accountsAccountPersons?: Maybe<StripeGetAccountsAccountPersons>;
+  accountsAccountPersonsPerson?: Maybe<StripePerson>;
+  applePayDomain?: Maybe<StripeApplePayDomain>;
+  applePayDomains?: Maybe<StripeGetApplePayDomains>;
+  applicationFee?: Maybe<StripeApplicationFee>;
+  applicationFees?: Maybe<StripeGetApplicationFees>;
+  appsSecret?: Maybe<StripeAppsSecret>;
+  appsSecrets?: Maybe<StripeGetAppsSecrets>;
+  balance?: Maybe<StripeBalance>;
+  balanceHistory?: Maybe<StripeGetBalanceHistory>;
+  balanceHistoryId?: Maybe<StripeBalanceTransaction>;
+  balanceTransactions?: Maybe<StripeGetBalanceTransactions>;
+  balanceTransactionsId?: Maybe<StripeBalanceTransaction>;
+  bankAccount?: Maybe<StripeBankAccount>;
+  bankAccounts?: Maybe<StripeGetCustomersCustomerBankAccounts>;
+  billingPortalConfiguration?: Maybe<StripeBillingPortalConfiguration>;
+  billingPortalConfigurations?: Maybe<StripeGetBillingPortalConfigurations>;
+  capabilities?: Maybe<StripeGetAccountsAccountCapabilities>;
+  capability?: Maybe<StripeCapability>;
+  card?: Maybe<StripeCard>;
+  cards?: Maybe<StripeGetCustomersCustomerCards>;
+  cashBalance?: Maybe<StripeCashBalance>;
+  charge?: Maybe<StripeCharge>;
+  charges?: Maybe<StripeGetCharges>;
+  chargesChargeDispute?: Maybe<StripeDispute>;
+  chargesChargeRefunds?: Maybe<StripeGetChargesChargeRefunds>;
+  chargesChargeRefundsRefund?: Maybe<StripeRefund>;
+  chargesSearch?: Maybe<StripeGetChargesSearch>;
+  checkoutSession?: Maybe<StripeCheckoutSession>;
+  checkoutSessions?: Maybe<StripeGetCheckoutSessions>;
+  checkoutSessionsSessionLineItems?: Maybe<StripeGetCheckoutSessionsSessionLineItems>;
+  countrySpec?: Maybe<StripeCountrySpec>;
+  countrySpecs?: Maybe<StripeGetCountrySpecs>;
+  coupon?: Maybe<StripeCoupon>;
+  coupons?: Maybe<StripeGetCoupons>;
+  creditNotes?: Maybe<StripeGetCreditNotes>;
+  creditNotesCreditNoteLines?: Maybe<StripeGetCreditNotesCreditNoteLines>;
+  creditNotesId?: Maybe<StripeCreditNote>;
+  creditNotesPreview?: Maybe<StripeCreditNote>;
+  creditNotesPreviewLines?: Maybe<StripeGetCreditNotesPreviewLines>;
+  customerBalanceTransaction?: Maybe<StripeCustomerBalanceTransaction>;
+  customerBalanceTransactions?: Maybe<StripeGetCustomersCustomerBalanceTransactions>;
+  customerCashBalanceTransaction?: Maybe<StripeCustomerCashBalanceTransaction>;
+  customerCashBalanceTransactions?: Maybe<StripeGetCustomersCustomerCashBalanceTransactions>;
+  customers?: Maybe<StripeGetCustomers>;
+  customersCustomer?: Maybe<StripeDeletedCustomerOrCustomerUnion>;
+  customersCustomerDiscount?: Maybe<StripeDiscount>;
+  customersCustomerPaymentMethods?: Maybe<StripeGetCustomersCustomerPaymentMethods>;
+  customersCustomerPaymentMethodsPaymentMethod?: Maybe<StripePaymentMethod>;
+  customersCustomerSources?: Maybe<StripeGetCustomersCustomerSources>;
+  customersCustomerSubscriptions?: Maybe<StripeGetCustomersCustomerSubscriptions>;
+  customersCustomerSubscriptionsSubscriptionExposedId?: Maybe<StripeSubscription>;
+  customersCustomerSubscriptionsSubscriptionExposedIdDiscount?: Maybe<StripeDiscount>;
+  customersSearch?: Maybe<StripeGetCustomersSearch>;
+  disputes?: Maybe<StripeGetDisputes>;
+  disputesDispute?: Maybe<StripeDispute>;
+  event?: Maybe<StripeEvent>;
+  events?: Maybe<StripeGetEvents>;
+  exchangeRate?: Maybe<StripeExchangeRate>;
+  exchangeRates?: Maybe<StripeGetExchangeRates>;
+  feeRefund?: Maybe<StripeFeeRefund>;
+  feeRefunds?: Maybe<StripeGetApplicationFeesIdRefunds>;
+  file?: Maybe<StripeFile>;
+  fileLink?: Maybe<StripeFileLink>;
+  fileLinks?: Maybe<StripeGetFileLinks>;
+  files?: Maybe<StripeGetFiles>;
+  financialConnectionsAccounts?: Maybe<StripeGetFinancialConnectionsAccounts>;
+  financialConnectionsAccountsAccount?: Maybe<StripeFinancialConnectionsAccount>;
+  financialConnectionsAccountsAccountOwners?: Maybe<StripeGetFinancialConnectionsAccountsAccountOwners>;
+  financialConnectionsSessionsSession?: Maybe<StripeFinancialConnectionsSession>;
+  identityVerificationReport?: Maybe<StripeIdentityVerificationReport>;
+  identityVerificationReports?: Maybe<StripeGetIdentityVerificationReports>;
+  identityVerificationSession?: Maybe<StripeIdentityVerificationSession>;
+  identityVerificationSessions?: Maybe<StripeGetIdentityVerificationSessions>;
+  invoiceitem?: Maybe<StripeInvoiceitem>;
+  invoiceitems?: Maybe<StripeGetInvoiceitems>;
+  invoices?: Maybe<StripeGetInvoices>;
+  invoicesInvoice?: Maybe<StripeInvoice>;
+  invoicesInvoiceLines?: Maybe<StripeGetInvoicesInvoiceLines>;
+  invoicesSearch?: Maybe<StripeGetInvoicesSearch>;
+  invoicesUpcoming?: Maybe<StripeInvoice>;
+  invoicesUpcomingLines?: Maybe<StripeGetInvoicesUpcomingLines>;
+  issuingAuthorization?: Maybe<StripeIssuingAuthorization>;
+  issuingAuthorizations?: Maybe<StripeGetIssuingAuthorizations>;
+  issuingCard?: Maybe<StripeIssuingCard>;
+  issuingCardholder?: Maybe<StripeIssuingCardholder>;
+  issuingCardholders?: Maybe<StripeGetIssuingCardholders>;
+  issuingCards?: Maybe<StripeGetIssuingCards>;
+  issuingDispute?: Maybe<StripeIssuingDispute>;
+  issuingDisputes?: Maybe<StripeGetIssuingDisputes>;
+  issuingSettlement?: Maybe<StripeIssuingSettlement>;
+  issuingSettlements?: Maybe<StripeGetIssuingSettlements>;
+  issuingTransaction?: Maybe<StripeIssuingTransaction>;
+  issuingTransactions?: Maybe<StripeGetIssuingTransactions>;
+  linkAccountSessionsSession?: Maybe<StripeFinancialConnectionsSession>;
+  linkedAccounts?: Maybe<StripeGetLinkedAccounts>;
+  linkedAccountsAccount?: Maybe<StripeFinancialConnectionsAccount>;
+  linkedAccountsAccountOwners?: Maybe<StripeGetLinkedAccountsAccountOwners>;
+  mandate?: Maybe<StripeMandate>;
+  paymentIntent?: Maybe<StripePaymentIntent>;
+  paymentIntents?: Maybe<StripeGetPaymentIntents>;
+  paymentIntentsSearch?: Maybe<StripeGetPaymentIntentsSearch>;
+  paymentLink?: Maybe<StripePaymentLink>;
+  paymentLinks?: Maybe<StripeGetPaymentLinks>;
+  paymentLinksPaymentLinkLineItems?: Maybe<StripeGetPaymentLinksPaymentLinkLineItems>;
+  paymentMethods?: Maybe<StripeGetPaymentMethods>;
+  paymentMethodsPaymentMethod?: Maybe<StripePaymentMethod>;
+  paymentSource?: Maybe<StripePaymentSource>;
+  payout?: Maybe<StripePayout>;
+  payouts?: Maybe<StripeGetPayouts>;
+  plan?: Maybe<StripePlan>;
+  plans?: Maybe<StripeGetPlans>;
+  price?: Maybe<StripePrice>;
+  prices?: Maybe<StripeGetPrices>;
+  pricesSearch?: Maybe<StripeGetPricesSearch>;
+  product?: Maybe<StripeProduct>;
+  products?: Maybe<StripeGetProducts>;
+  productsSearch?: Maybe<StripeGetProductsSearch>;
+  promotionCode?: Maybe<StripePromotionCode>;
+  promotionCodes?: Maybe<StripeGetPromotionCodes>;
+  quote?: Maybe<StripeQuote>;
+  quotes?: Maybe<StripeGetQuotes>;
+  quotesQuoteComputedUpfrontLineItems?: Maybe<StripeGetQuotesQuoteComputedUpfrontLineItems>;
+  quotesQuoteLineItems?: Maybe<StripeGetQuotesQuoteLineItems>;
+  radarEarlyFraudWarning?: Maybe<StripeRadarEarlyFraudWarning>;
+  radarEarlyFraudWarnings?: Maybe<StripeGetRadarEarlyFraudWarnings>;
+  radarValueList?: Maybe<StripeRadarValueList>;
+  radarValueListItem?: Maybe<StripeRadarValueListItem>;
+  radarValueListItems?: Maybe<StripeGetRadarValueListItems>;
+  radarValueLists?: Maybe<StripeGetRadarValueLists>;
+  refunds?: Maybe<StripeGetRefunds>;
+  refundsRefund?: Maybe<StripeRefund>;
+  reportingReportRun?: Maybe<StripeReportingReportRun>;
+  reportingReportRuns?: Maybe<StripeGetReportingReportRuns>;
+  reportingReportType?: Maybe<StripeReportingReportType>;
+  reportingReportTypes?: Maybe<StripeGetReportingReportTypes>;
+  review?: Maybe<StripeReview>;
+  reviews?: Maybe<StripeGetReviews>;
+  scheduledQueryRun?: Maybe<StripeScheduledQueryRun>;
+  scheduledQueryRuns?: Maybe<StripeGetSigmaScheduledQueryRuns>;
+  setupAttempts?: Maybe<StripeGetSetupAttempts>;
+  setupIntent?: Maybe<StripeSetupIntent>;
+  setupIntents?: Maybe<StripeGetSetupIntents>;
+  shippingRate?: Maybe<StripeShippingRate>;
+  shippingRates?: Maybe<StripeGetShippingRates>;
+  source?: Maybe<StripeSource>;
+  sourceMandateNotification?: Maybe<StripeSourceMandateNotification>;
+  sourceTransaction?: Maybe<StripeSourceTransaction>;
+  sourceTransactions?: Maybe<StripeGetSourcesSourceSourceTransactions>;
+  subscriptionItem?: Maybe<StripeSubscriptionItem>;
+  subscriptionItems?: Maybe<StripeGetSubscriptionItems>;
+  subscriptionSchedule?: Maybe<StripeSubscriptionSchedule>;
+  subscriptionSchedules?: Maybe<StripeGetSubscriptionSchedules>;
+  subscriptions?: Maybe<StripeGetSubscriptions>;
+  subscriptionsSearch?: Maybe<StripeGetSubscriptionsSearch>;
+  subscriptionsSubscriptionExposedId?: Maybe<StripeSubscription>;
+  taxCalculationLineItems?: Maybe<StripeGetTaxCalculationsCalculationLineItems>;
+  taxCode?: Maybe<StripeTaxCode>;
+  taxCodes?: Maybe<StripeGetTaxCodes>;
+  taxId?: Maybe<StripeTaxId>;
+  taxIds?: Maybe<StripeGetCustomersCustomerTaxIds>;
+  taxRate?: Maybe<StripeTaxRate>;
+  taxRates?: Maybe<StripeGetTaxRates>;
+  taxTransaction?: Maybe<StripeTaxTransaction>;
+  taxTransactionLineItems?: Maybe<StripeGetTaxTransactionsTransactionLineItems>;
+  terminalConfigurations?: Maybe<StripeGetTerminalConfigurations>;
+  terminalConfigurationsConfiguration?: Maybe<StripeDeletedTerminalConfigurationOrTerminalConfigurationUnion>;
+  terminalLocations?: Maybe<StripeGetTerminalLocations>;
+  terminalLocationsLocation?: Maybe<StripeDeletedTerminalLocationOrTerminalLocationUnion>;
+  terminalReaders?: Maybe<StripeGetTerminalReaders>;
+  terminalReadersReader?: Maybe<StripeDeletedTerminalReaderOrTerminalReaderUnion>;
+  testHelpersTestClock?: Maybe<StripeTestHelpersTestClock>;
+  testHelpersTestClocks?: Maybe<StripeGetTestHelpersTestClocks>;
+  token?: Maybe<StripeToken>;
+  topup?: Maybe<StripeTopup>;
+  topups?: Maybe<StripeGetTopups>;
+  transfer?: Maybe<StripeTransfer>;
+  transferReversal?: Maybe<StripeTransferReversal>;
+  transferReversals?: Maybe<StripeGetTransfersIdReversals>;
+  transfers?: Maybe<StripeGetTransfers>;
+  treasuryCreditReversal?: Maybe<StripeTreasuryCreditReversal>;
+  treasuryCreditReversals?: Maybe<StripeGetTreasuryCreditReversals>;
+  treasuryDebitReversal?: Maybe<StripeTreasuryDebitReversal>;
+  treasuryDebitReversals?: Maybe<StripeGetTreasuryDebitReversals>;
+  treasuryFinancialAccount?: Maybe<StripeTreasuryFinancialAccount>;
+  treasuryFinancialAccountFeatures?: Maybe<StripeTreasuryFinancialAccountFeatures>;
+  treasuryFinancialAccounts?: Maybe<StripeGetTreasuryFinancialAccounts>;
+  treasuryInboundTransfer?: Maybe<StripeTreasuryInboundTransfer>;
+  treasuryInboundTransfers?: Maybe<StripeGetTreasuryInboundTransfers>;
+  treasuryOutboundPayment?: Maybe<StripeTreasuryOutboundPayment>;
+  treasuryOutboundPayments?: Maybe<StripeGetTreasuryOutboundPayments>;
+  treasuryOutboundTransfer?: Maybe<StripeTreasuryOutboundTransfer>;
+  treasuryOutboundTransfers?: Maybe<StripeGetTreasuryOutboundTransfers>;
+  treasuryReceivedCredit?: Maybe<StripeTreasuryReceivedCredit>;
+  treasuryReceivedCredits?: Maybe<StripeGetTreasuryReceivedCredits>;
+  treasuryReceivedDebit?: Maybe<StripeTreasuryReceivedDebit>;
+  treasuryReceivedDebits?: Maybe<StripeGetTreasuryReceivedDebits>;
+  treasuryTransaction?: Maybe<StripeTreasuryTransaction>;
+  treasuryTransactionEntries?: Maybe<StripeGetTreasuryTransactionEntries>;
+  treasuryTransactionEntry?: Maybe<StripeTreasuryTransactionEntry>;
+  treasuryTransactions?: Maybe<StripeGetTreasuryTransactions>;
+  usageRecordSummaries?: Maybe<StripeGetSubscriptionItemsSubscriptionItemUsageRecordSummaries>;
+  webhookEndpoint?: Maybe<StripeWebhookEndpoint>;
+  webhookEndpoints?: Maybe<StripeGetWebhookEndpoints>;
 };
 
 
@@ -35969,6 +36389,7 @@ export type StripeSetupAttemptPaymentMethodDetails = {
   ideal?: Maybe<StripeSetupAttemptPaymentMethodDetailsIdeal>;
   klarna?: Maybe<Scalars['JSON']>;
   link?: Maybe<Scalars['JSON']>;
+  paypal?: Maybe<Scalars['JSON']>;
   sepaDebit?: Maybe<Scalars['JSON']>;
   sofort?: Maybe<StripeSetupAttemptPaymentMethodDetailsSofort>;
   type: Scalars['String'];
@@ -36167,6 +36588,7 @@ export type StripeSetupIntentPaymentMethodOptions = {
   blik?: Maybe<StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsBlikUnion>;
   card?: Maybe<StripeSetupIntentPaymentMethodOptionsCard>;
   link?: Maybe<StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsLinkUnion>;
+  paypal?: Maybe<StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsPaypalUnion>;
   sepaDebit?: Maybe<StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsSepaDebitUnion>;
   usBankAccount?: Maybe<StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsUsBankAccountUnion>;
 };
@@ -36294,6 +36716,11 @@ export enum StripeSetupIntentPaymentMethodOptionsMandateOptionsBlikType {
   OnSession = 'ON_SESSION'
 }
 
+export type StripeSetupIntentPaymentMethodOptionsPaypal = {
+  __typename?: 'StripeSetupIntentPaymentMethodOptionsPaypal';
+  billingAgreementId?: Maybe<Scalars['String']>;
+};
+
 export type StripeSetupIntentPaymentMethodOptionsSepaDebit = {
   __typename?: 'StripeSetupIntentPaymentMethodOptionsSepaDebit';
   mandateOptions?: Maybe<Scalars['JSON']>;
@@ -36330,6 +36757,8 @@ export type StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntent
 export type StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsBlikUnion = StripeSetupIntentPaymentMethodOptionsBlik | StripeSetupIntentTypeSpecificPaymentMethodOptionsClient;
 
 export type StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsLinkUnion = StripeSetupIntentPaymentMethodOptionsLink | StripeSetupIntentTypeSpecificPaymentMethodOptionsClient;
+
+export type StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsPaypalUnion = StripeSetupIntentPaymentMethodOptionsPaypal | StripeSetupIntentTypeSpecificPaymentMethodOptionsClient;
 
 export type StripeSetupIntentTypeSpecificPaymentMethodOptionsClientOrSetupIntentPaymentMethodOptionsSepaDebitUnion = StripeSetupIntentPaymentMethodOptionsSepaDebit | StripeSetupIntentTypeSpecificPaymentMethodOptionsClient;
 
@@ -37740,6 +38169,11 @@ export type StripeStringOrPostPaymentIntentsIntentConfirmPaynowPaymentMethodOpti
   stripePostPaymentIntentsIntentConfirmPaynowPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentConfirmPaynowPaymentMethodOptionsInput>;
 };
 
+export type StripeStringOrPostPaymentIntentsIntentConfirmPaypalPaymentMethodOptionsUnionInput = {
+  string?: InputMaybe<Scalars['String']>;
+  stripePostPaymentIntentsIntentConfirmPaypalPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentConfirmPaypalPaymentMethodOptionsInput>;
+};
+
 export type StripeStringOrPostPaymentIntentsIntentConfirmPixPaymentMethodOptionsUnionInput = {
   string?: InputMaybe<Scalars['String']>;
   stripePostPaymentIntentsIntentConfirmPixPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentConfirmPixPaymentMethodOptionsInput>;
@@ -37840,6 +38274,11 @@ export type StripeStringOrPostPaymentIntentsIntentPaynowPaymentMethodOptionsUnio
   stripePostPaymentIntentsIntentPaynowPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentPaynowPaymentMethodOptionsInput>;
 };
 
+export type StripeStringOrPostPaymentIntentsIntentPaypalPaymentMethodOptionsUnionInput = {
+  string?: InputMaybe<Scalars['String']>;
+  stripePostPaymentIntentsIntentPaypalPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentPaypalPaymentMethodOptionsInput>;
+};
+
 export type StripeStringOrPostPaymentIntentsIntentPixPaymentMethodOptionsUnionInput = {
   string?: InputMaybe<Scalars['String']>;
   stripePostPaymentIntentsIntentPixPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentPixPaymentMethodOptionsInput>;
@@ -37908,6 +38347,11 @@ export type StripeStringOrPostPaymentIntentsP24PaymentMethodOptionsUnionInput = 
 export type StripeStringOrPostPaymentIntentsPaynowPaymentMethodOptionsUnionInput = {
   string?: InputMaybe<Scalars['String']>;
   stripePostPaymentIntentsPaynowPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsPaynowPaymentMethodOptionsInput>;
+};
+
+export type StripeStringOrPostPaymentIntentsPaypalPaymentMethodOptionsUnionInput = {
+  string?: InputMaybe<Scalars['String']>;
+  stripePostPaymentIntentsPaypalPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsPaypalPaymentMethodOptionsInput>;
 };
 
 export type StripeStringOrPostPaymentIntentsPixPaymentMethodOptionsUnionInput = {
@@ -38622,6 +39066,7 @@ export enum StripeSubscriptionsResourcePaymentSettingsPaymentMethodTypes {
   Konbini = 'KONBINI',
   Link = 'LINK',
   Paynow = 'PAYNOW',
+  Paypal = 'PAYPAL',
   Promptpay = 'PROMPTPAY',
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
@@ -39062,6 +39507,7 @@ export type StripeTaxRate = {
   created: Scalars['Int'];
   description?: Maybe<Scalars['String']>;
   displayName: Scalars['String'];
+  effectivePercentage?: Maybe<Scalars['Float']>;
   id: Scalars['String'];
   inclusive: Scalars['Boolean'];
   jurisdiction?: Maybe<Scalars['String']>;
@@ -39078,6 +39524,8 @@ export enum StripeTaxRateObject {
 }
 
 export enum StripeTaxRateTaxType {
+  AmusementTax = 'AMUSEMENT_TAX',
+  CommunicationsTax = 'COMMUNICATIONS_TAX',
   Gst = 'GST',
   Hst = 'HST',
   Igst = 'IGST',
@@ -40591,7 +41039,7 @@ export type UserSubscriptionsQueryVariables = Exact<{
 }>;
 
 
-export type UserSubscriptionsQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', id: string, subscriptions?: { __typename?: 'StripeCustomerSubscriptions', nodes: Array<{ __typename?: 'StripeSubscription', id: string, items: { __typename?: 'StripeSubscriptionItems', nodes: Array<{ __typename?: 'StripeSubscriptionItem', id: string, price: { __typename?: 'StripePrice', id: string, product: { __typename?: 'StripeDeletedProduct', id: string, deleted: boolean } | { __typename?: 'StripeProduct', id: string, active: boolean, created: number, description?: string | null, images: Array<string>, livemode: boolean, metadata: any, name: string, object: StripeProductObject, shippable?: boolean | null, statementDescriptor?: string | null, unitLabel?: string | null, updated: number, url?: string | null } | { __typename?: 'StripeString' } } }> } }> } | null } | null } | null };
+export type UserSubscriptionsQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', id: string, subscriptions?: { __typename?: 'StripeCustomerSubscriptions', nodes: Array<{ __typename?: 'StripeSubscription', id: string, items: { __typename?: 'StripeSubscriptionItems', nodes: Array<{ __typename?: 'StripeSubscriptionItem', id: string, quantity?: number | null, price: { __typename?: 'StripePrice', id: string, active: boolean, currency: string, unitAmount?: number | null, recurring?: { __typename?: 'StripeRecurring', interval: StripeRecurringInterval } | null, product: { __typename: 'StripeDeletedProduct', id: string, deleted: boolean } | { __typename: 'StripeProduct', id: string, active: boolean, created: number, description?: string | null, images: Array<string>, livemode: boolean, metadata: any, name: string, object: StripeProductObject, shippable?: boolean | null, statementDescriptor?: string | null, unitLabel?: string | null, updated: number, url?: string | null } | { __typename: 'StripeString' } } }> } }> } | null } | null } | null };
 
 export const AddressPartsFragmentDoc = `
     fragment AddressParts on StripeAddress {
@@ -40852,8 +41300,15 @@ export const UserSubscriptionsDocument = `
           items {
             nodes {
               id
+              quantity
               price {
                 id
+                active
+                currency
+                recurring {
+                  interval
+                }
+                unitAmount
                 product {
                   ... on StripeProduct {
                     ...ProductParts
@@ -40862,6 +41317,7 @@ export const UserSubscriptionsDocument = `
                     id
                     deleted
                   }
+                  __typename
                 }
               }
             }

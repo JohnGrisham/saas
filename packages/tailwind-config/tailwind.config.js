@@ -4,4 +4,5 @@ const resolveConfig = require('tailwindcss/resolveConfig');
 
 config.theme = undefined;
 const finalConfig = resolveConfig({ ...config, theme });
+/** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
 module.exports = finalConfig;

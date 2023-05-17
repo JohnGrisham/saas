@@ -10,13 +10,13 @@ export const credentialsSigninHandler = async (
 ) => {
   const gqlUserRecord = await getUserByEmail(email);
   const cognitoUser = isCognitoUser(user);
-  const hasPasswordIdentity = !!gqlUserRecord?.identities?.edges?.find(
+  const passwordIdentity = gqlUserRecord?.identities?.edges?.find(
     (edge) => edge?.node.type === IdentityType.Credentials,
   );
 
   if (!gqlUserRecord && cognitoUser) {
     await createUser(email, user.getUsername(), IdentityType.Credentials, name);
-  } else if (gqlUserRecord && !hasPasswordIdentity && cognitoUser) {
+  } else if (gqlUserRecord && !passwordIdentity && cognitoUser) {
     await createIdentity(
       user.getUsername(),
       gqlUserRecord.id,

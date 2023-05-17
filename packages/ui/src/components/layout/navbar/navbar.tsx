@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Dropdown, DropdownItem } from '../../dropdown';
 import { SignOutParams, signOut, useSession } from 'next-auth/react';
+import { useRootDomain, useThemeContext } from '../../../hooks';
 import { useBreakpointEffect } from 'tailwind-config';
 import { Avatar } from '../../avatar';
 import { Button } from '../../button';
@@ -11,7 +12,6 @@ import { Toggle } from '../../toggle';
 import cn from 'classnames';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { usePathname } from 'next/navigation';
-import { useThemeContext } from '../../../hooks';
 
 export interface NavItem {
   id: string;
@@ -50,6 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const { data: session, status } = useSession();
   const { isDarkMode, setDarkMode } = useThemeContext();
+  const isRootDomain = useRootDomain();
   const pathname = usePathname();
 
   const navbarStyles = React.useMemo(() => {
@@ -122,16 +123,20 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   });
 
+  if (!isRootDomain && status !== 'authenticated' && !session) {
+    return null;
+  }
+
   return (
     <nav className={navbarStyles}>
-      <div className="container flex flex-wrap items-center justify-between mx-auto h-14">
+      <div className="container mx-auto flex h-14 flex-wrap items-center justify-between">
         <a href={logoProps.href ?? '#'} className="flex items-center">
           <img
             src={logoProps.src}
-            className="h-6 mr-3"
+            className="mr-3 h-6"
             alt={`${logoProps.title} Logo`}
           />
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
             {logoProps.title}
           </span>
         </a>
@@ -141,7 +146,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className={navWrapperStyles} id="navbar-items-wrapper">
                 <ul className={navStyles}>
                   {navItems.map((item) => (
-                    <li key={item.id} className="p-2 nav-item">
+                    <li key={item.id} className="nav-item p-2">
                       {item.type === 'simple' ? (
                         <Link
                           href={item.href}
@@ -158,7 +163,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <div className={postNavStyles}>
                 <Button
-                  className="inline-flex items-center p-2 ml-3 mr-1 text-sm text-gray-500 rounded-lg hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
+                  className="ml-3 mr-1 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
                   aria-controls="navbar-items-wrapper"
                   aria-expanded="false"
                   onClick={() => setMobileMenuOpen((current) => !current)}
@@ -168,7 +173,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </Button>
                 <Dropdown listClassNames="right-0" items={profileDropdownItems}>
                   <Avatar
-                    imageSrc="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+                    imageSrc={
+                      session.user?.image ??
+                      'https://mdbcdn.b-cdn.net/img/new/avatars/8.webp'
+                    }
                     width={7}
                   />
                 </Dropdown>

@@ -6,11 +6,25 @@
       "outputs": ["dist/**", ".next/**"]
     },
     "codegen": {
+      "cache": false,
+      "dependsOn": []
+    },
+    "gql:dev": {
+      "cache": false,
+      "persistent": true,
       "dependsOn": []
     },
     "dev": {
       "cache": false,
-      "dependsOn": ["^dev", "ui#build"]
+      "dependsOn": [
+        "^dev",
+        "api#build",
+        "auth#build",
+        "client#build",
+        "payments-client#build",
+        "payments-server#build",
+        "ui#build"
+      ]
     },
     "generate-tailwind-theme": {
       "cache": false,
@@ -19,8 +33,12 @@
     "storybook": {
       "dependsOn": []
     },
+    "test": {
+      "dependsOn": []
+    },
     "auth#build": {
       "dependsOn": [
+        "client#build",
         "$API_KEY",
         "$COGNITO_CLIENT_ID",
         "$COGNITO_CLIENT_SECRET",
@@ -30,7 +48,8 @@
         "$GOOGLE_CLIENT_ID",
         "$GOOGLE_CLIENT_SECRET",
         "$ISSUER_URL",
-        "$NEXTAUTH_SECRET"
+        "$NEXTAUTH_SECRET",
+        "$NEXTAUTH_URL"
       ]
     },
     "client#build": {
@@ -44,22 +63,30 @@
         "$STRIPE_WEBHOOK_SECRET_LIVE"
       ]
     },
+    "payments-client#build": {
+      "dependsOn": []
+    },
     "web#build": {
       "dependsOn": [
+        "$AUTH_BEARER_TOKEN",
         "$NEXT_PUBLIC_AWS_REGION",
         "$NEXT_PUBLIC_COGNITO_DOMAIN",
-        "$NEXTAUTH_URL",
         "$ISSUER_URL",
         "$NEXTAUTH_SECRET",
+        "$NEXT_PUBLIC_DYNAMIC_ROOT",
+        "$NEXT_PUBLIC_MULTIDOMAIN",
         "$NEXT_PUBLIC_ROOT_URL",
         "$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE",
         "$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
         "$NEXT_PUBLIC_USER_POOL_ID",
-        "$NEXT_PUBLIC_USER_POOL_CLIENT_ID"
+        "$NEXT_PUBLIC_USER_POOL_CLIENT_ID",
+        "$NODE_ENV",
+        "$TEAM_ID_VERCEL",
+        "$VERCEL"
       ]
     },
     "api#build": {
-      "dependsOn": ["$OPENAI_API_KEY"]
+      "dependsOn": ["client#build", "$OPENAI_API_KEY"]
     },
     "grafbase#build": {
       "dependsOn": [

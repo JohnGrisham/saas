@@ -51,6 +51,12 @@ export default defineConfig({
           process.env.GOOGLE_CLIENT_SECRET,
         );
       }
+
+      if (process.env.NEXTAUTH_URL) {
+        options.define['process.env.NEXTAUTH_URL'] = JSON.stringify(
+          process.env.NEXTAUTH_URL,
+        );
+      }
     }
   },
 });

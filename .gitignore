@@ -38,3 +38,6 @@ dist/
 
 # grafbase
 .grafbase
+
+# parcel
+.parcel-cache

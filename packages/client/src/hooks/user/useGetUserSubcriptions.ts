@@ -1,6 +1,5 @@
 import { graphQLClient } from '../../provider';
-import { Scalars, useUserSubscriptionsQuery } from '../../types';
-import { isEmail } from 'core';
+import { Scalars, isEmail, useUserSubscriptionsQuery } from '../../types';
 
 export const useGetUserSubscriptions = (email: Scalars['Email']) => {
   if (!isEmail(email)) {
