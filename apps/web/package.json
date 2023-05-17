@@ -22,7 +22,6 @@
     "react-dom": "^18.2.0",
     "stripe": "*",
     "tailwind-config": "*",
-    "templates": "*",
     "ui": "*",
     "uuid": "^9.0.0"
   },

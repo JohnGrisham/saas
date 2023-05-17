@@ -1,1 +1,1 @@
-export * from './constructTemplate';
+export * from './utils';

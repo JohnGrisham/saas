@@ -23,7 +23,6 @@
         "client#build",
         "payments-client#build",
         "payments-server#build",
-        "templates#build",
         "ui#build"
       ]
     },
@@ -76,6 +75,8 @@
         "$NEXT_PUBLIC_COGNITO_DOMAIN",
         "$ISSUER_URL",
         "$NEXTAUTH_SECRET",
+        "$NEXT_PUBLIC_DYNAMIC_ROOT",
+        "$NEXT_PUBLIC_MULTIDOMAIN",
         "$NEXT_PUBLIC_ROOT_URL",
         "$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE",
         "$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
@@ -98,9 +99,6 @@
         "$STRIPE_SECRET_KEY",
         "$STRIPE_SECRET_KEY_LIVE"
       ]
-    },
-    "templates#build": {
-      "dependsOn": []
     },
     "lint": {
       "outputs": []

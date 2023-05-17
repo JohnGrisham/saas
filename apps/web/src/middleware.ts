@@ -13,7 +13,7 @@ export const config = {
   ],
 };
 
-export default async function middleware(req: NextRequest) {
+const middleware = async (req: NextRequest) => {
   const url = req.nextUrl;
 
   // Get hostname of request (e.g. demo.vercel.app, demo.localhost:3000)
@@ -65,8 +65,15 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.rewrite(new URL(path, req.url));
   }
 
-  // rewrite everything else to `/_sites/[site] dynamic route
+  // rewrite everything else to dynamic route
   return NextResponse.rewrite(
-    new URL(`/_sites/${currentHost}${path}`, req.url),
+    new URL(
+      `/${process.env.NEXT_PUBLIC_DYNAMIC_ROOT}/${currentHost}${path}`,
+      req.url,
+    ),
   );
-}
+};
+
+export default JSON.parse(process.env.NEXT_PUBLIC_MULTIDOMAIN ?? 'false')
+  ? middleware
+  : () => {};

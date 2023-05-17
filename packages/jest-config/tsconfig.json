@@ -5,10 +5,7 @@
     "baseUrl": "./",
     "lib": ["DOM"],
     "isolatedModules": false,
-    "resolveJsonModule": true,
-    "paths": {
-      "templates/*": ["../templates/*"]
-    }
+    "resolveJsonModule": true
   },
   "exclude": ["dist", "build", "node_modules"]
 }

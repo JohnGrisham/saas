@@ -24,7 +24,6 @@ enum IdentityType {
   CREDENTIALS
   GITHUB
   GOOGLE
-  NETLIFY
 }
 
 type CognitoUser {
@@ -35,10 +34,6 @@ type CognitoUser {
   confirmationStatus: String!
 }
 
-type Message {
-  content: String
-}
-
 type User @model {
   id: ID!
   name: String
@@ -46,7 +41,6 @@ type User @model {
   identities: [Identity!]
   customer: StripeCustomer @resolver(name: "stripe/customer/byEmail")
   cognitoUser: CognitoUser @resolver(name: "cognito/user/byEmail")
-  sites: [Site]
 }
 
 type Identity @model {
@@ -54,24 +48,4 @@ type Identity @model {
   sub: String! @unique
   type: IdentityType!
   user: User!
-}
-
-type TemplateData @model {
-  id: ID!
-  data: JSON!
-  site: Site!
-}
-
-type Site @model {
-  id: ID!
-  name: String!
-  description: String!
-  logo: String
-  font: String @default(value: "font-cal")
-  image: String
-  imageBlurhash: String
-  subdomain: String! @unique
-  customDomain: String! @unique
-  user: User
-  templateData: TemplateData
 }
