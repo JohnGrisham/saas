@@ -13,6 +13,8 @@ module.exports = {
       loader: 'html-loader',
     });
 
+    config.resolve.fallback = { fs: false };
+
     return config;
   },
 };

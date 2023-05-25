@@ -9,7 +9,7 @@
       "cache": false,
       "dependsOn": []
     },
-    "gql:dev": {
+    "dev:gql": {
       "cache": false,
       "persistent": true,
       "dependsOn": []

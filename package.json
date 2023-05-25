@@ -13,7 +13,8 @@
     "generate-tailwind-theme": "turbo run generate-tailwind-theme",
     "codegen": "turbo run codegen",
     "dev": "turbo run dev --parallel",
-    "gql:dev": "turbo run gql:dev",
+    "dev:gql": "turbo run dev:gql",
+    "dev:play": "turbo run dev:play",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "storybook": "turbo run storybook"
