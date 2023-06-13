@@ -49,3 +49,24 @@ type Identity @model {
   type: IdentityType!
   user: User!
 }
+
+type TemplateData @model {
+  id: ID!
+  data: JSON!
+  template: String!
+  site: Site!
+}
+
+type Site @model {
+  id: ID!
+  name: String!
+  description: String!
+  logo: String
+  font: String @default(value: "font-cal")
+  image: String
+  imageBlurhash: String
+  subdomain: String! @unique
+  customDomain: String! @unique
+  user: User
+  templateData: TemplateData
+}
