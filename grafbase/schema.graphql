@@ -50,7 +50,7 @@ type Identity @model {
   user: User!
 }
 
-type TemplateData @model {
+type TemplateData @model @auth(rules: [{ allow: public }]) {
   id: ID!
   data: JSON!
   template: String!
