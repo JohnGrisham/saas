@@ -57,7 +57,7 @@ type TemplateData @model {
   site: Site!
 }
 
-type Site @model {
+type Site @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   description: String!
@@ -67,6 +67,6 @@ type Site @model {
   imageBlurhash: String
   subdomain: String! @unique
   customDomain: String! @unique
-  user: User
+  user: User @auth(rules: [{ allow: private }])
   templateData: TemplateData
 }
