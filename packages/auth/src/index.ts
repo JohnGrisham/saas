@@ -1,3 +1,4 @@
+import type { UserByEmailQuery, UserByEmailQueryVariables } from 'client';
 import { Account, CallbacksOptions, CookiesOptions, Profile } from 'next-auth';
 import CredentialsProvider, {
   CredentialsConfig,
@@ -8,11 +9,7 @@ import {
   credentialsSigninHandler,
   googleSigninHandler,
 } from './signin-handlers';
-import {
-  UserByEmailQuery,
-  UserByEmailQueryVariables,
-  graphQLClient,
-} from 'client';
+import { graphQLClient } from 'api';
 import { JWTOptions } from 'next-auth/jwt';
 import { OAuthUserConfig } from 'next-auth/providers';
 import { Auth } from '@aws-amplify/auth';
@@ -107,7 +104,6 @@ export const github = (config?: OAuthUserConfig<GithubProfile>) =>
 export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
   async signIn({ user, account, profile }) {
     try {
-      graphQLClient.setHeader('x-api-key', process.env.API_KEY as string);
       let stripeId = '';
       const stripe = constructStripe();
       const name = user.name ?? '';
@@ -132,10 +128,9 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
           await credentialsSigninHandler(user, email, name);
       }
 
-      const { user: userRecord } = await graphQLClient.request<
-        UserByEmailQuery,
-        UserByEmailQueryVariables
-      >(
+      const { user: userRecord } = await graphQLClient({
+        ['x-api-key']: process.env.API_KEY as string,
+      }).request<UserByEmailQuery, UserByEmailQueryVariables>(
         gql`
           query GetUserByEmail($email: Email!) {
             user(by: { email: $email }) {

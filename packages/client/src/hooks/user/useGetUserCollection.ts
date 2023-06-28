@@ -1,9 +1,9 @@
-import { graphQLClient } from '../../provider';
+import { graphQLClient } from 'api';
 import { useUserCollectionQuery, QueryUserCollectionArgs } from '../../types';
 
 export const useGetUserCollection = ({
   first = 100,
   ...args
 }: QueryUserCollectionArgs) => {
-  return useUserCollectionQuery(graphQLClient, { ...args, first });
+  return useUserCollectionQuery(graphQLClient(), { ...args, first });
 };

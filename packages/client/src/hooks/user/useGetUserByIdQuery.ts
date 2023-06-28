@@ -1,6 +1,6 @@
-import { graphQLClient } from '../../provider';
+import { graphQLClient } from 'api';
 import { Scalars, useUserByIdQuery } from '../../types';
 
 export const useGetUserByIdQuery = (id: Scalars['ID']) => {
-  return useUserByIdQuery(graphQLClient, { id });
+  return useUserByIdQuery(graphQLClient(), { id });
 };

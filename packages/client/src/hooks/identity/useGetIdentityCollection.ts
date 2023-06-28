@@ -1,4 +1,4 @@
-import { graphQLClient } from '../../provider';
+import { graphQLClient } from 'api';
 import {
   useIdentityCollectionQuery,
   QueryIdentityCollectionArgs,
@@ -8,5 +8,5 @@ export const useGetIdentityCollection = ({
   first = 100,
   ...args
 }: QueryIdentityCollectionArgs) => {
-  return useIdentityCollectionQuery(graphQLClient, { ...args, first });
+  return useIdentityCollectionQuery(graphQLClient(), { ...args, first });
 };

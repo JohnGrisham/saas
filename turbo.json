@@ -53,7 +53,7 @@
       ]
     },
     "client#build": {
-      "dependsOn": ["$API_ENDPOINT"]
+      "dependsOn": []
     },
     "payments-server#build": {
       "dependsOn": [
@@ -86,7 +86,7 @@
       ]
     },
     "api#build": {
-      "dependsOn": ["client#build", "$OPENAI_API_KEY"]
+      "dependsOn": ["client#build", "$API_ENDPOINT", "$OPENAI_API_KEY"]
     },
     "grafbase#build": {
       "dependsOn": [
@@ -97,6 +97,9 @@
         "$STRIPE_SECRET_KEY",
         "$STRIPE_SECRET_KEY_LIVE"
       ]
+    },
+    "startup-nextjs-template#build": {
+      "dependsOn": ["$NEXT_PUBLIC_ROOT_URL", "$NEXTAUTH_SECRET"]
     },
     "lint": {
       "outputs": []

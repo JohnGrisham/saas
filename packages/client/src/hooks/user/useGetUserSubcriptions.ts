@@ -1,4 +1,4 @@
-import { graphQLClient } from '../../provider';
+import { graphQLClient } from 'api';
 import { Scalars, isEmail, useUserSubscriptionsQuery } from '../../types';
 
 export const useGetUserSubscriptions = (email: Scalars['Email']) => {
@@ -6,5 +6,5 @@ export const useGetUserSubscriptions = (email: Scalars['Email']) => {
     throw new Error(`${email} is an invalid email address!`);
   }
 
-  return useUserSubscriptionsQuery(graphQLClient, { email });
+  return useUserSubscriptionsQuery(graphQLClient(), { email });
 };

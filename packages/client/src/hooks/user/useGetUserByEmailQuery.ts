@@ -1,6 +1,6 @@
-import { graphQLClient } from '../../provider';
+import { graphQLClient } from 'api';
 import { Scalars, useUserByEmailQuery } from '../../types';
 
 export const useGetUserByEmailQuery = (email: Scalars['Email']) => {
-  return useUserByEmailQuery(graphQLClient, { email });
+  return useUserByEmailQuery(graphQLClient(), { email });
 };

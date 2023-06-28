@@ -1,17 +1,20 @@
-import {
+import type {
   Mutation,
   MutationIdentityCreateArgs,
   IdentityType,
-  graphQLClient,
 } from 'client';
 import { gql } from 'graphql-request';
+import { graphQLClient } from 'api';
 
 export const createIdentity = async (
   sub: string,
   userId: string,
   type: IdentityType,
 ) => {
-  await graphQLClient.request<Mutation, MutationIdentityCreateArgs>(
+  await graphQLClient({ ['x-api-key']: process.env.API_KEY as string }).request<
+    Mutation,
+    MutationIdentityCreateArgs
+  >(
     gql`
       mutation CreateIdentity($input: IdentityCreateInput!) {
         identityCreate(input: $input) {

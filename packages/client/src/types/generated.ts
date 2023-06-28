@@ -148,7 +148,19 @@ export type Mutation = {
   identityDelete?: Maybe<IdentityDeletePayload>;
   /** Update a Identity */
   identityUpdate?: Maybe<IdentityUpdatePayload>;
+  /** Create a Site */
+  siteCreate?: Maybe<SiteCreatePayload>;
+  /** Delete a Site by ID or unique field */
+  siteDelete?: Maybe<SiteDeletePayload>;
+  /** Update a Site */
+  siteUpdate?: Maybe<SiteUpdatePayload>;
   stripe: StripeMutation;
+  /** Create a TemplateData */
+  templateDataCreate?: Maybe<TemplateDataCreatePayload>;
+  /** Delete a TemplateData by ID or unique field */
+  templateDataDelete?: Maybe<TemplateDataDeletePayload>;
+  /** Update a TemplateData */
+  templateDataUpdate?: Maybe<TemplateDataUpdatePayload>;
   /** Create a User */
   userCreate?: Maybe<UserCreatePayload>;
   /** Delete a User by ID or unique field */
@@ -171,6 +183,38 @@ export type MutationIdentityDeleteArgs = {
 export type MutationIdentityUpdateArgs = {
   by: IdentityByInput;
   input: IdentityUpdateInput;
+};
+
+
+export type MutationSiteCreateArgs = {
+  input: SiteCreateInput;
+};
+
+
+export type MutationSiteDeleteArgs = {
+  by: SiteByInput;
+};
+
+
+export type MutationSiteUpdateArgs = {
+  by: SiteByInput;
+  input: SiteUpdateInput;
+};
+
+
+export type MutationTemplateDataCreateArgs = {
+  input: TemplateDataCreateInput;
+};
+
+
+export type MutationTemplateDataDeleteArgs = {
+  by: TemplateDataByInput;
+};
+
+
+export type MutationTemplateDataUpdateArgs = {
+  by: TemplateDataByInput;
+  input: TemplateDataUpdateInput;
 };
 
 
@@ -204,11 +248,19 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: 'Query';
+  Stripe: StripeQuery;
   /** Query a single Identity by an ID or a unique field */
   identity?: Maybe<Identity>;
   /** Paginated query to fetch the whole list of `Identity`. */
   identityCollection?: Maybe<IdentityConnection>;
-  stripe: StripeQuery;
+  /** Query a single Site by an ID or a unique field */
+  site?: Maybe<Site>;
+  /** Paginated query to fetch the whole list of `Site`. */
+  siteCollection?: Maybe<SiteConnection>;
+  /** Query a single TemplateData by an ID or a unique field */
+  templateData?: Maybe<TemplateData>;
+  /** Paginated query to fetch the whole list of `TemplateData`. */
+  templateDataCollection?: Maybe<TemplateDataConnection>;
   /** Query a single User by an ID or a unique field */
   user?: Maybe<User>;
   /** Paginated query to fetch the whole list of `User`. */
@@ -230,6 +282,34 @@ export type QueryIdentityCollectionArgs = {
 };
 
 
+export type QuerySiteArgs = {
+  by: SiteByInput;
+};
+
+
+export type QuerySiteCollectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<SiteOrderByInput>;
+};
+
+
+export type QueryTemplateDataArgs = {
+  by: TemplateDataByInput;
+};
+
+
+export type QueryTemplateDataCollectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TemplateDataOrderByInput>;
+};
+
+
 export type QueryUserArgs = {
   by: UserByInput;
 };
@@ -241,6 +321,157 @@ export type QueryUserCollectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<UserOrderByInput>;
+};
+
+export type Site = {
+  __typename?: 'Site';
+  /** when the model was created */
+  createdAt: Scalars['DateTime'];
+  customDomain: Scalars['String'];
+  description: Scalars['String'];
+  font?: Maybe<Scalars['String']>;
+  /** Unique identifier */
+  id: Scalars['ID'];
+  image?: Maybe<Scalars['String']>;
+  imageBlurhash?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  subdomain: Scalars['String'];
+  templateData?: Maybe<TemplateData>;
+  /** when the model was updated */
+  updatedAt: Scalars['DateTime'];
+  user?: Maybe<User>;
+};
+
+export type SiteByInput = {
+  customDomain?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  subdomain?: InputMaybe<Scalars['String']>;
+};
+
+export type SiteConnection = {
+  __typename?: 'SiteConnection';
+  edges?: Maybe<Array<Maybe<SiteEdge>>>;
+  /** Information to aid in pagination */
+  pageInfo: PageInfo;
+};
+
+/** Input to create a Site */
+export type SiteCreateInput = {
+  customDomain: Scalars['String'];
+  description: Scalars['String'];
+  font?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  imageBlurhash?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  subdomain: Scalars['String'];
+  templateData?: InputMaybe<SiteToTemplateDataCreateTemplateDataRelation>;
+  user?: InputMaybe<SiteToUserCreateUserRelation>;
+};
+
+export type SiteCreatePayload = {
+  __typename?: 'SiteCreatePayload';
+  site?: Maybe<Site>;
+};
+
+export type SiteDeletePayload = {
+  __typename?: 'SiteDeletePayload';
+  deletedId: Scalars['ID'];
+};
+
+export type SiteEdge = {
+  __typename?: 'SiteEdge';
+  cursor: Scalars['String'];
+  node: Site;
+};
+
+export type SiteOrderByInput = {
+  createdAt?: InputMaybe<OrderByDirection>;
+};
+
+/** Input to create a Site for the SiteToTemplateData relation of TemplateData */
+export type SiteToTemplateDataCreateSite = {
+  customDomain: Scalars['String'];
+  description: Scalars['String'];
+  font?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  imageBlurhash?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  subdomain: Scalars['String'];
+  user?: InputMaybe<SiteToUserCreateUserRelation>;
+};
+
+/** Input to link to or create a Site for the SiteToTemplateData relation of TemplateData */
+export type SiteToTemplateDataCreateSiteRelation = {
+  create?: InputMaybe<SiteToTemplateDataCreateSite>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to create a TemplateData for the SiteToTemplateData relation of Site */
+export type SiteToTemplateDataCreateTemplateData = {
+  data: Scalars['JSON'];
+  template: Scalars['String'];
+};
+
+/** Input to link to or create a TemplateData for the SiteToTemplateData relation of Site */
+export type SiteToTemplateDataCreateTemplateDataRelation = {
+  create?: InputMaybe<SiteToTemplateDataCreateTemplateData>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a Site for the SiteToTemplateData relation of TemplateData */
+export type SiteToTemplateDataUpdateSiteRelation = {
+  create?: InputMaybe<SiteToTemplateDataCreateSite>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a TemplateData for the SiteToTemplateData relation of Site */
+export type SiteToTemplateDataUpdateTemplateDataRelation = {
+  create?: InputMaybe<SiteToTemplateDataCreateTemplateData>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to create a User for the SiteToUser relation of Site */
+export type SiteToUserCreateUser = {
+  email: Scalars['Email'];
+  identities?: InputMaybe<Array<IdentityToUserCreateIdentityRelation>>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** Input to link to or create a User for the SiteToUser relation of Site */
+export type SiteToUserCreateUserRelation = {
+  create?: InputMaybe<SiteToUserCreateUser>;
+  link?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to link/unlink to or create a User for the SiteToUser relation of Site */
+export type SiteToUserUpdateUserRelation = {
+  create?: InputMaybe<SiteToUserCreateUser>;
+  link?: InputMaybe<Scalars['ID']>;
+  unlink?: InputMaybe<Scalars['ID']>;
+};
+
+/** Input to update a Site */
+export type SiteUpdateInput = {
+  customDomain?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  font?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  imageBlurhash?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  subdomain?: InputMaybe<Scalars['String']>;
+  templateData?: InputMaybe<SiteToTemplateDataUpdateTemplateDataRelation>;
+  user?: InputMaybe<SiteToUserUpdateUserRelation>;
+};
+
+export type SiteUpdatePayload = {
+  __typename?: 'SiteUpdatePayload';
+  site?: Maybe<Site>;
 };
 
 export type StripeAccount = {
@@ -338,6 +569,7 @@ export type StripeAccountCapabilities = {
   transfers?: Maybe<StripeAccountCapabilitiesTransfers>;
   treasury?: Maybe<StripeAccountCapabilitiesTreasury>;
   usBankAccountAchPayments?: Maybe<StripeAccountCapabilitiesUsBankAccountAchPayments>;
+  zipPayments?: Maybe<StripeAccountCapabilitiesZipPayments>;
 };
 
 export enum StripeAccountCapabilitiesAcssDebitPayments {
@@ -545,6 +777,12 @@ export enum StripeAccountCapabilitiesTreasury {
 }
 
 export enum StripeAccountCapabilitiesUsBankAccountAchPayments {
+  Active = 'ACTIVE',
+  Inactive = 'INACTIVE',
+  Pending = 'PENDING'
+}
+
+export enum StripeAccountCapabilitiesZipPayments {
   Active = 'ACTIVE',
   Inactive = 'INACTIVE',
   Pending = 'PENDING'
@@ -1560,10 +1798,12 @@ export type StripeCheckoutCustomerBalanceBankTransferPaymentMethodOptions = {
 };
 
 export enum StripeCheckoutCustomerBalanceBankTransferPaymentMethodOptionsRequestedAddressTypes {
+  Aba = 'ABA',
   Iban = 'IBAN',
   Sepa = 'SEPA',
   SortCode = 'SORT_CODE',
   Spei = 'SPEI',
+  Swift = 'SWIFT',
   Zengin = 'ZENGIN'
 }
 
@@ -1571,7 +1811,8 @@ export enum StripeCheckoutCustomerBalanceBankTransferPaymentMethodOptionsType {
   EuBankTransfer = 'EU_BANK_TRANSFER',
   GbBankTransfer = 'GB_BANK_TRANSFER',
   JpBankTransfer = 'JP_BANK_TRANSFER',
-  MxBankTransfer = 'MX_BANK_TRANSFER'
+  MxBankTransfer = 'MX_BANK_TRANSFER',
+  UsBankTransfer = 'US_BANK_TRANSFER'
 }
 
 export type StripeCheckoutCustomerBalancePaymentMethodOptions = {
@@ -1756,7 +1997,7 @@ export type StripeCheckoutSession = {
   status?: Maybe<StripeCheckoutSessionStatus>;
   submitType?: Maybe<StripeCheckoutSessionSubmitType>;
   subscription?: Maybe<StripeStringOrSubscriptionUnion>;
-  successUrl: Scalars['String'];
+  successUrl?: Maybe<Scalars['String']>;
   taxIdCollection?: Maybe<StripePaymentPagesCheckoutSessionTaxIdCollection>;
   totalDetails?: Maybe<StripePaymentPagesCheckoutSessionTotalDetails>;
   url?: Maybe<Scalars['String']>;
@@ -2007,6 +2248,7 @@ export type StripeCreditNote = {
   customerBalanceTransaction?: Maybe<StripeStringOrCustomerBalanceTransactionUnion>;
   discountAmount: Scalars['Int'];
   discountAmounts: Array<StripeDiscountsResourceDiscountAmount>;
+  effectiveAt?: Maybe<Scalars['Int']>;
   id: Scalars['String'];
   invoice: StripeStringOrInvoiceUnion;
   lines: StripeCreditNoteLines;
@@ -2199,6 +2441,7 @@ export type StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTra
   jpBankTransfer?: Maybe<StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceJpBankTransfer>;
   reference?: Maybe<Scalars['String']>;
   type: StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferType;
+  usBankTransfer?: Maybe<StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransfer>;
 };
 
 export type StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceEuBankTransfer = {
@@ -2222,11 +2465,24 @@ export type StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTra
   senderName?: Maybe<Scalars['String']>;
 };
 
+export type StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransfer = {
+  __typename?: 'StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransfer';
+  network?: Maybe<StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransferNetwork>;
+  senderName?: Maybe<Scalars['String']>;
+};
+
+export enum StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransferNetwork {
+  Ach = 'ACH',
+  DomesticWireUs = 'DOMESTIC_WIRE_US',
+  Swift = 'SWIFT'
+}
+
 export enum StripeCustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferType {
   EuBankTransfer = 'EU_BANK_TRANSFER',
   GbBankTransfer = 'GB_BANK_TRANSFER',
   JpBankTransfer = 'JP_BANK_TRANSFER',
-  MxBankTransfer = 'MX_BANK_TRANSFER'
+  MxBankTransfer = 'MX_BANK_TRANSFER',
+  UsBankTransfer = 'US_BANK_TRANSFER'
 }
 
 export type StripeCustomerBalanceResourceCashBalanceTransactionResourceRefundedFromPaymentTransaction = {
@@ -3901,7 +4157,8 @@ export enum StripeGetCustomersCustomerPaymentMethodsType {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export type StripeGetCustomersCustomerSources = {
@@ -4462,10 +4719,13 @@ export type StripeGetInvoicesUpcomingLinesTaxIdsCustomerDetailsInput = {
 };
 
 export enum StripeGetInvoicesUpcomingLinesTypeTaxIdsCustomerDetails {
+  AdNrt = 'AD_NRT',
   AeTrn = 'AE_TRN',
+  ArCuit = 'AR_CUIT',
   AuAbn = 'AU_ABN',
   AuArn = 'AU_ARN',
   BgUic = 'BG_UIC',
+  BoTin = 'BO_TIN',
   BrCnpj = 'BR_CNPJ',
   BrCpf = 'BR_CPF',
   CaBn = 'CA_BN',
@@ -4476,6 +4736,11 @@ export enum StripeGetInvoicesUpcomingLinesTypeTaxIdsCustomerDetails {
   CaQst = 'CA_QST',
   ChVat = 'CH_VAT',
   ClTin = 'CL_TIN',
+  CnTin = 'CN_TIN',
+  CoNit = 'CO_NIT',
+  CrTin = 'CR_TIN',
+  DoRcn = 'DO_RCN',
+  EcRuc = 'EC_RUC',
   EgTin = 'EG_TIN',
   EsCif = 'ES_CIF',
   EuOssVat = 'EU_OSS_VAT',
@@ -4500,18 +4765,24 @@ export enum StripeGetInvoicesUpcomingLinesTypeTaxIdsCustomerDetails {
   MySst = 'MY_SST',
   NoVat = 'NO_VAT',
   NzGst = 'NZ_GST',
+  PeRuc = 'PE_RUC',
   PhTin = 'PH_TIN',
+  RsPib = 'RS_PIB',
   RuInn = 'RU_INN',
   RuKpp = 'RU_KPP',
   SaVat = 'SA_VAT',
   SgGst = 'SG_GST',
   SgUen = 'SG_UEN',
   SiTin = 'SI_TIN',
+  SvNit = 'SV_NIT',
   ThVat = 'TH_VAT',
   TrTin = 'TR_TIN',
   TwVat = 'TW_VAT',
   UaVat = 'UA_VAT',
   UsEin = 'US_EIN',
+  UyRuc = 'UY_RUC',
+  VeRif = 'VE_RIF',
+  VnTin = 'VN_TIN',
   ZaVat = 'ZA_VAT'
 }
 
@@ -4602,10 +4873,13 @@ export type StripeGetInvoicesUpcomingTaxIdsCustomerDetailsInput = {
 };
 
 export enum StripeGetInvoicesUpcomingTypeTaxIdsCustomerDetails {
+  AdNrt = 'AD_NRT',
   AeTrn = 'AE_TRN',
+  ArCuit = 'AR_CUIT',
   AuAbn = 'AU_ABN',
   AuArn = 'AU_ARN',
   BgUic = 'BG_UIC',
+  BoTin = 'BO_TIN',
   BrCnpj = 'BR_CNPJ',
   BrCpf = 'BR_CPF',
   CaBn = 'CA_BN',
@@ -4616,6 +4890,11 @@ export enum StripeGetInvoicesUpcomingTypeTaxIdsCustomerDetails {
   CaQst = 'CA_QST',
   ChVat = 'CH_VAT',
   ClTin = 'CL_TIN',
+  CnTin = 'CN_TIN',
+  CoNit = 'CO_NIT',
+  CrTin = 'CR_TIN',
+  DoRcn = 'DO_RCN',
+  EcRuc = 'EC_RUC',
   EgTin = 'EG_TIN',
   EsCif = 'ES_CIF',
   EuOssVat = 'EU_OSS_VAT',
@@ -4640,18 +4919,24 @@ export enum StripeGetInvoicesUpcomingTypeTaxIdsCustomerDetails {
   MySst = 'MY_SST',
   NoVat = 'NO_VAT',
   NzGst = 'NZ_GST',
+  PeRuc = 'PE_RUC',
   PhTin = 'PH_TIN',
+  RsPib = 'RS_PIB',
   RuInn = 'RU_INN',
   RuKpp = 'RU_KPP',
   SaVat = 'SA_VAT',
   SgGst = 'SG_GST',
   SgUen = 'SG_UEN',
   SiTin = 'SI_TIN',
+  SvNit = 'SV_NIT',
   ThVat = 'TH_VAT',
   TrTin = 'TR_TIN',
   TwVat = 'TW_VAT',
   UaVat = 'UA_VAT',
   UsEin = 'US_EIN',
+  UyRuc = 'UY_RUC',
+  VeRif = 'VE_RIF',
+  VnTin = 'VN_TIN',
   ZaVat = 'ZA_VAT'
 }
 
@@ -4938,7 +5223,8 @@ export enum StripeGetPaymentMethodsType {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export type StripeGetPayouts = {
@@ -5406,6 +5692,10 @@ export type StripeGetSubscriptions = {
   nodes: Array<StripeSubscription>;
   object: StripeGetSubscriptionsObject;
   url: Scalars['String'];
+};
+
+export type StripeGetSubscriptionsAutomaticTaxInput = {
+  enabled: Scalars['Boolean'];
 };
 
 export enum StripeGetSubscriptionsCollectionMethod {
@@ -6298,6 +6588,7 @@ export type StripeInvoice = {
   discount?: Maybe<StripeDiscount>;
   discounts?: Maybe<Array<StripeStringOrDeletedDiscountOrDiscountUnion>>;
   dueDate?: Maybe<Scalars['Int']>;
+  effectiveAt?: Maybe<Scalars['Int']>;
   endingBalance?: Maybe<Scalars['Int']>;
   footer?: Maybe<Scalars['String']>;
   fromInvoice?: Maybe<StripeInvoicesFromInvoice>;
@@ -6628,17 +6919,6 @@ export type StripeInvoicesFromInvoice = {
   invoice: StripeStringOrInvoiceUnion;
 };
 
-export type StripeInvoicesLineItemsCreditedItems = {
-  __typename?: 'StripeInvoicesLineItemsCreditedItems';
-  invoice: Scalars['String'];
-  invoiceLineItems: Array<Scalars['String']>;
-};
-
-export type StripeInvoicesLineItemsProrationDetails = {
-  __typename?: 'StripeInvoicesLineItemsProrationDetails';
-  creditedItems?: Maybe<StripeInvoicesLineItemsCreditedItems>;
-};
-
 export type StripeInvoicesPaymentMethodOptions = {
   __typename?: 'StripeInvoicesPaymentMethodOptions';
   acssDebit?: Maybe<StripeInvoicePaymentMethodOptionsAcssDebit>;
@@ -6689,10 +6969,13 @@ export type StripeInvoicesResourceInvoiceTaxId = {
 };
 
 export enum StripeInvoicesResourceInvoiceTaxIdType {
+  AdNrt = 'AD_NRT',
   AeTrn = 'AE_TRN',
+  ArCuit = 'AR_CUIT',
   AuAbn = 'AU_ABN',
   AuArn = 'AU_ARN',
   BgUic = 'BG_UIC',
+  BoTin = 'BO_TIN',
   BrCnpj = 'BR_CNPJ',
   BrCpf = 'BR_CPF',
   CaBn = 'CA_BN',
@@ -6703,6 +6986,11 @@ export enum StripeInvoicesResourceInvoiceTaxIdType {
   CaQst = 'CA_QST',
   ChVat = 'CH_VAT',
   ClTin = 'CL_TIN',
+  CnTin = 'CN_TIN',
+  CoNit = 'CO_NIT',
+  CrTin = 'CR_TIN',
+  DoRcn = 'DO_RCN',
+  EcRuc = 'EC_RUC',
   EgTin = 'EG_TIN',
   EsCif = 'ES_CIF',
   EuOssVat = 'EU_OSS_VAT',
@@ -6727,21 +7015,38 @@ export enum StripeInvoicesResourceInvoiceTaxIdType {
   MySst = 'MY_SST',
   NoVat = 'NO_VAT',
   NzGst = 'NZ_GST',
+  PeRuc = 'PE_RUC',
   PhTin = 'PH_TIN',
+  RsPib = 'RS_PIB',
   RuInn = 'RU_INN',
   RuKpp = 'RU_KPP',
   SaVat = 'SA_VAT',
   SgGst = 'SG_GST',
   SgUen = 'SG_UEN',
   SiTin = 'SI_TIN',
+  SvNit = 'SV_NIT',
   ThVat = 'TH_VAT',
   TrTin = 'TR_TIN',
   TwVat = 'TW_VAT',
   UaVat = 'UA_VAT',
   Unknown = 'UNKNOWN',
   UsEin = 'US_EIN',
+  UyRuc = 'UY_RUC',
+  VeRif = 'VE_RIF',
+  VnTin = 'VN_TIN',
   ZaVat = 'ZA_VAT'
 }
+
+export type StripeInvoicesResourceLineItemsCreditedItems = {
+  __typename?: 'StripeInvoicesResourceLineItemsCreditedItems';
+  invoice: Scalars['String'];
+  invoiceLineItems: Array<Scalars['String']>;
+};
+
+export type StripeInvoicesResourceLineItemsProrationDetails = {
+  __typename?: 'StripeInvoicesResourceLineItemsProrationDetails';
+  creditedItems?: Maybe<StripeInvoicesResourceLineItemsCreditedItems>;
+};
 
 export type StripeInvoicesShippingCost = {
   __typename?: 'StripeInvoicesShippingCost';
@@ -7973,6 +8278,7 @@ export type StripeIssuingCardholder = {
   name: Scalars['String'];
   object: StripeIssuingCardholderObject;
   phoneNumber?: Maybe<Scalars['String']>;
+  preferredLocales?: Maybe<Array<StripeIssuingCardholderPreferredLocales>>;
   requirements: StripeIssuingCardholderRequirements;
   spendingControls?: Maybe<StripeIssuingCardholderAuthorizationControls>;
   status: StripeIssuingCardholderStatus;
@@ -8622,6 +8928,14 @@ export type StripeIssuingCardholderIndividualDob = {
 
 export enum StripeIssuingCardholderObject {
   IssuingCardholder = 'ISSUING_CARDHOLDER'
+}
+
+export enum StripeIssuingCardholderPreferredLocales {
+  De = 'DE',
+  En = 'EN',
+  Es = 'ES',
+  Fr = 'FR',
+  It = 'IT'
 }
 
 export type StripeIssuingCardholderRequirements = {
@@ -9398,7 +9712,7 @@ export type StripeLineItem = {
   period: StripeInvoiceLineItemPeriod;
   price?: Maybe<StripePrice>;
   proration: Scalars['Boolean'];
-  prorationDetails?: Maybe<StripeInvoicesLineItemsProrationDetails>;
+  prorationDetails?: Maybe<StripeInvoicesResourceLineItemsProrationDetails>;
   quantity?: Maybe<Scalars['Int']>;
   subscription?: Maybe<StripeStringOrSubscriptionUnion>;
   subscriptionItem?: Maybe<StripeStringOrSubscriptionItemUnion>;
@@ -9483,6 +9797,7 @@ export type StripeMandate = {
   livemode: Scalars['Boolean'];
   multiUse?: Maybe<Scalars['JSON']>;
   object: StripeMandateObject;
+  onBehalfOf?: Maybe<Scalars['String']>;
   paymentMethod: StripeStringOrPaymentMethodUnion;
   paymentMethodDetails: StripeMandatePaymentMethodDetails;
   singleUse?: Maybe<StripeMandateSingleUse>;
@@ -11516,7 +11831,8 @@ export enum StripePaymentIntentNextActionDisplayBankTransferInstructionsType {
   EuBankTransfer = 'EU_BANK_TRANSFER',
   GbBankTransfer = 'GB_BANK_TRANSFER',
   JpBankTransfer = 'JP_BANK_TRANSFER',
-  MxBankTransfer = 'MX_BANK_TRANSFER'
+  MxBankTransfer = 'MX_BANK_TRANSFER',
+  UsBankTransfer = 'US_BANK_TRANSFER'
 }
 
 export type StripePaymentIntentNextActionDisplayOxxoDetails = {
@@ -11646,7 +11962,7 @@ export type StripePaymentIntentPaymentMethodOptions = {
   auBecsDebit?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIntentPaymentMethodOptionsAuBecsDebitUnion>;
   bacsDebit?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsBacsDebitUnion>;
   bancontact?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsBancontactUnion>;
-  blik?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientUnion>;
+  blik?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIntentPaymentMethodOptionsBlikUnion>;
   boleto?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsBoletoUnion>;
   card?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIntentPaymentMethodOptionsCardUnion>;
   cardPresent?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsCardPresentUnion>;
@@ -11671,6 +11987,7 @@ export type StripePaymentIntentPaymentMethodOptions = {
   sofort?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsSofortUnion>;
   usBankAccount?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIntentPaymentMethodOptionsUsBankAccountUnion>;
   wechatPay?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsWechatPayUnion>;
+  zip?: Maybe<StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsZipUnion>;
 };
 
 export type StripePaymentIntentPaymentMethodOptionsAcssDebit = {
@@ -11702,6 +12019,11 @@ export enum StripePaymentIntentPaymentMethodOptionsAuBecsDebitSetupFutureUsage {
   OffSession = 'OFF_SESSION',
   OnSession = 'ON_SESSION'
 }
+
+export type StripePaymentIntentPaymentMethodOptionsBlik = {
+  __typename?: 'StripePaymentIntentPaymentMethodOptionsBlik';
+  mandateOptions?: Maybe<StripePaymentIntentPaymentMethodOptionsMandateOptionsBlik>;
+};
 
 export type StripePaymentIntentPaymentMethodOptionsCard = {
   __typename?: 'StripePaymentIntentPaymentMethodOptionsCard';
@@ -11789,6 +12111,18 @@ export enum StripePaymentIntentPaymentMethodOptionsMandateOptionsAcssDebitTransa
   Personal = 'PERSONAL'
 }
 
+export type StripePaymentIntentPaymentMethodOptionsMandateOptionsBlik = {
+  __typename?: 'StripePaymentIntentPaymentMethodOptionsMandateOptionsBlik';
+  expiresAfter?: Maybe<Scalars['Int']>;
+  offSession?: Maybe<StripeMandateOptionsOffSessionDetailsBlik>;
+  type?: Maybe<StripePaymentIntentPaymentMethodOptionsMandateOptionsBlikType>;
+};
+
+export enum StripePaymentIntentPaymentMethodOptionsMandateOptionsBlikType {
+  OffSession = 'OFF_SESSION',
+  OnSession = 'ON_SESSION'
+}
+
 export type StripePaymentIntentPaymentMethodOptionsSepaDebit = {
   __typename?: 'StripePaymentIntentPaymentMethodOptionsSepaDebit';
   mandateOptions?: Maybe<Scalars['JSON']>;
@@ -11868,6 +12202,8 @@ export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIn
 
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIntentPaymentMethodOptionsAuBecsDebitUnion = StripePaymentIntentPaymentMethodOptionsAuBecsDebit | StripePaymentIntentTypeSpecificPaymentMethodOptionsClient;
 
+export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIntentPaymentMethodOptionsBlikUnion = StripePaymentIntentPaymentMethodOptionsBlik | StripePaymentIntentTypeSpecificPaymentMethodOptionsClient;
+
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIntentPaymentMethodOptionsCardUnion = StripePaymentIntentPaymentMethodOptionsCard | StripePaymentIntentTypeSpecificPaymentMethodOptionsClient;
 
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentIntentPaymentMethodOptionsEpsUnion = StripePaymentIntentPaymentMethodOptionsEps | StripePaymentIntentTypeSpecificPaymentMethodOptionsClient;
@@ -11923,6 +12259,8 @@ export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMe
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsSofortUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsSofort;
 
 export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsWechatPayUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsWechatPay;
+
+export type StripePaymentIntentTypeSpecificPaymentMethodOptionsClientOrPaymentMethodOptionsZipUnion = StripePaymentIntentTypeSpecificPaymentMethodOptionsClient | StripePaymentMethodOptionsZip;
 
 export enum StripePaymentIntentTypeSpecificPaymentMethodOptionsClientSetupFutureUsage {
   None = 'NONE',
@@ -12089,7 +12427,9 @@ export type StripePaymentLinksResourceCustomFields = {
   dropdown?: Maybe<StripePaymentLinksResourceCustomFieldsDropdown>;
   key: Scalars['String'];
   label: StripePaymentLinksResourceCustomFieldsLabel;
+  numeric?: Maybe<StripePaymentLinksResourceCustomFieldsNumeric>;
   optional: Scalars['Boolean'];
+  text?: Maybe<StripePaymentLinksResourceCustomFieldsText>;
   type: StripePaymentLinksResourceCustomFieldsType;
 };
 
@@ -12113,6 +12453,18 @@ export type StripePaymentLinksResourceCustomFieldsLabel = {
 export enum StripePaymentLinksResourceCustomFieldsLabelType {
   Custom = 'CUSTOM'
 }
+
+export type StripePaymentLinksResourceCustomFieldsNumeric = {
+  __typename?: 'StripePaymentLinksResourceCustomFieldsNumeric';
+  maximumLength?: Maybe<Scalars['Int']>;
+  minimumLength?: Maybe<Scalars['Int']>;
+};
+
+export type StripePaymentLinksResourceCustomFieldsText = {
+  __typename?: 'StripePaymentLinksResourceCustomFieldsText';
+  maximumLength?: Maybe<Scalars['Int']>;
+  minimumLength?: Maybe<Scalars['Int']>;
+};
 
 export enum StripePaymentLinksResourceCustomFieldsType {
   Dropdown = 'DROPDOWN',
@@ -12480,6 +12832,7 @@ export type StripePaymentMethod = {
   type: StripePaymentMethodType;
   usBankAccount?: Maybe<StripePaymentMethodUsBankAccount>;
   wechatPay?: Maybe<Scalars['JSON']>;
+  zip?: Maybe<Scalars['JSON']>;
 };
 
 export type StripePaymentMethodAcssDebit = {
@@ -12653,6 +13006,7 @@ export type StripePaymentMethodDetails = {
   usBankAccount?: Maybe<StripePaymentMethodDetailsUsBankAccount>;
   wechat?: Maybe<Scalars['JSON']>;
   wechatPay?: Maybe<StripePaymentMethodDetailsWechatPay>;
+  zip?: Maybe<Scalars['JSON']>;
 };
 
 export type StripePaymentMethodDetailsAchCreditTransfer = {
@@ -13505,10 +13859,12 @@ export type StripePaymentMethodOptionsCustomerBalanceBankTransfer = {
 };
 
 export enum StripePaymentMethodOptionsCustomerBalanceBankTransferRequestedAddressTypes {
+  Aba = 'ABA',
   Iban = 'IBAN',
   Sepa = 'SEPA',
   SortCode = 'SORT_CODE',
   Spei = 'SPEI',
+  Swift = 'SWIFT',
   Zengin = 'ZENGIN'
 }
 
@@ -13516,7 +13872,8 @@ export enum StripePaymentMethodOptionsCustomerBalanceBankTransferType {
   EuBankTransfer = 'EU_BANK_TRANSFER',
   GbBankTransfer = 'GB_BANK_TRANSFER',
   JpBankTransfer = 'JP_BANK_TRANSFER',
-  MxBankTransfer = 'MX_BANK_TRANSFER'
+  MxBankTransfer = 'MX_BANK_TRANSFER',
+  UsBankTransfer = 'US_BANK_TRANSFER'
 }
 
 export type StripePaymentMethodOptionsCustomerBalanceEuBankAccount = {
@@ -13709,6 +14066,15 @@ export enum StripePaymentMethodOptionsWechatPaySetupFutureUsage {
   None = 'NONE'
 }
 
+export type StripePaymentMethodOptionsZip = {
+  __typename?: 'StripePaymentMethodOptionsZip';
+  setupFutureUsage?: Maybe<StripePaymentMethodOptionsZipSetupFutureUsage>;
+};
+
+export enum StripePaymentMethodOptionsZipSetupFutureUsage {
+  None = 'NONE'
+}
+
 export type StripePaymentMethodP24 = {
   __typename?: 'StripePaymentMethodP24';
   bank?: Maybe<StripePaymentMethodP24Bank>;
@@ -13744,6 +14110,7 @@ export enum StripePaymentMethodP24Bank {
 
 export type StripePaymentMethodPaypal = {
   __typename?: 'StripePaymentMethodPaypal';
+  payerEmail?: Maybe<Scalars['String']>;
   payerId?: Maybe<Scalars['String']>;
 };
 
@@ -13794,7 +14161,8 @@ export enum StripePaymentMethodType {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export type StripePaymentMethodUsBankAccount = {
@@ -13948,6 +14316,8 @@ export enum StripePaymentPagesCheckoutSessionCustomFieldsLabelType {
 
 export type StripePaymentPagesCheckoutSessionCustomFieldsNumeric = {
   __typename?: 'StripePaymentPagesCheckoutSessionCustomFieldsNumeric';
+  maximumLength?: Maybe<Scalars['Int']>;
+  minimumLength?: Maybe<Scalars['Int']>;
   value?: Maybe<Scalars['String']>;
 };
 
@@ -13959,6 +14329,8 @@ export type StripePaymentPagesCheckoutSessionCustomFieldsOption = {
 
 export type StripePaymentPagesCheckoutSessionCustomFieldsText = {
   __typename?: 'StripePaymentPagesCheckoutSessionCustomFieldsText';
+  maximumLength?: Maybe<Scalars['Int']>;
+  minimumLength?: Maybe<Scalars['Int']>;
   value?: Maybe<Scalars['String']>;
 };
 
@@ -14288,10 +14660,13 @@ export type StripePaymentPagesCheckoutSessionTaxIdCollection = {
 };
 
 export enum StripePaymentPagesCheckoutSessionTaxIdType {
+  AdNrt = 'AD_NRT',
   AeTrn = 'AE_TRN',
+  ArCuit = 'AR_CUIT',
   AuAbn = 'AU_ABN',
   AuArn = 'AU_ARN',
   BgUic = 'BG_UIC',
+  BoTin = 'BO_TIN',
   BrCnpj = 'BR_CNPJ',
   BrCpf = 'BR_CPF',
   CaBn = 'CA_BN',
@@ -14302,6 +14677,11 @@ export enum StripePaymentPagesCheckoutSessionTaxIdType {
   CaQst = 'CA_QST',
   ChVat = 'CH_VAT',
   ClTin = 'CL_TIN',
+  CnTin = 'CN_TIN',
+  CoNit = 'CO_NIT',
+  CrTin = 'CR_TIN',
+  DoRcn = 'DO_RCN',
+  EcRuc = 'EC_RUC',
   EgTin = 'EG_TIN',
   EsCif = 'ES_CIF',
   EuOssVat = 'EU_OSS_VAT',
@@ -14326,19 +14706,25 @@ export enum StripePaymentPagesCheckoutSessionTaxIdType {
   MySst = 'MY_SST',
   NoVat = 'NO_VAT',
   NzGst = 'NZ_GST',
+  PeRuc = 'PE_RUC',
   PhTin = 'PH_TIN',
+  RsPib = 'RS_PIB',
   RuInn = 'RU_INN',
   RuKpp = 'RU_KPP',
   SaVat = 'SA_VAT',
   SgGst = 'SG_GST',
   SgUen = 'SG_UEN',
   SiTin = 'SI_TIN',
+  SvNit = 'SV_NIT',
   ThVat = 'TH_VAT',
   TrTin = 'TR_TIN',
   TwVat = 'TW_VAT',
   UaVat = 'UA_VAT',
   Unknown = 'UNKNOWN',
   UsEin = 'US_EIN',
+  UyRuc = 'UY_RUC',
+  VeRif = 'VE_RIF',
+  VnTin = 'VN_TIN',
   ZaVat = 'ZA_VAT'
 }
 
@@ -15025,6 +15411,7 @@ export type StripePostAccountsAccountCapabilitiesInput = {
   transfers?: InputMaybe<StripePostAccountsAccountTransfersCapabilitiesInput>;
   treasury?: InputMaybe<StripePostAccountsAccountTreasuryCapabilitiesInput>;
   usBankAccountAchPayments?: InputMaybe<StripePostAccountsAccountUsBankAccountAchPaymentsCapabilitiesInput>;
+  zipPayments?: InputMaybe<StripePostAccountsAccountZipPaymentsCapabilitiesInput>;
 };
 
 export type StripePostAccountsAccountCardIssuingCapabilitiesInput = {
@@ -15930,6 +16317,10 @@ export enum StripePostAccountsAccountWeeklyAnchorSchedulePayoutsSettings {
   Wednesday = 'WEDNESDAY'
 }
 
+export type StripePostAccountsAccountZipPaymentsCapabilitiesInput = {
+  requested?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type StripePostAccountsAcssDebitPaymentsCapabilitiesInput = {
   requested?: InputMaybe<Scalars['Boolean']>;
 };
@@ -16110,6 +16501,7 @@ export type StripePostAccountsCapabilitiesInput = {
   transfers?: InputMaybe<StripePostAccountsTransfersCapabilitiesInput>;
   treasury?: InputMaybe<StripePostAccountsTreasuryCapabilitiesInput>;
   usBankAccountAchPayments?: InputMaybe<StripePostAccountsUsBankAccountAchPaymentsCapabilitiesInput>;
+  zipPayments?: InputMaybe<StripePostAccountsZipPaymentsCapabilitiesInput>;
 };
 
 export type StripePostAccountsCardIssuingCapabilitiesInput = {
@@ -16468,6 +16860,10 @@ export enum StripePostAccountsWeeklyAnchorSchedulePayoutsSettings {
   Tuesday = 'TUESDAY',
   Wednesday = 'WEDNESDAY'
 }
+
+export type StripePostAccountsZipPaymentsCapabilitiesInput = {
+  requested?: InputMaybe<Scalars['Boolean']>;
+};
 
 export type StripePostApplePayDomainsInput = {
   domainName: Scalars['String'];
@@ -17379,7 +17775,9 @@ export type StripePostCheckoutSessionsCustomFieldsInput = {
   dropdown?: InputMaybe<StripePostCheckoutSessionsDropdownCustomFieldsInput>;
   key: Scalars['String'];
   label: StripePostCheckoutSessionsLabelCustomFieldsInput;
+  numeric?: InputMaybe<StripePostCheckoutSessionsNumericCustomFieldsInput>;
   optional?: InputMaybe<Scalars['Boolean']>;
+  text?: InputMaybe<StripePostCheckoutSessionsTextCustomFieldsInput>;
   type: StripePostCheckoutSessionsTypeCustomFields;
 };
 
@@ -17639,6 +18037,11 @@ export enum StripePostCheckoutSessionsNameCustomerUpdate {
   Never = 'NEVER'
 }
 
+export type StripePostCheckoutSessionsNumericCustomFieldsInput = {
+  maximumLength?: InputMaybe<Scalars['Int']>;
+  minimumLength?: InputMaybe<Scalars['Int']>;
+};
+
 export type StripePostCheckoutSessionsOptionsDropdownCustomFieldsInput = {
   label: Scalars['String'];
   value: Scalars['String'];
@@ -17735,7 +18138,8 @@ export enum StripePostCheckoutSessionsPaymentMethodTypes {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export enum StripePostCheckoutSessionsPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions {
@@ -17838,10 +18242,12 @@ export type StripePostCheckoutSessionsRenderingOptionsInvoiceDataInvoiceCreation
 };
 
 export enum StripePostCheckoutSessionsRequestedAddressTypesBankTransferCustomerBalancePaymentMethodOptions {
+  Aba = 'ABA',
   Iban = 'IBAN',
   Sepa = 'SEPA',
   SortCode = 'SORT_CODE',
   Spei = 'SPEI',
+  Swift = 'SWIFT',
   Zengin = 'ZENGIN'
 }
 
@@ -18068,6 +18474,11 @@ export enum StripePostCheckoutSessionsTermsOfServiceConsentCollection {
   Required = 'REQUIRED'
 }
 
+export type StripePostCheckoutSessionsTextCustomFieldsInput = {
+  maximumLength?: InputMaybe<Scalars['Int']>;
+  minimumLength?: InputMaybe<Scalars['Int']>;
+};
+
 export enum StripePostCheckoutSessionsTransactionTypeMandateOptionsAcssDebitPaymentMethodOptions {
   Business = 'BUSINESS',
   Personal = 'PERSONAL'
@@ -18091,7 +18502,8 @@ export enum StripePostCheckoutSessionsTypeBankTransferCustomerBalancePaymentMeth
   EuBankTransfer = 'EU_BANK_TRANSFER',
   GbBankTransfer = 'GB_BANK_TRANSFER',
   JpBankTransfer = 'JP_BANK_TRANSFER',
-  MxBankTransfer = 'MX_BANK_TRANSFER'
+  MxBankTransfer = 'MX_BANK_TRANSFER',
+  UsBankTransfer = 'US_BANK_TRANSFER'
 }
 
 export enum StripePostCheckoutSessionsTypeCustomFields {
@@ -18193,6 +18605,7 @@ export type StripePostCreditNotesIdVoidInput = {
 export type StripePostCreditNotesInput = {
   amount?: InputMaybe<Scalars['Int']>;
   creditAmount?: InputMaybe<Scalars['Int']>;
+  effectiveAt?: InputMaybe<Scalars['Int']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   invoice: Scalars['String'];
   lines?: InputMaybe<Array<StripePostCreditNotesLinesInput>>;
@@ -18540,7 +18953,8 @@ export enum StripePostCustomersCustomerFundingInstructionsTypeBankTransfer {
   EuBankTransfer = 'EU_BANK_TRANSFER',
   GbBankTransfer = 'GB_BANK_TRANSFER',
   JpBankTransfer = 'JP_BANK_TRANSFER',
-  MxBankTransfer = 'MX_BANK_TRANSFER'
+  MxBankTransfer = 'MX_BANK_TRANSFER',
+  UsBankTransfer = 'US_BANK_TRANSFER'
 }
 
 export type StripePostCustomersCustomerInput = {
@@ -19276,10 +19690,13 @@ export type StripePostCustomersCustomerTaxIdsInput = {
 };
 
 export enum StripePostCustomersCustomerTaxIdsType {
+  AdNrt = 'AD_NRT',
   AeTrn = 'AE_TRN',
+  ArCuit = 'AR_CUIT',
   AuAbn = 'AU_ABN',
   AuArn = 'AU_ARN',
   BgUic = 'BG_UIC',
+  BoTin = 'BO_TIN',
   BrCnpj = 'BR_CNPJ',
   BrCpf = 'BR_CPF',
   CaBn = 'CA_BN',
@@ -19290,6 +19707,11 @@ export enum StripePostCustomersCustomerTaxIdsType {
   CaQst = 'CA_QST',
   ChVat = 'CH_VAT',
   ClTin = 'CL_TIN',
+  CnTin = 'CN_TIN',
+  CoNit = 'CO_NIT',
+  CrTin = 'CR_TIN',
+  DoRcn = 'DO_RCN',
+  EcRuc = 'EC_RUC',
   EgTin = 'EG_TIN',
   EsCif = 'ES_CIF',
   EuOssVat = 'EU_OSS_VAT',
@@ -19314,18 +19736,24 @@ export enum StripePostCustomersCustomerTaxIdsType {
   MySst = 'MY_SST',
   NoVat = 'NO_VAT',
   NzGst = 'NZ_GST',
+  PeRuc = 'PE_RUC',
   PhTin = 'PH_TIN',
+  RsPib = 'RS_PIB',
   RuInn = 'RU_INN',
   RuKpp = 'RU_KPP',
   SaVat = 'SA_VAT',
   SgGst = 'SG_GST',
   SgUen = 'SG_UEN',
   SiTin = 'SI_TIN',
+  SvNit = 'SV_NIT',
   ThVat = 'TH_VAT',
   TrTin = 'TR_TIN',
   TwVat = 'TW_VAT',
   UaVat = 'UA_VAT',
   UsEin = 'US_EIN',
+  UyRuc = 'UY_RUC',
+  VeRif = 'VE_RIF',
+  VnTin = 'VN_TIN',
   ZaVat = 'ZA_VAT'
 }
 
@@ -19395,10 +19823,13 @@ export type StripePostCustomersTaxInput = {
 };
 
 export enum StripePostCustomersTypeTaxIdData {
+  AdNrt = 'AD_NRT',
   AeTrn = 'AE_TRN',
+  ArCuit = 'AR_CUIT',
   AuAbn = 'AU_ABN',
   AuArn = 'AU_ARN',
   BgUic = 'BG_UIC',
+  BoTin = 'BO_TIN',
   BrCnpj = 'BR_CNPJ',
   BrCpf = 'BR_CPF',
   CaBn = 'CA_BN',
@@ -19409,6 +19840,11 @@ export enum StripePostCustomersTypeTaxIdData {
   CaQst = 'CA_QST',
   ChVat = 'CH_VAT',
   ClTin = 'CL_TIN',
+  CnTin = 'CN_TIN',
+  CoNit = 'CO_NIT',
+  CrTin = 'CR_TIN',
+  DoRcn = 'DO_RCN',
+  EcRuc = 'EC_RUC',
   EgTin = 'EG_TIN',
   EsCif = 'ES_CIF',
   EuOssVat = 'EU_OSS_VAT',
@@ -19433,18 +19869,24 @@ export enum StripePostCustomersTypeTaxIdData {
   MySst = 'MY_SST',
   NoVat = 'NO_VAT',
   NzGst = 'NZ_GST',
+  PeRuc = 'PE_RUC',
   PhTin = 'PH_TIN',
+  RsPib = 'RS_PIB',
   RuInn = 'RU_INN',
   RuKpp = 'RU_KPP',
   SaVat = 'SA_VAT',
   SgGst = 'SG_GST',
   SgUen = 'SG_UEN',
   SiTin = 'SI_TIN',
+  SvNit = 'SV_NIT',
   ThVat = 'TH_VAT',
   TrTin = 'TR_TIN',
   TwVat = 'TW_VAT',
   UaVat = 'UA_VAT',
   UsEin = 'US_EIN',
+  UyRuc = 'UY_RUC',
+  VeRif = 'VE_RIF',
+  VnTin = 'VN_TIN',
   ZaVat = 'ZA_VAT'
 }
 
@@ -19816,6 +20258,7 @@ export type StripePostInvoicesInput = {
   description?: InputMaybe<Scalars['String']>;
   discounts?: InputMaybe<StripeStringOrPostInvoicesDiscountsUnionInput>;
   dueDate?: InputMaybe<Scalars['Int']>;
+  effectiveAt?: InputMaybe<Scalars['Int']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   footer?: InputMaybe<Scalars['String']>;
   fromInvoice?: InputMaybe<StripePostInvoicesFromInvoiceInput>;
@@ -19930,6 +20373,7 @@ export type StripePostInvoicesInvoiceInput = {
   description?: InputMaybe<Scalars['String']>;
   discounts?: InputMaybe<StripeStringOrPostInvoicesInvoiceDiscountsUnionInput>;
   dueDate?: InputMaybe<Scalars['Int']>;
+  effectiveAt?: InputMaybe<Scalars['JSON']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   footer?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Scalars['JSON']>;
@@ -21822,6 +22266,7 @@ export type StripePostIssuingCardholdersCardholderInput = {
   individual?: InputMaybe<StripePostIssuingCardholdersCardholderIndividualInput>;
   metadata?: InputMaybe<Scalars['JSON']>;
   phoneNumber?: InputMaybe<Scalars['String']>;
+  preferredLocales?: InputMaybe<Array<StripePostIssuingCardholdersCardholderPreferredLocales>>;
   spendingControls?: InputMaybe<StripePostIssuingCardholdersCardholderSpendingControlsInput>;
   status?: InputMaybe<StripePostIssuingCardholdersCardholderStatus>;
 };
@@ -21833,6 +22278,14 @@ export enum StripePostIssuingCardholdersCardholderIntervalSpendingLimitsSpending
   PerAuthorization = 'PER_AUTHORIZATION',
   Weekly = 'WEEKLY',
   Yearly = 'YEARLY'
+}
+
+export enum StripePostIssuingCardholdersCardholderPreferredLocales {
+  De = 'DE',
+  En = 'EN',
+  Es = 'ES',
+  Fr = 'FR',
+  It = 'IT'
 }
 
 export type StripePostIssuingCardholdersCardholderSpendingControlsInput = {
@@ -22193,6 +22646,7 @@ export type StripePostIssuingCardholdersInput = {
   metadata?: InputMaybe<Scalars['JSON']>;
   name: Scalars['String'];
   phoneNumber?: InputMaybe<Scalars['String']>;
+  preferredLocales?: InputMaybe<Array<StripePostIssuingCardholdersPreferredLocales>>;
   spendingControls?: InputMaybe<StripePostIssuingCardholdersSpendingControlsInput>;
   status?: InputMaybe<StripePostIssuingCardholdersStatus>;
   type?: InputMaybe<StripePostIssuingCardholdersType>;
@@ -22205,6 +22659,14 @@ export enum StripePostIssuingCardholdersIntervalSpendingLimitsSpendingControls {
   PerAuthorization = 'PER_AUTHORIZATION',
   Weekly = 'WEEKLY',
   Yearly = 'YEARLY'
+}
+
+export enum StripePostIssuingCardholdersPreferredLocales {
+  De = 'DE',
+  En = 'EN',
+  Es = 'ES',
+  Fr = 'FR',
+  It = 'IT'
 }
 
 export type StripePostIssuingCardholdersSpendingControlsInput = {
@@ -24602,6 +25064,7 @@ export type StripePostPaymentIntentsBillingDetailsPaymentMethodDataInput = {
 
 export type StripePostPaymentIntentsBlikPaymentMethodOptionsInput = {
   code?: InputMaybe<Scalars['String']>;
+  mandateOptions?: InputMaybe<StripePostPaymentIntentsMandateOptionsBlikPaymentMethodOptionsInput>;
 };
 
 export type StripePostPaymentIntentsBoletoPaymentMethodDataInput = {
@@ -24969,6 +25432,7 @@ export type StripePostPaymentIntentsIntentBillingDetailsPaymentMethodDataInput =
 
 export type StripePostPaymentIntentsIntentBlikPaymentMethodOptionsInput = {
   code?: InputMaybe<Scalars['String']>;
+  mandateOptions?: InputMaybe<StripePostPaymentIntentsIntentMandateOptionsBlikPaymentMethodOptionsInput>;
 };
 
 export type StripePostPaymentIntentsIntentBoletoPaymentMethodDataInput = {
@@ -25240,6 +25704,7 @@ export type StripePostPaymentIntentsIntentConfirmBillingDetailsPaymentMethodData
 
 export type StripePostPaymentIntentsIntentConfirmBlikPaymentMethodOptionsInput = {
   code?: InputMaybe<Scalars['String']>;
+  mandateOptions?: InputMaybe<StripePostPaymentIntentsIntentConfirmMandateOptionsBlikPaymentMethodOptionsInput>;
 };
 
 export type StripePostPaymentIntentsIntentConfirmBoletoPaymentMethodDataInput = {
@@ -25389,6 +25854,13 @@ export enum StripePostPaymentIntentsIntentConfirmIntervalMandateOptionsCardPayme
   Year = 'YEAR'
 }
 
+export enum StripePostPaymentIntentsIntentConfirmIntervalOffSessionMandateOptionsBlikPaymentMethodOptions {
+  Day = 'DAY',
+  Month = 'MONTH',
+  Week = 'WEEK',
+  Year = 'YEAR'
+}
+
 export enum StripePostPaymentIntentsIntentConfirmIntervalPlanInstallmentsCardPaymentMethodOptions {
   Month = 'MONTH'
 }
@@ -25432,6 +25904,11 @@ export type StripePostPaymentIntentsIntentConfirmMandateOptionsAcssDebitPaymentM
   transactionType?: InputMaybe<StripePostPaymentIntentsIntentConfirmTransactionTypeMandateOptionsAcssDebitPaymentMethodOptions>;
 };
 
+export type StripePostPaymentIntentsIntentConfirmMandateOptionsBlikPaymentMethodOptionsInput = {
+  expiresAfter?: InputMaybe<Scalars['Int']>;
+  offSession?: InputMaybe<StripePostPaymentIntentsIntentConfirmOffSessionMandateOptionsBlikPaymentMethodOptionsInput>;
+};
+
 export type StripePostPaymentIntentsIntentConfirmMandateOptionsCardPaymentMethodOptionsInput = {
   amount: Scalars['Int'];
   amountType: StripePostPaymentIntentsIntentConfirmAmountTypeMandateOptionsCardPaymentMethodOptions;
@@ -25460,6 +25937,11 @@ export enum StripePostPaymentIntentsIntentConfirmNetworkCardPaymentMethodOptions
 
 export type StripePostPaymentIntentsIntentConfirmNetworksUsBankAccountPaymentMethodOptionsInput = {
   requested?: InputMaybe<Array<StripePostPaymentIntentsIntentConfirmRequestedNetworksUsBankAccountPaymentMethodOptions>>;
+};
+
+export type StripePostPaymentIntentsIntentConfirmOffSessionMandateOptionsBlikPaymentMethodOptionsInput = {
+  interval: StripePostPaymentIntentsIntentConfirmIntervalOffSessionMandateOptionsBlikPaymentMethodOptions;
+  intervalCount: Scalars['Int'];
 };
 
 export type StripePostPaymentIntentsIntentConfirmOnlineCustomerAcceptanceMandateDataInput = {
@@ -25516,6 +25998,7 @@ export type StripePostPaymentIntentsIntentConfirmPaymentMethodDataInput = {
   type: StripePostPaymentIntentsIntentConfirmTypePaymentMethodData;
   usBankAccount?: InputMaybe<StripePostPaymentIntentsIntentConfirmUsBankAccountPaymentMethodDataInput>;
   wechatPay?: InputMaybe<Scalars['JSON']>;
+  zip?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostPaymentIntentsIntentConfirmPaymentMethodOptionsInput = {
@@ -25551,6 +26034,7 @@ export type StripePostPaymentIntentsIntentConfirmPaymentMethodOptionsInput = {
   sofort?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmSofortPaymentMethodOptionsUnionInput>;
   usBankAccount?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmUsBankAccountPaymentMethodOptionsUnionInput>;
   wechatPay?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmWechatPayPaymentMethodOptionsUnionInput>;
+  zip?: InputMaybe<StripeStringOrPostPaymentIntentsIntentConfirmZipPaymentMethodOptionsUnionInput>;
 };
 
 export enum StripePostPaymentIntentsIntentConfirmPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions {
@@ -25686,10 +26170,12 @@ export enum StripePostPaymentIntentsIntentConfirmRequestThreeDSecureCardPaymentM
 }
 
 export enum StripePostPaymentIntentsIntentConfirmRequestedAddressTypesBankTransferCustomerBalancePaymentMethodOptions {
+  Aba = 'ABA',
   Iban = 'IBAN',
   Sepa = 'SEPA',
   SortCode = 'SORT_CODE',
   Spei = 'SPEI',
+  Swift = 'SWIFT',
   Zengin = 'ZENGIN'
 }
 
@@ -25767,6 +26253,10 @@ export enum StripePostPaymentIntentsIntentConfirmSetupFutureUsageWechatPayPaymen
   None = 'NONE'
 }
 
+export enum StripePostPaymentIntentsIntentConfirmSetupFutureUsageZipPaymentMethodOptions {
+  None = 'NONE'
+}
+
 export type StripePostPaymentIntentsIntentConfirmShippingInput = {
   address: StripePostPaymentIntentsIntentConfirmAddressShippingInput;
   carrier?: InputMaybe<Scalars['String']>;
@@ -25797,7 +26287,8 @@ export enum StripePostPaymentIntentsIntentConfirmTypeBankTransferCustomerBalance
   EuBankTransfer = 'EU_BANK_TRANSFER',
   GbBankTransfer = 'GB_BANK_TRANSFER',
   JpBankTransfer = 'JP_BANK_TRANSFER',
-  MxBankTransfer = 'MX_BANK_TRANSFER'
+  MxBankTransfer = 'MX_BANK_TRANSFER',
+  UsBankTransfer = 'US_BANK_TRANSFER'
 }
 
 export enum StripePostPaymentIntentsIntentConfirmTypeCustomerAcceptanceMandateData {
@@ -25833,7 +26324,8 @@ export enum StripePostPaymentIntentsIntentConfirmTypePaymentMethodData {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export enum StripePostPaymentIntentsIntentConfirmTypePlanInstallmentsCardPaymentMethodOptions {
@@ -25871,6 +26363,10 @@ export type StripePostPaymentIntentsIntentConfirmWechatPayPaymentMethodOptionsIn
   appId?: InputMaybe<Scalars['String']>;
   client: StripePostPaymentIntentsIntentConfirmClientWechatPayPaymentMethodOptions;
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsIntentConfirmSetupFutureUsageWechatPayPaymentMethodOptions>;
+};
+
+export type StripePostPaymentIntentsIntentConfirmZipPaymentMethodOptionsInput = {
+  setupFutureUsage?: InputMaybe<StripePostPaymentIntentsIntentConfirmSetupFutureUsageZipPaymentMethodOptions>;
 };
 
 export enum StripePostPaymentIntentsIntentCountrySofortPaymentMethodData {
@@ -25988,6 +26484,13 @@ export enum StripePostPaymentIntentsIntentIntervalMandateOptionsCardPaymentMetho
   Year = 'YEAR'
 }
 
+export enum StripePostPaymentIntentsIntentIntervalOffSessionMandateOptionsBlikPaymentMethodOptions {
+  Day = 'DAY',
+  Month = 'MONTH',
+  Week = 'WEEK',
+  Year = 'YEAR'
+}
+
 export enum StripePostPaymentIntentsIntentIntervalPlanInstallmentsCardPaymentMethodOptions {
   Month = 'MONTH'
 }
@@ -26023,6 +26526,11 @@ export type StripePostPaymentIntentsIntentMandateOptionsAcssDebitPaymentMethodOp
   transactionType?: InputMaybe<StripePostPaymentIntentsIntentTransactionTypeMandateOptionsAcssDebitPaymentMethodOptions>;
 };
 
+export type StripePostPaymentIntentsIntentMandateOptionsBlikPaymentMethodOptionsInput = {
+  expiresAfter?: InputMaybe<Scalars['Int']>;
+  offSession?: InputMaybe<StripePostPaymentIntentsIntentOffSessionMandateOptionsBlikPaymentMethodOptionsInput>;
+};
+
 export type StripePostPaymentIntentsIntentMandateOptionsCardPaymentMethodOptionsInput = {
   amount: Scalars['Int'];
   amountType: StripePostPaymentIntentsIntentAmountTypeMandateOptionsCardPaymentMethodOptions;
@@ -26051,6 +26559,11 @@ export enum StripePostPaymentIntentsIntentNetworkCardPaymentMethodOptions {
 
 export type StripePostPaymentIntentsIntentNetworksUsBankAccountPaymentMethodOptionsInput = {
   requested?: InputMaybe<Array<StripePostPaymentIntentsIntentRequestedNetworksUsBankAccountPaymentMethodOptions>>;
+};
+
+export type StripePostPaymentIntentsIntentOffSessionMandateOptionsBlikPaymentMethodOptionsInput = {
+  interval: StripePostPaymentIntentsIntentIntervalOffSessionMandateOptionsBlikPaymentMethodOptions;
+  intervalCount: Scalars['Int'];
 };
 
 export type StripePostPaymentIntentsIntentOxxoPaymentMethodOptionsInput = {
@@ -26102,6 +26615,7 @@ export type StripePostPaymentIntentsIntentPaymentMethodDataInput = {
   type: StripePostPaymentIntentsIntentTypePaymentMethodData;
   usBankAccount?: InputMaybe<StripePostPaymentIntentsIntentUsBankAccountPaymentMethodDataInput>;
   wechatPay?: InputMaybe<Scalars['JSON']>;
+  zip?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostPaymentIntentsIntentPaymentMethodOptionsInput = {
@@ -26137,6 +26651,7 @@ export type StripePostPaymentIntentsIntentPaymentMethodOptionsInput = {
   sofort?: InputMaybe<StripeStringOrPostPaymentIntentsIntentSofortPaymentMethodOptionsUnionInput>;
   usBankAccount?: InputMaybe<StripeStringOrPostPaymentIntentsIntentUsBankAccountPaymentMethodOptionsUnionInput>;
   wechatPay?: InputMaybe<StripeStringOrPostPaymentIntentsIntentWechatPayPaymentMethodOptionsUnionInput>;
+  zip?: InputMaybe<StripeStringOrPostPaymentIntentsIntentZipPaymentMethodOptionsUnionInput>;
 };
 
 export enum StripePostPaymentIntentsIntentPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions {
@@ -26268,10 +26783,12 @@ export enum StripePostPaymentIntentsIntentRequestThreeDSecureCardPaymentMethodOp
 }
 
 export enum StripePostPaymentIntentsIntentRequestedAddressTypesBankTransferCustomerBalancePaymentMethodOptions {
+  Aba = 'ABA',
   Iban = 'IBAN',
   Sepa = 'SEPA',
   SortCode = 'SORT_CODE',
   Spei = 'SPEI',
+  Swift = 'SWIFT',
   Zengin = 'ZENGIN'
 }
 
@@ -26349,6 +26866,10 @@ export enum StripePostPaymentIntentsIntentSetupFutureUsageWechatPayPaymentMethod
   None = 'NONE'
 }
 
+export enum StripePostPaymentIntentsIntentSetupFutureUsageZipPaymentMethodOptions {
+  None = 'NONE'
+}
+
 export type StripePostPaymentIntentsIntentShippingInput = {
   address: StripePostPaymentIntentsIntentAddressShippingInput;
   carrier?: InputMaybe<Scalars['String']>;
@@ -26383,7 +26904,8 @@ export enum StripePostPaymentIntentsIntentTypeBankTransferCustomerBalancePayment
   EuBankTransfer = 'EU_BANK_TRANSFER',
   GbBankTransfer = 'GB_BANK_TRANSFER',
   JpBankTransfer = 'JP_BANK_TRANSFER',
-  MxBankTransfer = 'MX_BANK_TRANSFER'
+  MxBankTransfer = 'MX_BANK_TRANSFER',
+  UsBankTransfer = 'US_BANK_TRANSFER'
 }
 
 export enum StripePostPaymentIntentsIntentTypePaymentMethodData {
@@ -26415,7 +26937,8 @@ export enum StripePostPaymentIntentsIntentTypePaymentMethodData {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export enum StripePostPaymentIntentsIntentTypePlanInstallmentsCardPaymentMethodOptions {
@@ -26462,10 +26985,21 @@ export type StripePostPaymentIntentsIntentWechatPayPaymentMethodOptionsInput = {
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsIntentSetupFutureUsageWechatPayPaymentMethodOptions>;
 };
 
+export type StripePostPaymentIntentsIntentZipPaymentMethodOptionsInput = {
+  setupFutureUsage?: InputMaybe<StripePostPaymentIntentsIntentSetupFutureUsageZipPaymentMethodOptions>;
+};
+
 export enum StripePostPaymentIntentsIntervalMandateOptionsCardPaymentMethodOptions {
   Day = 'DAY',
   Month = 'MONTH',
   Sporadic = 'SPORADIC',
+  Week = 'WEEK',
+  Year = 'YEAR'
+}
+
+export enum StripePostPaymentIntentsIntervalOffSessionMandateOptionsBlikPaymentMethodOptions {
+  Day = 'DAY',
+  Month = 'MONTH',
   Week = 'WEEK',
   Year = 'YEAR'
 }
@@ -26509,6 +27043,11 @@ export type StripePostPaymentIntentsMandateOptionsAcssDebitPaymentMethodOptionsI
   transactionType?: InputMaybe<StripePostPaymentIntentsTransactionTypeMandateOptionsAcssDebitPaymentMethodOptions>;
 };
 
+export type StripePostPaymentIntentsMandateOptionsBlikPaymentMethodOptionsInput = {
+  expiresAfter?: InputMaybe<Scalars['Int']>;
+  offSession?: InputMaybe<StripePostPaymentIntentsOffSessionMandateOptionsBlikPaymentMethodOptionsInput>;
+};
+
 export type StripePostPaymentIntentsMandateOptionsCardPaymentMethodOptionsInput = {
   amount: Scalars['Int'];
   amountType: StripePostPaymentIntentsAmountTypeMandateOptionsCardPaymentMethodOptions;
@@ -26537,6 +27076,11 @@ export enum StripePostPaymentIntentsNetworkCardPaymentMethodOptions {
 
 export type StripePostPaymentIntentsNetworksUsBankAccountPaymentMethodOptionsInput = {
   requested?: InputMaybe<Array<StripePostPaymentIntentsRequestedNetworksUsBankAccountPaymentMethodOptions>>;
+};
+
+export type StripePostPaymentIntentsOffSessionMandateOptionsBlikPaymentMethodOptionsInput = {
+  interval: StripePostPaymentIntentsIntervalOffSessionMandateOptionsBlikPaymentMethodOptions;
+  intervalCount: Scalars['Int'];
 };
 
 export type StripePostPaymentIntentsOnlineCustomerAcceptanceMandateDataInput = {
@@ -26593,6 +27137,7 @@ export type StripePostPaymentIntentsPaymentMethodDataInput = {
   type: StripePostPaymentIntentsTypePaymentMethodData;
   usBankAccount?: InputMaybe<StripePostPaymentIntentsUsBankAccountPaymentMethodDataInput>;
   wechatPay?: InputMaybe<Scalars['JSON']>;
+  zip?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostPaymentIntentsPaymentMethodOptionsInput = {
@@ -26628,6 +27173,7 @@ export type StripePostPaymentIntentsPaymentMethodOptionsInput = {
   sofort?: InputMaybe<StripeStringOrPostPaymentIntentsSofortPaymentMethodOptionsUnionInput>;
   usBankAccount?: InputMaybe<StripeStringOrPostPaymentIntentsUsBankAccountPaymentMethodOptionsUnionInput>;
   wechatPay?: InputMaybe<StripeStringOrPostPaymentIntentsWechatPayPaymentMethodOptionsUnionInput>;
+  zip?: InputMaybe<StripeStringOrPostPaymentIntentsZipPaymentMethodOptionsUnionInput>;
 };
 
 export enum StripePostPaymentIntentsPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions {
@@ -26763,10 +27309,12 @@ export enum StripePostPaymentIntentsRequestThreeDSecureCardPaymentMethodOptions 
 }
 
 export enum StripePostPaymentIntentsRequestedAddressTypesBankTransferCustomerBalancePaymentMethodOptions {
+  Aba = 'ABA',
   Iban = 'IBAN',
   Sepa = 'SEPA',
   SortCode = 'SORT_CODE',
   Spei = 'SPEI',
+  Swift = 'SWIFT',
   Zengin = 'ZENGIN'
 }
 
@@ -26849,6 +27397,10 @@ export enum StripePostPaymentIntentsSetupFutureUsageWechatPayPaymentMethodOption
   None = 'NONE'
 }
 
+export enum StripePostPaymentIntentsSetupFutureUsageZipPaymentMethodOptions {
+  None = 'NONE'
+}
+
 export type StripePostPaymentIntentsShippingInput = {
   address: StripePostPaymentIntentsAddressShippingInput;
   carrier?: InputMaybe<Scalars['String']>;
@@ -26884,7 +27436,8 @@ export enum StripePostPaymentIntentsTypeBankTransferCustomerBalancePaymentMethod
   EuBankTransfer = 'EU_BANK_TRANSFER',
   GbBankTransfer = 'GB_BANK_TRANSFER',
   JpBankTransfer = 'JP_BANK_TRANSFER',
-  MxBankTransfer = 'MX_BANK_TRANSFER'
+  MxBankTransfer = 'MX_BANK_TRANSFER',
+  UsBankTransfer = 'US_BANK_TRANSFER'
 }
 
 export enum StripePostPaymentIntentsTypeCustomerAcceptanceMandateData {
@@ -26921,7 +27474,8 @@ export enum StripePostPaymentIntentsTypePaymentMethodData {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export enum StripePostPaymentIntentsTypePlanInstallmentsCardPaymentMethodOptions {
@@ -26959,6 +27513,10 @@ export type StripePostPaymentIntentsWechatPayPaymentMethodOptionsInput = {
   appId?: InputMaybe<Scalars['String']>;
   client: StripePostPaymentIntentsClientWechatPayPaymentMethodOptions;
   setupFutureUsage?: InputMaybe<StripePostPaymentIntentsSetupFutureUsageWechatPayPaymentMethodOptions>;
+};
+
+export type StripePostPaymentIntentsZipPaymentMethodOptionsInput = {
+  setupFutureUsage?: InputMaybe<StripePostPaymentIntentsSetupFutureUsageZipPaymentMethodOptions>;
 };
 
 export type StripePostPaymentLinksAdjustableQuantityLineItemsInput = {
@@ -27237,7 +27795,9 @@ export type StripePostPaymentLinksCustomFieldsInput = {
   dropdown?: InputMaybe<StripePostPaymentLinksDropdownCustomFieldsInput>;
   key: Scalars['String'];
   label: StripePostPaymentLinksLabelCustomFieldsInput;
+  numeric?: InputMaybe<StripePostPaymentLinksNumericCustomFieldsInput>;
   optional?: InputMaybe<Scalars['Boolean']>;
+  text?: InputMaybe<StripePostPaymentLinksTextCustomFieldsInput>;
   type: StripePostPaymentLinksTypeCustomFields;
 };
 
@@ -27316,6 +27876,11 @@ export type StripePostPaymentLinksLineItemsInput = {
   adjustableQuantity?: InputMaybe<StripePostPaymentLinksAdjustableQuantityLineItemsInput>;
   price: Scalars['String'];
   quantity: Scalars['Int'];
+};
+
+export type StripePostPaymentLinksNumericCustomFieldsInput = {
+  maximumLength?: InputMaybe<Scalars['Int']>;
+  minimumLength?: InputMaybe<Scalars['Int']>;
 };
 
 export type StripePostPaymentLinksOptionsDropdownCustomFieldsInput = {
@@ -27593,7 +28158,9 @@ export type StripePostPaymentLinksPaymentLinkCustomFieldsInput = {
   dropdown?: InputMaybe<StripePostPaymentLinksPaymentLinkDropdownCustomFieldsInput>;
   key: Scalars['String'];
   label: StripePostPaymentLinksPaymentLinkLabelCustomFieldsInput;
+  numeric?: InputMaybe<StripePostPaymentLinksPaymentLinkNumericCustomFieldsInput>;
   optional?: InputMaybe<Scalars['Boolean']>;
+  text?: InputMaybe<StripePostPaymentLinksPaymentLinkTextCustomFieldsInput>;
   type: StripePostPaymentLinksPaymentLinkTypeCustomFields;
 };
 
@@ -27663,6 +28230,11 @@ export type StripePostPaymentLinksPaymentLinkLineItemsInput = {
   quantity?: InputMaybe<Scalars['Int']>;
 };
 
+export type StripePostPaymentLinksPaymentLinkNumericCustomFieldsInput = {
+  maximumLength?: InputMaybe<Scalars['Int']>;
+  minimumLength?: InputMaybe<Scalars['Int']>;
+};
+
 export type StripePostPaymentLinksPaymentLinkOptionsDropdownCustomFieldsInput = {
   label: Scalars['String'];
   value: Scalars['String'];
@@ -27691,6 +28263,11 @@ export type StripePostPaymentLinksPaymentLinkShippingAddressCustomTextInput = {
 
 export type StripePostPaymentLinksPaymentLinkSubmitCustomTextInput = {
   message: Scalars['String'];
+};
+
+export type StripePostPaymentLinksPaymentLinkTextCustomFieldsInput = {
+  maximumLength?: InputMaybe<Scalars['Int']>;
+  minimumLength?: InputMaybe<Scalars['Int']>;
 };
 
 export enum StripePostPaymentLinksPaymentLinkTypeAfterCompletion {
@@ -27802,6 +28379,11 @@ export enum StripePostPaymentLinksTermsOfServiceConsentCollection {
   None = 'NONE',
   Required = 'REQUIRED'
 }
+
+export type StripePostPaymentLinksTextCustomFieldsInput = {
+  maximumLength?: InputMaybe<Scalars['Int']>;
+  minimumLength?: InputMaybe<Scalars['Int']>;
+};
 
 export type StripePostPaymentLinksTransferDataInput = {
   amount?: InputMaybe<Scalars['Int']>;
@@ -28044,6 +28626,7 @@ export type StripePostPaymentMethodsInput = {
   type?: InputMaybe<StripePostPaymentMethodsType>;
   usBankAccount?: InputMaybe<StripePostPaymentMethodsUsBankAccountInput>;
   wechatPay?: InputMaybe<Scalars['JSON']>;
+  zip?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostPaymentMethodsKlarnaInput = {
@@ -28144,7 +28727,8 @@ export enum StripePostPaymentMethodsType {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export type StripePostPaymentMethodsUsBankAccountInput = {
@@ -29561,6 +30145,7 @@ export type StripePostSetupIntentsBillingDetailsPaymentMethodDataInput = {
 
 export type StripePostSetupIntentsBlikPaymentMethodOptionsInput = {
   code?: InputMaybe<Scalars['String']>;
+  mandateOptions?: InputMaybe<StripePostSetupIntentsMandateOptionsBlikPaymentMethodOptionsInput>;
 };
 
 export type StripePostSetupIntentsBoletoPaymentMethodDataInput = {
@@ -29585,6 +30170,10 @@ export enum StripePostSetupIntentsCountrySofortPaymentMethodData {
 export enum StripePostSetupIntentsCurrencyAcssDebitPaymentMethodOptions {
   Cad = 'CAD',
   Usd = 'USD'
+}
+
+export enum StripePostSetupIntentsCurrencyOffSessionMandateOptionsBlikPaymentMethodOptions {
+  Pln = 'PLN'
 }
 
 export type StripePostSetupIntentsCustomerAcceptanceMandateDataInput = {
@@ -29803,6 +30392,7 @@ export type StripePostSetupIntentsIntentBillingDetailsPaymentMethodDataInput = {
 
 export type StripePostSetupIntentsIntentBlikPaymentMethodOptionsInput = {
   code?: InputMaybe<Scalars['String']>;
+  mandateOptions?: InputMaybe<StripePostSetupIntentsIntentMandateOptionsBlikPaymentMethodOptionsInput>;
 };
 
 export type StripePostSetupIntentsIntentBoletoPaymentMethodDataInput = {
@@ -29982,6 +30572,7 @@ export type StripePostSetupIntentsIntentConfirmBillingDetailsPaymentMethodDataIn
 
 export type StripePostSetupIntentsIntentConfirmBlikPaymentMethodOptionsInput = {
   code?: InputMaybe<Scalars['String']>;
+  mandateOptions?: InputMaybe<StripePostSetupIntentsIntentConfirmMandateOptionsBlikPaymentMethodOptionsInput>;
 };
 
 export type StripePostSetupIntentsIntentConfirmBoletoPaymentMethodDataInput = {
@@ -30006,6 +30597,10 @@ export enum StripePostSetupIntentsIntentConfirmCountrySofortPaymentMethodData {
 export enum StripePostSetupIntentsIntentConfirmCurrencyAcssDebitPaymentMethodOptions {
   Cad = 'CAD',
   Usd = 'USD'
+}
+
+export enum StripePostSetupIntentsIntentConfirmCurrencyOffSessionMandateOptionsBlikPaymentMethodOptions {
+  Pln = 'PLN'
 }
 
 export type StripePostSetupIntentsIntentConfirmCustomerAcceptanceMandateDataInput = {
@@ -30059,6 +30654,13 @@ export enum StripePostSetupIntentsIntentConfirmIntervalMandateOptionsCardPayment
   Year = 'YEAR'
 }
 
+export enum StripePostSetupIntentsIntentConfirmIntervalOffSessionMandateOptionsBlikPaymentMethodOptions {
+  Day = 'DAY',
+  Month = 'MONTH',
+  Week = 'WEEK',
+  Year = 'YEAR'
+}
+
 export type StripePostSetupIntentsIntentConfirmKlarnaPaymentMethodDataInput = {
   dob?: InputMaybe<StripePostSetupIntentsIntentConfirmDobKlarnaPaymentMethodDataInput>;
 };
@@ -30081,6 +30683,11 @@ export type StripePostSetupIntentsIntentConfirmMandateOptionsAcssDebitPaymentMet
   intervalDescription?: InputMaybe<Scalars['String']>;
   paymentSchedule?: InputMaybe<StripePostSetupIntentsIntentConfirmPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions>;
   transactionType?: InputMaybe<StripePostSetupIntentsIntentConfirmTransactionTypeMandateOptionsAcssDebitPaymentMethodOptions>;
+};
+
+export type StripePostSetupIntentsIntentConfirmMandateOptionsBlikPaymentMethodOptionsInput = {
+  expiresAfter?: InputMaybe<Scalars['Int']>;
+  offSession?: InputMaybe<StripePostSetupIntentsIntentConfirmOffSessionMandateOptionsBlikPaymentMethodOptionsInput>;
 };
 
 export type StripePostSetupIntentsIntentConfirmMandateOptionsCardPaymentMethodOptionsInput = {
@@ -30112,6 +30719,13 @@ export enum StripePostSetupIntentsIntentConfirmNetworkCardPaymentMethodOptions {
 
 export type StripePostSetupIntentsIntentConfirmNetworksUsBankAccountPaymentMethodOptionsInput = {
   requested?: InputMaybe<Array<StripePostSetupIntentsIntentConfirmRequestedNetworksUsBankAccountPaymentMethodOptions>>;
+};
+
+export type StripePostSetupIntentsIntentConfirmOffSessionMandateOptionsBlikPaymentMethodOptionsInput = {
+  amount: Scalars['Int'];
+  currency: StripePostSetupIntentsIntentConfirmCurrencyOffSessionMandateOptionsBlikPaymentMethodOptions;
+  interval: StripePostSetupIntentsIntentConfirmIntervalOffSessionMandateOptionsBlikPaymentMethodOptions;
+  intervalCount: Scalars['Int'];
 };
 
 export type StripePostSetupIntentsIntentConfirmOnlineCustomerAcceptanceMandateDataInput = {
@@ -30158,6 +30772,7 @@ export type StripePostSetupIntentsIntentConfirmPaymentMethodDataInput = {
   type: StripePostSetupIntentsIntentConfirmTypePaymentMethodData;
   usBankAccount?: InputMaybe<StripePostSetupIntentsIntentConfirmUsBankAccountPaymentMethodDataInput>;
   wechatPay?: InputMaybe<Scalars['JSON']>;
+  zip?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostSetupIntentsIntentConfirmPaymentMethodOptionsInput = {
@@ -30255,7 +30870,8 @@ export enum StripePostSetupIntentsIntentConfirmTypePaymentMethodData {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export type StripePostSetupIntentsIntentConfirmUsBankAccountPaymentMethodDataInput = {
@@ -30296,6 +30912,10 @@ export enum StripePostSetupIntentsIntentCountrySofortPaymentMethodData {
 export enum StripePostSetupIntentsIntentCurrencyAcssDebitPaymentMethodOptions {
   Cad = 'CAD',
   Usd = 'USD'
+}
+
+export enum StripePostSetupIntentsIntentCurrencyOffSessionMandateOptionsBlikPaymentMethodOptions {
+  Pln = 'PLN'
 }
 
 export enum StripePostSetupIntentsIntentDefaultForMandateOptionsAcssDebitPaymentMethodOptions {
@@ -30352,6 +30972,13 @@ export enum StripePostSetupIntentsIntentIntervalMandateOptionsCardPaymentMethodO
   Year = 'YEAR'
 }
 
+export enum StripePostSetupIntentsIntentIntervalOffSessionMandateOptionsBlikPaymentMethodOptions {
+  Day = 'DAY',
+  Month = 'MONTH',
+  Week = 'WEEK',
+  Year = 'YEAR'
+}
+
 export type StripePostSetupIntentsIntentKlarnaPaymentMethodDataInput = {
   dob?: InputMaybe<StripePostSetupIntentsIntentDobKlarnaPaymentMethodDataInput>;
 };
@@ -30366,6 +30993,11 @@ export type StripePostSetupIntentsIntentMandateOptionsAcssDebitPaymentMethodOpti
   intervalDescription?: InputMaybe<Scalars['String']>;
   paymentSchedule?: InputMaybe<StripePostSetupIntentsIntentPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions>;
   transactionType?: InputMaybe<StripePostSetupIntentsIntentTransactionTypeMandateOptionsAcssDebitPaymentMethodOptions>;
+};
+
+export type StripePostSetupIntentsIntentMandateOptionsBlikPaymentMethodOptionsInput = {
+  expiresAfter?: InputMaybe<Scalars['Int']>;
+  offSession?: InputMaybe<StripePostSetupIntentsIntentOffSessionMandateOptionsBlikPaymentMethodOptionsInput>;
 };
 
 export type StripePostSetupIntentsIntentMandateOptionsCardPaymentMethodOptionsInput = {
@@ -30397,6 +31029,13 @@ export enum StripePostSetupIntentsIntentNetworkCardPaymentMethodOptions {
 
 export type StripePostSetupIntentsIntentNetworksUsBankAccountPaymentMethodOptionsInput = {
   requested?: InputMaybe<Array<StripePostSetupIntentsIntentRequestedNetworksUsBankAccountPaymentMethodOptions>>;
+};
+
+export type StripePostSetupIntentsIntentOffSessionMandateOptionsBlikPaymentMethodOptionsInput = {
+  amount: Scalars['Int'];
+  currency: StripePostSetupIntentsIntentCurrencyOffSessionMandateOptionsBlikPaymentMethodOptions;
+  interval: StripePostSetupIntentsIntentIntervalOffSessionMandateOptionsBlikPaymentMethodOptions;
+  intervalCount: Scalars['Int'];
 };
 
 export type StripePostSetupIntentsIntentP24PaymentMethodDataInput = {
@@ -30438,6 +31077,7 @@ export type StripePostSetupIntentsIntentPaymentMethodDataInput = {
   type: StripePostSetupIntentsIntentTypePaymentMethodData;
   usBankAccount?: InputMaybe<StripePostSetupIntentsIntentUsBankAccountPaymentMethodDataInput>;
   wechatPay?: InputMaybe<Scalars['JSON']>;
+  zip?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostSetupIntentsIntentPaymentMethodOptionsInput = {
@@ -30531,7 +31171,8 @@ export enum StripePostSetupIntentsIntentTypePaymentMethodData {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export type StripePostSetupIntentsIntentUsBankAccountPaymentMethodDataInput = {
@@ -30575,6 +31216,13 @@ export enum StripePostSetupIntentsIntervalMandateOptionsCardPaymentMethodOptions
   Year = 'YEAR'
 }
 
+export enum StripePostSetupIntentsIntervalOffSessionMandateOptionsBlikPaymentMethodOptions {
+  Day = 'DAY',
+  Month = 'MONTH',
+  Week = 'WEEK',
+  Year = 'YEAR'
+}
+
 export type StripePostSetupIntentsKlarnaPaymentMethodDataInput = {
   dob?: InputMaybe<StripePostSetupIntentsDobKlarnaPaymentMethodDataInput>;
 };
@@ -30593,6 +31241,11 @@ export type StripePostSetupIntentsMandateOptionsAcssDebitPaymentMethodOptionsInp
   intervalDescription?: InputMaybe<Scalars['String']>;
   paymentSchedule?: InputMaybe<StripePostSetupIntentsPaymentScheduleMandateOptionsAcssDebitPaymentMethodOptions>;
   transactionType?: InputMaybe<StripePostSetupIntentsTransactionTypeMandateOptionsAcssDebitPaymentMethodOptions>;
+};
+
+export type StripePostSetupIntentsMandateOptionsBlikPaymentMethodOptionsInput = {
+  expiresAfter?: InputMaybe<Scalars['Int']>;
+  offSession?: InputMaybe<StripePostSetupIntentsOffSessionMandateOptionsBlikPaymentMethodOptionsInput>;
 };
 
 export type StripePostSetupIntentsMandateOptionsCardPaymentMethodOptionsInput = {
@@ -30624,6 +31277,13 @@ export enum StripePostSetupIntentsNetworkCardPaymentMethodOptions {
 
 export type StripePostSetupIntentsNetworksUsBankAccountPaymentMethodOptionsInput = {
   requested?: InputMaybe<Array<StripePostSetupIntentsRequestedNetworksUsBankAccountPaymentMethodOptions>>;
+};
+
+export type StripePostSetupIntentsOffSessionMandateOptionsBlikPaymentMethodOptionsInput = {
+  amount: Scalars['Int'];
+  currency: StripePostSetupIntentsCurrencyOffSessionMandateOptionsBlikPaymentMethodOptions;
+  interval: StripePostSetupIntentsIntervalOffSessionMandateOptionsBlikPaymentMethodOptions;
+  intervalCount: Scalars['Int'];
 };
 
 export type StripePostSetupIntentsOnlineCustomerAcceptanceMandateDataInput = {
@@ -30670,6 +31330,7 @@ export type StripePostSetupIntentsPaymentMethodDataInput = {
   type: StripePostSetupIntentsTypePaymentMethodData;
   usBankAccount?: InputMaybe<StripePostSetupIntentsUsBankAccountPaymentMethodDataInput>;
   wechatPay?: InputMaybe<Scalars['JSON']>;
+  zip?: InputMaybe<Scalars['JSON']>;
 };
 
 export type StripePostSetupIntentsPaymentMethodOptionsInput = {
@@ -30773,7 +31434,8 @@ export enum StripePostSetupIntentsTypePaymentMethodData {
   SepaDebit = 'SEPA_DEBIT',
   Sofort = 'SOFORT',
   UsBankAccount = 'US_BANK_ACCOUNT',
-  WechatPay = 'WECHAT_PAY'
+  WechatPay = 'WECHAT_PAY',
+  Zip = 'ZIP'
 }
 
 export type StripePostSetupIntentsUsBankAccountPaymentMethodDataInput = {
@@ -32322,10 +32984,13 @@ export enum StripePostTaxCalculationsTaxabilityOverrideCustomerDetails {
 }
 
 export enum StripePostTaxCalculationsTypeTaxIdsCustomerDetails {
+  AdNrt = 'AD_NRT',
   AeTrn = 'AE_TRN',
+  ArCuit = 'AR_CUIT',
   AuAbn = 'AU_ABN',
   AuArn = 'AU_ARN',
   BgUic = 'BG_UIC',
+  BoTin = 'BO_TIN',
   BrCnpj = 'BR_CNPJ',
   BrCpf = 'BR_CPF',
   CaBn = 'CA_BN',
@@ -32336,6 +33001,11 @@ export enum StripePostTaxCalculationsTypeTaxIdsCustomerDetails {
   CaQst = 'CA_QST',
   ChVat = 'CH_VAT',
   ClTin = 'CL_TIN',
+  CnTin = 'CN_TIN',
+  CoNit = 'CO_NIT',
+  CrTin = 'CR_TIN',
+  DoRcn = 'DO_RCN',
+  EcRuc = 'EC_RUC',
   EgTin = 'EG_TIN',
   EsCif = 'ES_CIF',
   EuOssVat = 'EU_OSS_VAT',
@@ -32360,18 +33030,24 @@ export enum StripePostTaxCalculationsTypeTaxIdsCustomerDetails {
   MySst = 'MY_SST',
   NoVat = 'NO_VAT',
   NzGst = 'NZ_GST',
+  PeRuc = 'PE_RUC',
   PhTin = 'PH_TIN',
+  RsPib = 'RS_PIB',
   RuInn = 'RU_INN',
   RuKpp = 'RU_KPP',
   SaVat = 'SA_VAT',
   SgGst = 'SG_GST',
   SgUen = 'SG_UEN',
   SiTin = 'SI_TIN',
+  SvNit = 'SV_NIT',
   ThVat = 'TH_VAT',
   TrTin = 'TR_TIN',
   TwVat = 'TW_VAT',
   UaVat = 'UA_VAT',
   UsEin = 'US_EIN',
+  UyRuc = 'UY_RUC',
+  VeRif = 'VE_RIF',
+  VnTin = 'VN_TIN',
   ZaVat = 'ZA_VAT'
 }
 
@@ -34448,6 +35124,7 @@ export type StripeQueryCreditNotesIdArgs = {
 export type StripeQueryCreditNotesPreviewArgs = {
   amount?: InputMaybe<Scalars['Int']>;
   creditAmount?: InputMaybe<Scalars['Int']>;
+  effectiveAt?: InputMaybe<Scalars['Int']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   invoice: Scalars['String'];
   lines?: InputMaybe<Array<StripeGetCreditNotesPreviewLinesInput>>;
@@ -34464,6 +35141,7 @@ export type StripeQueryCreditNotesPreviewArgs = {
 export type StripeQueryCreditNotesPreviewLinesArgs = {
   amount?: InputMaybe<Scalars['Int']>;
   creditAmount?: InputMaybe<Scalars['Int']>;
+  effectiveAt?: InputMaybe<Scalars['Int']>;
   endingBefore?: InputMaybe<Scalars['String']>;
   expand?: InputMaybe<Array<Scalars['String']>>;
   invoice: Scalars['String'];
@@ -35463,6 +36141,7 @@ export type StripeQuerySubscriptionSchedulesArgs = {
 
 
 export type StripeQuerySubscriptionsArgs = {
+  automaticTax?: InputMaybe<StripeGetSubscriptionsAutomaticTaxInput>;
   collectionMethod?: InputMaybe<StripeGetSubscriptionsCollectionMethod>;
   created?: InputMaybe<StripeIntOrGetSubscriptionsCreatedUnionInput>;
   currentPeriodEnd?: InputMaybe<StripeIntOrGetSubscriptionsCurrentPeriodEndUnionInput>;
@@ -38214,6 +38893,11 @@ export type StripeStringOrPostPaymentIntentsIntentConfirmWechatPayPaymentMethodO
   stripePostPaymentIntentsIntentConfirmWechatPayPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentConfirmWechatPayPaymentMethodOptionsInput>;
 };
 
+export type StripeStringOrPostPaymentIntentsIntentConfirmZipPaymentMethodOptionsUnionInput = {
+  string?: InputMaybe<Scalars['String']>;
+  stripePostPaymentIntentsIntentConfirmZipPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentConfirmZipPaymentMethodOptionsInput>;
+};
+
 export type StripeStringOrPostPaymentIntentsIntentCustomerBalancePaymentMethodOptionsUnionInput = {
   string?: InputMaybe<Scalars['String']>;
   stripePostPaymentIntentsIntentCustomerBalancePaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentCustomerBalancePaymentMethodOptionsInput>;
@@ -38319,6 +39003,11 @@ export type StripeStringOrPostPaymentIntentsIntentWechatPayPaymentMethodOptionsU
   stripePostPaymentIntentsIntentWechatPayPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentWechatPayPaymentMethodOptionsInput>;
 };
 
+export type StripeStringOrPostPaymentIntentsIntentZipPaymentMethodOptionsUnionInput = {
+  string?: InputMaybe<Scalars['String']>;
+  stripePostPaymentIntentsIntentZipPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsIntentZipPaymentMethodOptionsInput>;
+};
+
 export type StripeStringOrPostPaymentIntentsKlarnaPaymentMethodOptionsUnionInput = {
   string?: InputMaybe<Scalars['String']>;
   stripePostPaymentIntentsKlarnaPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsKlarnaPaymentMethodOptionsInput>;
@@ -38387,6 +39076,11 @@ export type StripeStringOrPostPaymentIntentsUsBankAccountPaymentMethodOptionsUni
 export type StripeStringOrPostPaymentIntentsWechatPayPaymentMethodOptionsUnionInput = {
   string?: InputMaybe<Scalars['String']>;
   stripePostPaymentIntentsWechatPayPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsWechatPayPaymentMethodOptionsInput>;
+};
+
+export type StripeStringOrPostPaymentIntentsZipPaymentMethodOptionsUnionInput = {
+  string?: InputMaybe<Scalars['String']>;
+  stripePostPaymentIntentsZipPaymentMethodOptionsInput?: InputMaybe<StripePostPaymentIntentsZipPaymentMethodOptionsInput>;
 };
 
 export type StripeStringOrPostPaymentLinksCustomFieldsInvoiceDataInvoiceCreationUnionInput = {
@@ -39205,10 +39899,13 @@ export enum StripeTaxIdObject {
 }
 
 export enum StripeTaxIdType {
+  AdNrt = 'AD_NRT',
   AeTrn = 'AE_TRN',
+  ArCuit = 'AR_CUIT',
   AuAbn = 'AU_ABN',
   AuArn = 'AU_ARN',
   BgUic = 'BG_UIC',
+  BoTin = 'BO_TIN',
   BrCnpj = 'BR_CNPJ',
   BrCpf = 'BR_CPF',
   CaBn = 'CA_BN',
@@ -39219,6 +39916,11 @@ export enum StripeTaxIdType {
   CaQst = 'CA_QST',
   ChVat = 'CH_VAT',
   ClTin = 'CL_TIN',
+  CnTin = 'CN_TIN',
+  CoNit = 'CO_NIT',
+  CrTin = 'CR_TIN',
+  DoRcn = 'DO_RCN',
+  EcRuc = 'EC_RUC',
   EgTin = 'EG_TIN',
   EsCif = 'ES_CIF',
   EuOssVat = 'EU_OSS_VAT',
@@ -39243,19 +39945,25 @@ export enum StripeTaxIdType {
   MySst = 'MY_SST',
   NoVat = 'NO_VAT',
   NzGst = 'NZ_GST',
+  PeRuc = 'PE_RUC',
   PhTin = 'PH_TIN',
+  RsPib = 'RS_PIB',
   RuInn = 'RU_INN',
   RuKpp = 'RU_KPP',
   SaVat = 'SA_VAT',
   SgGst = 'SG_GST',
   SgUen = 'SG_UEN',
   SiTin = 'SI_TIN',
+  SvNit = 'SV_NIT',
   ThVat = 'TH_VAT',
   TrTin = 'TR_TIN',
   TwVat = 'TW_VAT',
   UaVat = 'UA_VAT',
   Unknown = 'UNKNOWN',
   UsEin = 'US_EIN',
+  UyRuc = 'UY_RUC',
+  VeRif = 'VE_RIF',
+  VnTin = 'VN_TIN',
   ZaVat = 'ZA_VAT'
 }
 
@@ -39294,10 +40002,13 @@ export type StripeTaxProductResourceCustomerDetailsResourceTaxId = {
 };
 
 export enum StripeTaxProductResourceCustomerDetailsResourceTaxIdType {
+  AdNrt = 'AD_NRT',
   AeTrn = 'AE_TRN',
+  ArCuit = 'AR_CUIT',
   AuAbn = 'AU_ABN',
   AuArn = 'AU_ARN',
   BgUic = 'BG_UIC',
+  BoTin = 'BO_TIN',
   BrCnpj = 'BR_CNPJ',
   BrCpf = 'BR_CPF',
   CaBn = 'CA_BN',
@@ -39308,6 +40019,11 @@ export enum StripeTaxProductResourceCustomerDetailsResourceTaxIdType {
   CaQst = 'CA_QST',
   ChVat = 'CH_VAT',
   ClTin = 'CL_TIN',
+  CnTin = 'CN_TIN',
+  CoNit = 'CO_NIT',
+  CrTin = 'CR_TIN',
+  DoRcn = 'DO_RCN',
+  EcRuc = 'EC_RUC',
   EgTin = 'EG_TIN',
   EsCif = 'ES_CIF',
   EuOssVat = 'EU_OSS_VAT',
@@ -39332,19 +40048,25 @@ export enum StripeTaxProductResourceCustomerDetailsResourceTaxIdType {
   MySst = 'MY_SST',
   NoVat = 'NO_VAT',
   NzGst = 'NZ_GST',
+  PeRuc = 'PE_RUC',
   PhTin = 'PH_TIN',
+  RsPib = 'RS_PIB',
   RuInn = 'RU_INN',
   RuKpp = 'RU_KPP',
   SaVat = 'SA_VAT',
   SgGst = 'SG_GST',
   SgUen = 'SG_UEN',
   SiTin = 'SI_TIN',
+  SvNit = 'SV_NIT',
   ThVat = 'TH_VAT',
   TrTin = 'TR_TIN',
   TwVat = 'TW_VAT',
   UaVat = 'UA_VAT',
   Unknown = 'UNKNOWN',
   UsEin = 'US_EIN',
+  UyRuc = 'UY_RUC',
+  VeRif = 'VE_RIF',
+  VnTin = 'VN_TIN',
   ZaVat = 'ZA_VAT'
 }
 
@@ -39438,8 +40160,27 @@ export type StripeTaxProductResourceTaxBreakdown = {
   amount: Scalars['Int'];
   inclusive: Scalars['Boolean'];
   taxRateDetails: StripeTaxProductResourceTaxRateDetails;
+  taxabilityReason: StripeTaxProductResourceTaxBreakdownTaxabilityReason;
   taxableAmount: Scalars['Int'];
 };
+
+export enum StripeTaxProductResourceTaxBreakdownTaxabilityReason {
+  CustomerExempt = 'CUSTOMER_EXEMPT',
+  NotCollecting = 'NOT_COLLECTING',
+  NotSubjectToTax = 'NOT_SUBJECT_TO_TAX',
+  NotSupported = 'NOT_SUPPORTED',
+  PortionProductExempt = 'PORTION_PRODUCT_EXEMPT',
+  PortionReducedRated = 'PORTION_REDUCED_RATED',
+  PortionStandardRated = 'PORTION_STANDARD_RATED',
+  ProductExempt = 'PRODUCT_EXEMPT',
+  ProductExemptHoliday = 'PRODUCT_EXEMPT_HOLIDAY',
+  ProportionallyRated = 'PROPORTIONALLY_RATED',
+  ReducedRated = 'REDUCED_RATED',
+  ReverseCharge = 'REVERSE_CHARGE',
+  StandardRated = 'STANDARD_RATED',
+  TaxableBasisReduced = 'TAXABLE_BASIS_REDUCED',
+  ZeroRated = 'ZERO_RATED'
+}
 
 export type StripeTaxProductResourceTaxCalculationShippingCost = {
   __typename?: 'StripeTaxProductResourceTaxCalculationShippingCost';
@@ -40157,6 +40898,19 @@ export type StripeTreasuryFinancialAccountsResourceAbaRecord = {
   routingNumber: Scalars['String'];
 };
 
+export type StripeTreasuryFinancialAccountsResourceAbaToggleSettings = {
+  __typename?: 'StripeTreasuryFinancialAccountsResourceAbaToggleSettings';
+  requested: Scalars['Boolean'];
+  status: StripeTreasuryFinancialAccountsResourceAbaToggleSettingsStatus;
+  statusDetails: Array<StripeTreasuryFinancialAccountsResourceTogglesSettingStatusDetails>;
+};
+
+export enum StripeTreasuryFinancialAccountsResourceAbaToggleSettingsStatus {
+  Active = 'ACTIVE',
+  Pending = 'PENDING',
+  Restricted = 'RESTRICTED'
+}
+
 export type StripeTreasuryFinancialAccountsResourceAchToggleSettings = {
   __typename?: 'StripeTreasuryFinancialAccountsResourceAchToggleSettings';
   requested: Scalars['Boolean'];
@@ -40206,7 +40960,7 @@ export enum StripeTreasuryFinancialAccountsResourceFinancialAddressType {
 
 export type StripeTreasuryFinancialAccountsResourceFinancialAddressesFeatures = {
   __typename?: 'StripeTreasuryFinancialAccountsResourceFinancialAddressesFeatures';
-  aba?: Maybe<StripeTreasuryFinancialAccountsResourceToggleSettings>;
+  aba?: Maybe<StripeTreasuryFinancialAccountsResourceAbaToggleSettings>;
 };
 
 export type StripeTreasuryFinancialAccountsResourceInboundTransfers = {
@@ -40902,6 +41656,69 @@ export type StripeWebhookEndpoint = {
 export enum StripeWebhookEndpointObject {
   WebhookEndpoint = 'WEBHOOK_ENDPOINT'
 }
+
+export type TemplateData = {
+  __typename?: 'TemplateData';
+  /** when the model was created */
+  createdAt: Scalars['DateTime'];
+  data: Scalars['JSON'];
+  /** Unique identifier */
+  id: Scalars['ID'];
+  site: Site;
+  template: Scalars['String'];
+  /** when the model was updated */
+  updatedAt: Scalars['DateTime'];
+};
+
+export type TemplateDataByInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type TemplateDataConnection = {
+  __typename?: 'TemplateDataConnection';
+  edges?: Maybe<Array<Maybe<TemplateDataEdge>>>;
+  /** Information to aid in pagination */
+  pageInfo: PageInfo;
+};
+
+/** Input to create a TemplateData */
+export type TemplateDataCreateInput = {
+  data: Scalars['JSON'];
+  site: SiteToTemplateDataCreateSiteRelation;
+  template: Scalars['String'];
+};
+
+export type TemplateDataCreatePayload = {
+  __typename?: 'TemplateDataCreatePayload';
+  templateData?: Maybe<TemplateData>;
+};
+
+export type TemplateDataDeletePayload = {
+  __typename?: 'TemplateDataDeletePayload';
+  deletedId: Scalars['ID'];
+};
+
+export type TemplateDataEdge = {
+  __typename?: 'TemplateDataEdge';
+  cursor: Scalars['String'];
+  node: TemplateData;
+};
+
+export type TemplateDataOrderByInput = {
+  createdAt?: InputMaybe<OrderByDirection>;
+};
+
+/** Input to update a TemplateData */
+export type TemplateDataUpdateInput = {
+  data?: InputMaybe<Scalars['JSON']>;
+  site?: InputMaybe<SiteToTemplateDataUpdateSiteRelation>;
+  template?: InputMaybe<Scalars['String']>;
+};
+
+export type TemplateDataUpdatePayload = {
+  __typename?: 'TemplateDataUpdatePayload';
+  templateData?: Maybe<TemplateData>;
+};
 
 export type User = {
   __typename?: 'User';

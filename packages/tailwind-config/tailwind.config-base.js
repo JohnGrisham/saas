@@ -62,7 +62,7 @@ module.exports = {
       },
     },
   },
-  plugins: ['@tailwindcss/forms'],
+  plugins: [],
   safelist: [
     {
       pattern:
