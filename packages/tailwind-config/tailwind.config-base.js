@@ -66,7 +66,7 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /(bg|text|border)-(primary|secondary|accent|danger|warning|info)-(50|100|200|300|400|500|600|700|800|900)/,
+        /(bg|text|border|ring)-(primary|secondary|accent|danger|warning|info|gray|red|orange|yellow|green|teal|blue|indigo|purple|pink)-(50|100|200|300|400|500|600|700|800|900)/,
       variants: [
         'dark',
         'hover',
