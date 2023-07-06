@@ -27,7 +27,10 @@ export const Table: React.FC<TableProps> = ({
 }) => {
   const [page, setPage] = React.useState(currentPage);
   const styles = React.useMemo(() => {
-    return cn([`flex flex-col text-gray-900 dark:text-white`, classNames]);
+    return cn([
+      `ui-flex ui-flex-col ui-text-gray-900 dark:ui-text-white`,
+      classNames,
+    ]);
   }, [classNames]);
 
   const tableHeaders = React.useMemo(
@@ -36,7 +39,7 @@ export const Table: React.FC<TableProps> = ({
         <th
           key={`${header}-${i}`}
           scope="col"
-          className="px-6 py-4 text-sm font-medium text-left"
+          className="ui-px-6 ui-py-4 ui-text-left ui-text-sm ui-font-medium"
         >
           {header}
         </th>
@@ -51,10 +54,10 @@ export const Table: React.FC<TableProps> = ({
           <tr
             id={id}
             key={id}
-            className="transition duration-300 ease-in-out border-b hover:bg-accent-100"
+            className="ui-border-b ui-transition ui-duration-300 ui-ease-in-out hover:ui-bg-accent-100"
           >
             {cells.map((cell) => (
-              <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
+              <td className="ui-whitespace-nowrap ui-px-6 ui-py-4 ui-text-sm ui-font-medium">
                 {cell}
               </td>
             ))}
@@ -67,9 +70,9 @@ export const Table: React.FC<TableProps> = ({
   const getPageLinkStyles = React.useCallback(
     (pageNum: number) => {
       return cn([
-        `page-link relative block rounded rounded border-0 py-1.5 px-3 outline-none transition-all duration-300 hover:bg-gray-200 hover:text-gray-800 focus:shadow-none dark:text-white dark:hover:text-gray-800`,
+        `page-link ui-relative ui-block ui-rounded ui-rounded ui-border-0 ui-py-1.5 ui-px-3 ui-outline-none ui-transition-all ui-duration-300 hover:ui-bg-gray-200 hover:ui-text-gray-800 focus:ui-shadow-none dark:ui-text-white dark:hover:ui-text-gray-800`,
         {
-          [`bg-primary-600 text-white`]: page === pageNum,
+          [`ui-bg-primary-600 ui-text-white`]: page === pageNum,
         },
       ]);
     },
@@ -85,9 +88,10 @@ export const Table: React.FC<TableProps> = ({
       return {
         children: navType,
         className: cn([
-          `page-link relative block rounded rounded border-0 py-1.5 px-3 outline-none transition-all duration-300 focus:shadow-none hover:text-gray-800 hover:bg-gray-200 focus:shadow-none`,
+          `page-link ui-relative ui-block ui-rounded ui-rounded ui-border-0 ui-py-1.5 ui-px-3 ui-outline-none ui-transition-all ui-duration-300 focus:ui-shadow-none hover:ui-text-gray-800 hover:ui-bg-gray-200 focus:ui-shadow-none`,
           {
-            'bg-transparent pointer-events-none text-gray-500': disabled,
+            'ui-bg-transparent ui-pointer-events-none ui-text-gray-500':
+              disabled,
           },
         ]),
         type: 'button',
@@ -119,11 +123,11 @@ export const Table: React.FC<TableProps> = ({
 
   return (
     <div className={styles}>
-      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-          <div className="overflow-hidden">
-            <table className="min-w-full">
-              <thead className="border-b">
+      <div className="ui-overflow-x-auto sm:-ui-mx-6 lg:-ui-mx-8">
+        <div className="ui-inline-block ui-min-w-full ui-py-2 sm:ui-px-6 lg:ui-px-8">
+          <div className="ui-overflow-hidden">
+            <table className="ui-min-w-full">
+              <thead className="ui-border-b">
                 <tr>{tableHeaders}</tr>
               </thead>
               <tbody>{tableRows[page - 1]}</tbody>
@@ -131,10 +135,10 @@ export const Table: React.FC<TableProps> = ({
           </div>
         </div>
       </div>
-      <div className="flex justify-center">
-        <nav aria-label="Page navigation example">
-          <ul className="flex list-style-none">
-            <li className="page-item disabled">
+      <div className="ui-flex ui-justify-center">
+        <nav>
+          <ul className="ui-list-style-none ui-flex">
+            <li className="page-item ui-disabled">
               <Button tabIndex={-1} {...getPageNavProps('Previous')} />
             </li>
             {tableRows.map((_p, i) => {

@@ -17,7 +17,7 @@ export const Basic = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="ui-flex ui-flex-col ui-justify-center">
       <Button onClick={() => setOpen(true)}>Show Modal</Button>
       <Modal title="Modal Title" isOpen={open} onClose={() => setOpen(false)}>
         <>Modal body text goes here.</>

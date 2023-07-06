@@ -12,7 +12,7 @@ const accordian = {
 export default accordian;
 
 export const Basic = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Accordion header="Accordion Item #1">
       <strong>This is the first item&apos;s accordion body.</strong> It is shown
       by default, until the collapse plugin adds the appropriate classes that we
@@ -26,7 +26,7 @@ export const Basic = () => (
 );
 
 export const Disabled = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Accordion header="Accordion Item #1" disabled>
       <strong>This is the first item&apos;s accordion body.</strong> It is shown
       by default, until the collapse plugin adds the appropriate classes that we

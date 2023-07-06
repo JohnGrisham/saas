@@ -46,10 +46,10 @@ export const Select: React.FC<SelectProps> = ({
   const { setFieldValue, values } = useFormikContext();
   const styles = React.useMemo(() => {
     return cn([
-      `form-select block w-full text-ellipsis mr-4 appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding bg-no-repeat px-4 py-2 text-xl font-normal transition ease-in-out focus:border-primary-600 focus:outline-none`,
+      `ui-form-select ui-block ui-w-full ui-text-ellipsis ui-mr-4 ui-appearance-none ui-rounded ui-border ui-border-solid ui-border-gray-300 ui-bg-white ui-bg-clip-padding ui-bg-no-repeat ui-px-4 ui-py-2 ui-text-xl ui-font-normal ui-transition ui-ease-in-out focus:ui-border-primary-600 focus:ui-outline-none`,
       {
-        'text-gray-400': !required && !(values as Record<string, any>)[name],
-        'text-gray-700': required || (values as Record<string, any>)[name],
+        'ui-text-gray-400': !required && !(values as Record<string, any>)[name],
+        'ui-text-gray-700': required || (values as Record<string, any>)[name],
       },
       classNames,
     ]);

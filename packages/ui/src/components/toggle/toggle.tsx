@@ -25,12 +25,13 @@ export const Toggle: React.FC<ToggleProps> = ({
 }) => {
   const styles = React.useMemo(() => {
     return cn([
-      `h-5 -ml-10 align-top bg-white bg-gray-300 bg-no-repeat bg-contain rounded-full shadow-sm appearance-none cursor-pointer form-check-input w-9 focus:outline-none checked:bg-${color}-600 toggle`,
+      `ui-h-5 -ui-ml-10 ui-align-top ui-bg-white ui-bg-gray-300 ui-bg-no-repeat ui-bg-contain ui-rounded-full ui-shadow-sm ui-appearance-none ui-cursor-pointer form-check-input ui-w-9 focus:ui-outline-none checked:ui-bg-${color}-600 toggle`,
       {
-        'px-2.5 py-1.5': size === 'small',
-        'px-5 py-3': size === 'medium',
-        'px-7 py-3': size === 'large',
-        'pointer-events-none text-decoration-none select-none': disabled,
+        'ui-px-2.5 ui-py-1.5': size === 'small',
+        'ui-px-5 ui-py-3': size === 'medium',
+        'ui-px-7 ui-py-3': size === 'large',
+        'ui-pointer-events-none ui-text-decoration-none ui-select-none':
+          disabled,
       },
       classNames,
     ]);
@@ -39,13 +40,13 @@ export const Toggle: React.FC<ToggleProps> = ({
   return (
     <div
       aria-disabled={disabled}
-      className={`flex justify-center ${
-        disabled ? 'cursor-not-allowed opacity-60' : ''
+      className={`ui-flex ui-justify-center ${
+        disabled ? 'ui-cursor-not-allowed ui-opacity-60' : ''
       }`}
     >
       <div
-        className={`form-check form-switch flex items-center ${
-          label ? 'pl-10' : undefined
+        className={`form-check form-switch ui-flex ui-items-center ${
+          label ? 'ui-pl-10' : undefined
         }`}
       >
         <input
@@ -58,7 +59,7 @@ export const Toggle: React.FC<ToggleProps> = ({
         />
         {label && (
           <label
-            className="inline-block ml-2 text-gray-800 form-check-label"
+            className="form-check-label ui-ml-2 ui-inline-block ui-text-gray-800 dark:ui-text-white"
             htmlFor={label}
           >
             {label}

@@ -53,7 +53,7 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
     './src/**/*.{js,ts,jsx,tsx}',
   ],
-  darkMode: 'class',
+  darkMode: ['class', '[class~="dark"]'],
   theme: {
     extend: {
       colors: {

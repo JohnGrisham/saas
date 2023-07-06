@@ -28,7 +28,7 @@ export const Basic = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="ui-flex ui-flex-col ui-justify-center">
       <Table data={data} headers={headers} />
     </div>
   );

@@ -24,7 +24,7 @@ export const Stepper: React.FC<StepperProps> = ({
 }) => {
   const styles = React.useMemo(() => {
     return cn([
-      `relative p-0 m-0 w-full list-none overflow-hidden`,
+      `ui-relative ui-p-0 ui-m-0 ui-w-full ui-list-none ui-overflow-hidden`,
       classNames,
     ]);
   }, [classNames]);
@@ -38,11 +38,11 @@ export const Stepper: React.FC<StepperProps> = ({
         return (
           <li
             key={`${header}-${stepNumber}`}
-            className="relative stepper-step h-fit"
+            className="ui-stepper-step ui-relative ui-h-fit"
           >
             <div
-              className={`text-decoration-none flex items-center leading-4 hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+              className={`ui-text-decoration-none ui-flex ui-items-center ui-leading-4 hover:ui-bg-gray-100 dark:hover:ui-bg-gray-700 ${
+                disabled ? 'ui-cursor-not-allowed' : 'ui-cursor-pointer'
               }`}
               aria-disabled={disabled}
               onClick={() => {
@@ -61,13 +61,13 @@ export const Stepper: React.FC<StepperProps> = ({
               >
                 {stepNumber}
               </Button>
-              <h2 className="ml-2 dark:text-white">{header}</h2>
+              <h2 className="ui-ml-2 dark:ui-text-white">{header}</h2>
             </div>
             <motion.section
               initial={isActive}
               animate={isActive ? 'open' : 'collapsed'}
               exit="collapsed"
-              className="flex pt-4 pb-6 pr-6 overflow-hidden justify-left pl-14 dark:text-white"
+              className="ui-justify-left ui-flex ui-overflow-hidden ui-pt-4 ui-pb-6 ui-pr-6 ui-pl-14 dark:ui-text-white"
               variants={{
                 open: {
                   height: 'auto',

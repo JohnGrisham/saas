@@ -17,11 +17,13 @@ export type FieldProps = Omit<
   label?: string;
   required?: boolean;
   type?: React.HTMLInputTypeAttribute;
+  inset?: boolean;
 };
 
 export const Field: React.FC<FieldProps> = ({
   classNames,
   disabled = false,
+  inset = false,
   label,
   name,
   required,
@@ -79,42 +81,68 @@ export const Field: React.FC<FieldProps> = ({
     },
     [name, required, type],
   );
-  const [_field, meta] = useField({
+  const [field, meta] = useField({
     disabled,
     name,
     type,
     validate: validate ?? validateType,
   });
+
+  const isErrorState = (meta.touched || meta.value) && meta.error;
+
+  const inputStateStyles = React.useMemo(() => {
+    return cn({
+      '!ui-ring-danger-500 !ui-text-danger-500': isErrorState,
+      'ui-text-gray-700': !meta.error,
+      'focus-within:ui-ring-primary-600': !meta.error,
+    });
+  }, [isErrorState, meta]);
+
   const styles = React.useMemo(() => {
     return cn([
-      `block w-full px-4 py-2 m-0 text-xl font-normal transition ease-in-out bg-white border border-solid rounded form-control bg-clip-padding focus:bg-white focus:outline-none`,
+      `ui-block ui-w-full ui-m-0 ui-font-normal ui-transition ui-ease-in-out ui-bg-white ui-form-control ui-ring-gray-300 ui-bg-clip-padding focus:ui-bg-white focus:ui-outline-none`,
+      inputStateStyles,
       {
-        'border-danger-500 text-danger-500': meta.touched && meta.error,
-        'text-gray-700': !meta.error,
-        'border-gray-300 focus:border-primary-600': meta.touched && !meta.error,
+        'ui-ring-1 ui-ring-inset ui-rounded-md ui-px-4 ui-py-2 ui-text-xl':
+          !inset,
       },
       classNames,
     ]);
-  }, [classNames, meta]);
+  }, [classNames, inset, inputStateStyles]);
+
+  const wrapperStyles = React.useMemo(() => {
+    return cn([
+      `ui-transition ui-ease-in-out ui-w-full ui-mb-6 field-wrapper`,
+      inset ? inputStateStyles : '',
+      {
+        'ui-bg-white ui-px-3 ui-pb-1.5 ui-pt-2.5 ui-rounded-md ui-shadow-sm ui-ring-1 ui-ring-inset ui-ring-gray-300':
+          inset,
+      },
+    ]);
+  }, [inset, inputStateStyles]);
+
+  const labelStyles = React.useMemo(() => {
+    return cn([
+      `ui-block ui-font-bold ui-text-gray-700 ui-text-left`,
+      {
+        '!ui-text-danger-500': isErrorState,
+        'ui-text-xs': inset,
+        'ui-text-sm dark:ui-text-white': !inset,
+      },
+    ]);
+  }, [isErrorState, inset]);
 
   return (
     <div
       aria-required={required}
       aria-disabled={disabled}
-      className={`relative flex justify-center ${
-        disabled ? 'cursor-not-allowed opacity-60' : ''
+      className={`ui-relative ui-flex ui-justify-center ${
+        disabled ? 'ui-cursor-not-allowed ui-opacity-60' : ''
       }`}
     >
-      <div className="w-full mb-6 field-wrapper">
+      <div className={wrapperStyles}>
         {label && (
-          <label
-            className={`block pt-2 pb-1 text-sm font-bold ${
-              meta.touched && meta.error
-                ? 'text-danger-500'
-                : 'text-gray-700 dark:text-white'
-            }`}
-            htmlFor={label}
-          >
+          <label className={labelStyles} htmlFor={label}>
             {label}
           </label>
         )}
@@ -124,11 +152,15 @@ export const Field: React.FC<FieldProps> = ({
           id={label}
           name={name}
           type={type}
+          placeholder={
+            inputProps.placeholder ?? inset ? `Insert ${name}...` : undefined
+          }
+          value={inputProps.defaultValue ? undefined : field.value || ''}
           {...inputProps}
         />
         <ErrorMessage
           component="a"
-          className="absolute text-sm text-red-500"
+          className="ui-absolute ui-text-sm ui-text-red-500"
           name={name}
         />
       </div>

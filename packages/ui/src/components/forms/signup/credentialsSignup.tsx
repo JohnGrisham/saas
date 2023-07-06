@@ -54,9 +54,9 @@ export const CredentialsSignup: React.FC<CredentialsSignupProps> = ({
 
   return (
     <section className="w-screen">
-      <div className="flex flex-wrap items-center justify-center text-gray-800 g-6">
-        <div className="w-7/12 -mt-10 md:mt-0 lg:w-5/12">{image}</div>
-        <div className="lg:w-4/12">
+      <div className="ui-g-6 ui-flex ui-flex-wrap ui-items-center ui-justify-center ui-text-gray-800">
+        <div className="md:mt-0 -ui-mt-10 ui-w-7/12 lg:ui-w-5/12">{image}</div>
+        <div className="lg:ui-w-4/12">
           {registration.status === RegistrationStatus.STARTED ? (
             <RegistrationFlow onSubmit={postRegister} onSkip={postRegister} />
           ) : (
@@ -113,16 +113,16 @@ export const CredentialsSignup: React.FC<CredentialsSignupProps> = ({
               ) : (
                 <Field label="Password" name="password" type="password" />
               )}
-              <div className="flex flex-col items-center mt-8">
+              <div className="ui-mt-8 ui-flex ui-flex-col ui-items-center">
                 <button
                   type="submit"
-                  className="inline-block w-full py-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md bg-primary-600 px-7 hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                  className="ui-inline-block ui-w-full ui-rounded ui-bg-primary-600 ui-py-3 ui-px-7 ui-text-sm ui-font-medium ui-uppercase ui-leading-snug ui-text-white ui-shadow-md ui-transition ui-duration-150 ui-ease-in-out hover:ui-bg-primary-700 hover:ui-shadow-lg focus:ui-bg-primary-700 focus:ui-shadow-lg focus:ui-outline-none focus:ui-ring-0 active:ui-bg-primary-800 active:ui-shadow-lg"
                 >
                   {authState === AuthState.PRE_SIGNUP ? 'Signup' : 'Verify'}
                 </button>
                 {signInUrl && (
                   <a
-                    className="mt-2 text-primary-600 hover:cursor-pointer dark:text-white"
+                    className="ui-mt-2 ui-text-primary-600 hover:ui-cursor-pointer dark:ui-text-white"
                     href={signInUrl}
                   >
                     Sign in

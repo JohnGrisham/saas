@@ -12,7 +12,7 @@ const avatar = {
 export default avatar;
 
 export const Basic = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Avatar
       imageSrc="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
       title="John Doe"

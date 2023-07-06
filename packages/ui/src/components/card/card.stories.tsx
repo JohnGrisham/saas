@@ -12,7 +12,7 @@ const card = {
 export default card;
 
 export const Basic = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Card
       title="A basic card"
       description="Some quick example text to build on the card title and make up the bulk of the card's

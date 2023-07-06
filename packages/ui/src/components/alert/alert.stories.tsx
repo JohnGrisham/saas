@@ -12,41 +12,42 @@ const alert = {
 export default alert;
 
 export const Basic = () => (
-  <div className="flex flex-col justify-center">
+  <div className="ui-flex ui-flex-col ui-justify-center">
     <Alert>
-      <strong className="mr-1">Primary</strong> You should check in on some of
-      those fields below.
+      <strong className="ui-mr-1">Primary</strong> You should check in on some
+      of those fields below.
     </Alert>
     <Alert color="secondary">
-      <strong className="mr-1">Secondary</strong> You should check in on some of
-      those fields below.
+      <strong className="ui-mr-1">Secondary</strong> You should check in on some
+      of those fields below.
     </Alert>
     <Alert color="accent">
-      <strong className="mr-1">Accent</strong> You should check in on some of
+      <strong className="ui-mr-1">Accent</strong> You should check in on some of
       those fields below.
     </Alert>
     <Alert color="danger">
-      <strong className="mr-1">Danger</strong> You should check in on some of
+      <strong className="ui-mr-1">Danger</strong> You should check in on some of
       those fields below.
     </Alert>
     <Alert color="warning">
-      <strong className="mr-1">Warning</strong> You should check in on some of
-      those fields below.
+      <strong className="ui-mr-1">Warning</strong> You should check in on some
+      of those fields below.
     </Alert>
     <Alert color="info">
-      <strong className="mr-1">Info</strong> You should check in on some of
+      <strong className="ui-mr-1">Info</strong> You should check in on some of
       those fields below.
     </Alert>
   </div>
 );
 
 export const Dismissable = () => (
-  <div className="flex flex-col justify-center">
+  <div className="ui-flex ui-flex-col ui-justify-center">
     <Alert dismissable>
-      <strong className="mr-1">Dismiss Me</strong> but I will be back on refresh
+      <strong className="ui-mr-1">Dismiss Me</strong> but I will be back on
+      refresh
     </Alert>
     <Alert dismissable dismissLifetime="session">
-      <strong className="mr-1">Dismiss Me</strong> and I will be gone for the
+      <strong className="ui-mr-1">Dismiss Me</strong> and I will be gone for the
       duration of your session
     </Alert>
   </div>

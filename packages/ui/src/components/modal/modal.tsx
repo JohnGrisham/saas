@@ -23,9 +23,9 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
   const styles = React.useMemo(() => {
     return cn([
-      `modal fade fixed top-0 left-0 h-full w-full overflow-y-auto overflow-x-hidden outline-none`,
+      `modal ui-fade ui-fixed ui-top-0 ui-left-0 ui-h-full ui-w-full ui-overflow-y-auto ui-overflow-x-hidden ui-outline-none`,
       {
-        hidden: !isOpen,
+        ['ui-hidden']: !isOpen,
       },
       classNames,
     ]);
@@ -42,30 +42,30 @@ export const Modal: React.FC<ModalProps> = ({
       aria-labelledby={label}
       aria-hidden="true"
     >
-      <div className="modal-dialog pointer-events-none relative w-auto">
-        <div className="modal-content pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none">
-          <div className="modal-header flex flex-shrink-0 items-center justify-between rounded-t-md border-b border-gray-200 p-4">
+      <div className="modal-dialog ui-pointer-events-none ui-relative ui-w-auto">
+        <div className="modal-content ui-pointer-events-auto ui-relative ui-flex ui-w-full ui-flex-col ui-rounded-md ui-border-none ui-bg-white ui-bg-clip-padding ui-text-current ui-shadow-lg ui-outline-none">
+          <div className="modal-header ui-flex ui-flex-shrink-0 ui-items-center ui-justify-between ui-rounded-t-md ui-border-b ui-border-gray-200 ui-p-4">
             <h5
-              className="text-xl font-medium leading-normal text-gray-800"
+              className="ui-text-xl ui-font-medium ui-leading-normal ui-text-gray-800"
               id={label}
             >
               {title}
             </h5>
             <button
               type="button"
-              className="box-content h-4 w-4 rounded-none border-none p-1 text-black opacity-50 hover:text-black hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              className="ui-box-content ui-h-4 ui-w-4 ui-rounded-none ui-border-none ui-p-1 ui-text-black ui-opacity-50 hover:ui-text-black hover:ui-no-underline hover:ui-opacity-75 focus:ui-opacity-100 focus:ui-shadow-none focus:ui-outline-none"
               onClick={onClose}
               aria-label="Close"
             >
               <FontAwesomeIcon icon={faTimes} />
             </button>
           </div>
-          <div className="modal-body relative p-4">{children}</div>
-          <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t border-gray-200 p-4">
+          <div className="modal-body ui-relative ui-p-4">{children}</div>
+          <div className="modal-footer ui-flex ui-flex-shrink-0 ui-flex-wrap ui-items-center ui-justify-end ui-rounded-b-md ui-border-t ui-border-gray-200 ui-p-4">
             {!footer ? (
               <button
                 type="button"
-                className="rounded bg-purple-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg"
+                className="py-2.5 ui-rounded ui-bg-purple-600 ui-px-6 ui-text-xs ui-font-medium ui-uppercase ui-leading-tight ui-text-white ui-shadow-md ui-transition ui-duration-150 ui-ease-in-out hover:ui-bg-purple-700 hover:ui-shadow-lg focus:ui-bg-purple-700 focus:ui-shadow-lg focus:ui-outline-none focus:ui-ring-0 active:ui-bg-purple-800 active:ui-shadow-lg"
                 onClick={onClose}
               >
                 Close

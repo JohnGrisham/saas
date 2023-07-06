@@ -20,7 +20,7 @@ export const RegistrationFlow: React.FC<RegistrationFlowProps> = ({
       {
         header: 'Tell us about your profession',
         children: (
-          <div className="flex flex-col items-baseline">
+          <div className="ui-flex ui-flex-col ui-items-baseline">
             <Field
               name="company"
               label="Company Name"
@@ -47,7 +47,7 @@ export const RegistrationFlow: React.FC<RegistrationFlowProps> = ({
         disabled: !valid,
         header: 'Set up your workspace',
         children: (
-          <div className="flex flex-col items-baseline">
+          <div className="ui-flex ui-flex-col ui-items-baseline">
             <Field
               name="workspace"
               label="Workspace Name"
@@ -66,13 +66,13 @@ export const RegistrationFlow: React.FC<RegistrationFlowProps> = ({
 
   return (
     <Form
-      innerFormProps={{ className: 'w-full' }}
+      innerFormProps={{ className: 'ui-w-full' }}
       initialValues={{ company: '', workspace: '', role: '' }}
       onSubmit={onSubmit}
       isInitialValid={false}
     >
       {({ isValid }) => (
-        <div className="relative">
+        <div className="ui-relative">
           <Stepper
             activeStep={activeStep}
             setActiveStep={setActiveStep}
@@ -80,7 +80,7 @@ export const RegistrationFlow: React.FC<RegistrationFlowProps> = ({
           />
           <Button
             onClick={onSkip}
-            classNames="absolute top-2 left-[310px]"
+            classNames="ui-absolute ui-top-2 ui-left-[310px]"
             style={{ padding: 0 }}
             link
           >

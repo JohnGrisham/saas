@@ -8,8 +8,8 @@ const toggle = {
 export default toggle;
 
 export const Basic = () => (
-  <div className="flex justify-center">
-    <div className="flex flex-col items-start">
+  <div className="ui-flex ui-justify-center">
+    <div className="ui-flex ui-flex-col ui-items-start">
       <Toggle label="Primary" />
       <Toggle label="Secondary" color="secondary" />
       <Toggle label="Accent" color="accent" />
@@ -22,8 +22,8 @@ export const Basic = () => (
 );
 
 export const Sizes = () => (
-  <div className="flex justify-center">
-    <div className="flex flex-col items-start">
+  <div className="ui-flex ui-justify-center">
+    <div className="ui-flex ui-flex-col ui-items-start">
       <Toggle label="Small" size="small" />
       <Toggle label="Medium" />
       <Toggle label="Large" size="large" />
