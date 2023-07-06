@@ -22,7 +22,7 @@ const button = {
 export default button;
 
 export const Solid = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Button>Primary</Button>
     <Button color="secondary">Secondary</Button>
     <Button color="accent">Accent</Button>
@@ -34,7 +34,7 @@ export const Solid = () => (
 );
 
 export const Outline = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Button outline>Primary</Button>
     <Button color="secondary" outline>
       Secondary
@@ -58,7 +58,7 @@ export const Outline = () => (
 );
 
 export const Rounded = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Button rounded>Primary</Button>
     <Button color="secondary" rounded>
       Secondary
@@ -82,7 +82,7 @@ export const Rounded = () => (
 );
 
 export const Link = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Button link="http://localhost:6006/?path=/story/button--link">
       Primary
     </Button>
@@ -120,7 +120,7 @@ export const Link = () => (
 );
 
 export const Icon = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Button rounded>
       <FontAwesomeIcon icon={faArrowDown} />
     </Button>
@@ -146,7 +146,7 @@ export const Icon = () => (
 );
 
 export const Sizes = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Button size="small">Small</Button>
     <Button>Medium</Button>
     <Button size="large">Large</Button>

@@ -18,9 +18,9 @@ export const BlurImage: React.FC<BlurImageProps> = ({
   const styles = React.useMemo(
     () =>
       cn([
-        `duration-700 ease-in-out grayscale-0 blur-0 scale-100`,
+        `ui-duration-700 ui-ease-in-out ui-grayscale-0 ui-blur-0 ui-scale-100`,
         {
-          'grayscale blur-2xl scale-110': isLoading,
+          'ui-grayscale ui-blur-2xl ui-scale-110': isLoading,
         },
         classNames,
       ]),

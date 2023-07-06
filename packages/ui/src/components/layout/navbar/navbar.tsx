@@ -55,29 +55,31 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navbarStyles = React.useMemo(() => {
     return cn([
-      `flex border-gray-200 bg-white px-2 py-2.5 dark:bg-gray-900 sm:px-4 relative`,
+      `ui-flex ui-border-gray-200 ui-bg-white ui-px-2 ui-py-2.5 dark:ui-bg-gray-900 sm:ui-px-4 ui-relative`,
       classNames,
     ]);
   }, [classNames]);
 
   const navWrapperStyles = React.useMemo(() => {
     return cn([
-      `items-center w-full md:flex md:w-auto md:space-x-8 md:mr-20`,
+      `ui-items-center ui-w-full md:ui-flex md:ui-w-auto md:ui-space-x-8 md:ui-mr-20`,
       {
-        hidden: !mobileMenuOpen,
-        ['absolute left-0 top-12']: mobileMenuOpen,
+        ['ui-hidden']: !mobileMenuOpen,
+        ['ui-absolute ui-left-0 ui-top-12']: mobileMenuOpen,
       },
     ]);
   }, [mobileMenuOpen]);
 
   const navStyles = React.useMemo(() => {
     return cn([
-      `mt-4 mx-2 flex flex-col text-gray-700 dark:text-gray-400 rounded-lg border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:text-sm md:font-medium md:dark:bg-gray-900`,
+      `ui-mt-4 ui-mx-2 ui-flex ui-flex-col ui-text-gray-700 dark:ui-text-gray-400 ui-rounded-lg ui-border ui-border-gray-100 ui-bg-gray-50 ui-p-4 dark:ui-border-gray-700 dark:ui-bg-gray-800 md:ui-mt-0 md:ui-flex-row md:ui-space-x-8 md:ui-border-0 md:ui-bg-white md:ui-text-sm md:ui-font-medium md:dark:ui-bg-gray-900`,
     ]);
   }, []);
 
   const postNavStyles = React.useMemo(() => {
-    return cn([`flex items-center absolute right-16 top-[1.4rem]`]);
+    return cn([
+      `ui-flex ui-items-center ui-absolute ui-right-16 ui-top-[1.4rem]`,
+    ]);
   }, []);
 
   const profileDropdownItems = React.useMemo(() => {
@@ -96,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         href: '/account',
       });
       options.unshift({
-        classNames: 'bg-primary-700 text-white',
+        classNames: 'ui-bg-primary-700 ui-text-white',
         title: session.user.email,
         disabled: true,
       });
@@ -108,9 +110,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   const getNavItemStyles = React.useCallback(
     (href: string) => {
       return cn([
-        `block rounded py-2 pl-3 pr-4 hover:bg-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent hover:text-primary-500 md:dark:hover:bg-transparent md:dark:hover:text-white`,
+        `ui-block ui-rounded ui-py-2 ui-pl-3 ui-pr-4 hover:ui-bg-white dark:hover:ui-bg-gray-700 dark:hover:ui-text-white md:ui-border-0 md:ui-p-0 md:hover:ui-bg-transparent hover:ui-text-primary-500 md:dark:hover:ui-bg-transparent md:dark:hover:ui-text-white`,
         {
-          ['text-primary-700']: pathname === href,
+          ['ui-text-primary-700']: pathname === href,
         },
       ]);
     },
@@ -129,24 +131,24 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav className={navbarStyles}>
-      <div className="container mx-auto flex h-14 flex-wrap items-center justify-between">
-        <a href={logoProps.href ?? '#'} className="flex items-center">
+      <div className="ui-container ui-mx-auto ui-flex ui-h-14 ui-flex-wrap ui-items-center ui-justify-between">
+        <a href={logoProps.href ?? '#'} className="ui-flex ui-items-center">
           <img
             src={logoProps.src}
-            className="mr-3 h-6"
+            className="ui-mr-3 ui-h-6"
             alt={`${logoProps.title} Logo`}
           />
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+          <span className="ui-self-center ui-whitespace-nowrap ui-text-xl ui-font-semibold dark:ui-text-white">
             {logoProps.title}
           </span>
         </a>
-        <div className="flex h-full">
+        <div className="ui-flex ui-h-full">
           {status === 'authenticated' && session && (
             <>
               <div className={navWrapperStyles} id="navbar-items-wrapper">
                 <ul className={navStyles}>
                   {navItems.map((item) => (
-                    <li key={item.id} className="nav-item p-2">
+                    <li key={item.id} className="nav-item ui-p-2">
                       {item.type === 'simple' ? (
                         <Link
                           href={item.href}
@@ -163,15 +165,18 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <div className={postNavStyles}>
                 <Button
-                  className="ml-3 mr-1 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
+                  className="ui-ml-3 ui-mr-1 ui-inline-flex ui-items-center ui-rounded-lg ui-p-2 ui-text-sm ui-text-gray-500 hover:ui-bg-white focus:ui-outline-none focus:ui-ring-2 focus:ui-ring-gray-200 dark:ui-text-gray-400 dark:hover:ui-bg-gray-700 dark:focus:ui-ring-gray-600 md:ui-hidden"
                   aria-controls="navbar-items-wrapper"
                   aria-expanded="false"
                   onClick={() => setMobileMenuOpen((current) => !current)}
                 >
-                  <span className="sr-only">Open main menu</span>
+                  <span className="ui-sr-only">Open main menu</span>
                   <FontAwesomeIcon icon={faBars} size={'lg'} />
                 </Button>
-                <Dropdown listClassNames="right-0" items={profileDropdownItems}>
+                <Dropdown
+                  listClassNames="ui-right-0"
+                  items={profileDropdownItems}
+                >
                   <Avatar
                     imageSrc={
                       session.user?.image ??
@@ -187,7 +192,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
       <Toggle
         checked={isDarkMode}
-        classNames="md:mb-1.5 ml-2 toggle-dark-mode"
+        classNames="md:ui-mb-1.5 ml-2 toggle-dark-mode"
         onChange={() => setDarkMode((currentMode) => !currentMode)}
       />
     </nav>

@@ -13,7 +13,7 @@ const dropdown = {
 export default dropdown;
 
 export const Basic = () => (
-  <div className="flex justify-center space-x-2">
+  <div className="ui-flex ui-justify-center ui-space-x-2">
     <Dropdown
       items={[
         {

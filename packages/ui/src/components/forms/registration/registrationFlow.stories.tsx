@@ -8,7 +8,7 @@ const registration = {
 export default registration;
 
 export const Basic = () => (
-  <div className="flex justify-center">
+  <div className="ui-flex ui-justify-center">
     <RegistrationFlow
       onSubmit={(values) => console.log(values)}
       onSkip={() => {}}

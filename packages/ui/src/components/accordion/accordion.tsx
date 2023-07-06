@@ -23,9 +23,9 @@ export const Accordion: React.FC<AccordionProps> = ({
 
   const accordionStyles = React.useMemo(() => {
     return cn([
-      `accordion-item border border-gray-200 bg-white overflow-hidden dark:bg-zinc-700 dark:text-white`,
+      `accordion-item ui-border ui-border-gray-200 ui-bg-white ui-overflow-hidden dark:ui-bg-zinc-700 dark:ui-text-white`,
       {
-        [`cursor-not-allowed text-decoration-none`]: disabled,
+        [`ui-cursor-not-allowed ui-text-decoration-none`]: disabled,
       },
       classNames,
     ]);
@@ -33,29 +33,29 @@ export const Accordion: React.FC<AccordionProps> = ({
 
   const headerStyles = React.useMemo(() => {
     return cn([
-      `accordion-header accordion-button relative mb-0
-      flex
-      w-full
-      select-none
-      items-center
-      rounded-none
-      border-0 bg-inherit py-4
-      px-5
-      justify-between
-      text-left
-      text-base
-      transition
-      focus:outline-none`,
+      `accordion-header accordion-button ui-relative ui-mb-0
+      ui-flex
+      ui-w-full
+      ui-select-none
+      ui-items-center
+      ui-rounded-none
+      ui-border-0 ui-bg-inherit ui-py-4
+      ui-px-5
+      ui-justify-between
+      ui-text-left
+      ui-text-base
+      ui-transition
+      focus:ui-outline-none`,
       {
-        [`border-b border-primary-200 text-primary-500`]: !collapsed,
-        [`cursor-pointer`]: !disabled,
-        [`pointer-events-none`]: disabled,
+        [`ui-border-b ui-border-primary-200 ui-text-primary-500`]: !collapsed,
+        [`ui-cursor-pointer`]: !disabled,
+        [`ui-pointer-events-none`]: disabled,
       },
     ]);
   }, [collapsed, disabled]);
 
   return (
-    <div className="w-full accordion">
+    <div className="accordion ui-w-full">
       <div className={accordionStyles}>
         <motion.h2
           className={headerStyles}
@@ -80,7 +80,7 @@ export const Accordion: React.FC<AccordionProps> = ({
               initial="collapsed"
               animate="open"
               exit="collapsed"
-              className="px-5 py-4 text-black accordion-body dark:text-white"
+              className="accordion-body ui-px-5 ui-py-4 ui-text-black dark:ui-text-white"
               variants={{
                 open: { height: 'auto', visibility: 'visible' },
                 collapsed: { height: 0, visibility: 'collapse' },

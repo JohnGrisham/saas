@@ -22,14 +22,14 @@ export const Alert: React.FC<AlertProps> = ({
 
   const alertStyles = React.useMemo(() => {
     return cn([
-      `alert alert-dismissible fade show mb-3 inline-flex w-full items-center rounded-lg bg-${color}-100 py-5 px-6 text-base text-${color}-700`,
+      `alert alert-dismissible ui-fade ui-show ui-mb-3 ui-inline-flex ui-w-full ui-items-center ui-rounded-lg ui-bg-${color}-100 ui-py-5 ui-px-6 ui-text-base ui-text-${color}-700`,
       classNames,
     ]);
   }, [classNames, color]);
 
   const buttonStyles = React.useMemo(() => {
     return cn([
-      `ml-auto rounded-none border-none text-${color}-900 opacity-50 hover:text-${color}-900 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none`,
+      `ui-ml-auto ui-rounded-none ui-border-none ui-text-${color}-900 ui-opacity-50 hover:ui-text-${color}-900 hover:ui-no-underline hover:ui-opacity-75 focus:ui-opacity-100 focus:ui-shadow-none focus:ui-outline-none`,
     ]);
   }, [color]);
 

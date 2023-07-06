@@ -18,14 +18,14 @@ export const Avatar: React.FC<AvatarProps> = ({
   width = 32,
 }) => {
   const avatarWrapperStyles = React.useMemo(() => {
-    return cn([`avatar text-center`, classNames]);
+    return cn([`avatar ui-text-center`, classNames]);
   }, [classNames]);
 
   const avatarImageStyles = React.useMemo(() => {
     return cn([
-      `mx-auto w-${width} rounded-full`,
+      `ui-mx-auto ui-w-${width} ui-rounded-full`,
       {
-        ['mb-4']: title,
+        ['ui-mb-4']: title,
       },
     ]);
   }, [title, width]);
@@ -34,12 +34,12 @@ export const Avatar: React.FC<AvatarProps> = ({
     <div className={avatarWrapperStyles}>
       <img src={imageSrc} className={avatarImageStyles} alt="Avatar" />
       {title && (
-        <h5 className="mb-2 text-xl font-medium leading-tight dark:text-white">
+        <h5 className="ui-mb-2 ui-text-xl ui-font-medium ui-leading-tight dark:ui-text-white">
           John Doe
         </h5>
       )}
       {description && (
-        <p className="text-gray-500 dark:text-white">Web designer</p>
+        <p className="ui-text-gray-500 dark:ui-text-white">Web designer</p>
       )}
     </div>
   );

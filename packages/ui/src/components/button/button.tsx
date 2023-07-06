@@ -26,24 +26,25 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   const styles = React.useMemo(() => {
     return cn([
-      `inline-block rounded font-medium uppercase transition duration-150 ease-in-out`,
+      `ui-inline-block ui-rounded ui-font-medium ui-uppercase ui-transition ui-duration-150 ui-ease-in-out`,
       {
-        'text-xs leading-tight': size !== 'large',
-        'px-2.5 py-1.5': size === 'small',
-        'px-3.5 py-2.5': size === 'medium',
-        'px-7 py-3 text-sm leading-snug': size === 'large',
-        'pointer-events-none text-decoration-none select-none': disabled,
-        'text-white': !link && !outline,
-        'rounded-full': rounded && !link,
-        'shadow-md': !link,
-        [`cursor-pointer hover:text-${color}-600 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200`]:
+        'ui-text-xs ui-leading-tight': size !== 'large',
+        'ui-px-2.5 ui-py-1.5': size === 'small',
+        'ui-px-3.5 ui-py-2.5': size === 'medium',
+        'ui-px-7 ui-py-3 ui-text-sm ui-leading-snug': size === 'large',
+        'ui-pointer-events-none ui-text-decoration-none ui-select-none':
+          disabled,
+        'ui-text-white': !link && !outline,
+        '!ui-rounded-full': rounded && !link,
+        'ui-shadow-md': !link,
+        [`ui-cursor-pointer hover:ui-text-${color}-600 hover:ui-bg-gray-100 focus:ui-bg-gray-100 focus:ui-outline-none focus:ui-ring-0 active:ui-bg-gray-200`]:
           link && !disabled,
-        [`border-${color}-500 border-2`]: outline && !link,
-        [`hover:text-${color}-400 focus:text-${color}-400 active:text-${color}-400 hover:bg-opacity-5`]:
+        [`ui-border-${color}-500 ui-border-2`]: outline && !link,
+        [`hover:ui-text-${color}-400 focus:ui-text-${color}-400 active:ui-text-${color}-400 hover:ui-bg-opacity-5`]:
           outline && !link && !disabled,
-        [`bg-${color}-500`]: !outline && !link,
-        [`text-${color}-500`]: outline || link,
-        [`hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg dark:hover:text-${color}-700 dark:focus:text-${color}-700 dark:active:text-${color}-700 hover:bg-${color}-600 dark:hover:bg-${color}-400 focus:bg-${color}-700 dark:focus:bg-${color}-300 active:bg-${color}-800 dark:active:bg-${color}-200`]:
+        [`ui-bg-${color}-500`]: !outline && !link,
+        [`ui-text-${color}-500`]: outline || link,
+        [`hover:ui-shadow-lg focus:ui-shadow-lg focus:ui-outline-none focus:ui-ring-0 active:ui-shadow-lg dark:hover:ui-text-${color}-700 dark:focus:ui-text-${color}-700 dark:active:ui-text-${color}-700 hover:ui-bg-${color}-600 dark:hover:ui-bg-${color}-400 focus:ui-bg-${color}-700 dark:focus:ui-bg-${color}-300 active:ui-bg-${color}-800 dark:active:ui-bg-${color}-200`]:
           !link && !disabled,
       },
       classNames,
@@ -52,8 +53,8 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <div
-      className={`flex items-center justify-center space-x-2 ${
-        disabled ? 'cursor-not-allowed opacity-60' : ''
+      className={`ui-flex ui-items-center ui-justify-center ui-space-x-2 ${
+        disabled ? 'ui-cursor-not-allowed ui-opacity-60' : ''
       }`}
       aria-disabled={disabled}
     >

@@ -9,11 +9,12 @@ const input = {
 export default input;
 
 export const Field = () => (
-  <div className="flex justify-center">
+  <div className="ui-flex ui-justify-center">
     <Formik initialValues={{}} onSubmit={() => {}}>
       <section>
         <InputField name="Text No Label" placeholder="No Label" />
         <InputField label="With Label" name="Text With Label" />
+        <InputField label="Inset Label" name="Text" inset />
         <InputField
           label="Number"
           name="number"
@@ -40,7 +41,7 @@ export const Field = () => (
 );
 
 export const Select = () => (
-  <div className="flex justify-center">
+  <div className="ui-flex ui-justify-center">
     <Formik initialValues={{}} onSubmit={() => {}}>
       <section>
         <InputSelect
@@ -54,7 +55,7 @@ export const Select = () => (
           ]}
         />
         <InputSelect
-          name="Select Field"
+          name="Select Field (Required)"
           label="Select Field (Required)"
           placeholder="Select your option"
           options={[

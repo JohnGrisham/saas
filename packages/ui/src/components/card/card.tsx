@@ -15,19 +15,19 @@ export const Card: React.FC<CardProps> = ({
   title,
 }) => {
   const styles = React.useMemo(() => {
-    return cn([`flex justify-center`, classNames]);
+    return cn([`ui-flex ui-justify-center`, classNames]);
   }, [classNames]);
 
   return (
     <div className={styles}>
-      <div className="block max-w-sm rounded-lg bg-white p-6 shadow-lg">
+      <div className="ui-block ui-max-w-sm ui-rounded-lg ui-bg-white ui-p-6 ui-shadow-lg">
         {title && (
-          <h5 className="mb-2 text-xl font-medium leading-tight text-gray-900">
+          <h5 className="ui-mb-2 ui-text-xl ui-font-medium ui-leading-tight ui-text-gray-900">
             {title}
           </h5>
         )}
         {description && (
-          <p className="mb-4 text-base text-gray-700">{description}</p>
+          <p className="ui-mb-4 ui-text-base ui-text-gray-700">{description}</p>
         )}
         {children}
       </div>

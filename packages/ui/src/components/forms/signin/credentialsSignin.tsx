@@ -16,10 +16,12 @@ export const CredentialsSignin: React.FC<CredentialsSignupProps> = ({
   signupUrl,
   signInOptions,
 }) => (
-  <section className="w-screen">
-    <div className="g-6 flex flex-wrap items-center justify-center text-gray-800">
-      <div className="-mt-10 w-7/12 md:mt-0 lg:w-5/12">{backgroundImage}</div>
-      <div className="lg:w-4/12">
+  <section className="ui-w-screen">
+    <div className="ui-g-6 ui-flex ui-flex-wrap ui-items-center ui-justify-center ui-text-gray-800">
+      <div className="-ui-mt-10 ui-w-7/12 md:ui-mt-0 lg:ui-w-5/12">
+        {backgroundImage}
+      </div>
+      <div className="lg:ui-w-4/12">
         <Form
           initialValues={{
             email: '',
@@ -36,7 +38,7 @@ export const CredentialsSignin: React.FC<CredentialsSignupProps> = ({
               window.location.replace(signInOptions.callbackUrl);
             }
           }}
-          innerFormProps={{ className: 'lg:w-10/12' }}
+          innerFormProps={{ className: 'lg:ui-w-10/12' }}
         >
           {({ isValid }) => (
             <>
@@ -47,15 +49,15 @@ export const CredentialsSignin: React.FC<CredentialsSignupProps> = ({
                 type="password"
                 required
               />
-              <div className="mb-6 flex items-center justify-between">
+              <div className="ui-mb-6 ui-flex ui-items-center ui-justify-between">
                 <div className="form-group form-check">
                   <input
                     type="checkbox"
-                    className="form-check-input float-left mt-1 mr-2 h-4 w-4 cursor-pointer appearance-none rounded-sm border border-gray-300 bg-white bg-contain bg-center bg-no-repeat align-top text-white transition duration-200 checked:border-primary-600 checked:bg-primary-600 focus:outline-none"
+                    className="form-check-input ui-float-left ui-mt-1 ui-mr-2 ui-h-4 ui-w-4 ui-cursor-pointer ui-appearance-none ui-rounded-sm ui-border ui-border-gray-300 ui-bg-white ui-bg-contain ui-bg-center ui-bg-no-repeat ui-align-top ui-text-white ui-transition ui-duration-200 checked:ui-border-primary-600 checked:ui-bg-primary-600 focus:ui-outline-none"
                     id="remember-me"
                   />
                   <label
-                    className="form-check-label inline-block text-primary-600"
+                    className="form-check-label ui-inline-block ui-text-primary-600"
                     htmlFor="remember-me"
                   >
                     Remember me
@@ -63,7 +65,7 @@ export const CredentialsSignin: React.FC<CredentialsSignupProps> = ({
                 </div>
                 <a
                   href="#!"
-                  className="text-primary-600 transition duration-200 ease-in-out hover:text-primary-700 focus:text-primary-700 active:text-primary-800"
+                  className="ui-text-primary-600 ui-transition ui-duration-200 ui-ease-in-out hover:ui-text-primary-700 focus:ui-text-primary-700 active:ui-text-primary-800"
                 >
                   Forgot password?
                 </a>
@@ -71,29 +73,29 @@ export const CredentialsSignin: React.FC<CredentialsSignupProps> = ({
               <Button
                 disabled={!isValid}
                 type="submit"
-                className="inline-block w-full rounded bg-primary-600 py-3 px-7 text-sm font-medium uppercase leading-snug text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                className="ui-inline-block ui-w-full ui-rounded ui-bg-primary-600 ui-py-3 ui-px-7 ui-text-sm ui-font-medium ui-uppercase ui-leading-snug ui-text-white ui-shadow-md ui-transition ui-duration-150 ui-ease-in-out hover:ui-bg-primary-700 hover:ui-shadow-lg focus:ui-bg-primary-700 focus:ui-shadow-lg focus:ui-outline-none focus:ui-ring-0 active:ui-bg-primary-800 active:ui-shadow-lg"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
               >
                 Sign in
               </Button>
-              <div className="font-small flex flex-col items-center px-7 text-xs uppercase">
+              <div className="ui-font-small ui-flex ui-flex-col ui-items-center ui-px-7 ui-text-xs ui-uppercase">
                 {signupUrl && (
                   <a
-                    className="mt-2 text-primary-600 hover:cursor-pointer dark:text-white"
+                    className="ui-mt-2 ui-text-primary-600 hover:ui-cursor-pointer dark:ui-text-white"
                     href={signupUrl}
                   >
                     Sign up
                   </a>
                 )}
               </div>
-              <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300">
-                <p className="mx-4 mb-0 text-center font-semibold text-primary-600">
+              <div className="ui-my-4 ui-flex ui-items-center before:ui-mt-0.5 before:ui-flex-1 before:ui-border-t before:ui-border-gray-300 after:ui-mt-0.5 after:ui-flex-1 after:ui-border-t after:ui-border-gray-300">
+                <p className="ui-mx-4 ui-mb-0 ui-text-center ui-font-semibold ui-text-primary-600">
                   OR
                 </p>
               </div>
               <a
-                className="mb-3 flex w-full items-center justify-center rounded py-3 px-7 text-sm font-medium uppercase leading-snug text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                className="ui-mb-3 ui-flex ui-w-full ui-items-center ui-justify-center ui-rounded ui-py-3 ui-px-7 ui-text-sm ui-font-medium ui-uppercase ui-leading-snug ui-text-white ui-shadow-md ui-transition ui-duration-150 ui-ease-in-out hover:ui-shadow-lg focus:ui-shadow-lg focus:ui-outline-none focus:ui-ring-0 active:ui-shadow-lg"
                 style={{ backgroundColor: '#0F9D58' }}
                 href="#!"
                 role="button"

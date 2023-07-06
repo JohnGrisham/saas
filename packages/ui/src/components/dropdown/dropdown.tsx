@@ -22,14 +22,15 @@ export const Dropdown: React.FC<DropdownProps> = ({
   classNames,
   disabled = false,
   items,
-  listClassNames = 'left-0',
+  listClassNames = 'ui-left-0',
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const dropdownWrapperStyles = React.useMemo(() => {
     return cn([
-      `dropdown relative`,
+      `dropdown ui-relative`,
       {
-        'pointer-events-none text-decoration-none select-none': disabled,
+        'ui-pointer-events-none ui-text-decoration-none ui-select-none':
+          disabled,
       },
       classNames,
     ]);
@@ -37,9 +38,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
   const dropdownListStyles = React.useMemo(() => {
     return cn([
-      `absolute z-50 float-left py-2 m-0 mt-1 text-base text-inherit text-left list-none bg-white rounded-lg shadow-lg dropdown-menu min-w-max bg-clip-padding dark:bg-gray-800`,
+      `ui-absolute ui-z-50 ui-float-left ui-py-2 ui-m-0 ui-mt-1 ui-text-base ui-text-inherit ui-text-left ui-list-none ui-bg-white ui-rounded-lg ui-shadow-lg dropdown-menu ui-min-w-max ui-bg-clip-padding dark:ui-bg-gray-800`,
       {
-        hidden: !isOpen,
+        ['ui-hidden']: !isOpen,
       },
       listClassNames,
     ]);
@@ -48,9 +49,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const getListItemStyles = React.useCallback(
     (classNames?: string, disabled?: boolean) => {
       return cn([
-        `dropdown-item block w-full whitespace-nowrap px-4 py-2 text-sm font-normal hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`,
+        `dropdown-item ui-block ui-w-full ui-whitespace-nowrap ui-px-4 ui-py-2 ui-text-sm ui-font-normal hover:ui-bg-gray-100 dark:ui-text-white dark:hover:ui-bg-gray-700`,
         {
-          'pointer-events-none text-decoration-none select-none': disabled,
+          'ui-pointer-events-none ui-text-decoration-none ui-select-none':
+            disabled,
         },
         classNames,
       ]);
@@ -61,7 +63,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div className={dropdownWrapperStyles}>
       <a
-        className="flex items-center dropdown-toggle hidden-arrow"
+        className="dropdown-toggle ui-hidden-arrow ui-flex ui-items-center"
         href="#"
         id="dropdownMenuButton"
         role="button"
