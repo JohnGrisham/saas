@@ -9,7 +9,7 @@ import {
   credentialsSigninHandler,
   googleSigninHandler,
 } from './signin-handlers';
-import { graphQLClient } from 'api';
+import { graphQLClient } from 'client';
 import { JWTOptions } from 'next-auth/jwt';
 import { OAuthUserConfig } from 'next-auth/providers';
 import { Auth } from '@aws-amplify/auth';

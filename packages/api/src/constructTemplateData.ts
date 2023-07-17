@@ -1,13 +1,17 @@
 import type { AnyObject, ObjectSchema, ValidationError } from 'yup';
-import type { TemplateData } from 'client';
+import type { OptionalObjectSchema } from 'yup/lib/object';
 import {
   ChatCompletionRequestMessageRoleEnum,
   OpenAIApi,
   openAI,
 } from './utils';
 
-export type TemplateInfo = Pick<TemplateData, 'data'> & {
-  site: Pick<TemplateData['site'], 'name' | 'description'>;
+export type TemplateInfo = {
+  data: AnyObject;
+  site: {
+    name: string;
+    description: string;
+  };
 };
 
 const isObject = (value: any) =>
@@ -71,9 +75,9 @@ const generateResponse = async (
 
 export const constructTemplateData = async <T extends AnyObject>(
   info: TemplateInfo,
-  schema: ObjectSchema<T>,
+  schema: OptionalObjectSchema<T> | ObjectSchema<T>,
 ): Promise<T> => {
-  const data: T = info.data ?? {};
+  const data = (info.data ?? {}) as T;
 
   try {
     await schema.validate(data, { abortEarly: false });

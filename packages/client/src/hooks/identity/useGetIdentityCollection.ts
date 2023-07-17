@@ -1,4 +1,4 @@
-import { graphQLClient } from 'api';
+import { graphQLClient } from '../../client';
 import {
   useIdentityCollectionQuery,
   QueryIdentityCollectionArgs,

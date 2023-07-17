@@ -1,0 +1,10 @@
+query SiteByCustomDomain($domain: String!) {
+  site(by: { customDomain: $domain }) {
+    ...SiteParts
+    createdAt
+    updatedAt
+    user {
+      ...UserParts
+    }
+  }
+}

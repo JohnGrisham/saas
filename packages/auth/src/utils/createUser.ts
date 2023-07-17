@@ -1,6 +1,10 @@
-import type { Mutation, MutationUserCreateArgs, IdentityType } from 'client';
+import {
+  Mutation,
+  MutationUserCreateArgs,
+  IdentityType,
+  graphQLClient,
+} from 'client';
 import { gql } from 'graphql-request';
-import { graphQLClient } from 'api';
 
 export const createUser = async (
   email: string,

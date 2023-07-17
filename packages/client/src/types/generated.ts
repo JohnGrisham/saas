@@ -41801,6 +41801,8 @@ export type IdentityPartsFragment = { __typename?: 'Identity', id: string, sub: 
 
 export type ProductPartsFragment = { __typename?: 'StripeProduct', id: string, active: boolean, created: number, description?: string | null, images: Array<string>, livemode: boolean, metadata: any, name: string, object: StripeProductObject, shippable?: boolean | null, statementDescriptor?: string | null, unitLabel?: string | null, updated: number, url?: string | null };
 
+export type SitePartsFragment = { __typename?: 'Site', id: string, name: string, description: string, logo?: string | null, font?: string | null, image?: string | null, imageBlurhash?: string | null, subdomain: string, customDomain: string, templateData?: { __typename?: 'TemplateData', id: string, data: any } | null };
+
 export type UserPartsFragment = { __typename?: 'User', id: string, email: string, name?: string | null };
 
 export type IdentityByIdQueryVariables = Exact<{
@@ -41826,6 +41828,20 @@ export type IdentityCollectionQueryVariables = Exact<{
 
 
 export type IdentityCollectionQuery = { __typename?: 'Query', identityCollection?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', cursor: string, node: { __typename?: 'Identity', createdAt: any, updatedAt: any, id: string, sub: string, type: IdentityType, user: { __typename?: 'User', id: string, email: string, name?: string | null } } } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } | null };
+
+export type SiteByCustomDomainQueryVariables = Exact<{
+  domain: Scalars['String'];
+}>;
+
+
+export type SiteByCustomDomainQuery = { __typename?: 'Query', site?: { __typename?: 'Site', createdAt: any, updatedAt: any, id: string, name: string, description: string, logo?: string | null, font?: string | null, image?: string | null, imageBlurhash?: string | null, subdomain: string, customDomain: string, user?: { __typename?: 'User', id: string, email: string, name?: string | null } | null, templateData?: { __typename?: 'TemplateData', id: string, data: any } | null } | null };
+
+export type SiteBySubdomainQueryVariables = Exact<{
+  sub: Scalars['String'];
+}>;
+
+
+export type SiteBySubdomainQuery = { __typename?: 'Query', site?: { __typename?: 'Site', createdAt: any, updatedAt: any, id: string, name: string, description: string, logo?: string | null, font?: string | null, image?: string | null, imageBlurhash?: string | null, subdomain: string, customDomain: string, user?: { __typename?: 'User', id: string, email: string, name?: string | null } | null, templateData?: { __typename?: 'TemplateData', id: string, data: any } | null } | null };
 
 export type UserByEmailQueryVariables = Exact<{
   email: Scalars['Email'];
@@ -41891,6 +41907,23 @@ export const ProductPartsFragmentDoc = `
   unitLabel
   updated
   url
+}
+    `;
+export const SitePartsFragmentDoc = `
+    fragment SiteParts on Site {
+  id
+  name
+  description
+  logo
+  font
+  image
+  imageBlurhash
+  subdomain
+  customDomain
+  templateData {
+    id
+    data
+  }
 }
     `;
 export const UserPartsFragmentDoc = `
@@ -41990,6 +42023,60 @@ export const useIdentityCollectionQuery = <
     useQuery<IdentityCollectionQuery, TError, TData>(
       variables === undefined ? ['IdentityCollection'] : ['IdentityCollection', variables],
       fetcher<IdentityCollectionQuery, IdentityCollectionQueryVariables>(client, IdentityCollectionDocument, variables, headers),
+      options
+    );
+export const SiteByCustomDomainDocument = `
+    query SiteByCustomDomain($domain: String!) {
+  site(by: {customDomain: $domain}) {
+    ...SiteParts
+    createdAt
+    updatedAt
+    user {
+      ...UserParts
+    }
+  }
+}
+    ${SitePartsFragmentDoc}
+${UserPartsFragmentDoc}`;
+export const useSiteByCustomDomainQuery = <
+      TData = SiteByCustomDomainQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: SiteByCustomDomainQueryVariables,
+      options?: UseQueryOptions<SiteByCustomDomainQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SiteByCustomDomainQuery, TError, TData>(
+      ['SiteByCustomDomain', variables],
+      fetcher<SiteByCustomDomainQuery, SiteByCustomDomainQueryVariables>(client, SiteByCustomDomainDocument, variables, headers),
+      options
+    );
+export const SiteBySubdomainDocument = `
+    query SiteBySubdomain($sub: String!) {
+  site(by: {subdomain: $sub}) {
+    ...SiteParts
+    createdAt
+    updatedAt
+    user {
+      ...UserParts
+    }
+  }
+}
+    ${SitePartsFragmentDoc}
+${UserPartsFragmentDoc}`;
+export const useSiteBySubdomainQuery = <
+      TData = SiteBySubdomainQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: SiteBySubdomainQueryVariables,
+      options?: UseQueryOptions<SiteBySubdomainQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SiteBySubdomainQuery, TError, TData>(
+      ['SiteBySubdomain', variables],
+      fetcher<SiteBySubdomainQuery, SiteBySubdomainQueryVariables>(client, SiteBySubdomainDocument, variables, headers),
       options
     );
 export const UserByEmailDocument = `

@@ -1,5 +1,5 @@
-import { Site, SiteByInput, QuerySiteArgs } from 'client';
-import { graphQLClient } from '../client';
+import type { Site, SiteByInput, QuerySiteArgs } from '../../types/generated';
+import { graphQLClient } from '../../client';
 import { gql } from 'graphql-request';
 
 export const getSiteTemplate = async (

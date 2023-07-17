@@ -53,7 +53,7 @@
       ]
     },
     "client#build": {
-      "dependsOn": []
+      "dependsOn": ["$API_ENDPOINT"]
     },
     "payments-server#build": {
       "dependsOn": [
@@ -86,7 +86,7 @@
       ]
     },
     "api#build": {
-      "dependsOn": ["client#build", "$API_ENDPOINT", "$OPENAI_API_KEY"]
+      "dependsOn": ["client#build", "$OPENAI_API_KEY"]
     },
     "grafbase#build": {
       "dependsOn": [

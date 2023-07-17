@@ -1,5 +1,9 @@
-import { SiteBySubdomainQuery, SiteByInput, QuerySiteArgs } from 'client';
-import { graphQLClient } from '../client';
+import type {
+  SiteBySubdomainQuery,
+  SiteByInput,
+  QuerySiteArgs,
+} from '../../types/generated';
+import { graphQLClient } from '../../client';
 import { gql } from 'graphql-request';
 
 export const getSiteData = async (

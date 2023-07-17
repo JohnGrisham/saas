@@ -7,7 +7,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const token = await getToken({ req, secret, raw: true });
+  try {
+    const token = await getToken({ req, secret, raw: true });
 
-  res.json({ token });
+    res.json({ token });
+  } catch {
+    res.status(500).send('Internal Server Error.');
+  }
 }

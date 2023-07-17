@@ -1,4 +1,4 @@
-import { graphQLClient } from 'api';
+import { graphQLClient } from '../../client';
 import { Scalars, isEmail, useUserSubscriptionsQuery } from '../../types';
 
 export const useGetUserSubscriptions = (email: Scalars['Email']) => {

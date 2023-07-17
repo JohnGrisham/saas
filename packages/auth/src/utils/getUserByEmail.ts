@@ -1,6 +1,9 @@
-import { UserByEmailQuery, UserByEmailQueryVariables } from 'client';
+import {
+  UserByEmailQuery,
+  UserByEmailQueryVariables,
+  graphQLClient,
+} from 'client';
 import { gql } from 'graphql-request';
-import { graphQLClient } from 'api';
 
 export const getUserByEmail = async (email: string) => {
   const { user } = await graphQLClient({

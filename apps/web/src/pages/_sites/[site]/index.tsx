@@ -7,7 +7,7 @@ import type { ParsedUrlQuery } from 'querystring';
 //import { authOptions } from '../../api/auth/[...nextauth]';
 //import dynamic from 'next/dynamic';
 //import { getServerSession } from 'next-auth/next';
-import { getSiteTemplate } from 'api';
+import { getSiteTemplate } from 'client';
 //import { TemplateInfo } from 'api';
 //import { useRouter } from 'next/router';
 import { getTemplateEnv } from '../../../utils';

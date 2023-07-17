@@ -1,6 +1,7 @@
-import { constructTemplateData, getSiteData } from 'api';
 import { NextResponse } from 'next/server';
 import { startupNextJsTemplateSchema } from 'core';
+import { constructTemplateData } from 'api';
+import { getSiteData } from 'client';
 
 export async function GET() {
   const { site } = await getSiteData({ subdomain: 'test' });

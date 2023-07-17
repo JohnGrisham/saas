@@ -1,10 +1,10 @@
-import type {
+import {
   Mutation,
   MutationIdentityCreateArgs,
   IdentityType,
+  graphQLClient,
 } from 'client';
 import { gql } from 'graphql-request';
-import { graphQLClient } from 'api';
 
 export const createIdentity = async (
   sub: string,

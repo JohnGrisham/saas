@@ -46,5 +46,8 @@
   "resolutions": {
     "openid-client": "5.1.10"
   },
-  "packageManager": "yarn@1.22.15"
+  "packageManager": "yarn@1.22.15",
+  "dependencies": {
+    "cross-fetch": "^4.0.0"
+  }
 }

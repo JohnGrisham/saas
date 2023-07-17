@@ -1,5 +1,5 @@
 import { useQuery as useRQquery, QueryKey, UseQueryOptions } from 'react-query';
-import { graphQLClient } from 'api';
+import { graphQLClient } from '../client';
 import { gql } from 'graphql-request';
 
 export const useQuery = <

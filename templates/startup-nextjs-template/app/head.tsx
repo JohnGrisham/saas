@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getSiteData } from 'api';
+import { getSiteData } from 'client';
 
 export default async function Head() {
   const { site } = await getSiteData({ subdomain: 'test' });

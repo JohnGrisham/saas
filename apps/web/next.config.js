@@ -14,7 +14,6 @@ module.exports = {
     });
 
     config.resolve.fallback = { fs: false };
-    config.externals.push('punycode');
 
     return config;
   },
