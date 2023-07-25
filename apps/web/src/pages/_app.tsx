@@ -4,12 +4,17 @@ import 'ui/styles.css';
 import type { AppProps } from 'next/app';
 import { Body, SessionProvider, ThemeProvider } from 'ui';
 import { Auth } from '@aws-amplify/auth';
-import { Client as GraphqlClient } from 'client';
 import { StripeClient } from 'payments-client';
 import dynamic from 'next/dynamic';
 // @ts-ignore
 import { theme } from 'tailwind-config/tailwind.config';
 
+const GraphqlClient = dynamic(
+  () => import('client').then(({ Client }) => Client),
+  {
+    ssr: false,
+  },
+);
 const Navbar = dynamic(() => import('ui').then(({ Navbar }) => Navbar), {
   ssr: false,
 });
@@ -53,7 +58,7 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
                 { id: 'home', href: '/', title: 'Home', type: 'simple' },
                 { id: 'about', href: '/about', title: 'About', type: 'simple' },
               ]}
-              signoutOptions={{ callbackUrl: `${ROOT}/auth/signout` }}
+              signoutOptions={{ callbackUrl: ROOT, redirect: undefined }}
             />
             <Body>
               <Component {...pageProps} />

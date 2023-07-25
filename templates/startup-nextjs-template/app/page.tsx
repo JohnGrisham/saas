@@ -1,3 +1,4 @@
+import type { startupNextJsTemplateSchema } from 'core';
 import AboutSectionOne from '@/components/About/AboutSectionOne';
 import AboutSectionTwo from '@/components/About/AboutSectionTwo';
 import Blog from '@/components/Blog';
@@ -10,7 +11,6 @@ import Pricing from '@/components/Pricing';
 import Testimonials from '@/components/Testimonials';
 import Video from '@/components/Video';
 import { Inter } from '@next/font/google';
-import { startupNextJsTemplateSchema } from 'core';
 
 const inter = Inter({ subsets: ['latin'] });
 

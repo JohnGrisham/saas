@@ -88,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       href: `/api/auth/signout`,
       onSelect: async (e) => {
         e.preventDefault();
-        await signOut(signoutOptions);
+        await signOut({ ...signoutOptions, redirect: false });
       },
     });
 

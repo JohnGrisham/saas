@@ -1,5 +1,11 @@
 import type { UserByEmailQuery, UserByEmailQueryVariables } from 'client';
-import { Account, CallbacksOptions, CookiesOptions, Profile } from 'next-auth';
+import {
+  Account,
+  CallbacksOptions,
+  CookiesOptions,
+  EventCallbacks,
+  Profile,
+} from 'next-auth';
 import CredentialsProvider, {
   CredentialsConfig,
 } from 'next-auth/providers/credentials';
@@ -221,6 +227,32 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
 
     return Promise.resolve(session);
   },
+};
+
+export const events: EventCallbacks = {
+  createUser: () => {},
+  linkAccount: () => {},
+  session: () => {},
+  signIn: () => {},
+  signOut: async ({ token, session }) => {
+    await fetch(
+      `${process.env.NEXTAUTH_URL}/api/auth/signout?callbackUrl=/api/auth/session`,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: await fetch(`${process.env.NEXTAUTH_URL}/api/auth/csrf`).then(
+          (rs) => rs.text(),
+        ),
+      },
+    );
+
+    token = {};
+    session = {} as any;
+  },
+  updateUser: () => {},
 };
 
 export const providers = [credentials(), google(), github()];
