@@ -5,5 +5,8 @@ export const authOptions: NextAuthOptions = {
   providers: [],
   callbacks,
   cookies: crossDomainCookies,
+  session: {
+    strategy: 'jwt',
+  },
   jwt,
 };

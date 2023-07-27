@@ -66,12 +66,12 @@ const middleware = async (req: NextRequest) => {
   }
 
   // rewrite everything else to dynamic route
-  return NextResponse.rewrite(
-    new URL(
-      `/${process.env.NEXT_PUBLIC_DYNAMIC_ROOT}/${currentHost}${path}`,
-      req.url,
-    ),
+  const dynamicRoute = new URL(
+    `/${process.env.NEXT_PUBLIC_DYNAMIC_ROOT}/${currentHost}${path}`,
+    req.url,
   );
+
+  return NextResponse.rewrite(dynamicRoute);
 };
 
 export default JSON.parse(process.env.NEXT_PUBLIC_MULTIDOMAIN ?? 'false')

@@ -68,7 +68,7 @@ export const getServerSideProps: GetServerSideProps<any, PathProps> = async ({
   const destination = new URL(
     `${protocol}//${
       filter.customDomain ? filter.customDomain : filter.subdomain + '.' + host
-    }/startup-nextjs-template`,
+    }/${template}`,
   ).href;
 
   const redirect = {

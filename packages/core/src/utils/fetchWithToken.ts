@@ -6,7 +6,7 @@ export async function fetchWithToken(
 ): Promise<any> {
   const { token } = (init?.headers as Record<string, any>)['x-api-key']
     ? { token: undefined }
-    : await fetchToken();
+    : await fetchToken('include');
   const authorization: Record<string, any> = token
     ? { Authorization: `Bearer ${token}` }
     : {};

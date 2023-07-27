@@ -27,15 +27,16 @@ import { isCognitoUser } from 'core';
 
 const hostName = new URL(process.env.NEXTAUTH_URL as string).hostname;
 const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://');
+const cookiePrefix = useSecureCookies ? '__Secure-' : '';
 
 export const crossDomainCookies: Partial<CookiesOptions> = {
   sessionToken: {
-    name: `${useSecureCookies ? '__Secure-' : ''}next-auth.session-token`,
+    name: `${cookiePrefix}next-auth.session-token`,
     options: {
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
-      domain: '.' + hostName,
+      domain: hostName == 'localhost' ? hostName : '.' + hostName,
       secure: useSecureCookies,
     },
   },
