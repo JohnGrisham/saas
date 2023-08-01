@@ -1,4 +1,5 @@
 import Footer from '@/components/Footer';
+import TemplateForm from '@/components/Form';
 import Head from './head';
 import Header from '@/components/Header';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -20,6 +21,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <ScrollToTop />
+          <TemplateForm />
         </body>
       </Providers>
     </html>
