@@ -5,7 +5,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const token = await getToken(req, true);
+  const token = await getToken(req);
 
-  res.json({ token });
+  if (token) {
+    res.json({ token });
+  } else {
+    res.status(401).send('Unauthorized');
+  }
 }

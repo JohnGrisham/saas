@@ -17,18 +17,19 @@ export default async function Resolver(user: User) {
       await stripe.customers.list({
         email,
         limit: 1,
-        expand: ['data.subscriptions'],
       })
     ).data;
 
-    const rawSubscriptions = existingStripeUser
-      ? (
-          await stripe.subscriptions.list({
-            customer: existingStripeUser.id,
-            status: 'all',
-          })
-        ).data
-      : [];
+    if (!existingStripeUser) {
+      return null;
+    }
+
+    const rawSubscriptions = (
+      await stripe.subscriptions.list({
+        customer: existingStripeUser.id,
+        status: 'all',
+      })
+    ).data;
 
     const subscriptions = await Promise.all(
       rawSubscriptions.map(async (sub) => {
