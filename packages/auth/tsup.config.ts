@@ -57,6 +57,11 @@ export default defineConfig({
           process.env.NEXTAUTH_URL,
         );
       }
+
+      if (process.env.STRIPE_TRIAL_PRODUCT_NAME) {
+        options.define['process.env.STRIPE_TRIAL_PRODUCT_NAME'] =
+          JSON.stringify(process.env.STRIPE_TRIAL_PRODUCT_NAME);
+      }
     }
   },
 });
