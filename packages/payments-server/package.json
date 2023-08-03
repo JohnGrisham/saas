@@ -24,6 +24,6 @@
   },
   "dependencies": {
     "micro": "^9.4.1",
-    "stripe": "^10.8.0"
+    "stripe": "*"
   }
 }

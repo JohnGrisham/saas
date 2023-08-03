@@ -11,7 +11,10 @@ export const createIdentity = async (
   userId: string,
   type: IdentityType,
 ) => {
-  await graphQLClient.request<Mutation, MutationIdentityCreateArgs>(
+  await graphQLClient({ ['x-api-key']: process.env.API_KEY as string }).request<
+    Mutation,
+    MutationIdentityCreateArgs
+  >(
     gql`
       mutation CreateIdentity($input: IdentityCreateInput!) {
         identityCreate(input: $input) {

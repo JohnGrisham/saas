@@ -6,10 +6,9 @@ import {
 import { gql } from 'graphql-request';
 
 export const getUserByEmail = async (email: string) => {
-  const { user } = await graphQLClient.request<
-    UserByEmailQuery,
-    UserByEmailQueryVariables
-  >(
+  const { user } = await graphQLClient({
+    ['x-api-key']: process.env.API_KEY as string,
+  }).request<UserByEmailQuery, UserByEmailQueryVariables>(
     gql`
       query UserByEmail($email: Email!) {
         user(by: { email: $email }) {

@@ -1,3 +1,4 @@
+import type { JWT } from 'next-auth/jwt';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken, stripe } from '../../utils';
 
@@ -6,7 +7,7 @@ const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;
 const createPortalLink = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     try {
-      const token = await getToken(req);
+      const token = (await getToken(req)) as JWT;
       const sub = token.sub;
 
       if (!sub) throw Error('Could not get customer sub');

@@ -1,4 +1,11 @@
-import { Account, CallbacksOptions, CookiesOptions, Profile } from 'next-auth';
+import type { UserByEmailQuery, UserByEmailQueryVariables } from 'client';
+import {
+  Account,
+  CallbacksOptions,
+  CookiesOptions,
+  EventCallbacks,
+  Profile,
+} from 'next-auth';
 import CredentialsProvider, {
   CredentialsConfig,
 } from 'next-auth/providers/credentials';
@@ -8,11 +15,7 @@ import {
   credentialsSigninHandler,
   googleSigninHandler,
 } from './signin-handlers';
-import {
-  UserByEmailQuery,
-  UserByEmailQueryVariables,
-  graphQLClient,
-} from 'client';
+import { graphQLClient } from 'client';
 import { JWTOptions } from 'next-auth/jwt';
 import { OAuthUserConfig } from 'next-auth/providers';
 import { Auth } from '@aws-amplify/auth';
@@ -24,15 +27,16 @@ import { isCognitoUser } from 'core';
 
 const hostName = new URL(process.env.NEXTAUTH_URL as string).hostname;
 const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://');
+const cookiePrefix = useSecureCookies ? '__Secure-' : '';
 
 export const crossDomainCookies: Partial<CookiesOptions> = {
   sessionToken: {
-    name: `${useSecureCookies ? '__Secure-' : ''}next-auth.session-token`,
+    name: `${cookiePrefix}next-auth.session-token`,
     options: {
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
-      domain: '.' + hostName,
+      domain: hostName == 'localhost' ? hostName : '.' + hostName,
       secure: useSecureCookies,
     },
   },
@@ -107,7 +111,6 @@ export const github = (config?: OAuthUserConfig<GithubProfile>) =>
 export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
   async signIn({ user, account, profile }) {
     try {
-      graphQLClient.setHeader('x-api-key', process.env.API_KEY as string);
       let stripeId = '';
       const stripe = constructStripe();
       const name = user.name ?? '';
@@ -132,10 +135,9 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
           await credentialsSigninHandler(user, email, name);
       }
 
-      const { user: userRecord } = await graphQLClient.request<
-        UserByEmailQuery,
-        UserByEmailQueryVariables
-      >(
+      const { user: userRecord } = await graphQLClient({
+        'x-api-key': process.env.API_KEY as string,
+      }).request<UserByEmailQuery, UserByEmailQueryVariables>(
         gql`
           query GetUserByEmail($email: Email!) {
             user(by: { email: $email }) {
@@ -167,13 +169,15 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
         });
         stripeId = newStripeCustomer.id;
 
-        const [starterProduct] = (
-          await stripe.products.search({ query: "name~'Starter'" })
+        const [trialProduct] = (
+          await stripe.products.search({
+            query: `name~'${process.env.STRIPE_TRIAL_PRODUCT_NAME ?? ''}'`,
+          })
         ).data;
         const price =
-          typeof starterProduct.default_price === 'string'
-            ? starterProduct.default_price
-            : starterProduct.default_price?.unit_amount_decimal ?? '0';
+          typeof trialProduct.default_price === 'string'
+            ? trialProduct.default_price
+            : trialProduct.default_price?.unit_amount_decimal ?? '0';
 
         await stripe.subscriptions.create({
           customer: newStripeCustomer.id,
@@ -226,6 +230,32 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
 
     return Promise.resolve(session);
   },
+};
+
+export const events: EventCallbacks = {
+  createUser: () => {},
+  linkAccount: () => {},
+  session: () => {},
+  signIn: () => {},
+  signOut: async ({ token, session }) => {
+    await fetch(
+      `${process.env.NEXTAUTH_URL}/api/auth/signout?callbackUrl=/api/auth/session`,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: await fetch(`${process.env.NEXTAUTH_URL}/api/auth/csrf`).then(
+          (rs) => rs.text(),
+        ),
+      },
+    );
+
+    token = {};
+    session = {} as any;
+  },
+  updateUser: () => {},
 };
 
 export const providers = [credentials(), google(), github()];

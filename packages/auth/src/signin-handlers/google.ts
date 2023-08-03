@@ -1,6 +1,5 @@
+import type { IdentityType } from 'client';
 import { createIdentity, createUser, getUserByEmail } from '../utils';
-import { IdentityType } from 'client';
-import { Profile } from 'next-auth';
 
 export const googleSigninHandler = async (
   sub: string,
@@ -9,12 +8,12 @@ export const googleSigninHandler = async (
 ) => {
   const gqlUserRecord = await getUserByEmail(email);
   const googleIdentity = gqlUserRecord?.identities?.edges?.find(
-    (edge) => edge?.node.type === IdentityType.Google,
+    (edge) => edge?.node.type === 'GOOGLE',
   );
 
   if (!gqlUserRecord) {
-    await createUser(email, sub, IdentityType.Google, name);
+    await createUser(email, sub, 'GOOGLE' as IdentityType, name);
   } else if (gqlUserRecord && !googleIdentity) {
-    await createIdentity(sub, gqlUserRecord.id, IdentityType.Google);
+    await createIdentity(sub, gqlUserRecord.id, 'GOOGLE' as IdentityType);
   }
 };

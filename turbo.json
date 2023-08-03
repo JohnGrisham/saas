@@ -9,22 +9,21 @@
       "cache": false,
       "dependsOn": []
     },
-    "gql:dev": {
-      "cache": false,
-      "persistent": true,
-      "dependsOn": []
-    },
     "dev": {
       "cache": false,
       "dependsOn": [
         "^dev",
-        "api#build",
         "auth#build",
         "client#build",
         "payments-client#build",
         "payments-server#build",
         "ui#build"
       ]
+    },
+    "dev:gql": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": []
     },
     "generate-tailwind-theme": {
       "cache": false,
@@ -49,7 +48,8 @@
         "$GOOGLE_CLIENT_SECRET",
         "$ISSUER_URL",
         "$NEXTAUTH_SECRET",
-        "$NEXTAUTH_URL"
+        "$NEXTAUTH_URL",
+        "$STRIPE_TRIAL_PRODUCT_NAME"
       ]
     },
     "client#build": {
@@ -84,9 +84,6 @@
         "$TEAM_ID_VERCEL",
         "$VERCEL"
       ]
-    },
-    "api#build": {
-      "dependsOn": ["client#build", "$OPENAI_API_KEY"]
     },
     "grafbase#build": {
       "dependsOn": [

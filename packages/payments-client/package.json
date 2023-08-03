@@ -24,6 +24,6 @@
   "dependencies": {
     "@stripe/react-stripe-js": "^1.10.0",
     "@stripe/stripe-js": "^1.36.0",
-    "react": "^18.2.0"
+    "react": "*"
   }
 }

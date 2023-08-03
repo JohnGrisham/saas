@@ -1,5 +1,5 @@
 import { useQuery as useRQquery, QueryKey, UseQueryOptions } from 'react-query';
-import { graphQLClient } from '../provider';
+import { graphQLClient } from '../client';
 import { gql } from 'graphql-request';
 
 export const useQuery = <
@@ -14,12 +14,15 @@ export const useQuery = <
   options?: Omit<
     UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
     'queryKey'
-  >,
+  > & { headers?: Record<string, any> },
 ) => {
   return useRQquery<TQueryFnData, TError, TData, TQueryKey>(
     key,
     async () => {
-      const response = await graphQLClient.request<TQueryFnData, {}>(
+      const response = await graphQLClient(options?.headers).request<
+        TQueryFnData,
+        {}
+      >(
         gql`
           ${query}
         `,

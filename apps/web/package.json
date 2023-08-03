@@ -11,15 +11,15 @@
   "dependencies": {
     "@aws-amplify/auth": "^4.6.6",
     "@stripe/react-stripe-js": "^1.14.2",
-    "api": "*",
     "auth": "*",
+    "client": "*",
     "core": "*",
     "encoding": "^0.1.13",
     "graphql-request": "^4.3.0",
     "next": "^13.1.6",
     "next-auth": "^4.19.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "*",
+    "react-dom": "*",
     "stripe": "*",
     "tailwind-config": "*",
     "ui": "*",
@@ -32,6 +32,6 @@
     "eslint-config-custom": "*",
     "html-loader": "^4.2.0",
     "tsconfig": "*",
-    "typescript": "^4.5.3"
+    "typescript": "*"
   }
 }

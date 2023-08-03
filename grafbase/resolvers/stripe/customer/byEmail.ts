@@ -9,7 +9,6 @@ export default async function Resolver(user: User) {
     const stripe = new Stripe(
       process.env.STRIPE_SECRET_KEY_LIVE ?? process.env.STRIPE_SECRET_KEY ?? '',
       {
-        // https://github.com/stripe/stripe-node#configuration
         apiVersion: '2022-11-15',
       },
     );
@@ -22,8 +21,17 @@ export default async function Resolver(user: User) {
       })
     ).data;
 
+    const rawSubscriptions = existingStripeUser
+      ? (
+          await stripe.subscriptions.list({
+            customer: existingStripeUser.id,
+            status: 'all',
+          })
+        ).data
+      : [];
+
     const subscriptions = await Promise.all(
-      existingStripeUser?.subscriptions?.data.map(async (sub) => {
+      rawSubscriptions.map(async (sub) => {
         const items = (
           await stripe.subscriptionItems.list({
             subscription: sub.id,

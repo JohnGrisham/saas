@@ -13,7 +13,7 @@
     "generate-tailwind-theme": "turbo run generate-tailwind-theme",
     "codegen": "turbo run codegen",
     "dev": "turbo run dev --parallel",
-    "gql:dev": "turbo run gql:dev",
+    "dev:gql": "turbo run dev:gql",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "storybook": "turbo run storybook"
@@ -21,16 +21,20 @@
   "devDependencies": {
     "@types/jest": "^29.5.0",
     "@types/prettier": "^2.7.2",
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.9",
+    "@types/react": "^18.2.18",
+    "@types/react-dom": "^18.2.7",
     "autoprefixer": "^10.4.13",
     "eslint-config-custom": "*",
     "eslint-config-next": "^13.1.6",
+    "graphql": "^16.7.1",
     "jest": "^29.5.0",
     "just-split": "^3.2.0",
     "postcss": "^8.4.21",
     "prettier": "latest",
     "prettier-plugin-tailwindcss": "^0.1.13",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "stripe": "^12.16.0",
     "tailwindcss": "^3.2.4",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
@@ -40,7 +44,6 @@
     "npm": ">=7.0.0",
     "node": ">=18.0.0"
   },
-  "dependencies": {},
   "resolutions": {
     "openid-client": "5.1.10"
   },
