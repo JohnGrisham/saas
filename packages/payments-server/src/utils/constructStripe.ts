@@ -5,7 +5,7 @@ export const constructStripe = (appInfo?: Stripe.AppInfo) =>
     process.env.STRIPE_SECRET_KEY_LIVE ?? process.env.STRIPE_SECRET_KEY ?? '',
     {
       // https://github.com/stripe/stripe-node#configuration
-      apiVersion: '2022-08-01',
+      apiVersion: '2022-11-15',
       // Register this as an official Stripe plugin.
       // https://stripe.com/docs/building-plugins#setappinfo
       appInfo,

@@ -20,7 +20,7 @@ export interface AuthContextData extends Omit<Session, 'user'> {
 }
 
 export interface AuthenticatedSessionContextProps {
-  context: Omit<SessionContextValue, 'data'> & {
+  context: Omit<SessionContextValue, 'data' | 'update'> & {
     data: AuthContextData;
   };
 }

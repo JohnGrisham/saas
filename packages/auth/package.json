@@ -29,7 +29,7 @@
     "core": "*",
     "graphql": "*",
     "graphql-request": "^4.3.0",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "*",
     "next-auth": "^4.19.2",
     "payments-server": "*"
   }
