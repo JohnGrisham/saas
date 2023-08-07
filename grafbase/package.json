@@ -4,7 +4,8 @@
   "main": "schema.graphql",
   "license": "MIT",
   "dependencies": {
-    "@aws-sdk/client-cognito-identity-provider": "^3.321.1"
+    "@aws-sdk/client-cognito-identity-provider": "^3.321.1",
+    "stripe": "*"
   },
   "scripts": {
     "dev:gql": "npx grafbase@latest dev"
