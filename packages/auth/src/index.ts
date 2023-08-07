@@ -80,9 +80,16 @@ export const credentials = (config?: CredentialsConfig) =>
       try {
         const { username = '', password = '' } = { ...credentials };
 
-        const user = await Auth.signIn({
+        const cognitoUser = await Auth.signIn({
           username,
           password,
+        });
+
+        const user = Object.assign(cognitoUser, {
+          ...cognitoUser,
+          id: cognitoUser.getUsername(),
+          email: cognitoUser.attributes.email,
+          name: cognitoUser.attributes.name,
         });
 
         return new Promise((res) => res(user as any));
@@ -109,14 +116,10 @@ export const github = (config?: OAuthUserConfig<GithubProfile>) =>
   });
 
 export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
-  async signIn({ user, account, profile }) {
+  async signIn({ account, profile, user }) {
     try {
-      let stripeId = '';
-      const stripe = constructStripe();
+      const email = user.email;
       const name = user.name ?? '';
-      const email: string = isCognitoUser(user)
-        ? user.attributes.email
-        : user.email ?? '';
 
       if (!email) {
         return false;
@@ -135,84 +138,24 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
           await credentialsSigninHandler(user, email, name);
       }
 
-      const { user: userRecord } = await graphQLClient({
-        'x-api-key': process.env.API_KEY as string,
-      }).request<UserByEmailQuery, UserByEmailQueryVariables>(
-        gql`
-          query GetUserByEmail($email: Email!) {
-            user(by: { email: $email }) {
-              id
-              customer {
-                id
-              }
-            }
-          }
-        `,
-        {
-          email,
-        },
-      );
-
-      if (!userRecord?.customer) {
-        const cognitoUser = isCognitoUser(user);
-        const sub = cognitoUser
-          ? user.getUsername()
-          : account?.providerAccountId ?? '';
-
-        const newStripeCustomer = await stripe.customers.create({
-          name,
-          email,
-          metadata: {
-            sub,
-            userId: userRecord?.id ?? '',
-          },
-        });
-        stripeId = newStripeCustomer.id;
-
-        const [trialProduct] = (
-          await stripe.products.search({
-            query: `name~'${process.env.STRIPE_TRIAL_PRODUCT_NAME ?? ''}'`,
-          })
-        ).data;
-        const price =
-          typeof trialProduct.default_price === 'string'
-            ? trialProduct.default_price
-            : trialProduct.default_price?.unit_amount_decimal ?? '0';
-
-        await stripe.subscriptions.create({
-          customer: newStripeCustomer.id,
-          items: [{ price, quantity: 1 }],
-          trial_period_days: 7,
-        });
-      } else {
-        stripeId = userRecord.customer.id;
-      }
-
-      if (isCognitoUser(user) && userRecord) {
-        await Auth.updateUserAttributes(user, {
-          'custom:userId': userRecord.id,
-          'custom:stripeId': stripeId,
-        });
-      }
-
       return true;
     } catch (err: any) {
       console.error(err.message);
       return false;
     }
   },
-  async jwt({ user, token }) {
+  async jwt({ account, user, token }) {
     if (user) {
       let currentUser = user as unknown;
       let tokenResponse: JWT = token;
 
-      if (isCognitoUser(currentUser)) {
+      if (isCognitoUser(currentUser) && account?.type === 'credentials') {
         const session = currentUser.getSignInUserSession();
 
         tokenResponse = {
           ...token,
-          sub: currentUser.getUsername(),
-          email: currentUser.attributes.email,
+          sub: currentUser.id,
+          email: currentUser.email,
           accessToken: session?.getAccessToken().getJwtToken(),
           refreshToken: session?.getRefreshToken().getToken(),
         };
@@ -236,8 +179,75 @@ export const events: EventCallbacks = {
   createUser: () => {},
   linkAccount: () => {},
   session: () => {},
-  signIn: () => {},
-  signOut: async ({ token, session }) => {
+  signIn: async ({ account, user }) => {
+    let stripeId = '';
+    const stripe = constructStripe();
+
+    const { email = undefined, name = undefined } = user;
+
+    if (!email) {
+      return;
+    }
+
+    const { user: userRecord } = await graphQLClient({
+      'x-api-key': process.env.API_KEY as string,
+    }).request<UserByEmailQuery, UserByEmailQueryVariables>(
+      gql`
+        query GetUserByEmail($email: Email!) {
+          user(by: { email: $email }) {
+            id
+            customer {
+              id
+            }
+          }
+        }
+      `,
+      {
+        email,
+      },
+    );
+
+    if (!userRecord?.customer) {
+      const cognitoUser = isCognitoUser(user);
+      const sub = cognitoUser ? user.id : account?.providerAccountId ?? '';
+
+      const newStripeCustomer = await stripe.customers.create({
+        name: name ?? '',
+        email,
+        metadata: {
+          sub,
+          userId: userRecord?.id ?? '',
+        },
+      });
+      stripeId = newStripeCustomer.id;
+
+      const [trialProduct] = (
+        await stripe.products.search({
+          query: `name~'${process.env.STRIPE_TRIAL_PRODUCT_NAME ?? ''}'`,
+        })
+      ).data;
+      const price =
+        typeof trialProduct.default_price === 'string'
+          ? trialProduct.default_price
+          : trialProduct.default_price?.unit_amount_decimal ?? '0';
+
+      await stripe.subscriptions.create({
+        customer: newStripeCustomer.id,
+        items: [{ price, quantity: 1 }],
+        trial_period_days: 7,
+      });
+    } else {
+      stripeId = userRecord.customer.id;
+    }
+
+    if (isCognitoUser(user) && userRecord) {
+      await Auth.updateUserAttributes(user, {
+        'custom:userId': userRecord.id,
+        'custom:stripeId': stripeId,
+      });
+    }
+  },
+  signOut: async ({ token: _token, session: _session }) => {
     await fetch(
       `${process.env.NEXTAUTH_URL}/api/auth/signout?callbackUrl=/api/auth/session`,
       {
@@ -252,8 +262,8 @@ export const events: EventCallbacks = {
       },
     );
 
-    token = {};
-    session = {} as any;
+    _token = {};
+    _session = {} as any;
   },
   updateUser: () => {},
 };

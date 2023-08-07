@@ -15,7 +15,7 @@ extend schema
         secret: "{{ env.NEXTAUTH_SECRET }}"
       }
     ]
-    rules: [{ allow: owner }]
+    rules: [{ allow: private }]
   ) {
   query: Query
 }

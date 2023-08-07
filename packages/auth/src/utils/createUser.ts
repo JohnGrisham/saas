@@ -10,7 +10,7 @@ export const createUser = async (
   email: string,
   sub: string,
   type: IdentityType,
-  name?: string,
+  name: string,
 ) => {
   await graphQLClient({ ['x-api-key']: process.env.API_KEY as string }).request<
     Mutation,
