@@ -46,7 +46,7 @@ export const Toggle: React.FC<ToggleProps> = ({
     >
       <div
         className={`form-check form-switch ui-flex ui-items-center ${
-          label ? 'ui-pl-10' : undefined
+          label ? 'ui-pl-10' : ''
         }`}
       >
         <input

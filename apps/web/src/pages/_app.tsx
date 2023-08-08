@@ -53,12 +53,16 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
               logoProps={{
                 title: 'SaaS',
                 src: 'https://flowbite.com/docs/images/logo.svg',
+                href: ROOT,
               }}
               navItems={[
                 { id: 'home', href: '/', title: 'Home', type: 'simple' },
                 { id: 'about', href: '/about', title: 'About', type: 'simple' },
               ]}
-              signoutOptions={{ callbackUrl: ROOT, redirect: undefined }}
+              signoutOptions={{
+                callbackUrl: `${ROOT}/auth/signin`,
+                redirect: true,
+              }}
             />
             <Body>
               <Component {...pageProps} />

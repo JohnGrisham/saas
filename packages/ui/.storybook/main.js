@@ -1,32 +1,23 @@
 const tailwindConfig = require('tailwind-config/tailwind.config.js');
-
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    'storybook-tailwind-dark-mode',
-    {
-      name: '@storybook/addon-postcss',
-      options: {
-        cssLoaderOptions: {
-          // When you have splitted your css over multiple files
-          // and use @import('./other-styles.css')
-          importLoaders: 1,
-        },
-        postcssLoaderOptions: {
-          // When using postCSS 8
-          implementation: require('postcss'),
-        },
+  addons: ["@storybook/addon-links", "@storybook/addon-essentials", "@storybook/addon-interactions", "storybook-addon-themes", {
+    name: '@storybook/addon-styling',
+    options: {
+      cssLoaderOptions: {
+        // When you have splitted your css over multiple files
+        // and use @import('./other-styles.css')
+        importLoaders: 1
       },
-    },
-    'storybook-addon-next-router',
-    '@tomfreudenberg/next-auth-mock/storybook',
-  ],
-  framework: '@storybook/react',
+      postcssLoaderOptions: {
+        // When using postCSS 8
+        implementation: require('postcss')
+      }
+    }
+  }, "storybook-addon-next-router", "@tomfreudenberg/next-auth-mock/storybook", "@storybook/addon-mdx-gfm"],
+  framework: "@storybook/nextjs",
   core: {
-    builder: '@storybook/builder-webpack5',
+    builder: "@storybook/builder-webpack5"
   },
   typescript: {
     check: false,
@@ -34,11 +25,10 @@ module.exports = {
     reactDocgen: 'react-docgen-typescript-plugin',
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) =>
-        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
-    },
+      propFilter: prop => prop.parent ? !/node_modules/.test(prop.parent.fileName) : true
+    }
   },
-  env: (config) => ({
+  env: config => ({
     ...config,
     PRIMARY_50: tailwindConfig.theme.colors.primary[50],
     PRIMARY_100: tailwindConfig.theme.colors.primary[100],
@@ -69,14 +59,20 @@ module.exports = {
     ACCENT_600: tailwindConfig.theme.colors.accent[600],
     ACCENT_700: tailwindConfig.theme.colors.accent[700],
     ACCENT_800: tailwindConfig.theme.colors.accent[800],
-    ACCENT_900: tailwindConfig.theme.colors.accent[900],
+    ACCENT_900: tailwindConfig.theme.colors.accent[900]
   }),
-  webpackFinal: async (config) => {
+  webpackFinal: async config => {
     config.resolve.fallback = {
+      fs: false,
+      stream: false,
       tty: require.resolve('tty-browserify'),
+      zlib: false
     };
 
     // Return the altered config
     return config;
   },
+  docs: {
+    autodocs: true
+  }
 };

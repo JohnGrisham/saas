@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { Toggle } from '../../toggle';
 import cn from 'classnames';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { isAuthScreen } from 'core';
 import { usePathname } from 'next/navigation';
 
 export interface NavItem {
@@ -35,9 +36,9 @@ export interface LogoSettings {
 export interface NavbarProps {
   navItems: Array<NavItem | CustomNavItem>;
   logoProps: LogoSettings;
+  signoutOptions: Required<SignOutParams>;
   classNames?: string;
   profileItems?: DropdownItem[];
-  signoutOptions?: SignOutParams;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -78,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const postNavStyles = React.useMemo(() => {
     return cn([
-      `ui-flex ui-items-center ui-absolute ui-right-16 ui-top-[1.4rem]`,
+      `ui-flex ui-items-center ui-absolute ui-right-16 ui-top-[1.4rem] md:ui-top-6`,
     ]);
   }, []);
 
@@ -190,11 +191,27 @@ export const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
       </div>
-      <Toggle
-        checked={isDarkMode}
-        classNames="md:ui-mb-1.5 ml-2 toggle-dark-mode"
-        onChange={() => setDarkMode((currentMode) => !currentMode)}
-      />
+      <div
+        className={`ui-flex ui-flex-row ui-justify-between ${
+          status !== 'authenticated' && !isAuthScreen() ? 'ui-w-32' : ''
+        }`}
+      >
+        {status === 'unauthenticated' && !session && !isAuthScreen() && (
+          <Button
+            onClick={() => window.location.replace(signoutOptions.callbackUrl)}
+            rounded
+          >
+            Login
+          </Button>
+        )}
+        {status !== 'loading' && (
+          <Toggle
+            checked={isDarkMode}
+            classNames="ui-ml-2 toggle-dark-mode"
+            onChange={() => setDarkMode((currentMode) => !currentMode)}
+          />
+        )}
+      </div>
     </nav>
   );
 };
