@@ -3,11 +3,9 @@
   "version": "0.0.0",
   "main": "schema.graphql",
   "license": "MIT",
-  "devDependencies": {
-    "eslint-config-custom": "*"
-  },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.321.1",
+    "eslint-config-custom": "*",
     "stripe": "*"
   },
   "scripts": {
