@@ -5,7 +5,6 @@
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.321.1",
-    "@grafbase/sdk": "^0.3.0",
     "stripe": "*"
   },
   "scripts": {
