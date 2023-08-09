@@ -1,3 +1,4 @@
 export * from './useAuthSession';
 export * from './useRootDomain';
-export * from './use-theme-context';
+export * from './useLoadingContext';
+export * from './useThemeContext';

@@ -95,7 +95,7 @@ export const credentials = (config?: CredentialsConfig) =>
         return new Promise((res) => res(user as any));
       } catch (err: any) {
         console.log(err.message);
-        return null;
+        return err;
       }
     },
     ...config,

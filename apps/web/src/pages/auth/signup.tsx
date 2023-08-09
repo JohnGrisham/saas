@@ -22,6 +22,7 @@ const Signup = () => {
           window.location.replace(process.env.NEXT_PUBLIC_ROOT_URL as string);
         }
       }}
+      disableRegistration
     />
   );
 };

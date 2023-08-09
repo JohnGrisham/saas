@@ -2,7 +2,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import '../styles/globals.css';
 import 'ui/styles.css';
 import type { AppProps } from 'next/app';
-import { Body, SessionProvider, ThemeProvider } from 'ui';
+import { Body, LoadingProvider, SessionProvider, ThemeProvider } from 'ui';
 import { Auth } from '@aws-amplify/auth';
 import { StripeClient } from 'payments-client';
 import dynamic from 'next/dynamic';
@@ -49,24 +49,31 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
       <GraphqlClient>
         <StripeClient publishableKey={STRIPE_PUBLISHABLE_KEY}>
           <ThemeProvider theme={theme}>
-            <Navbar
-              logoProps={{
-                title: 'SaaS',
-                src: 'https://flowbite.com/docs/images/logo.svg',
-                href: ROOT,
-              }}
-              navItems={[
-                { id: 'home', href: '/', title: 'Home', type: 'simple' },
-                { id: 'about', href: '/about', title: 'About', type: 'simple' },
-              ]}
-              signoutOptions={{
-                callbackUrl: `${ROOT}/auth/signin`,
-                redirect: true,
-              }}
-            />
-            <Body>
-              <Component {...pageProps} />
-            </Body>
+            <LoadingProvider>
+              <Navbar
+                logoProps={{
+                  title: 'SaaS',
+                  src: 'https://flowbite.com/docs/images/logo.svg',
+                  href: ROOT,
+                }}
+                navItems={[
+                  { id: 'home', href: '/', title: 'Home', type: 'simple' },
+                  {
+                    id: 'about',
+                    href: '/about',
+                    title: 'About',
+                    type: 'simple',
+                  },
+                ]}
+                signoutOptions={{
+                  callbackUrl: `${ROOT}/auth/signin`,
+                  redirect: true,
+                }}
+              />
+              <Body>
+                <Component {...pageProps} />
+              </Body>
+            </LoadingProvider>
           </ThemeProvider>
         </StripeClient>
       </GraphqlClient>
