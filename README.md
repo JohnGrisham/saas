@@ -1,6 +1,6 @@
-# Turborepo SaaS starter
+# Turborepo/Grafbase SaaS starter
 
-This is an unofficial starter Turborepo.
+This is an unofficial starter for Turborepo.
 
 ## What's inside?
 
@@ -12,27 +12,16 @@ This Turborepo includes the following packages/apps:
 - `docs`: a [Next.js](https://nextjs.org) app with [Tailwind CSS](https://tailwindcss.com/)
 - `web`: another [Next.js](https://nextjs.org) app with [Tailwind CSS](https://tailwindcss.com/)
 - `ui`: a stub React component library with [Tailwind CSS](https://tailwindcss.com/) shared by both `web` and `docs` applications
+- `auth`: shared [Auth.js](https://authjs.dev) configuration
+- `client`: graphql client configuration, types, operations and provider
+- `core`: shared utilites and other common logic
+- `jest-config`: shared testing config
+- `payments-client/payments-server`: Stripe functions and utilities
+- `tailwind-config`: shared tailwind config
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Building packages/ui
-
-This example is setup to build `packages/ui` and output the transpiled source and compiled styles to `dist/`. This was chosen to make sharing one `tailwind.config.js` as easy as possible, and to ensure only the CSS that is used by the current application and its dependencies is generated.
-
-Another option is to consume `packages/ui` directly from source without building. If using this option, you will need to update your `tailwind.config.js` to be aware of your package locations, so it can find all usages of the `tailwindcss` class names.
-
-For example, in [tailwind.config.js](packages/tailwind-config/tailwind.config.js):
-
-```js
-  content: [
-    // app content
-    `src/**/*.{js,ts,jsx,tsx}`,
-    // include packages if not transpiling
-    "../../packages/**/*.{js,ts,jsx,tsx}",
-  ],
-```
 
 ### Utilities
 
@@ -54,5 +43,12 @@ Configure your client by adding a `.env.local` file to your the `packages/client
 
 ```
 API_ENDPOINT=https://{your-project}.grafbase.app/graphql
-API_KEY={your-api-key}
+```
+
+### Auth
+
+The Grafbase client authentication is primarily meant to token based but can still be authenticated via the API token. The API token is required for some operations that happen prior to getting the user's JWT access token. You will need to add the API key to the auth package .env file for this reason.
+
+```
+API_KEY=
 ```
