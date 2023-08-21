@@ -25,7 +25,7 @@ export const Toggle: React.FC<ToggleProps> = ({
 }) => {
   const styles = React.useMemo(() => {
     return cn([
-      `ui-h-5 -ui-ml-10 ui-align-top ui-bg-white ui-bg-gray-300 ui-bg-no-repeat ui-bg-contain ui-rounded-full ui-shadow-sm ui-appearance-none ui-cursor-pointer form-check-input ui-w-9 focus:ui-outline-none checked:ui-bg-${color}-600 toggle`,
+      `ui-h-5 -ui-ml-10 ui-align-top ui-bg-gray-300 ui-bg-no-repeat ui-bg-contain ui-rounded-full ui-shadow-sm ui-appearance-none ui-cursor-pointer form-check-input ui-w-9 focus:ui-outline-none checked:ui-bg-${color}-600 toggle`,
       {
         'ui-px-2.5 ui-py-1.5': size === 'small',
         'ui-px-5 ui-py-3': size === 'medium',

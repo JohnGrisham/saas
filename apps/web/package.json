@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-amplify/auth": "^4.6.6",
     "@stripe/react-stripe-js": "^1.14.2",
+    "amplify": "*",
     "auth": "*",
     "client": "*",
     "core": "*",

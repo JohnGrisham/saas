@@ -15,7 +15,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsup",
-    "dev": "tsup src/index.ts --format esm,cjs --dts --external react --watch",
+    "dev": "tsup --watch",
     "clean": "rm -rf dist",
     "codegen": "graphql-codegen --config codegen.ts"
   },

@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "clean": "turbo run clean",
     "generate-tailwind-theme": "turbo run generate-tailwind-theme",
     "codegen": "turbo run codegen",
     "dev": "turbo run dev --parallel",

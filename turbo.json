@@ -5,19 +5,17 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "clean": {
+      "cache": false,
+      "dependsOn": []
+    },
     "codegen": {
       "cache": false,
       "dependsOn": []
     },
     "dev": {
       "cache": false,
-      "dependsOn": [
-        "^dev",
-        "auth#build",
-        "client#build",
-        "payments-client#build",
-        "payments-server#build"
-      ]
+      "dependsOn": ["^dev"]
     },
     "dev:gql": {
       "cache": false,
@@ -35,7 +33,7 @@
       "dependsOn": []
     },
     "auth#build": {
-      "dependsOn": ["client#build"],
+      "dependsOn": ["amplify#build", "client#build"],
       "env": [
         "API_KEY",
         "COGNITO_CLIENT_ID",
@@ -71,35 +69,39 @@
     "payments-client#build": {
       "dependsOn": []
     },
+    "ui#build": {
+      "dependsOn": ["amplify#build"],
+      "env": ["NEXT_PUBLIC_ROOT_URL"]
+    },
     "web#build": {
-      "dependsOn": [],
+      "dependsOn": ["auth#build", "core#build", "ui#build"],
       "env": [
-        "AUTH_BEARER_TOKEN",
-        "NEXT_PUBLIC_AWS_REGION",
-        "NEXT_PUBLIC_COGNITO_DOMAIN",
         "ISSUER_URL",
         "NEXTAUTH_SECRET",
-        "NEXT_PUBLIC_DYNAMIC_ROOT",
-        "NEXT_PUBLIC_MULTIDOMAIN",
         "NEXT_PUBLIC_ROOT_URL",
         "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE",
-        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
-        "NEXT_PUBLIC_USER_POOL_ID",
-        "NEXT_PUBLIC_USER_POOL_CLIENT_ID",
-        "NODE_ENV",
-        "TEAM_ID_VERCEL",
-        "VERCEL"
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
       ]
     },
     "grafbase#build": {
       "dependsOn": [],
       "env": [
-        "AWS_REGION",
-        "AWS_ACCESS_KEY",
-        "AWS_SECRET_ACCESS_KEY",
+        "AWS_COGNITO_REGION",
+        "AWS_COGNITO_ACCESS_KEY",
+        "AWS_COGNITO_SECRET_ACCESS_KEY",
         "COGNITO_USER_POOL_ID",
         "STRIPE_SECRET_KEY",
         "STRIPE_SECRET_KEY_LIVE"
+      ]
+    },
+    "amplify#build": {
+      "dependsOn": [],
+      "env": [
+        "AWS_COGNITO_REGION",
+        "COGNITO_DOMAIN",
+        "COGNITO_USER_POOL_ID",
+        "COGNITO_USER_POOL_CLIENT_ID",
+        "NEXT_PUBLIC_ROOT_URL"
       ]
     },
     "lint": {

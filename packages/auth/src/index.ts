@@ -15,15 +15,16 @@ import {
   credentialsSigninHandler,
   googleSigninHandler,
 } from './signin-handlers';
+import Auth from 'amplify';
 import { graphQLClient } from 'client';
 import { JWTOptions } from 'next-auth/jwt';
 import { OAuthUserConfig } from 'next-auth/providers';
-import { Auth } from '@aws-amplify/auth';
 import { JWT } from 'next-auth/jwt';
 import { constructStripe } from 'payments-server';
 import { gql } from 'graphql-request';
 import jsonwebtoken from 'jsonwebtoken';
 import { isCognitoUser } from 'core';
+import { refreshAccessToken } from './utils/refreshAccessToken';
 
 const hostName = new URL(process.env.NEXTAUTH_URL as string).hostname;
 const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://');
@@ -103,6 +104,7 @@ export const credentials = (config?: CredentialsConfig) =>
 
 export const google = (config?: OAuthUserConfig<GoogleProfile>) =>
   GoogleProvider({
+    authorization: { params: { access_type: 'offline', prompt: 'consent' } },
     clientId: process.env.GOOGLE_CLIENT_ID as string,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     ...config,
@@ -144,27 +146,50 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
       return false;
     }
   },
-  async jwt({ account, user, token }) {
-    if (user) {
-      let currentUser = user as unknown;
-      let tokenResponse: JWT = token;
+  async jwt({ account, user, token, trigger }) {
+    const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
+    const defaultExpiration = currentTimestampInSeconds + 3600;
+    let currentUser = user as unknown;
 
+    if (trigger === 'update' || trigger === undefined) {
+      const existingToken = token as any;
+
+      if (currentTimestampInSeconds < existingToken.accessTokenExpires) {
+        if (currentUser && isCognitoUser(currentUser)) {
+          // Refresh the token for Cognito users.
+          Auth.currentAuthenticatedUser();
+        }
+
+        return token;
+      }
+    }
+
+    if (currentUser) {
       if (isCognitoUser(currentUser) && account?.type === 'credentials') {
         const session = currentUser.getSignInUserSession();
 
-        tokenResponse = {
+        return {
           ...token,
-          sub: currentUser.id,
+          sub: currentUser.getUsername(),
           email: currentUser.email,
           accessToken: session?.getAccessToken().getJwtToken(),
+          accessTokenExpires:
+            session?.getAccessToken().getExpiration() ?? defaultExpiration,
           refreshToken: session?.getRefreshToken().getToken(),
         };
-      }
+      } else if (account && currentUser) {
+        const expiration = account.expires_at ?? defaultExpiration;
 
-      return Promise.resolve(tokenResponse);
+        return {
+          ...token,
+          accessToken: account.access_token,
+          accessTokenExpires: Math.floor(expiration),
+          refreshToken: account.refresh_token,
+        };
+      }
     }
 
-    return Promise.resolve(token);
+    return refreshAccessToken(token);
   },
   async session({ session, token: { sub, email, name, picture } }) {
     if (sub) {
