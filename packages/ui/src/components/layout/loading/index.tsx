@@ -11,7 +11,10 @@ export interface LoadingProps {
 
 export const Loading: React.FC<LoadingProps> = ({ classNames, size }) => {
   const styles = React.useMemo(() => {
-    return cn([`ui-flex ui-justify-center ui-content-center`, classNames]);
+    return cn([
+      `ui-h-full ui-w-full ui-flex ui-justify-center ui-content-center ui-items-center`,
+      classNames,
+    ]);
   }, [classNames]);
 
   return (

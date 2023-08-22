@@ -11,20 +11,20 @@ import CredentialsProvider, {
 } from 'next-auth/providers/credentials';
 import GithubProvider, { GithubProfile } from 'next-auth/providers/github';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
+import { PasswordUser, isCognitoUser } from 'core';
+import { constructCognitoToken, refreshAccessToken } from './utils';
 import {
   credentialsSigninHandler,
   googleSigninHandler,
 } from './signin-handlers';
 import Auth from 'amplify';
-import { graphQLClient } from 'client';
+import { JWT } from 'next-auth/jwt';
 import { JWTOptions } from 'next-auth/jwt';
 import { OAuthUserConfig } from 'next-auth/providers';
-import { JWT } from 'next-auth/jwt';
 import { constructStripe } from 'payments-server';
+import { graphQLClient } from 'client';
 import { gql } from 'graphql-request';
 import jsonwebtoken from 'jsonwebtoken';
-import { isCognitoUser } from 'core';
-import { refreshAccessToken } from './utils/refreshAccessToken';
 
 const hostName = new URL(process.env.NEXTAUTH_URL as string).hostname;
 const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://');
@@ -157,7 +157,8 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
       if (currentTimestampInSeconds < existingToken.accessTokenExpires) {
         if (currentUser && isCognitoUser(currentUser)) {
           // Refresh the token for Cognito users.
-          Auth.currentAuthenticatedUser();
+          const user = (await Auth.currentAuthenticatedUser()) as PasswordUser;
+          return constructCognitoToken(existingToken, user, defaultExpiration);
         }
 
         return token;
@@ -166,17 +167,7 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
 
     if (currentUser) {
       if (isCognitoUser(currentUser) && account?.type === 'credentials') {
-        const session = currentUser.getSignInUserSession();
-
-        return {
-          ...token,
-          sub: currentUser.getUsername(),
-          email: currentUser.email,
-          accessToken: session?.getAccessToken().getJwtToken(),
-          accessTokenExpires:
-            session?.getAccessToken().getExpiration() ?? defaultExpiration,
-          refreshToken: session?.getRefreshToken().getToken(),
-        };
+        return constructCognitoToken(token, currentUser, defaultExpiration);
       } else if (account && currentUser) {
         const expiration = account.expires_at ?? defaultExpiration;
 

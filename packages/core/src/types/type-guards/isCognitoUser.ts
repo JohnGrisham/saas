@@ -1,9 +1,9 @@
 import { CognitoUser } from '@aws-amplify/auth';
 
-interface User extends CognitoUser {
+export interface PasswordUser extends CognitoUser {
   [key: string]: any;
 }
 
-export const isCognitoUser = (data: unknown): data is User => {
+export const isCognitoUser = (data: unknown): data is PasswordUser => {
   return Object.hasOwn(data as {}, 'authenticationFlowType');
 };

@@ -4,7 +4,7 @@ import { ThemeConfig } from 'tailwindcss/types/config';
 import { theme } from 'tailwind-config/tailwind.config';
 
 interface TailwindThemeConfig extends Partial<ThemeConfig> {
-  colors: Record<string, any>;
+  colors?: Record<string, any>;
 }
 
 export interface ThemeProviderValue extends TailwindThemeConfig {
@@ -14,7 +14,7 @@ export interface ThemeProviderValue extends TailwindThemeConfig {
 
 export interface ThemeProviderProps {
   children: React.ReactNode;
-  theme: TailwindThemeConfig;
+  theme?: TailwindThemeConfig;
 }
 
 export const ThemeContext = createContext<ThemeProviderValue>(theme);

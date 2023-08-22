@@ -9,7 +9,7 @@ export const Body: React.FC<BodyProps> = ({ children }) => {
   const isRootDomain = useRootDomain();
   const styles = React.useMemo(() => {
     return cn([
-      `ui-flex ui-h-full ui-min-h-[92vh] ui-bg-white dark:ui-bg-black`,
+      `ui-flex ui-min-h-[92vh] ui-bg-white dark:ui-bg-black`,
       {
         'ui-justify-center ui-p-8': isRootDomain,
       },

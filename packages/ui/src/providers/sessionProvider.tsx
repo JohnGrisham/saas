@@ -7,6 +7,7 @@ import {
   useSession,
 } from 'next-auth/react';
 import { isAuthenticatedSession, isAuthScreen } from 'core';
+import { Loading } from '../components';
 import { Session } from 'next-auth';
 
 export interface AuthenticatedUser {
@@ -66,12 +67,12 @@ const AuthenticatedSessionProvider: React.FC<
       setAuthStatus('loading');
       signIn();
     } else {
-      setAuthStatus(status);
+      window.setTimeout(() => setAuthStatus(status), 700);
     }
   }, [authStatus, isAuthSession, status]);
 
   if (authStatus === 'loading') {
-    return <div>Loading...</div>;
+    return <Loading size="4x" />;
   }
 
   if (!isAuthScreen() && authStatus === 'unauthenticated') {

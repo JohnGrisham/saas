@@ -30,8 +30,8 @@ export async function refreshAccessToken(token: JWT) {
       accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
       refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
     };
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.error(error.message);
 
     return {
       ...token,
