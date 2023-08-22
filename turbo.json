@@ -33,7 +33,7 @@
       "dependsOn": []
     },
     "auth#build": {
-      "dependsOn": ["amplify#build", "client#build"],
+      "dependsOn": ["amplify#build", "client#build", "payments-server#build"],
       "env": [
         "API_KEY",
         "COGNITO_CLIENT_ID",

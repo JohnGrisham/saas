@@ -41,3 +41,6 @@ dist/
 
 # parcel
 .parcel-cache
+
+# Generated types (Remove after initial generation to use in project)
+packages/client/src/types/generated.ts
