@@ -70,6 +70,7 @@
       "dependsOn": []
     },
     "ui#build": {
+      "cache": false,
       "dependsOn": ["amplify#build"],
       "env": ["NEXT_PUBLIC_ROOT_URL"]
     },

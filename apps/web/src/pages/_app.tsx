@@ -4,6 +4,7 @@ import 'ui/styles.css';
 import type { AppProps } from 'next/app';
 import { Body, LoadingProvider, SessionProvider, ThemeProvider } from 'ui';
 import { StripeClient } from 'payments-client';
+import { ThemeConfig } from 'tailwindcss/types/config';
 import dynamic from 'next/dynamic';
 // @ts-ignore
 import { theme } from 'tailwind-config/tailwind.config';
@@ -33,7 +34,7 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
     <SessionProvider requiresAuth={Component.auth}>
       <GraphqlClient>
         <StripeClient publishableKey={STRIPE_PUBLISHABLE_KEY}>
-          <ThemeProvider theme={theme}>
+          <ThemeProvider theme={theme as ThemeConfig}>
             <LoadingProvider>
               <Navbar
                 logoProps={{

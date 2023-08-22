@@ -7,7 +7,7 @@ const Signup = () => {
 
   return (
     <CredentialsSignup
-      image={<Register color={theme?.colors?.primary[500]} />}
+      image={<Register color={theme.colors.primary[500]} />}
       signInUrl="/auth/signin"
       onSignup={async (email, password) => {
         try {
