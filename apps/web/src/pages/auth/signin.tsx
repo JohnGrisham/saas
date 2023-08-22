@@ -11,7 +11,7 @@ const Signin: React.FC = () => {
 
   return (
     <CredentialsSignin
-      backgroundImage={<Unlock color={theme.colors.primary[500]} />}
+      backgroundImage={<Unlock color={theme?.colors?.primary[500]} />}
       signupUrl="/auth/signup"
       signInOptions={signInOptions}
     />
