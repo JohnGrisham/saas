@@ -96,7 +96,15 @@
       ]
     },
     "web#build": {
-      "dependsOn": ["auth#build", "core#build", "platforms#build", "ui#build"],
+      "dependsOn": [
+        "amplify#build",
+        "auth#build",
+        "client#build",
+        "core#build",
+        "payments-client#build",
+        "platforms#build",
+        "ui#build"
+      ],
       "env": [
         "AUTH_BEARER_TOKEN",
         "ISSUER_URL",
