@@ -1,4 +1,4 @@
 {
   "buildCommand": "cd ../../ && yarn build",
-  "installCommand": "cd ../../ && yarn --legacy-peer-deps"
+  "installCommand": "cd ../../ && yarn"
 }
