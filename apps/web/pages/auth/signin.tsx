@@ -1,5 +1,5 @@
 import { CredentialsSignin, useThemeContext } from 'ui';
-import Unlock from '../../../public/unlock.svg';
+import Unlock from '../../public/unlock.svg';
 
 const signInOptions = {
   callbackUrl: process.env.NEXT_PUBLIC_ROOT_URL as string,
