@@ -1,5 +1,8 @@
-import { middleware } from 'platforms';
+import { middleware as platformMiddleware } from 'platforms';
 
-export default JSON.parse(process.env.NEXT_PUBLIC_MULTIDOMAIN ?? 'false')
-  ? middleware
-  : () => {};
+const multidomain: boolean = JSON.parse(
+  process.env.NEXT_PUBLIC_MULTIDOMAIN ?? 'false',
+);
+const middleware = multidomain ? platformMiddleware : () => {};
+
+export default middleware;
