@@ -5,4 +5,4 @@ const multidomain: boolean = JSON.parse(
 );
 const middleware = multidomain ? platformMiddleware : async () => {};
 
-export default middleware;
+export default middleware as any;
