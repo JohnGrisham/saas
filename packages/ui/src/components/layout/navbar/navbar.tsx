@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import * as React from 'react';
 import { Dropdown, DropdownItem } from '../../dropdown';
-import { SignOutParams, signOut, useSession } from 'next-auth/react';
-import { useRootDomain, useThemeContext } from '../../../hooks';
+import { SignOutParams, signOut } from 'next-auth/react';
+import { useRootDomain, useThemeContext, useSession } from '../../../hooks';
 import { useBreakpointEffect } from 'tailwind-config';
 import { Avatar } from '../../avatar';
 import { Button } from '../../button';

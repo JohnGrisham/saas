@@ -9,7 +9,6 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -18,5 +17,6 @@
     "jsx": "preserve"
   },
   "include": ["src", "next-env.d.ts"],
+  "plugins": [{ "name": "next" }],
   "exclude": ["node_modules"]
 }

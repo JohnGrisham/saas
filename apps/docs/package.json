@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^13.1.6",
+    "next": "*",
     "react": "*",
     "react-dom": "*",
     "ui": "*"
@@ -20,6 +20,6 @@
     "eslint-config-custom": "*",
     "tailwind-config": "*",
     "tsconfig": "*",
-    "typescript": "^4.5.3"
+    "typescript": "*"
   }
 }

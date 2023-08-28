@@ -1,14 +1,15 @@
 {
-  "name": "core",
+  "name": "platforms",
   "version": "0.0.0",
-  "main": "./src/index.ts",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist"
   },
-  "license": "MIT",
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts",
-    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
@@ -19,5 +20,10 @@
     "tsconfig": "*",
     "tsup": "*",
     "typescript": "*"
+  },
+  "dependencies": {
+    "core": "*",
+    "next": "*",
+    "next-auth": "*"
   }
 }

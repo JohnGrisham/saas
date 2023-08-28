@@ -1,10 +1,9 @@
 import * as React from 'react';
 import Head from 'next/head';
-import { Button } from 'ui';
+import { Button, useSession } from 'ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useGetUserByEmailQuery } from 'client';
-import { useSession } from 'next-auth/react';
 
 export default function Home() {
   const { data } = useSession();

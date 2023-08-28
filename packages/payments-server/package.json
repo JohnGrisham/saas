@@ -18,8 +18,8 @@
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
     "tsconfig": "*",
-    "tsup": "^6.1.3",
-    "typescript": "^4.5.2"
+    "tsup": "*",
+    "typescript": "*"
   },
   "dependencies": {
     "micro": "^9.4.1",

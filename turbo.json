@@ -69,6 +69,15 @@
     "payments-client#build": {
       "dependsOn": []
     },
+    "platforms#build": {
+      "dependsOn": [],
+      "env": [
+        "AUTH_BEARER_TOKEN",
+        "NEXT_PUBLIC_ROOT_URL",
+        "PROJECT_ID_VERCEL",
+        "TEAM_ID_VERCEL"
+      ]
+    },
     "ui#build": {
       "cache": false,
       "dependsOn": ["amplify#build"],
@@ -87,7 +96,7 @@
       ]
     },
     "web#build": {
-      "dependsOn": ["auth#build", "core#build", "ui#build"],
+      "dependsOn": ["auth#build", "core#build", "platforms#build", "ui#build"],
       "env": [
         "AUTH_BEARER_TOKEN",
         "ISSUER_URL",
