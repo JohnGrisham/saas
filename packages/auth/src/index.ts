@@ -21,7 +21,7 @@ import Auth from 'amplify';
 import { JWT } from 'next-auth/jwt';
 import { JWTOptions } from 'next-auth/jwt';
 import { OAuthUserConfig } from 'next-auth/providers';
-import { constructStripe } from 'payments-server';
+import { constructStripe } from 'payments';
 import { graphQLClient } from 'client';
 import { gql } from 'graphql-request';
 import jsonwebtoken from 'jsonwebtoken';

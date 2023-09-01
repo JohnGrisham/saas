@@ -1080,6 +1080,12 @@ export enum StripeBalanceTransactionType {
   IssuingAuthorizationRelease = 'ISSUING_AUTHORIZATION_RELEASE',
   IssuingDispute = 'ISSUING_DISPUTE',
   IssuingTransaction = 'ISSUING_TRANSACTION',
+  ObligationInbound = 'OBLIGATION_INBOUND',
+  ObligationOutbound = 'OBLIGATION_OUTBOUND',
+  ObligationPayout = 'OBLIGATION_PAYOUT',
+  ObligationPayoutFailure = 'OBLIGATION_PAYOUT_FAILURE',
+  ObligationReversalInbound = 'OBLIGATION_REVERSAL_INBOUND',
+  ObligationReversalOutbound = 'OBLIGATION_REVERSAL_OUTBOUND',
   Payment = 'PAYMENT',
   PaymentFailureRefund = 'PAYMENT_FAILURE_REFUND',
   PaymentRefund = 'PAYMENT_REFUND',
@@ -12164,6 +12170,7 @@ export type StripePaymentLink = {
   active: Scalars['Boolean'];
   afterCompletion: StripePaymentLinksResourceAfterCompletion;
   allowPromotionCodes: Scalars['Boolean'];
+  application?: Maybe<StripeStringOrDeletedApplicationOrApplicationUnion>;
   applicationFeeAmount?: Maybe<Scalars['Int']>;
   applicationFeePercent?: Maybe<Scalars['Float']>;
   automaticTax: StripePaymentLinksResourceAutomaticTax;
@@ -14887,6 +14894,11 @@ export type StripePortalFlowsAfterCompletionRedirect = {
   returnUrl: Scalars['String'];
 };
 
+export type StripePortalFlowsCouponOffer = {
+  __typename?: 'StripePortalFlowsCouponOffer';
+  coupon: Scalars['String'];
+};
+
 export type StripePortalFlowsFlow = {
   __typename?: 'StripePortalFlowsFlow';
   afterCompletion: StripePortalFlowsFlowAfterCompletion;
@@ -14911,6 +14923,7 @@ export enum StripePortalFlowsFlowAfterCompletionType {
 
 export type StripePortalFlowsFlowSubscriptionCancel = {
   __typename?: 'StripePortalFlowsFlowSubscriptionCancel';
+  retention?: Maybe<StripePortalFlowsRetention>;
   subscription: Scalars['String'];
 };
 
@@ -14931,6 +14944,16 @@ export enum StripePortalFlowsFlowType {
   SubscriptionCancel = 'SUBSCRIPTION_CANCEL',
   SubscriptionUpdate = 'SUBSCRIPTION_UPDATE',
   SubscriptionUpdateConfirm = 'SUBSCRIPTION_UPDATE_CONFIRM'
+}
+
+export type StripePortalFlowsRetention = {
+  __typename?: 'StripePortalFlowsRetention';
+  couponOffer?: Maybe<StripePortalFlowsCouponOffer>;
+  type: StripePortalFlowsRetentionType;
+};
+
+export enum StripePortalFlowsRetentionType {
+  CouponOffer = 'COUPON_OFFER'
 }
 
 export type StripePortalFlowsSubscriptionUpdateConfirmDiscount = {
@@ -16996,6 +17019,10 @@ export type StripePostBillingPortalSessionsAfterCompletionFlowDataInput = {
   type: StripePostBillingPortalSessionsTypeAfterCompletionFlowData;
 };
 
+export type StripePostBillingPortalSessionsCouponOfferRetentionSubscriptionCancelFlowDataInput = {
+  coupon: Scalars['String'];
+};
+
 export type StripePostBillingPortalSessionsDiscountsSubscriptionUpdateConfirmFlowDataInput = {
   coupon?: InputMaybe<Scalars['String']>;
   promotionCode?: InputMaybe<Scalars['String']>;
@@ -17083,7 +17110,13 @@ export type StripePostBillingPortalSessionsRedirectAfterCompletionFlowDataInput 
   returnUrl: Scalars['String'];
 };
 
+export type StripePostBillingPortalSessionsRetentionSubscriptionCancelFlowDataInput = {
+  couponOffer: StripePostBillingPortalSessionsCouponOfferRetentionSubscriptionCancelFlowDataInput;
+  type: StripePostBillingPortalSessionsTypeRetentionSubscriptionCancelFlowData;
+};
+
 export type StripePostBillingPortalSessionsSubscriptionCancelFlowDataInput = {
+  retention?: InputMaybe<StripePostBillingPortalSessionsRetentionSubscriptionCancelFlowDataInput>;
   subscription: Scalars['String'];
 };
 
@@ -17108,6 +17141,10 @@ export enum StripePostBillingPortalSessionsTypeFlowData {
   SubscriptionCancel = 'SUBSCRIPTION_CANCEL',
   SubscriptionUpdate = 'SUBSCRIPTION_UPDATE',
   SubscriptionUpdateConfirm = 'SUBSCRIPTION_UPDATE_CONFIRM'
+}
+
+export enum StripePostBillingPortalSessionsTypeRetentionSubscriptionCancelFlowData {
+  CouponOffer = 'COUPON_OFFER'
 }
 
 export type StripePostChargesAddressShippingInput = {
@@ -29278,6 +29315,7 @@ export enum StripePostReportingReportRunsReportingCategoryParameters {
   IssuingDispute = 'ISSUING_DISPUTE',
   IssuingTransaction = 'ISSUING_TRANSACTION',
   NetworkCost = 'NETWORK_COST',
+  Obligation = 'OBLIGATION',
   OtherAdjustment = 'OTHER_ADJUSTMENT',
   PartialCaptureReversal = 'PARTIAL_CAPTURE_REVERSAL',
   Payout = 'PAYOUT',
@@ -41622,10 +41660,10 @@ export enum StripeWebhookEndpointObject {
 
 export type User = {
   __typename?: 'User';
-  cognitoUser: CognitoUser;
+  cognitoUser?: Maybe<CognitoUser>;
   /** when the model was created */
   createdAt: Scalars['DateTime'];
-  customer: StripeCustomer;
+  customer?: Maybe<StripeCustomer>;
   email: Scalars['Email'];
   /** Unique identifier */
   id: Scalars['ID'];
@@ -41764,14 +41802,14 @@ export type UserByEmailQueryVariables = Exact<{
 }>;
 
 
-export type UserByEmailQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer: { __typename?: 'StripeCustomer', id: string }, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
+export type UserByEmailQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', id: string } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
 
 export type UserByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type UserByIdQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer: { __typename?: 'StripeCustomer', id: string }, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
+export type UserByIdQuery = { __typename?: 'Query', user?: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', id: string } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null } | null } | null };
 
 export type UserCollectionQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
@@ -41781,14 +41819,14 @@ export type UserCollectionQueryVariables = Exact<{
 }>;
 
 
-export type UserCollectionQuery = { __typename?: 'Query', userCollection?: { __typename?: 'UserConnection', edges?: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer: { __typename?: 'StripeCustomer', id: string }, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', cursor: string, node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } | null } } | null> | null } | null };
+export type UserCollectionQuery = { __typename?: 'Query', userCollection?: { __typename?: 'UserConnection', edges?: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', createdAt: any, updatedAt: any, id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', id: string } | null, identities?: { __typename?: 'IdentityConnection', edges?: Array<{ __typename?: 'IdentityEdge', cursor: string, node: { __typename?: 'Identity', id: string, sub: string, type: IdentityType } } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } | null } } | null> | null } | null };
 
 export type UserSubscriptionsQueryVariables = Exact<{
   email: Scalars['Email'];
 }>;
 
 
-export type UserSubscriptionsQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, email: string, name?: string | null, customer: { __typename?: 'StripeCustomer', id: string, subscriptions?: { __typename?: 'StripeCustomerSubscriptions', nodes: Array<{ __typename?: 'StripeSubscription', id: string, canceledAt?: number | null, items: { __typename?: 'StripeSubscriptionItems', nodes: Array<{ __typename?: 'StripeSubscriptionItem', id: string, quantity?: number | null, price: { __typename?: 'StripePrice', id: string, active: boolean, currency: string, unitAmount?: number | null, recurring?: { __typename?: 'StripeRecurring', interval: StripeRecurringInterval } | null, product: { __typename: 'StripeDeletedProduct', id: string, deleted: boolean } | { __typename: 'StripeProduct', id: string, active: boolean, created: number, description?: string | null, images: Array<string>, livemode: boolean, metadata: any, name: string, object: StripeProductObject, shippable?: boolean | null, statementDescriptor?: string | null, unitLabel?: string | null, updated: number, url?: string | null } | { __typename: 'StripeString' } } }> } }> } | null } } | null };
+export type UserSubscriptionsQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, email: string, name?: string | null, customer?: { __typename?: 'StripeCustomer', id: string, subscriptions?: { __typename?: 'StripeCustomerSubscriptions', nodes: Array<{ __typename?: 'StripeSubscription', id: string, canceledAt?: number | null, items: { __typename?: 'StripeSubscriptionItems', nodes: Array<{ __typename?: 'StripeSubscriptionItem', id: string, quantity?: number | null, price: { __typename?: 'StripePrice', id: string, active: boolean, currency: string, unitAmount?: number | null, recurring?: { __typename?: 'StripeRecurring', interval: StripeRecurringInterval } | null, product: { __typename: 'StripeDeletedProduct', id: string, deleted: boolean } | { __typename: 'StripeProduct', id: string, active: boolean, created: number, description?: string | null, images: Array<string>, livemode: boolean, metadata: any, name: string, object: StripeProductObject, shippable?: boolean | null, statementDescriptor?: string | null, unitLabel?: string | null, updated: number, url?: string | null } | { __typename: 'StripeString' } } }> } }> } | null } | null } | null };
 
 export const AddressPartsFragmentDoc = `
     fragment AddressParts on StripeAddress {

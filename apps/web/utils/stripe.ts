@@ -1,4 +1,4 @@
-import { constructStripe } from 'payments-server';
+import { constructStripe } from 'payments';
 import packageInfo from '../package.json';
 
 export const stripe = constructStripe({

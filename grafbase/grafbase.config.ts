@@ -1,7 +1,7 @@
 import { auth, config, connector, g } from '@grafbase/sdk';
 import { Type } from '@grafbase/sdk/dist/src/type';
 
-const stripe = connector.OpenAPI({
+const stripe = connector.OpenAPI('Stripe', {
   schema:
     'https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.json',
   url: 'https://api.stripe.com',
@@ -15,7 +15,7 @@ const provider = auth.JWT({
   secret: g.env('NEXTAUTH_SECRET'),
 });
 
-g.datasource(stripe, { namespace: 'Stripe' });
+g.datasource(stripe);
 
 const identityType = g.enum('IdentityType', ['CREDENTIALS', 'GOOGLE']);
 const cognitoUser = g.type('CognitoUser', {
@@ -36,8 +36,9 @@ const user = g.model('User', {
     .optional(),
   customer: g
     .ref(new Type('StripeCustomer'))
+    .optional()
     .resolver('stripe/customer/byEmail'),
-  cognitoUser: g.ref(cognitoUser).resolver('cognito/user/byEmail'),
+  cognitoUser: g.ref(cognitoUser).optional().resolver('cognito/user/byEmail'),
 });
 
 const identity = g.model('Identity', {

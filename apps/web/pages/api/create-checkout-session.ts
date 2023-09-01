@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { constructStripe } from 'payments-server';
+import { constructStripe } from 'payments';
 import { getToken } from 'next-auth/jwt';
 
 const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;

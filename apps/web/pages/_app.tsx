@@ -3,7 +3,7 @@ import '../styles/globals.css';
 import 'ui/styles.css';
 import type { AppProps } from 'next/app';
 import { Body, LoadingProvider, SessionProvider, ThemeProvider } from 'ui';
-import { StripeClient } from 'payments-client';
+import { StripeClient } from 'payments';
 import { ThemeConfig } from 'tailwindcss/types/config';
 import dynamic from 'next/dynamic';
 // @ts-ignore

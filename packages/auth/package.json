@@ -30,6 +30,6 @@
     "graphql-request": "^4.3.0",
     "jsonwebtoken": "*",
     "next-auth": "*",
-    "payments-server": "*"
+    "payments": "*"
   }
 }

@@ -1,0 +1,38 @@
+{
+  "name": "payments",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "node": "./dist/server.js",
+      "import": "./dist/index.js",
+      "module": "./dist/index.mjs",
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn build:server && yarn build:client",
+    "build:server": "tsup src/server.ts",
+    "build:client": "tsup src/index.ts --external react --platform=browser",
+    "dev": "concurrently \"tsup src/server.ts --watch\" \"tsup src/index.ts --external react --watch --platform=browser\"",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "esbuild": "^0.15.5",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
+    "tsconfig": "*",
+    "tsup": "*",
+    "typescript": "*"
+  },
+  "dependencies": {
+    "@stripe/react-stripe-js": "^1.10.0",
+    "@stripe/stripe-js": "^1.36.0",
+    "micro": "^9.4.1",
+    "react": "*",
+    "stripe": "*"
+  }
+}

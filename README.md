@@ -16,7 +16,7 @@ This Turborepo includes the following packages/apps:
 - `client`: graphql client configuration, types, operations and provider
 - `core`: shared utilites and other common logic
 - `jest-config`: shared testing config
-- `payments-client/payments-server`: Stripe functions and utilities
+- `payments`: Stripe functions and utilities
 - `tailwind-config`: shared tailwind config
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
@@ -112,12 +112,15 @@ NEXTAUTH_URL=http://localhost:3000
 STRIPE_TRIAL_PRODUCT_NAME=${Free trail product name}
 ```
 
-### Payments (Server)
+### Payments
 
-`packages/payments-server/.env` example
+`packages/payments/.env` example
 
 ```
 STRIPE_SECRET_KEY=${Stripe Secret Key}
+STRIPE_SECRET_KEY_LIVE=${Stripe Secret Key Live}
+STRIPE_WEBHOOK_SECRET=${Stripe Webhook Secret}
+STRIPE_WEBHOOK_SECRET_LIVE=${Stripe Webhook Secret Live}
 ```
 
 ### UI

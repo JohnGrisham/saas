@@ -2724,10 +2724,10 @@
   dependencies:
     prop-types "^15.8.1"
 
-"@grafbase/sdk@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@grafbase/sdk/-/sdk-0.3.0.tgz#339d9e5a5e3a1e9005d25408415009f6c71d875c"
-  integrity sha512-kvpNPbtHwVr1EDcY3nv5dQH98+M/9dM8Sp8Lcd9tc2Ayi3/12CkJCxSKBDaYf4MA5e8e05DGmfo+CRTTP1rsAQ==
+"@grafbase/sdk@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@grafbase/sdk/-/sdk-0.6.1.tgz#7ddfb1389caf7c31376032396fbcf88596ad05be"
+  integrity sha512-8DYG9EgLVVgyf1BkTJuR43XHlowz9Vx8AdERTQtSNKXVUmMKcpBBV8kKTP803K9TzwmMh/bQJNKD1hWlWVSjzg==
   dependencies:
     dotenv "^16.1.4"
     type-fest "^3.9.0"

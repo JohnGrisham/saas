@@ -67,7 +67,7 @@ const AuthenticatedSessionProvider: React.FC<
       setAuthStatus('loading');
       signIn();
     } else {
-      window.setTimeout(() => setAuthStatus(status), 700);
+      window.setTimeout(() => setAuthStatus(status), 500);
     }
   }, [authStatus, isAuthSession, status]);
 
