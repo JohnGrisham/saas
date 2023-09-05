@@ -1,8 +1,9 @@
-import * as React from 'react';
 import { AuthenticatedSessionContext } from '../providers';
+import { useContext } from 'react';
 import { useSession } from 'next-auth/react';
 
-export const useAuthSession = () =>
-  React.useContext(AuthenticatedSessionContext);
+export const useAuthSession = () => {
+  return useContext(AuthenticatedSessionContext);
+};
 
 export { useSession };

@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import { Accordion, Button, useAuthSession } from 'ui';
 import { StripeProduct, useGetUserSubscriptions } from 'client';
@@ -28,11 +29,9 @@ function Card({ title, description, footer, children }: Props) {
   );
 }
 
-export default function Account() {
+export default function Profile() {
   const [loading, setLoading] = useState(false);
-  const {
-    context: { data: session },
-  } = useAuthSession();
+  const { data: session } = useAuthSession();
   const { data } = useGetUserSubscriptions(session.user.email);
 
   const subscription = React.useMemo(() => {
@@ -95,7 +94,7 @@ export default function Account() {
       <div className="max-w-6xl px-4 pt-8 pb-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
         <div className="sm:align-center dark:text-white sm:flex sm:flex-col">
           <h1 className="text-4xl font-extrabold sm:text-center sm:text-6xl">
-            Account
+            Profile
           </h1>
           <p className="max-w-2xl m-auto mt-5 text-xl sm:text-center sm:text-2xl">
             We partnered with Stripe for a simplified billing.

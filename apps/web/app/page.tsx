@@ -1,13 +1,14 @@
+'use client';
 import * as React from 'react';
 import Head from 'next/head';
-import { Button, useSession } from 'ui';
+import { Button, useAuthSession } from 'ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useGetUserByEmailQuery } from 'client';
 
 export default function Home() {
-  const { data } = useSession();
-  const response = useGetUserByEmailQuery(data?.user?.email ?? '');
+  const { data } = useAuthSession();
+  const response = useGetUserByEmailQuery(data.user.email);
   console.log({ response });
 
   return (
@@ -35,5 +36,3 @@ export default function Home() {
     </div>
   );
 }
-
-Home.auth = false;

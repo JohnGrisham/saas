@@ -6,9 +6,12 @@ import {
   signIn,
   useSession,
 } from 'next-auth/react';
-import { isAuthenticatedSession, isAuthScreen } from 'core';
+import {
+  AuthenticatedSession,
+  isAuthenticatedSession,
+  isAuthScreen,
+} from 'core';
 import { Loading } from '../components';
-import { Session } from 'next-auth';
 
 export interface AuthenticatedUser {
   email: string;
@@ -16,60 +19,39 @@ export interface AuthenticatedUser {
   image?: string | null;
 }
 
-export interface AuthContextData extends Omit<Session, 'user'> {
-  user: AuthenticatedUser;
-}
-
-export interface AuthenticatedSessionContextProps {
-  context: Omit<SessionContextValue, 'data' | 'update'> & {
-    data: AuthContextData;
-  };
-}
-
-export interface AuthenticatedSessionProviderProps
-  extends SessionProviderProps {
-  AuthSessionProvider?: React.FC<AuthenticatedSessionProviderProps>;
-  requiresAuth?: boolean;
+export interface AuthSessionValue extends Omit<SessionContextValue, 'data'> {
+  data: AuthenticatedSession;
+  status: 'authenticated';
 }
 
 export const AuthenticatedSessionContext =
-  React.createContext<AuthenticatedSessionContextProps>({
-    context: {
-      data: {} as AuthContextData,
-      status: 'unauthenticated',
-    },
+  React.createContext<AuthSessionValue>({
+    data: {} as AuthenticatedSession,
+    status: 'authenticated',
+    update: async () => Promise.resolve(null),
   });
 
-const withNextSessionProvider = ({
-  AuthSessionProvider,
+const AuthenticatedSessionProvider: React.FC<SessionProviderProps> = ({
   children,
-  requiresAuth = true,
-  ...props
-}: AuthenticatedSessionProviderProps) => (
-  <NextAuthSessionProvider {...props}>
-    {requiresAuth && AuthSessionProvider ? (
-      <AuthSessionProvider {...props}>{children}</AuthSessionProvider>
-    ) : (
-      children
-    )}
-  </NextAuthSessionProvider>
-);
-
-const AuthenticatedSessionProvider: React.FC<
-  AuthenticatedSessionProviderProps
-> = ({ children }) => {
-  const { data: session, status } = useSession();
-  const [authStatus, setAuthStatus] = React.useState(status);
-  const isAuthSession = isAuthenticatedSession(session);
+}) => {
+  const sessionContext = useSession();
+  const [authStatus, setAuthStatus] = React.useState(sessionContext.status);
+  const isAuthSession = isAuthenticatedSession(sessionContext.data);
 
   React.useEffect(() => {
-    if (!isAuthSession && !isAuthScreen() && status !== 'loading') {
+    if (
+      !isAuthSession &&
+      !isAuthScreen() &&
+      sessionContext.status !== 'loading'
+    ) {
       setAuthStatus('loading');
       signIn();
+    } else if (!isAuthScreen()) {
+      window.setTimeout(() => setAuthStatus(sessionContext.status), 500);
     } else {
-      window.setTimeout(() => setAuthStatus(status), 500);
+      setAuthStatus('unauthenticated');
     }
-  }, [authStatus, isAuthSession, status]);
+  }, [authStatus, isAuthSession, sessionContext]);
 
   if (authStatus === 'loading') {
     return <Loading size="4x" />;
@@ -82,7 +64,11 @@ const AuthenticatedSessionProvider: React.FC<
   if (isAuthSession) {
     return (
       <AuthenticatedSessionContext.Provider
-        value={{ context: { data: session, status: 'authenticated' } }}
+        value={{
+          ...sessionContext,
+          data: sessionContext.data as AuthenticatedSession,
+          status: 'authenticated',
+        }}
       >
         {children}
       </AuthenticatedSessionContext.Provider>
@@ -92,10 +78,17 @@ const AuthenticatedSessionProvider: React.FC<
   return <>{children}</>;
 };
 
+const withNextSessionProvider = ({
+  children,
+  ...props
+}: SessionProviderProps) => (
+  <NextAuthSessionProvider {...props}>
+    <AuthenticatedSessionProvider {...props}>
+      {children}
+    </AuthenticatedSessionProvider>
+  </NextAuthSessionProvider>
+);
+
 export const SessionProvider: React.FC<
-  Omit<AuthenticatedSessionProviderProps, 'AuthSessionProvider'>
-> = (props) =>
-  withNextSessionProvider({
-    AuthSessionProvider: AuthenticatedSessionProvider,
-    ...props,
-  });
+  Omit<SessionProviderProps, 'AuthSessionProvider'>
+> = (props) => withNextSessionProvider(props);

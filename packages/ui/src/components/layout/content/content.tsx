@@ -5,7 +5,7 @@ export interface BodyProps {
   children: React.ReactNode;
 }
 
-export const Body: React.FC<BodyProps> = ({ children }) => {
+export const Content: React.FC<BodyProps> = ({ children }) => {
   const isRootDomain = useRootDomain();
   const styles = React.useMemo(() => {
     return cn([

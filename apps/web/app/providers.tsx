@@ -1,8 +1,5 @@
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import '../styles/globals.css';
-import 'ui/styles.css';
-import type { AppProps } from 'next/app';
-import { Body, LoadingProvider, SessionProvider, ThemeProvider } from 'ui';
+'use client';
+import { Content, LoadingProvider, SessionProvider, ThemeProvider } from 'ui';
 import { StripeClient } from 'payments';
 import { ThemeConfig } from 'tailwindcss/types/config';
 import dynamic from 'next/dynamic';
@@ -25,13 +22,9 @@ const STRIPE_PUBLISHABLE_KEY =
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ??
   '';
 
-export interface MyAppProps extends AppProps {
-  Component: any;
-}
-
-export default function MyApp({ Component, pageProps }: MyAppProps) {
+export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider requiresAuth={Component.auth}>
+    <SessionProvider>
       <GraphqlClient>
         <StripeClient publishableKey={STRIPE_PUBLISHABLE_KEY}>
           <ThemeProvider theme={theme as ThemeConfig}>
@@ -56,9 +49,7 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
                   redirect: true,
                 }}
               />
-              <Body>
-                <Component {...pageProps} />
-              </Body>
+              <Content>{children}</Content>
             </LoadingProvider>
           </ThemeProvider>
         </StripeClient>

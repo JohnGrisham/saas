@@ -1,10 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest } from 'next';
+import { NextResponse } from 'next/server';
 import { HttpMethod } from 'core';
 
-export default async function requestDelegation(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
+export async function POST(req: NextApiRequest) {
   const { domain } = req.query;
 
   try {
@@ -21,9 +19,9 @@ export default async function requestDelegation(
       },
     );
 
-    res.status(response.ok ? 200 : 403).end();
-  } catch (error) {
+    return NextResponse.json({}, { status: response.ok ? 200 : 403 });
+  } catch (error: any) {
     console.error(error);
-    res.status(500).end(error);
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }

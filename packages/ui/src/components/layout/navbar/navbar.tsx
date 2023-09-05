@@ -96,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (session && session.user?.email) {
       options.unshift({
         title: 'Profile',
-        href: '/account',
+        href: '/profile',
       });
       options.unshift({
         classNames: 'ui-bg-primary-700 ui-text-white',
