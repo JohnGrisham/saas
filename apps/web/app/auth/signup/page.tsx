@@ -1,3 +1,4 @@
+'use client';
 import { CredentialsSignup, useThemeContext } from 'ui';
 import Register from '../../../public/register.svg';
 import { signIn } from 'next-auth/react';

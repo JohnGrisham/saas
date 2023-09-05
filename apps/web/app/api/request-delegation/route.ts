@@ -1,9 +1,12 @@
-import type { NextApiRequest } from 'next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { HttpMethod } from 'core';
 
-export async function POST(req: NextApiRequest) {
-  const { domain } = req.query;
+export async function POST(req: NextRequest) {
+  const domain = req.nextUrl.searchParams.get('domain');
+
+  if (!domain) {
+    throw new Error('Missing domain in request');
+  }
 
   try {
     const response = await fetch(

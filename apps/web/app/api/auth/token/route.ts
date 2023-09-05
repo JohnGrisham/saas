@@ -1,8 +1,7 @@
-import { NextApiRequest } from 'next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from '../../../../utils';
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   const token = await getToken(req);
 
   if (token) {

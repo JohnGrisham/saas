@@ -1,12 +1,11 @@
 import type { JWT } from 'next-auth/jwt';
-import { NextApiRequest } from 'next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getToken, stripe } from '../../../utils';
 import jsonwebtoken from 'jsonwebtoken';
 
 const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;
 
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
   try {
     const rawToken = await getToken(req);
 

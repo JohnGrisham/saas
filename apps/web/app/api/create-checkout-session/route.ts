@@ -1,13 +1,16 @@
-import { NextApiRequest } from 'next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { constructStripe } from 'payments';
 import { getToken } from 'next-auth/jwt';
 
 const ROOT = process.env.NEXT_PUBLIC_ROOT_URL as string;
 
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
   const stripe = constructStripe({ name: 'test', version: '1.0.0' });
-  const { price, quantity = 1, metadata = {} } = req.body;
+  const {
+    price = { id: '' },
+    quantity = 1,
+    metadata = {},
+  } = { ...(req.body ?? {}) };
 
   try {
     const token = await getToken({ req });
