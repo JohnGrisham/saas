@@ -86,8 +86,11 @@ export const CredentialsSignin: React.FC<CredentialsSignupProps> = ({
           password,
         });
 
-        if (response?.ok && signInOptions?.callbackUrl) {
-          window.location.replace(signInOptions.callbackUrl);
+        if (!response?.error && response?.ok && signInOptions?.callbackUrl) {
+          window.setTimeout(
+            () => window.location.replace(signInOptions.callbackUrl as string),
+            200,
+          );
         } else if (response?.error) {
           setError(response.error);
         }

@@ -129,15 +129,15 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
 
       switch (account?.provider) {
         case 'credentials':
-          await credentialsSigninHandler(user, email, name);
+          //await credentialsSigninHandler(user, email, name);
           break;
         case 'google': {
           const sub = profile?.sub ?? `GSTUB_${user.id}`;
-          await googleSigninHandler(sub, email, name);
+          //await googleSigninHandler(sub, email, name);
           break;
         }
         default:
-          await credentialsSigninHandler(user, email, name);
+        //await credentialsSigninHandler(user, email, name);
       }
 
       return true;
@@ -205,63 +205,63 @@ export const events: EventCallbacks = {
       return;
     }
 
-    const { user: userRecord } = await graphQLClient({
-      'x-api-key': process.env.API_KEY as string,
-    }).request<UserByEmailQuery, UserByEmailQueryVariables>(
-      gql`
-        query GetUserByEmail($email: Email!) {
-          user(by: { email: $email }) {
-            id
-            customer {
-              id
-            }
-          }
-        }
-      `,
-      {
-        email,
-      },
-    );
+    // const { user: userRecord } = await graphQLClient({
+    //   'x-api-key': process.env.API_KEY as string,
+    // }).request<UserByEmailQuery, UserByEmailQueryVariables>(
+    //   gql`
+    //     query GetUserByEmail($email: Email!) {
+    //       user(by: { email: $email }) {
+    //         id
+    //         customer {
+    //           id
+    //         }
+    //       }
+    //     }
+    //   `,
+    //   {
+    //     email,
+    //   },
+    // );
 
-    if (!userRecord?.customer) {
-      const cognitoUser = isCognitoUser(user);
-      const sub = cognitoUser ? user.id : account?.providerAccountId ?? '';
+    // if (!userRecord?.customer) {
+    //   const cognitoUser = isCognitoUser(user);
+    //   const sub = cognitoUser ? user.id : account?.providerAccountId ?? '';
 
-      const newStripeCustomer = await stripe.customers.create({
-        name: name ?? '',
-        email,
-        metadata: {
-          sub,
-          userId: userRecord?.id ?? '',
-        },
-      });
-      stripeId = newStripeCustomer.id;
+    //   const newStripeCustomer = await stripe.customers.create({
+    //     name: name ?? '',
+    //     email,
+    //     metadata: {
+    //       sub,
+    //       userId: userRecord?.id ?? '',
+    //     },
+    //   });
+    //   stripeId = newStripeCustomer.id;
 
-      const [trialProduct] = (
-        await stripe.products.search({
-          query: `name~'${process.env.STRIPE_TRIAL_PRODUCT_NAME ?? ''}'`,
-        })
-      ).data;
-      const price =
-        typeof trialProduct.default_price === 'string'
-          ? trialProduct.default_price
-          : trialProduct.default_price?.unit_amount_decimal ?? '0';
+    const [trialProduct] = (
+      await stripe.products.search({
+        query: `name~'${process.env.STRIPE_TRIAL_PRODUCT_NAME ?? ''}'`,
+      })
+    ).data;
+    const price =
+      typeof trialProduct.default_price === 'string'
+        ? trialProduct.default_price
+        : trialProduct.default_price?.unit_amount_decimal ?? '0';
 
-      await stripe.subscriptions.create({
-        customer: newStripeCustomer.id,
-        items: [{ price, quantity: 1 }],
-        trial_period_days: 7,
-      });
-    } else {
-      stripeId = userRecord.customer.id;
-    }
+    //   await stripe.subscriptions.create({
+    //     customer: newStripeCustomer.id,
+    //     items: [{ price, quantity: 1 }],
+    //     trial_period_days: 7,
+    //   });
+    // } else {
+    //   stripeId = userRecord.customer.id;
+    // }
 
-    if (isCognitoUser(user) && userRecord) {
-      await Auth.updateUserAttributes(user, {
-        'custom:userId': userRecord.id,
-        'custom:stripeId': stripeId,
-      });
-    }
+    // if (isCognitoUser(user) && userRecord) {
+    //   await Auth.updateUserAttributes(user, {
+    //     'custom:userId': userRecord.id,
+    //     'custom:stripeId': stripeId,
+    //   });
+    // }
   },
   signOut: async ({ token: _token, session: _session }) => {
     await fetch(

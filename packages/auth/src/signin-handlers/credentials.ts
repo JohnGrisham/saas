@@ -15,12 +15,7 @@ export const credentialsSigninHandler = async (
   );
 
   if (!gqlUserRecord && cognitoUser) {
-    await createUser(
-      email,
-      user.id,
-      'CREDENTIALS' as IdentityType,
-      name,
-    );
+    await createUser(email, user.id, 'CREDENTIALS' as IdentityType, name);
   } else if (gqlUserRecord && !passwordIdentity && cognitoUser) {
     await createIdentity(
       user.id,
