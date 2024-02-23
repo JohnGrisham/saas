@@ -157,8 +157,7 @@ export const callbacks: Partial<CallbacksOptions<Profile, Account>> = {
       if (currentTimestampInSeconds < existingToken.accessTokenExpires) {
         if (currentUser && isCognitoUser(currentUser)) {
           // Refresh the token for Cognito users.
-          const user = (await Auth.currentAuthenticatedUser()) as PasswordUser;
-          return constructCognitoToken(existingToken, user, defaultExpiration);
+          Auth.currentAuthenticatedUser();
         }
 
         return token;

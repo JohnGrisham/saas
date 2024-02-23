@@ -44,8 +44,8 @@ const AuthenticatedSessionProvider: React.FC<SessionProviderProps> = ({
       !isAuthScreen() &&
       sessionContext.status !== 'loading'
     ) {
-      // setAuthStatus('loading');
-      // signIn();
+      setAuthStatus('loading');
+      signIn();
     } else if (!isAuthScreen()) {
       window.setTimeout(() => setAuthStatus(sessionContext.status), 500);
     } else {
@@ -57,9 +57,9 @@ const AuthenticatedSessionProvider: React.FC<SessionProviderProps> = ({
     return <Loading size="4x" />;
   }
 
-  // if (!isAuthScreen() && authStatus === 'unauthenticated') {
-  //   return null;
-  // }
+  if (!isAuthScreen() && authStatus === 'unauthenticated') {
+    return null;
+  }
 
   if (isAuthSession) {
     return (

@@ -7,9 +7,9 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useGetUserByEmailQuery } from 'client';
 
 export default function Home() {
-  const { data } = useAuthSession();
-  const response = useGetUserByEmailQuery(data.user.email);
-  console.log({ response });
+  // const { data } = useAuthSession();
+  // const response = useGetUserByEmailQuery(data.user.email);
+  // console.log({ response });
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
