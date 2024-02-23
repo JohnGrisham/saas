@@ -57,9 +57,9 @@ const AuthenticatedSessionProvider: React.FC<SessionProviderProps> = ({
     return <Loading size="4x" />;
   }
 
-  if (!isAuthScreen() && authStatus === 'unauthenticated') {
-    return null;
-  }
+  // if (!isAuthScreen() && authStatus === 'unauthenticated') {
+  //   return null;
+  // }
 
   if (isAuthSession) {
     return (
